@@ -1,10 +1,15 @@
+Django CKEditor:
+================
+
+**Attempt at better Django admin RTE integration.**
+
 Goal:
-=====
+-----
 
 To create a rich text editing capability for Django admin allowing to include any admin editable object in rich text. 
 
 Resources:
-==========
+----------
 
 Some resources that might aid development:
 
