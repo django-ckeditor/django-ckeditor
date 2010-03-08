@@ -1,7 +1,7 @@
 Goal:
 =====
 
-To create a rich text editing capability for Django admin allowing to include and admin editable object. 
+To create a rich text editing capability for Django admin allowing to include any admin editable object in rich text. 
 
 Resources:
 ==========
