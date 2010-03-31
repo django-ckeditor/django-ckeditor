@@ -14,6 +14,10 @@ Installation:
     
     CKEDITOR_JS_URL = "/media/ckeditor/ckeditor.js"
 
+#. Add ckeditor include to the project's `` url.py`` file::
+    
+    (r'^ckeditor/', include('ckeditor.urls')),    
+
 Usage:
 ------
 
