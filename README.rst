@@ -10,11 +10,13 @@ Installation:
 
 #. Install or add django-ckeditor to your python path.
 
+#. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
+
 #. Add CKEDITOR_JS_URL to the project's ``settings.py`` file. This setting specifies the URL to the CKEditor Javascript include (ckeditor.js), i.e::
     
     CKEDITOR_JS_URL = "/media/ckeditor/ckeditor.js"
 
-#. Add ckeditor include to the project's `` url.py`` file::
+#. Add ckeditor url include to the project's ``url.py`` file::
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
