@@ -12,9 +12,13 @@ Installation:
 
 #. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
 
-#. Add CKEDITOR_JS_URL to the project's ``settings.py`` file. This setting specifies the URL to the CKEditor Javascript include (ckeditor.js), i.e::
+#. Add a CKEDITOR_JS_URL setting to the project's ``settings.py`` file. This setting specifies the URL to the CKEditor Javascript include (ckeditor.js), i.e::
     
     CKEDITOR_JS_URL = "/media/ckeditor/ckeditor.js"
+
+#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor image upload directory. Make sure you have write permissions for the path, i.e.::
+
+    CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
 
 #. Add ckeditor url include to the project's ``url.py`` file::
     
