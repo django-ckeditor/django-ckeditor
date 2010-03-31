@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
@@ -7,6 +8,13 @@ from django.utils.encoding import force_unicode
 from django.forms.util import flatatt
 
 class CKEditorWidget(forms.Textarea):
+    """
+    Widget providing CKEditor for Rich Text Editing.
+    Supports direct image uploads and embed.
+
+    TODO:
+        Add file browser
+    """
     class Media:
         js = (
             settings.CKEDITOR_JS_URL,
@@ -23,7 +31,7 @@ class CKEditorWidget(forms.Textarea):
                     toolbar : "Full",
                     height:"291", 
                     width:"618",
-                    filebrowserUploadUrl : '/ckeditor/upload/',
+                    filebrowserUploadUrl : "%s",
                 }
             );
-        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id']))
+        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], reverse('ckeditor_upload')))
