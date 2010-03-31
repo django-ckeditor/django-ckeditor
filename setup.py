@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='django-ckeditor',
     version='dev',
-    description='Attempt at better Django admin RTE integration.',
+    description='Django admin CKEditor integration.',
     author='Shaun Sephton',
     author_email='shaunsephton@gmail.com',
     url='http://github.com/shaunsephton/django-ckeditor',
