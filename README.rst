@@ -2,18 +2,24 @@ Django CKEditor:
 ================
 **Django admin CKEditor integration.**
 
-Provides a RichTextField and CKEditorWidget with the widget supporting image uploads.
+Provides a ``RichTextField`` and ``CKEditorWidget`` with the widget supporting image uploads.
 
 
-Instalation:
+Installation:
 ------------
+
+#. Install or add django-ckeditor to your python path.
+
+#. Add CKEDITOR_JS_URL to the project's ``settings.py`` file. This setting specifies the URL to the CKEditor Javascript include (ckeditor.js), i.e::
+    
+    CKEDITOR_JS_URL = "/media/ckeditor/ckeditor.js"
 
 Usage:
 ------
 
 Field:
 ~~~~~~
-The quickest way to add rich text capabilities to your models is to use the included ``RichTextField`` model field type. A CKEditor widget is rendered as the form field but in all other regards the field behaves as the standard Django ``TextField``. For example::
+The quickest way to add rich text editing capabilities to your models is to use the included ``RichTextField`` model field type. A CKEditor widget is rendered as the form field but in all other regards the field behaves as the standard Django ``TextField``. For example::
 
     from django.db import models
     from ckeditor.fields import RichTextField
