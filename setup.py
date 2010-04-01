@@ -8,5 +8,11 @@ setup(
     author_email='shaunsephton@gmail.com',
     url='http://github.com/shaunsephton/django-ckeditor',
     packages = find_packages(),
+    dependency_links = [
+        'http://dist.repoze.org/',
+    ],
+    install_requires = [
+        'PIL==1.1.6',
+    ],
     include_package_data=True,
 )
