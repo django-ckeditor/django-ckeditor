@@ -11,13 +11,10 @@ class CKEditorWidget(forms.Textarea):
     """
     Widget providing CKEditor for Rich Text Editing.
     Supports direct image uploads and embed.
-
-    TODO:
-        Add file browser
     """
     class Media:
         js = (
-            settings.CKEDITOR_JS_URL,
+            settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
         )
     
     def render(self, name, value, attrs={}):
@@ -32,6 +29,9 @@ class CKEditorWidget(forms.Textarea):
                     height:"291", 
                     width:"618",
                     filebrowserUploadUrl : "%s",
+                    filebrowserBrowseUrl : "%s",
+                    filebrowserWindowWidth : '940',
+                    filebrowserWindowHeight : '747'
                 }
             );
-        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], reverse('ckeditor_upload')))
+        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], reverse('ckeditor_upload'), reverse('ckeditor_browse')))
