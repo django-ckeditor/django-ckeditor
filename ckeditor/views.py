@@ -2,6 +2,12 @@ import os
 
 from django.conf import settings
 from django.http import HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+            
+from PIL import Image, ImageOps
+            
+THUMBNAIL_SIZE = (75, 75)
     
 def exists(name):
     """
@@ -25,6 +31,40 @@ def get_available_name(name):
         name = os.path.join(dir_name, file_root + file_ext)
     return name
 
+def get_thumb_filename(filename):
+    """
+    Generate thumb filename by adding _thumb to end of filename before . (if present)
+    """
+    try:
+        dot_index = filename.rindex('.')
+    except ValueError: # filename has no dot
+        return '%s_thumb' % filename
+    else:
+        return '%s_thumb%s' % (filename[:dot_index], filename[dot_index:])
+
+def create_thumbnail(filename):
+    
+    image = Image.open(filename)
+        
+    # Convert to RGB if necessary
+    # Thanks to Limodou on DjangoSnippets.org
+    # http://www.djangosnippets.org/snippets/20/
+    if image.mode not in ('L', 'RGB'):
+        image = image.convert('RGB')
+       
+    # scale and crop to thumbnail
+    imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
+    imagefit.save(get_thumb_filename(filename))
+        
+
+def get_media_url(path):
+    """
+    Determine system file's media url.
+    # XXX: seems very flaky, needs refactor.
+    """
+    url = settings.MEDIA_URL + path.split(settings.MEDIA_ROOT)[1]
+    return url
+
 def upload(request):
     """
     Uploads a file and send back its URL to CKEditor.
@@ -44,12 +84,32 @@ def upload(request):
         destination.write(chunk)
     destination.close()
 
-    # determine uploaded file's media url
-    # XXX: very flaky, needs some tlc
-    url = settings.MEDIA_URL + destination_filename.split(settings.MEDIA_ROOT)[1]
+    create_thumbnail(destination_filename)
+
+    url = get_media_url(destination_filename)
 
     # respond with javascript sending ckeditor upload url.
     return HttpResponse("""
     <script type='text/javascript'>
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
     </script>""" % (request.GET['CKEditorFuncNum'], url))
+
+def browse(request):
+    uploads = os.listdir(settings.CKEDITOR_UPLOAD_PATH)
+    
+    images = []
+    for upload in uploads:
+        # bypass for thumbs
+        if '_thumb' in upload:
+            continue
+        filename = os.path.join(settings.CKEDITOR_UPLOAD_PATH, upload)
+        images.append({
+            'thumb': get_media_url(get_thumb_filename(filename)),
+            'src': get_media_url(filename)
+        })
+   
+    context = RequestContext(request, {
+        'images': images,
+        'media_prefix': settings.CKEDITOR_MEDIA_PREFIX,
+    })
+    return render_to_response('browse.html', context)
