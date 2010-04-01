@@ -2,7 +2,7 @@ Django CKEditor:
 ================
 **Django admin CKEditor integration.**
 
-Provides a ``RichTextField`` and ``CKEditorWidget`` with the widget supporting image uploads.
+Provides a ``RichTextField`` and ``CKEditorWidget`` with the widget supporting image uploads and browsing.
 
 
 Installation:
@@ -10,11 +10,13 @@ Installation:
 
 #. Install or add django-ckeditor to your python path.
 
+#. Add ``ckeditor`` to your INSTALLED_APPS setting.
+
 #. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
 
-#. Add a CKEDITOR_JS_URL setting to the project's ``settings.py`` file. This setting specifies the URL to the CKEditor Javascript include (ckeditor.js), i.e::
-    
-    CKEDITOR_JS_URL = "/media/ckeditor/ckeditor.js"
+#. Add a CKEDITOR_MEDIA_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to the ckeditor media. Make sure to use a trailing slash::
+
+    CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
 
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor image upload directory. Make sure you have write permissions for the path, i.e.::
 
@@ -57,8 +59,3 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
         form = PostAdminForm
     
     admin.site.register(Post, PostAdmin)
-
-
-TODO:
------
-#. Add filebrowser support.
