@@ -2,7 +2,7 @@ Django CKEditor:
 ================
 **Django admin CKEditor integration.**
 
-Provides a ``RichTextField`` and ``CKEditorWidget`` with the widget supporting image uploads and browsing.
+Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
 
 
 Installation:
