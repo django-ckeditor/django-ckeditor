@@ -12,7 +12,7 @@ setup(
         'http://dist.repoze.org/',
     ],
     install_requires = [
-        'PIL==1.1.6',
+        'PIL>=1.1.6',
     ],
     include_package_data=True,
 )
