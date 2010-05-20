@@ -60,9 +60,9 @@ def create_thumbnail(filename):
 def get_media_url(path):
     """
     Determine system file's media url.
-    # XXX: seems very flaky, needs refactor.
     """
-    url = settings.MEDIA_URL + path.split(settings.MEDIA_ROOT)[1]
+    base = getattr(settings, "CKEDITOR_UPLOAD_URL", settings.MEDIA_URL)
+    url = base + os.path.basename(path)
     return url
 
 def upload(request):
