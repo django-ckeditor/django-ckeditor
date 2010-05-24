@@ -9,7 +9,7 @@ setup(
     url='http://github.com/shaunsephton/django-ckeditor',
     packages = find_packages(),
     dependency_links = [
-        'http://dist.repoze.org/',
+        'http://dist.plone.org/thirdparty/',
     ],
     install_requires = [
         'PIL>=1.1.6',
