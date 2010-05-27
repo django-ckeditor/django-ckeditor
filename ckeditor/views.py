@@ -62,10 +62,12 @@ def get_media_url(path):
     """
     Determine system file's media url.
     """
-    base = getattr(settings, "CKEDITOR_UPLOAD_URL", settings.MEDIA_URL)
-    url = base + os.path.basename(path)
+    upload_url = getattr(settings, "CKEDITOR_UPLOAD_URL", None)
+    if upload_url:
+        url = upload_url + os.path.basename(path)
+    else:
+        url = settings.MEDIA_URL + path.split(settings.MEDIA_ROOT)[1]
     return url
-
 
 @csrf_exempt
 def upload(request):
