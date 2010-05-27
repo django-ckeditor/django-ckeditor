@@ -4,6 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
             
 from PIL import Image, ImageOps
             
@@ -65,6 +66,8 @@ def get_media_url(path):
     url = settings.MEDIA_URL + path.split(settings.MEDIA_ROOT)[1]
     return url
 
+
+@csrf_exempt
 def upload(request):
     """
     Uploads a file and send back its URL to CKEditor.
