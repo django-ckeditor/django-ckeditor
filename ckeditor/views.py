@@ -44,7 +44,6 @@ def get_thumb_filename(filename):
         return '%s_thumb%s' % (filename[:dot_index], filename[dot_index:])
 
 def create_thumbnail(filename):
-    
     image = Image.open(filename)
         
     # Convert to RGB if necessary
@@ -57,7 +56,6 @@ def create_thumbnail(filename):
     imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
     imagefit.save(get_thumb_filename(filename))
         
-
 def get_media_url(path):
     """
     Determine system file's media url.
