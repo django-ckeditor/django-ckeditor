@@ -18,7 +18,7 @@ Installation
 
     CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
 
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor image upload directory. Make sure you have write permissions for the path, i.e.::
+#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor media upload directory. Make sure you have write permissions for the path, i.e.::
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
 
@@ -26,11 +26,11 @@ Installation
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
-#. Optionally, add a CKEDITOR_UPLOAD_MEDIA_URL setting to the project's ``settings.py`` file. This is the URL from which ckeditor uploaded media is served, i.e.::
+#. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This settings specifies a URL prefix to media uploaded through ckeditor, i.e.::
 
-    CKEDITOR_UPLOAD_MEDIA_URL = "http://media.lawrence.com/media/uploads/
+    CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
 
-(If CKEDITOR_UPLOAD_MEDIA_URL is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and CKEDITOR_UPLOAD_PATH appended.)
+(If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and CKEDITOR_UPLOAD_PATH appended.)
 
 Usage
 -----
@@ -73,4 +73,4 @@ ChangeLog
 0.0.1
 +++++
 
-Added CKEDITOR_UPLOAD_MEDIA_URL setting. Thanks to chr15m for the input.
+Added CKEDITOR_UPLOAD_PREFIX setting. Thanks to chr15m for the input.

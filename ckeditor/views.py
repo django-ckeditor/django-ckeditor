@@ -60,7 +60,7 @@ def get_media_url(path):
     """
     Determine system file's media url.
     """
-    upload_url = getattr(settings, "CKEDITOR_UPLOAD_MEDIA_URL", None)
+    upload_url = getattr(settings, "CKEDITOR_UPLOAD_PREFIX", None)
     if upload_url:
         url = upload_url + os.path.basename(path)
     else:
