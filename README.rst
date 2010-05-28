@@ -26,7 +26,7 @@ Installation
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
-#. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This settings specifies a URL prefix to media uploaded through ckeditor, i.e.::
+#. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through ckeditor, i.e.::
 
     CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
 
