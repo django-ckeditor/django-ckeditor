@@ -73,4 +73,9 @@ ChangeLog
 0.0.1
 +++++
 
-Added CKEDITOR_UPLOAD_PREFIX setting. Thanks to chr15m for the input.
+#. Added CKEDITOR_UPLOAD_PREFIX setting. Thanks to chr15m for the input.
+
+0.0.2
++++++
+
+#. Included README.rst in manifest.
