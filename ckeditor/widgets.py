@@ -5,6 +5,7 @@ from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
 
+from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
 
 class CKEditorWidget(forms.Textarea):
@@ -13,9 +14,12 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
     class Media:
-        js = (
-            settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
-        )
+        try:
+            js = (
+                settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
+            )
+        except AttributeError:
+            raise ImproperlyConfigured("django-ckeditor requires CKEDITOR_MEDIA_PREFIX setting.")
     
     def render(self, name, value, attrs={}):
         if value is None: value = ''
