@@ -6,7 +6,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
             
-from PIL import Image, ImageOps
+try: 
+    from PIL import Image, ImageOps 
+except ImportError: 
+    import Image, ImageOps
             
 THUMBNAIL_SIZE = (75, 75)
     
