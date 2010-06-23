@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-ckeditor',
-    version='0.0.3',
+    version='0.0.4',
     description='Django admin CKEditor integration.',
     long_description = open('README.rst', 'r').read(),
     author='Shaun Sephton',
@@ -20,4 +20,5 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
+    zip_safe=False,
 )
