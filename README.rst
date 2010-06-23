@@ -85,3 +85,8 @@ ChangeLog
 
 #. More robust PIL import, thanks Dusty Phillips.
 #. Better CKEDITOR_MEDIA_PREFIX setting error.
+
+0.0.4
++++++
+
+#. Include resources, sorry about that.
