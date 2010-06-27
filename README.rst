@@ -109,3 +109,8 @@ ChangeLog
 +++++
 
 #. Include resources, sorry about that.
+
+0.0.5
++++++
+
+#. Added CKEDITOR_CONFIGS setting.
