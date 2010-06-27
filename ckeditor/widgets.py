@@ -32,7 +32,12 @@ class CKEditorWidget(forms.Textarea):
             if not isinstance(self.config, dict):
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS["%s"] setting must be a dictionary type.' % config_name)
         except AttributeError:
-            self.config = {}
+            self.config = {'skin': 'v2',
+                           'toolbar': 'Full',
+                           'height': 291,
+                           'width': 618,
+                           'filebrowserWindowWidth': 940,
+                           'filebrowserWindowHeight': 747}
     
     def render(self, name, value, attrs={}):
         if value is None: value = ''
