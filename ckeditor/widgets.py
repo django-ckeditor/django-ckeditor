@@ -16,7 +16,6 @@ class CKEditorWidget(forms.Textarea):
     Widget providing CKEditor for Rich Text Editing.
     Supports direct image uploads and embed.
     """
-    
     class Media:
         try:
             js = (
@@ -29,9 +28,9 @@ class CKEditorWidget(forms.Textarea):
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
         try:
-            self.config = settings.CKEDITOR_CONFIG[config_name]
+            self.config = settings.CKEDITOR_CONFIGS[config_name]
             if not isinstance(self.config, dict):
-                raise ImproperlyConfigured('CKEDITOR_CONFIG["%s"] setting must be a dictionary type.' % config_name)
+                raise ImproperlyConfigured('CKEDITOR_CONFIGS["%s"] setting must be a dictionary type.' % config_name)
         except AttributeError:
             self.config = {}
     
