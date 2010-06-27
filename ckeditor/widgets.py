@@ -11,29 +11,6 @@ from django.forms.util import flatatt
 
 json_encode = simplejson.JSONEncoder().encode
 
-DEFAULT_CONFIG = {
-    #'skin': 'v2',
-    'toolbar': 'Full',
-    'width': 618,
-    'height': 291,
-    'filebrowserWindowWidth': '940',
-    'filebrowserWindowHeight': '747',
-}
-
-def deep_update(dictionary, *other_dicts):
-    """
-    Does a deep update of other_dicts' keys into dict.
-    Any keys that also contain dictionaries will be deep_updated too.
-    """
-    for d in other_dicts:
-        for k,v in d.iteritems():
-            if k in dictionary and isinstance(dictionary[k], dict) \
-                   and isinstance(v, dict):
-                dictionary[k] = deep_update(dictionary[k], v)
-            else:
-                dictionary[k] = v
-    return dictionary
-
 class CKEditorWidget(forms.Textarea):
     """
     Widget providing CKEditor for Rich Text Editing.
@@ -51,11 +28,12 @@ class CKEditorWidget(forms.Textarea):
     
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
-        self.config = DEFAULT_CONFIG.copy()
         try:
-            deep_update(self.config, settings.CKEDITOR_CONFIG[config_name])
+            self.config = settings.CKEDITOR_CONFIG[config_name]
+            if not isinstance(self.config, dict):
+                raise ImproperlyConfigured('CKEDITOR_CONFIG["%s"] setting must be a dictionary type.' % config_name)
         except AttributeError:
-            pass
+            self.config = {}
     
     def render(self, name, value, attrs={}):
         if value is None: value = ''
