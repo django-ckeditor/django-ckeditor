@@ -28,26 +28,26 @@ Installation
 
 #. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through ckeditor, i.e.::
 
-    CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
+       CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
 
-(If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and CKEDITOR_UPLOAD_PATH appended.)
+   (If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and CKEDITOR_UPLOAD_PATH appended.)
 
 #. Optionally, add CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditorWidget settings that are passed to CKEditor (see CKEditor's `Setting Configurations`__), i.e.::
 
-    CKEDITOR_CONFIGS = {
-        'default': {
-             'toolbar': [['Bold', 'Italic', 'Strike']],
-	     'width': 450,
-	     'height': 300,
-	     'toolbarCanCollapse: False
-        },
-    }
+       CKEDITOR_CONFIGS = {
+           'default': {
+               'toolbar': [['Bold', 'Italic', 'Strike']],
+               'width': 450,
+               'height': 300,
+               'toolbarCanCollapse: False,
+           },
+       }
 
-The name of the settings can be referenced when instanciating the CKEditorWidget::
+   The name of the settings can be referenced when instanciating the CKEditorWidget::
 
-    widget = CKEditorWidget(config_name='default')
+       widget = CKEditorWidget(config_name='default')
 
-The default is 'default', and RichTextField only uses the default configuration.
+   The default is 'default', and RichTextField only uses the default configuration.
 
 __ http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations
 
