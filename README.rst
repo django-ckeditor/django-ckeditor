@@ -90,3 +90,7 @@ ChangeLog
 +++++
 
 #. Include resources, sorry about that.
+
+0.0.5
++++++
+#. csrf_exempt backwards compatability. Thanks chr15m for the patch.
