@@ -112,5 +112,4 @@ ChangeLog
 
 0.0.5
 +++++
-
-#. Added CKEDITOR_CONFIGS setting.
+#. csrf_exempt backwards compatability. Thanks chr15m for the patch.
