@@ -20,6 +20,11 @@ class CKEditorWidget(forms.Textarea):
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires CKEDITOR_MEDIA_PREFIX setting.")
+
+    def __init__(self, toolbar="Full", *args, **kwargs):
+        '''You can set the toolbar to Basic or Full.'''
+        self.toolbar = toolbar
+        super(CKEditorWidget, self).__init__(*args, **kwargs)
     
     def render(self, name, value, attrs={}):
         if value is None: value = ''
@@ -29,7 +34,7 @@ class CKEditorWidget(forms.Textarea):
             CKEDITOR.replace("%s",
                 {
                     skin: "v2",
-                    toolbar : "Full",
+                    toolbar : "%s",
                     height:"291", 
                     width:"618",
                     filebrowserUploadUrl : "%s",
@@ -38,4 +43,4 @@ class CKEditorWidget(forms.Textarea):
                     filebrowserWindowHeight : '747'
                 }
             );
-        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], reverse('ckeditor_upload'), reverse('ckeditor_browse')))
+        </script>''' % (flatatt(final_attrs), conditional_escape(force_unicode(value)), final_attrs['id'], self.toolbar, reverse('ckeditor_upload'), reverse('ckeditor_browse')))
