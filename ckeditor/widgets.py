@@ -19,7 +19,7 @@ class CKEditorWidget(forms.Textarea):
                 settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
             )
         except AttributeError:
-            raise ImproperlyConfigured("django-ckeditor requires CKEDITOR_MEDIA_PREFIX setting.")
+            raise ImproperlyConfigured("django-ckeditor requires CKEDITOR_MEDIA_PREFIX setting. This setting specifies a URL prefix to the ckeditor JS and CSS media (not uploaded media). Make sure to use a trailing slash: CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'")
     
     def render(self, name, value, attrs={}):
         if value is None: value = ''
