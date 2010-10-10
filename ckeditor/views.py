@@ -21,12 +21,6 @@ except ImportError:
         
 THUMBNAIL_SIZE = (75, 75)
     
-def exists(name):
-    """
-    Determines wether or not a file exists on the target storage system.
-    """
-    return os.path.exists(name)
-
 def get_available_name(name):
     """
     Returns a filename that's free on the target storage system, and
@@ -37,22 +31,17 @@ def get_available_name(name):
     # If the filename already exists, keep adding an underscore (before the
     # file extension, if one exists) to the filename until the generated
     # filename doesn't exist.
-    while exists(name):
+    while os.path.exists(name):
         file_root += '_'
         # file_ext includes the dot.
         name = os.path.join(dir_name, file_root + file_ext)
     return name
 
-def get_thumb_filename(filename):
+def get_thumb_filename(file_name):
     """
     Generate thumb filename by adding _thumb to end of filename before . (if present)
     """
-    try:
-        dot_index = filename.rindex('.')
-    except ValueError: # filename has no dot
-        return '%s_thumb' % filename
-    else:
-        return '%s_thumb%s' % (filename[:dot_index], filename[dot_index:])
+    return '%s_thumb%s' % os.path.splitext(file_name)
 
 def create_thumbnail(filename):
     image = Image.open(filename)
@@ -69,15 +58,16 @@ def create_thumbnail(filename):
         
 def get_media_url(path):
     """
-    Determine system file's media url.
+    Determine system file's media URL.
     """
-    upload_url = getattr(settings, "CKEDITOR_UPLOAD_PREFIX", None)
-    if upload_url:
-        url = upload_url + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
+    upload_prefix = getattr(settings, "CKEDITOR_UPLOAD_PREFIX", None)
+    if upload_prefix:
+        url = upload_prefix + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
     else:
-        url = settings.MEDIA_URL + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
-    
-    return url
+        url = settings.MEDIA_URL + path.replace(settings.MEDIA_ROOT, '')
+   
+    # Remove any double slashes.
+    return url.replace('//', '/')
 
 @csrf_exempt
 def upload(request):
@@ -120,10 +110,13 @@ def upload(request):
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
-def browse(request):
+def get_image_browse_urls():
+    """
+    Recursively walks all dirs under upload dir and generates a list of
+    thumbnail and full image URL's for each file found.
+    """
     images = []
     
-    # this block walks recursively in all dirs under upload dir
     for root, dirs, files in os.walk(settings.CKEDITOR_UPLOAD_PATH):
         for filename in [ os.path.join(root, x) for x in files ]:
             # bypass for thumbs
@@ -134,9 +127,12 @@ def browse(request):
                 'thumb': get_media_url(get_thumb_filename(filename)),
                 'src': get_media_url(filename)
             })
-   
+
+    return images
+    
+def browse(request):
     context = RequestContext(request, {
-        'images': images,
+        'images': get_image_browse_urls(),
         'media_prefix': settings.CKEDITOR_MEDIA_PREFIX,
     })
     return render_to_response('browse.html', context)
