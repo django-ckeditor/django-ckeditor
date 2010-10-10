@@ -69,6 +69,27 @@ def get_media_url(path):
     # Remove any double slashes.
     return url.replace('//', '/')
 
+def get_upload_filename(upload_name, user):
+    # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
+    if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
+        user_path = user.username
+    else:
+        user_path = ''
+
+    # Generate date based path to put uploaded file.
+    date_path = datetime.now().strftime('%Y/%m/%d')
+    
+    # Complete upload path (upload_path + date_path).
+    upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path, date_path)
+   
+    # Make sure upload_path exists.
+    if not os.path.exists(upload_path):
+        os.makedirs(upload_path)
+    
+    # Get available name and return.
+    return get_available_name(os.path.join(upload_path, upload_name))
+     
+    
 @csrf_exempt
 def upload(request):
     """
@@ -77,47 +98,45 @@ def upload(request):
     TODO:
         Validate uploads
     """
-    # get the upload from request
+    # Get the uploaded file from request.
     upload = request.FILES['upload']
     upload_ext = os.path.splitext(upload.name)[1]
-    
-    # dir to put uploaded file
-    sort_dir = datetime.now().strftime('%Y/%m/%d')
-    
-    # complete upload path (upload_path + sort_dir)
-    upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, sort_dir)
-    
-    # make sure sort_dir exists
-    if not os.path.exists(upload_path):
-        os.makedirs(upload_path)
-    
-    # determine destination filename
-    destination_filename = get_available_name(os.path.join(upload_path, upload.name))
-     
-    # iterate through chunks and write to destination
-    destination = open(destination_filename, 'wb+')
+   
+    # Open output file in which to store upload. 
+    upload_filename = get_upload_filename(upload.name, request.user)
+    out = open(upload_filename, 'wb+')
+
+    # Iterate through chunks and write to destination.
     for chunk in upload.chunks():
-        destination.write(chunk)
-    destination.close()
+        out.write(chunk)
+    out.close()
 
-    create_thumbnail(destination_filename)
+    create_thumbnail(upload_filename)
 
-    url = get_media_url(destination_filename)
-
-    # respond with javascript sending ckeditor upload url.
+    # Respond with Javascript sending ckeditor upload url.
+    url = get_media_url(upload_filename)
     return HttpResponse("""
     <script type='text/javascript'>
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
-def get_image_browse_urls():
+def get_image_browse_urls(user=None):
     """
     Recursively walks all dirs under upload dir and generates a list of
     thumbnail and full image URL's for each file found.
     """
     images = []
     
-    for root, dirs, files in os.walk(settings.CKEDITOR_UPLOAD_PATH):
+    # If a user is provided and CKEDITOR_RESTRICT_BY_USER is True,
+    # limit images to user specific path, but not for superusers.
+    if user and not user.is_superuser and getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
+        user_path = user.username
+    else:
+        user_path = ''
+
+    browse_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path)
+    
+    for root, dirs, files in os.walk(browse_path):
         for filename in [ os.path.join(root, x) for x in files ]:
             # bypass for thumbs
             if '_thumb' in filename:
@@ -132,7 +151,7 @@ def get_image_browse_urls():
     
 def browse(request):
     context = RequestContext(request, {
-        'images': get_image_browse_urls(),
+        'images': get_image_browse_urls(request.user),
         'media_prefix': settings.CKEDITOR_MEDIA_PREFIX,
     })
     return render_to_response('browse.html', context)
