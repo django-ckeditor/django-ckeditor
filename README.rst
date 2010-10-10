@@ -26,6 +26,8 @@ Installation
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
+#. Optionally, set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser. 
+
 #. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through ckeditor, i.e.::
 
     CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
