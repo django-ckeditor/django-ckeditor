@@ -22,7 +22,7 @@ Installation
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
 
-#. Add ckeditor url include to the project's ``url.py`` file::
+#. Add ckeditor url include to the project's ``urls.py`` file::
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
