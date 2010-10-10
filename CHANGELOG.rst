@@ -3,7 +3,10 @@ Changelog
 
 0.0.6
 -----
-#. Enforce correct configration.
+#. Enforce correct configuration.
+#. Changed upload behavior to separate files into directories by upload date. `Thanks loop0 <http://github.com/loop0>`_.
+#. Added initial set of much needed tests.
+#. General cleanup, light refactor.
 
 0.0.5
 -----
