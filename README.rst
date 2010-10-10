@@ -30,7 +30,7 @@ Installation
 
     CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
 
-(If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and CKEDITOR_UPLOAD_PATH appended.)
+(If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and the uploaded resource's full path and filename appended.)
 
 Usage
 -----
