@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -72,9 +73,10 @@ def get_media_url(path):
     """
     upload_url = getattr(settings, "CKEDITOR_UPLOAD_PREFIX", None)
     if upload_url:
-        url = upload_url + os.path.basename(path)
+        url = upload_url + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
     else:
-        url = settings.MEDIA_URL + path.split(settings.MEDIA_ROOT)[1]
+        url = settings.MEDIA_URL + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
+    
     return url
 
 @csrf_exempt
@@ -87,9 +89,20 @@ def upload(request):
     """
     # get the upload from request
     upload = request.FILES['upload']
-
+    upload_ext = os.path.splitext(upload.name)[1]
+    
+    # dir to put uploaded file
+    sort_dir = datetime.now().strftime('%Y/%m/%d')
+    
+    # complete upload path (upload_path + sort_dir)
+    upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, sort_dir)
+    
+    # make sure sort_dir exists
+    if not os.path.exists(upload_path):
+        os.makedirs(upload_path)
+    
     # determine destination filename
-    destination_filename = get_available_name(os.path.join(settings.CKEDITOR_UPLOAD_PATH, upload.name))
+    destination_filename = get_available_name(os.path.join(upload_path, upload.name))
      
     # iterate through chunks and write to destination
     destination = open(destination_filename, 'wb+')
@@ -108,18 +121,19 @@ def upload(request):
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
 def browse(request):
-    uploads = os.listdir(settings.CKEDITOR_UPLOAD_PATH)
-    
     images = []
-    for upload in uploads:
-        # bypass for thumbs
-        if '_thumb' in upload:
-            continue
-        filename = os.path.join(settings.CKEDITOR_UPLOAD_PATH, upload)
-        images.append({
-            'thumb': get_media_url(get_thumb_filename(filename)),
-            'src': get_media_url(filename)
-        })
+    
+    # this block walks recursively in all dirs under upload dir
+    for root, dirs, files in os.walk(settings.CKEDITOR_UPLOAD_PATH):
+        for filename in [ os.path.join(root, x) for x in files ]:
+            # bypass for thumbs
+            if '_thumb' in filename:
+                continue
+            
+            images.append({
+                'thumb': get_media_url(get_thumb_filename(filename)),
+                'src': get_media_url(filename)
+            })
    
     context = RequestContext(request, {
         'images': images,
