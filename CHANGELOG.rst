@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.0.7
+-----
+#. Egg package corrected to exclude testing admin.py and models.py.
+
 0.0.6
 -----
 #. Enforce correct configuration.
