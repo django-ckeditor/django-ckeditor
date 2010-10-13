@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.0.8
+-----
+
+#. Removed buggy url include check.
+
 0.0.7
 -----
 #. Egg package corrected to exclude testing admin.py and models.py.

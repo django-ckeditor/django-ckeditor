@@ -2,15 +2,8 @@ import os
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse, NoReverseMatch
 
 if 'ckeditor' in settings.INSTALLED_APPS:
-    # Confirm ckeditor urls have been included.
-    try:
-        reverse('ckeditor_upload')
-    except NoReverseMatch:
-        raise ImproperlyConfigured("django-ckeditor requires ckeditor.urls to be included in the project's urls.py file: (r'^ckeditor/', include('ckeditor.urls'))")
-
     # Confirm CKEDITOR_MEDIA_PREFIX setting has been specified.
     try:                
         settings.CKEDITOR_MEDIA_PREFIX
