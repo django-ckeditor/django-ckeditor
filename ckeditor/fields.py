@@ -17,5 +17,6 @@ class RichTextFormField(forms.fields.Field):
     widget = CKEditorWidget
 
     def __init__(self, *args, **kwargs):
-        kwargs.update({'widget': CKEditorWidget})
+        defaults = {'widget': CKEditorWidget}
+        defaults.update(kwargs)
         super(RichTextFormField, self).__init__(*args, **kwargs)
