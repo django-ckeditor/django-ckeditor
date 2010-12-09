@@ -36,22 +36,31 @@ Installation
        
    (If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and the uploaded resource's full path and filename appended.)
 
-#. Optionally, add CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditorWidget settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
+#. Optionally, add CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
 
        CKEDITOR_CONFIGS = {
-           'default': {
+           'awesome_ckeditor': {
                'toolbar': 'Basic',
            },
        }
    
    The name of the settings can be referenced when instantiating a RichTextField::
 
-       content = RichTextField(config_name='default')
+       content = RichTextField(config_name='awesome_ckeditor')
 
    The name of the settings can be referenced when instantiating a CKEditorWidget::
 
-       widget = CKEditorWidget(config_name='default')
-
+       widget = CKEditorWidget(config_name='awesome_ckeditor')
+   
+   By specifying a set named ``default`` you'll be applying its settings to all RichTextField and CKEditorWidget objects for which ``config_name`` has not been explicitly defined ::
+       
+       CKEDITOR_CONFIGS = {
+           'default': {
+               'toolbar': 'Full',
+               'height': 300,
+               'width': 300,
+           },
+       }
 
 Usage
 -----
