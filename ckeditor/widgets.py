@@ -11,6 +11,15 @@ from django.forms.util import flatatt
 
 json_encode = simplejson.JSONEncoder().encode
 
+DEFAULT_CONFIG = {
+    'skin': 'v2',
+    'toolbar': 'Full',
+    'height': 291,
+    'width': 618,
+    'filebrowserWindowWidth': 940,
+    'filebrowserWindowHeight': 747,
+}
+
 class CKEditorWidget(forms.Textarea):
     """
     Widget providing CKEditor for Rich Text Editing.
@@ -26,25 +35,30 @@ class CKEditorWidget(forms.Textarea):
 
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
-        try:
-            self.config = settings.CKEDITOR_CONFIGS[config_name]
-            if not isinstance(self.config, dict):
-                raise ImproperlyConfigured('CKEDITOR_CONFIGS["%s"] setting must be a dictionary type.' % config_name)
-        except AttributeError:
-            self.config = {
-                'skin': 'v2',
-                'toolbar': 'Full',
-                'height': 291,
-                'width': 618,
-                'filebrowserWindowWidth': 940,
-                'filebrowserWindowHeight': 747,
-            }
-        self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
-        self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
-    
+        # Setup config from defaults.
+        self.config = DEFAULT_CONFIG
+
+        # Try to get valid config from settings.
+        configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
+        if configs and isinstance(configs, dict):
+            # Make sure the config_name exists.
+            if configs.has_key(config_name):
+                config = configs[config_name]
+                # Make sure the configuration is a dictionary.
+                if not isinstance(config, dict):
+                    raise ImproperlyConfigured('CKEDITOR_CONFIGS["%s"] setting must be a dictionary type.' % config_name)
+                # Override defaults with settings config.
+                self.config.update(config)
+            else:
+                raise ImproperlyConfigured("No configuration named '%s' found in your CKEDITOR_CONFIGS setting." % config_name)
+        else:
+            raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a dictionary type.')
+            
     def render(self, name, value, attrs={}):
         if value is None: value = ''
         final_attrs = self.build_attrs(attrs, name=name)
+        self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
+        self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
         return mark_safe(u'''<textarea%s>%s</textarea>
         <script type="text/javascript">
             CKEDITOR.replace("%s", %s);
