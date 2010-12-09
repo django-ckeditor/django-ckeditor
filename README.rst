@@ -4,6 +4,11 @@ Django CKEditor
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
 
+Contents
+--------
+.. toctree::
+    :maxdepth: 5
+
 
 Installation
 ------------
