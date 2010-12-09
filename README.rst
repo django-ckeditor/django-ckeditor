@@ -41,12 +41,14 @@ Installation
                'toolbar': 'Basic',
            },
        }
+   
+   The name of the settings can be referenced when instantiating a RichTextField::
+
+       content = RichTextField(config_name='default')
 
    The name of the settings can be referenced when instantiating the CKEditorWidget::
 
        widget = CKEditorWidget(config_name='default')
-
-   The default is 'default', and RichTextField only uses the default configuration.
 
 
 Usage
