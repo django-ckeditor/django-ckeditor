@@ -7,7 +7,8 @@ Created By
 
 Contributors
 ------------
-#. `loop0 <http://github.com/loop0>`_
+#. `buchuki <http://github.com/buchuki>`
 #. `chr15m <http://github.com/chr15m>`_
-#. `buchuki <http://github.com/buchuki>`_
+#. `_jeffh <https://github.com/jeffh>`_
+#. `loop0 <http://github.com/loop0>`_
 

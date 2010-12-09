@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.0.9
+-----
+
+#. Added ability to configure CKeditor through a CKEDITOR_CONFIGS settings. Thanks `jeffh <https://github.com/jeffh>`_ for the input.
+
 0.0.8
 -----
 
