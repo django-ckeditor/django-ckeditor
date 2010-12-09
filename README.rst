@@ -38,10 +38,7 @@ Installation
 
        CKEDITOR_CONFIGS = {
            'default': {
-               'toolbar': [['Bold', 'Italic', 'Strike']],
-               'width': 450,
-               'height': 300,
-               'toolbarCanCollapse: False,
+               'toolbar': 'Basic',
            },
        }
 
