@@ -46,7 +46,7 @@ Installation
 
        content = RichTextField(config_name='default')
 
-   The name of the settings can be referenced when instantiating the CKEditorWidget::
+   The name of the settings can be referenced when instantiating a CKEditorWidget::
 
        widget = CKEditorWidget(config_name='default')
 
