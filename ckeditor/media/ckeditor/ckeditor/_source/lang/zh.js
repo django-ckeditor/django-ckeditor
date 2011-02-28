@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -56,6 +56,7 @@ CKEDITOR.lang['zh'] =
 	superscript		: '上標',
 	horizontalrule	: '插入水平線',
 	pagebreak		: '插入分頁符號',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: '移除超連結',
 	undo			: '復原',
 	redo			: '重複',
@@ -105,22 +106,44 @@ CKEDITOR.lang['zh'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
+		width			: '寬度',
+		height			: '高度',
+		align			: '對齊',
+		alignLeft		: '靠左對齊',
+		alignRight		: '靠右對齊',
+		alignCenter		: '置中',
+		alignTop		: '靠上對齊',
+		alignMiddle		: '置中對齊',
+		alignBottom		: '靠下對齊',
+		invalidHeight	: '高度必須為數字格式',
+		invalidWidth	: '寬度必須為數字格式',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, 已關閉</span>'
+	},
+
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: '插入特殊符號',
-		title		: '請選擇特殊符號'
+		title		: '請選擇特殊符號',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: '插入/編輯超連結',
+		other 		: '<其他>',
 		menu		: '編輯超連結',
 		title		: '超連結',
 		info		: '超連結資訊',
@@ -144,9 +167,7 @@ CKEDITOR.lang['zh'] =
 		popupFullScreen	: '全螢幕 (IE)',
 		popupScrollBars	: '捲軸',
 		popupDependent	: '從屬 (NS)',
-		popupWidth		: '寬',
 		popupLeft		: '左',
-		popupHeight		: '高',
 		popupTop		: '右',
 		id				: 'ID',
 		langDir			: '語言方向',
@@ -182,6 +203,30 @@ CKEDITOR.lang['zh'] =
 		errorName	: '請輸入錨點名稱'
 	},
 
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Numbered List Properties', // MISSING
+		bulletedTitle		: 'Bulleted List Properties', // MISSING
+		type				: 'Type', // MISSING
+		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
+		circle				: 'Circle', // MISSING
+		disc				: 'Disc', // MISSING
+		square				: 'Square', // MISSING
+		none				: 'None', // MISSING
+		notset				: '<not set>', // MISSING
+		armenian			: 'Armenian numbering', // MISSING
+		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
+		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
+		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
+		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
+	},
+
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -208,15 +253,9 @@ CKEDITOR.lang['zh'] =
 		rows		: '列數',
 		columns		: '欄數',
 		border		: '邊框',
-		align		: '對齊',
-		alignLeft	: '靠左對齊',
-		alignCenter	: '置中',
-		alignRight	: '靠右對齊',
-		width		: '寬度',
 		widthPx		: '像素',
 		widthPc		: '百分比',
 		widthUnit	: 'width unit', // MISSING
-		height		: '高度',
 		cellSpace	: '間距',
 		cellPad		: '內距',
 		caption		: '標題',
@@ -252,9 +291,6 @@ CKEDITOR.lang['zh'] =
 			wordWrap		: '自動換行',
 			hAlign			: '水平對齊',
 			vAlign			: '垂直對齊',
-			alignTop		: '向上對齊',
-			alignMiddle		: '置中對齊',
-			alignBottom		: '向下對齊',
 			alignBaseline	: '基線對齊',
 			bgColor			: '背景顏色',
 			borderColor		: '邊框顏色',
@@ -375,24 +411,17 @@ CKEDITOR.lang['zh'] =
 		btnUpload	: '上傳至伺服器',
 		upload		: '上傳',
 		alt			: '替代文字',
-		width		: '寬度',
-		height		: '高度',
 		lockRatio	: '等比例',
 		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: '重設為原大小',
 		border		: '邊框',
 		hSpace		: '水平距離',
 		vSpace		: '垂直距離',
-		align		: '對齊',
-		alignLeft	: '靠左對齊',
-		alignRight	: '靠右對齊',
 		alertUrl	: '請輸入影像 URL',
 		linkTab		: '超連結',
 		button2Img	: '要把影像按鈕改成影像嗎？',
 		img2Button	: '要把影像改成影像按鈕嗎？',
 		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
 		validateBorder	: 'Border must be a whole number.', // MISSING
 		validateHSpace	: 'HSpace must be a whole number.', // MISSING
 		validateVSpace	: 'VSpace must be a whole number.' // MISSING
@@ -416,16 +445,10 @@ CKEDITOR.lang['zh'] =
 		accessAlways	: '永遠',
 		accessSameDomain: '相同域名',
 		accessNever		: '永不',
-		align			: '對齊',
-		alignLeft		: '靠左對齊',
 		alignAbsBottom	: '絕對下方',
 		alignAbsMiddle	: '絕對中間',
 		alignBaseline	: '基準線',
-		alignBottom		: '靠下對齊',
-		alignMiddle		: '置中對齊',
-		alignRight		: '靠右對齊',
 		alignTextTop	: '文字上方',
-		alignTop		: '靠上對齊',
 		quality			: '質素',
 		qualityBest		: '最好',
 		qualityHigh		: '高',
@@ -439,13 +462,9 @@ CKEDITOR.lang['zh'] =
 		windowMode		: '視窗模式',
 		flashvars		: 'Flash 變數',
 		bgcolor			: '背景顏色',
-		width			: '寬度',
-		height			: '高度',
 		hSpace			: '水平距離',
 		vSpace			: '垂直距離',
 		validateSrc		: '請輸入欲連結的 URL',
-		validateWidth	: '寬度必須為數字格式',
-		validateHeight	: '高度必須為數字格式',
 		validateHSpace	: '水平間距必須為數字格式',
 		validateVSpace	: '垂直間距必須為數字格式'
 	},
@@ -476,7 +495,8 @@ CKEDITOR.lang['zh'] =
 	smiley :
 	{
 		toolbar	: '表情符號',
-		title	: '插入表情符號'
+		title	: '插入表情符號',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
@@ -503,9 +523,9 @@ CKEDITOR.lang['zh'] =
 	clipboard :
 	{
 		title		: '貼上',
-		cutError	: '瀏覽器的安全性設定不允許編輯器自動執行剪下動作。請使用快捷鍵 (Ctrl+X) 剪下。',
-		copyError	: '瀏覽器的安全性設定不允許編輯器自動執行複製動作。請使用快捷鍵 (Ctrl+C) 複製。',
-		pasteMsg	: '請使用快捷鍵 (<strong>Ctrl+V</strong>) 貼到下方區域中並按下 <strong>確定</strong>',
+		cutError	: '瀏覽器的安全性設定不允許編輯器自動執行剪下動作。請使用快捷鍵 (Ctrl/Cmd+X) 剪下。',
+		copyError	: '瀏覽器的安全性設定不允許編輯器自動執行複製動作。請使用快捷鍵 (Ctrl/Cmd+C) 複製。',
+		pasteMsg	: '請使用快捷鍵 (<strong>Ctrl/Cmd+V</strong>) 貼到下方區域中並按下 <strong>確定</strong>',
 		securityMsg	: '因為瀏覽器的安全性設定，本編輯器無法直接存取您的剪貼簿資料，請您自行在本視窗進行貼上動作。',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +548,7 @@ CKEDITOR.lang['zh'] =
 	{
 		button			: '樣版',
 		title			: '內容樣版',
+		options : 'Template Options', // MISSING
 		insertOption	: '取代原有內容',
 		selectPromptMsg	: '請選擇欲開啟的樣版<br> (原有的內容將會被清除):',
 		emptyListMsg	: '(無樣版)'
@@ -578,6 +599,15 @@ CKEDITOR.lang['zh'] =
 		remove				: 'Remove Div' // MISSING
   	},
 
+	iframe :
+	{
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
+	},
+
 	font :
 	{
 		label		: '字體',
@@ -610,7 +640,7 @@ CKEDITOR.lang['zh'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
+		'696969' : 'Dark Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -626,7 +656,7 @@ CKEDITOR.lang['zh'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
+		'A9A9A9' : 'Dim Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -648,6 +678,7 @@ CKEDITOR.lang['zh'] =
 	scayt :
 	{
 		title			: '即時拼寫檢查',
+		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: '啟用即時拼寫檢查',
 		disable			: '關閉即時拼寫檢查',
 		about			: '關於即時拼寫檢查',
@@ -659,9 +690,23 @@ CKEDITOR.lang['zh'] =
 		ignoreAll		: '全部忽略',
 		addWord			: '添加單詞',
 		emptyDic		: '字典名不應為空.',
+
 		optionsTab		: '選項',
+		allCaps			: 'Ignore All-Caps Words', // MISSING
+		ignoreDomainNames : 'Ignore Domain Names', // MISSING
+		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
+		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
+
 		languagesTab	: '語言',
+
 		dictionariesTab	: '字典',
+		dic_field_name	: 'Dictionary name', // MISSING
+		dic_create		: 'Create', // MISSING
+		dic_restore		: 'Restore', // MISSING
+		dic_delete		: 'Delete', // MISSING
+		dic_rename		: 'Rename', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
+
 		aboutTab		: '關於'
 	},
 
@@ -678,10 +723,11 @@ CKEDITOR.lang['zh'] =
 
 	fakeobjects :
 	{
-		anchor	: '錨點',
-		flash	: 'Flash 動畫',
-		div		: '分頁',
-		unknown	: '不明物件'
+		anchor		: '錨點',
+		flash		: 'Flash 動畫',
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
+		unknown		: '不明物件'
 	},
 
 	resize : '拖拽改變大小',
@@ -689,11 +735,18 @@ CKEDITOR.lang['zh'] =
 	colordialog :
 	{
 		title		: 'Select color', // MISSING
+		options	:	'Color Options', // MISSING
 		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
+		selected	: 'Selected Color', // MISSING
 		clear		: 'Clear' // MISSING
 	},
 
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarExpand	: 'Expand Toolbar', // MISSING
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -34,7 +34,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 							textarea.setAttributes(
 								{
 									dir : 'ltr',
-									tabIndex : editor.tabIndex,
+									tabIndex : CKEDITOR.env.webkit ? -1 : editor.tabIndex,
 									'role' : 'textbox',
 									'aria-label' : editor.lang.editorTitle.replace( '%1', editor.name )
 								});
@@ -71,17 +71,6 @@ CKEDITOR.plugins.add( 'sourcearea',
 								editor.on( 'resize', onResize );
 								win.on( 'resize', onResize );
 								setTimeout( onResize, 0 );
-							}
-							else
-							{
-								// By some yet unknown reason, we must stop the
-								// mousedown propagation for the textarea,
-								// otherwise it's not possible to place the caret
-								// inside of it (non IE).
-								textarea.on( 'mousedown', function( evt )
-									{
-										evt.data.stopPropagation();
-									} );
 							}
 
 							// Reset the holder element and append the
@@ -138,6 +127,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 
 						unload : function( holderElement )
 						{
+							textarea.clearCustomData();
 							editor.textarea = textarea = null;
 
 							if ( onResize )
@@ -190,6 +180,7 @@ CKEDITOR.plugins.sourcearea =
 		source :
 		{
 			modes : { wysiwyg:1, source:1 },
+			editorFocus : false,
 
 			exec : function( editor )
 			{

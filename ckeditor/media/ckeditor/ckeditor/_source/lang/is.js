@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -56,6 +56,7 @@ CKEDITOR.lang['is'] =
 	superscript		: 'Uppskrifað',
 	horizontalrule	: 'Lóðrétt lína',
 	pagebreak		: 'Setja inn síðuskil',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'Fjarlægja stiklu',
 	undo			: 'Afturkalla',
 	redo			: 'Hætta við afturköllun',
@@ -105,22 +106,44 @@ CKEDITOR.lang['is'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
+		width			: 'Breidd',
+		height			: 'Hæð',
+		align			: 'Jöfnun',
+		alignLeft		: 'Vinstri',
+		alignRight		: 'Hægri',
+		alignCenter		: 'Miðjað',
+		alignTop		: 'Efst',
+		alignMiddle		: 'Miðjuð',
+		alignBottom		: 'Neðst',
+		invalidHeight	: 'Height must be a number.', // MISSING
+		invalidWidth	: 'Width must be a number.', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
+	},
+
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Setja inn merki',
-		title		: 'Velja tákn'
+		title		: 'Velja tákn',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Stofna/breyta stiklu',
+		other 		: '<annar>',
 		menu		: 'Breyta stiklu',
 		title		: 'Stikla',
 		info		: 'Almennt',
@@ -144,9 +167,7 @@ CKEDITOR.lang['is'] =
 		popupFullScreen	: 'Heilskjár (IE)',
 		popupScrollBars	: 'Skrunstikur',
 		popupDependent	: 'Háð venslum (Netscape)',
-		popupWidth		: 'Breidd',
 		popupLeft		: 'Fjarlægð frá vinstri',
-		popupHeight		: 'Hæð',
 		popupTop		: 'Fjarlægð frá efri brún',
 		id				: 'Id', // MISSING
 		langDir			: 'Lesstefna',
@@ -182,6 +203,30 @@ CKEDITOR.lang['is'] =
 		errorName	: 'Sláðu inn nafn bókamerkis!'
 	},
 
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Numbered List Properties', // MISSING
+		bulletedTitle		: 'Bulleted List Properties', // MISSING
+		type				: 'Type', // MISSING
+		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
+		circle				: 'Circle', // MISSING
+		disc				: 'Disc', // MISSING
+		square				: 'Square', // MISSING
+		none				: 'None', // MISSING
+		notset				: '<not set>', // MISSING
+		armenian			: 'Armenian numbering', // MISSING
+		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
+		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
+		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
+		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
+	},
+
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -208,15 +253,9 @@ CKEDITOR.lang['is'] =
 		rows		: 'Raðir',
 		columns		: 'Dálkar',
 		border		: 'Breidd ramma',
-		align		: 'Jöfnun',
-		alignLeft	: 'Vinstrijafnað',
-		alignCenter	: 'Miðjað',
-		alignRight	: 'Hægrijafnað',
-		width		: 'Breidd',
 		widthPx		: 'myndeindir',
 		widthPc		: 'prósent',
 		widthUnit	: 'width unit', // MISSING
-		height		: 'Hæð',
 		cellSpace	: 'Bil milli reita',
 		cellPad		: 'Reitaspássía',
 		caption		: 'Titill',
@@ -252,9 +291,6 @@ CKEDITOR.lang['is'] =
 			wordWrap		: 'Word Wrap', // MISSING
 			hAlign			: 'Horizontal Alignment', // MISSING
 			vAlign			: 'Vertical Alignment', // MISSING
-			alignTop		: 'Top', // MISSING
-			alignMiddle		: 'Middle', // MISSING
-			alignBottom		: 'Bottom', // MISSING
 			alignBaseline	: 'Baseline', // MISSING
 			bgColor			: 'Background Color', // MISSING
 			borderColor		: 'Border Color', // MISSING
@@ -375,24 +411,17 @@ CKEDITOR.lang['is'] =
 		btnUpload	: 'Hlaða upp',
 		upload		: 'Hlaða upp',
 		alt			: 'Baklægur texti',
-		width		: 'Breidd',
-		height		: 'Hæð',
 		lockRatio	: 'Festa stærðarhlutfall',
 		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Reikna stærð',
 		border		: 'Rammi',
 		hSpace		: 'Vinstri bil',
 		vSpace		: 'Hægri bil',
-		align		: 'Jöfnun',
-		alignLeft	: 'Vinstri',
-		alignRight	: 'Hægri',
 		alertUrl	: 'Sláðu inn slóðina að myndinni',
 		linkTab		: 'Stikla',
 		button2Img	: 'Do you want to transform the selected image button on a simple image?', // MISSING
 		img2Button	: 'Do you want to transform the selected image on a image button?', // MISSING
 		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
 		validateBorder	: 'Border must be a whole number.', // MISSING
 		validateHSpace	: 'HSpace must be a whole number.', // MISSING
 		validateVSpace	: 'VSpace must be a whole number.' // MISSING
@@ -416,16 +445,10 @@ CKEDITOR.lang['is'] =
 		accessAlways	: 'Always', // MISSING
 		accessSameDomain: 'Same domain', // MISSING
 		accessNever		: 'Never', // MISSING
-		align			: 'Jöfnun',
-		alignLeft		: 'Vinstri',
 		alignAbsBottom	: 'Abs neðst',
 		alignAbsMiddle	: 'Abs miðjuð',
 		alignBaseline	: 'Grunnlína',
-		alignBottom		: 'Neðst',
-		alignMiddle		: 'Miðjuð',
-		alignRight		: 'Hægri',
 		alignTextTop	: 'Efri brún texta',
-		alignTop		: 'Efst',
 		quality			: 'Quality', // MISSING
 		qualityBest		: 'Best', // MISSING
 		qualityHigh		: 'High', // MISSING
@@ -439,13 +462,9 @@ CKEDITOR.lang['is'] =
 		windowMode		: 'Window mode', // MISSING
 		flashvars		: 'Variables for Flash', // MISSING
 		bgcolor			: 'Bakgrunnslitur',
-		width			: 'Breidd',
-		height			: 'Hæð',
 		hSpace			: 'Vinstri bil',
 		vSpace			: 'Hægri bil',
 		validateSrc		: 'Sláðu inn veffang stiklunnar!',
-		validateWidth	: 'Width must be a number.', // MISSING
-		validateHeight	: 'Height must be a number.', // MISSING
 		validateHSpace	: 'HSpace must be a number.', // MISSING
 		validateVSpace	: 'VSpace must be a number.' // MISSING
 	},
@@ -476,7 +495,8 @@ CKEDITOR.lang['is'] =
 	smiley :
 	{
 		toolbar	: 'Svipur',
-		title	: 'Velja svip'
+		title	: 'Velja svip',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
@@ -503,9 +523,9 @@ CKEDITOR.lang['is'] =
 	clipboard :
 	{
 		title		: 'Líma',
-		cutError	: 'Öryggisstillingar vafrans þíns leyfa ekki klippingu texta með músaraðgerð. Notaðu lyklaborðið í klippa (Ctrl+X).',
-		copyError	: 'Öryggisstillingar vafrans þíns leyfa ekki afritun texta með músaraðgerð. Notaðu lyklaborðið í afrita (Ctrl+C).',
-		pasteMsg	: 'Límdu í svæðið hér að neðan og (<STRONG>Ctrl+V</STRONG>) og smelltu á <STRONG>OK</STRONG>.',
+		cutError	: 'Öryggisstillingar vafrans þíns leyfa ekki klippingu texta með músaraðgerð. Notaðu lyklaborðið í klippa (Ctrl/Cmd+X).',
+		copyError	: 'Öryggisstillingar vafrans þíns leyfa ekki afritun texta með músaraðgerð. Notaðu lyklaborðið í afrita (Ctrl/Cmd+C).',
+		pasteMsg	: 'Límdu í svæðið hér að neðan og (<STRONG>Ctrl/Cmd+V</STRONG>) og smelltu á <STRONG>OK</STRONG>.',
 		securityMsg	: 'Vegna öryggisstillinga í vafranum þínum fær ritillinn ekki beinan aðgang að klippuborðinu. Þú verður að líma innihaldið aftur inn í þennan glugga.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +548,7 @@ CKEDITOR.lang['is'] =
 	{
 		button			: 'Sniðmát',
 		title			: 'Innihaldssniðmát',
+		options : 'Template Options', // MISSING
 		insertOption	: 'Skipta út raunverulegu innihaldi',
 		selectPromptMsg	: 'Veldu sniðmát til að opna í ritlinum.<br>(Núverandi innihald víkur fyrir því!):',
 		emptyListMsg	: '(Ekkert sniðmát er skilgreint!)'
@@ -578,6 +599,15 @@ CKEDITOR.lang['is'] =
 		remove				: 'Remove Div' // MISSING
   	},
 
+	iframe :
+	{
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
+	},
+
 	font :
 	{
 		label		: 'Leturgerð ',
@@ -610,7 +640,7 @@ CKEDITOR.lang['is'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
+		'696969' : 'Dark Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -626,7 +656,7 @@ CKEDITOR.lang['is'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
+		'A9A9A9' : 'Dim Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -648,6 +678,7 @@ CKEDITOR.lang['is'] =
 	scayt :
 	{
 		title			: 'Spell Check As You Type', // MISSING
+		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: 'Enable SCAYT', // MISSING
 		disable			: 'Disable SCAYT', // MISSING
 		about			: 'About SCAYT', // MISSING
@@ -659,9 +690,23 @@ CKEDITOR.lang['is'] =
 		ignoreAll		: 'Ignore All', // MISSING
 		addWord			: 'Add Word', // MISSING
 		emptyDic		: 'Dictionary name should not be empty.', // MISSING
+
 		optionsTab		: 'Options', // MISSING
+		allCaps			: 'Ignore All-Caps Words', // MISSING
+		ignoreDomainNames : 'Ignore Domain Names', // MISSING
+		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
+		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
+
 		languagesTab	: 'Languages', // MISSING
+
 		dictionariesTab	: 'Dictionaries', // MISSING
+		dic_field_name	: 'Dictionary name', // MISSING
+		dic_create		: 'Create', // MISSING
+		dic_restore		: 'Restore', // MISSING
+		dic_delete		: 'Delete', // MISSING
+		dic_rename		: 'Rename', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
+
 		aboutTab		: 'About' // MISSING
 	},
 
@@ -678,10 +723,11 @@ CKEDITOR.lang['is'] =
 
 	fakeobjects :
 	{
-		anchor	: 'Anchor', // MISSING
-		flash	: 'Flash Animation', // MISSING
-		div		: 'Page Break', // MISSING
-		unknown	: 'Unknown Object' // MISSING
+		anchor		: 'Anchor', // MISSING
+		flash		: 'Flash Animation', // MISSING
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
+		unknown		: 'Unknown Object' // MISSING
 	},
 
 	resize : 'Drag to resize', // MISSING
@@ -689,11 +735,18 @@ CKEDITOR.lang['is'] =
 	colordialog :
 	{
 		title		: 'Select color', // MISSING
+		options	:	'Color Options', // MISSING
 		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
+		selected	: 'Selected Color', // MISSING
 		clear		: 'Clear' // MISSING
 	},
 
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarExpand	: 'Expand Toolbar', // MISSING
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

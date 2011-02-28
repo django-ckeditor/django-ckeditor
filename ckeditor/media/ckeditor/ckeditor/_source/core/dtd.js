@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -10,16 +10,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
 /**
- * Holds and object representation of the HTML DTD to be used by the editor in
- * its internal operations.
- *
- * Each element in the DTD is represented by a
- * property in this object. Each property contains the list of elements that
- * can be contained by the element. Text is represented by the "#" property.
- *
+ * @namespace Holds and object representation of the HTML DTD to be used by the
+ * editor in its internal operations.<br />
+ * <br />
+ * Each element in the DTD is represented by a property in this object. Each
+ * property contains the list of elements that can be contained by the element.
+ * Text is represented by the "#" property.<br />
+ * <br />
  * Several special grouping properties are also available. Their names start
  * with the "$" character.
- * @namespace
  * @example
  * // Check if "div" can be contained in a "p" element.
  * alert( !!CKEDITOR.dtd[ 'p' ][ 'div' ] );  "false"
@@ -39,7 +38,7 @@ CKEDITOR.dtd = (function()
 		C = X({a:1},B),
 		D = X({iframe:1},C),
 		E = {hr:1,ul:1,menu:1,div:1,blockquote:1,noscript:1,table:1,center:1,address:1,dir:1,pre:1,h5:1,dl:1,h4:1,noframes:1,h6:1,ol:1,h1:1,h3:1,h2:1},
-		F = {ins:1,del:1,script:1},
+		F = {ins:1,del:1,script:1,style:1},
 		G = X({b:1,acronym:1,bdo:1,'var':1,'#':1,abbr:1,code:1,br:1,i:1,cite:1,kbd:1,u:1,strike:1,s:1,tt:1,strong:1,q:1,samp:1,em:1,dfn:1,span:1},F),
 		H = X({sub:1,img:1,object:1,sup:1,basefont:1,map:1,applet:1,font:1,big:1,small:1},G),
 		I = X({p:1},H),
@@ -81,8 +80,14 @@ CKEDITOR.dtd = (function()
 		 */
 		$blockLimit : { body:1,div:1,td:1,th:1,caption:1,form:1 },
 
+		/**
+		 * List of inline (&lt;span&gt; like) elements.
+		 */
 		$inline : L,	// Just like span.
 
+		/**
+		 * list of elements that can be children at &lt;body&gt;.
+		 */
 		$body : X({script:1,style:1}, block),
 
 		$cdata : {script:1,style:1},

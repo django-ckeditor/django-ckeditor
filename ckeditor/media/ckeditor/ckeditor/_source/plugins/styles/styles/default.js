@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -81,5 +81,8 @@ CKEDITOR.stylesSet.add( 'default',
 			'border' : '2',
 			'align' : 'right'
 		}
-	}
+	},
+
+	{ name : 'Borderless Table', element : 'table', styles: { 'border-style': 'hidden', 'background-color' : '#E6E6FA' } },
+	{ name : 'Square Bulleted List', element : 'ul', styles : { 'list-style-type' : 'square' } }
 ]);

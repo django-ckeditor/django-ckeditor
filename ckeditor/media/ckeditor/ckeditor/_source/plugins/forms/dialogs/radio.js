@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'radio', function( editor )
@@ -13,7 +13,7 @@ CKEDITOR.dialog.add( 'radio', function( editor )
 			delete this.radioButton;
 
 			var element = this.getParentEditor().getSelection().getSelectedElement();
-			if ( element && element.getName() == "input" && element.getAttribute( 'type' ) == "radio" )
+			if ( element && element.getName() == 'input' && element.getAttribute( 'type' ) == 'radio' )
 			{
 				this.radioButton = element;
 				this.setupContent( element );
@@ -51,7 +51,7 @@ CKEDITOR.dialog.add( 'radio', function( editor )
 						setup : function( element )
 						{
 							this.setValue(
-									element.getAttribute( '_cke_saved_name' ) ||
+									element.data( 'cke-saved-name' ) ||
 									element.getAttribute( 'name' ) ||
 									'' );
 						},
@@ -60,10 +60,10 @@ CKEDITOR.dialog.add( 'radio', function( editor )
 							var element = data.element;
 
 							if ( this.getValue() )
-								element.setAttribute( '_cke_saved_name', this.getValue() );
+								element.data( 'cke-saved-name', this.getValue() );
 							else
 							{
-								element.removeAttribute( '_cke_saved_name' );
+								element.data( 'cke-saved-name', false );
 								element.removeAttribute( 'name' );
 							}
 						}
@@ -103,7 +103,7 @@ CKEDITOR.dialog.add( 'radio', function( editor )
 						{
 							var element = data.element;
 
-							if ( !CKEDITOR.env.ie )
+							if ( !( CKEDITOR.env.ie || CKEDITOR.env.opera ) )
 							{
 								if ( this.getValue() )
 									element.setAttribute( 'checked', 'checked' );

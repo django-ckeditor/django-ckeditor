@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -174,7 +174,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			params.langCode = editor.langCode;
 
 		var url = addQueryString( this.filebrowser.url, params );
-		editor.popup( url, width, height );
+		editor.popup( url, width, height, editor.config.fileBrowserWindowFeatures );
 	}
 
 	/**
@@ -261,8 +261,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			if ( element.filebrowser.action == 'Browse' )
 			{
-				var url = element.filebrowser.url || editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'BrowseUrl' ]
-							|| editor.config.filebrowserBrowseUrl;
+				var url = element.filebrowser.url;
+				if ( url === undefined )
+				{
+					url = editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'BrowseUrl' ];
+					if ( url === undefined )
+						url = editor.config.filebrowserBrowseUrl;
+				}
 
 				if ( url )
 				{
@@ -273,8 +278,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 			else if ( element.filebrowser.action == 'QuickUpload' && element[ 'for' ] )
 			{
-				url =  element.filebrowser.url || editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'UploadUrl' ]
-							|| editor.config.filebrowserUploadUrl;
+				url = element.filebrowser.url;
+				if ( url === undefined )
+				{
+					url = editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'UploadUrl' ];
+					if ( url === undefined )
+						url = editor.config.filebrowserUploadUrl;
+				}
 
 				if ( url )
 				{
@@ -340,7 +350,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			var ids = elementId.split( ";" );
 			for ( var i = 0 ; i < ids.length ; i++ )
 			{
-				if ( isConfigured( definition, tabId, ids[i]) )
+				if ( isConfigured( definition, tabId, ids[i] ) )
 					return true;
 			}
 			return false;
@@ -378,22 +388,25 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		init : function( editor, pluginPath )
 		{
 			editor._.filebrowserFn = CKEDITOR.tools.addFunction( setUrl, editor );
+			editor.on( 'destroy', function () { CKEDITOR.tools.removeFunction( this._.filebrowserFn ); } );
+		}
+	} );
 
-			CKEDITOR.on( 'dialogDefinition', function( evt )
+	CKEDITOR.on( 'dialogDefinition', function( evt )
+	{
+		var definition = evt.data.definition,
+			element;
+		// Associate filebrowser to elements with 'filebrowser' attribute.
+		for ( var i in definition.contents )
+		{
+			if ( ( element = definition.contents[ i ] ) )
 			{
-				var definition = evt.data.definition,
-					element;
-				// Associate filebrowser to elements with 'filebrowser' attribute.
-				for ( var i in definition.contents )
+				attachFileBrowser( evt.editor, evt.data.name, definition, element.elements );
+				if ( element.hidden && element.filebrowser )
 				{
-					element = definition.contents[ i ] ;
-					attachFileBrowser( evt.editor, evt.data.name, definition, element.elements );
-					if ( element.hidden && element.filebrowser )
-					{
-						element.hidden = !isConfigured( definition, element[ 'id' ], element.filebrowser );
-					}
+					element.hidden = !isConfigured( definition, element[ 'id' ], element.filebrowser );
 				}
-			} );
+			}
 		}
 	} );
 
@@ -476,4 +489,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @default '' (empty string = disabled)
  * @example
  * config.filebrowserImageBrowseLinkUrl = '/browser/browse.php';
+ */
+
+/**
+ * The "features" to use in the file browser popup window.
+ * @name CKEDITOR.config.filebrowserWindowFeatures
+ * @since 3.4.1
+ * @type String
+ * @default 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes'
+ * @example
+ * config.filebrowserWindowFeatures = 'resizable=yes,scrollbars=no';
  */

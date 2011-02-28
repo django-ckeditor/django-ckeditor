@@ -1,12 +1,18 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * HTML text parser.
- * @constructor
+ * Creates a {@link CKEDITOR.htmlParser} class instance.
+ * @class Provides an "event like" system to parse strings of HTML data.
  * @example
+ * var parser = new CKEDITOR.htmlParser();
+ * parser.onTagOpen = function( tagName, attributes, selfClosing )
+ *     {
+ *         alert( tagName );
+ *     };
+ * parser.parse( '&lt;p&gt;Some &lt;b&gt;text&lt;/b&gt;.&lt;/p&gt;' );
  */
 CKEDITOR.htmlParser = function()
 {
@@ -92,7 +98,7 @@ CKEDITOR.htmlParser = function()
 		 * @param {String} comment The comment text.
 		 * @example
 		 * var parser = new CKEDITOR.htmlParser();
-		 * parser.onText = function( comment )
+		 * parser.onComment = function( comment )
 		 *     {
 		 *         alert( comment );  // e.g. " Example "
 		 *     });
@@ -172,6 +178,12 @@ CKEDITOR.htmlParser = function()
 				if ( ( tagName = parts[ 3 ] ) )
 				{
 					tagName = tagName.toLowerCase();
+
+					// There are some tag names that can break things, so let's
+					// simply ignore them when parsing. (#5224)
+					if ( /="/.test( tagName ) )
+						continue;
+
 					var attribs = {},
 						attribMatch,
 						attribsPart = parts[ 4 ],

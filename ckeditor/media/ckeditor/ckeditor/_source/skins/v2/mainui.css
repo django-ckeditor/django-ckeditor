@@ -1,15 +1,16 @@
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 .cke_skin_v2 .cke_editor
 {
-/*
-	border: solid 1px #dcdcdc;
-*/
 	display: inline-table;
 	width: 100%;
+}
+.cke_skin_v2 .cke_browser_webkit .cke_editor
+{
+	display: table;	/* #6684 */
 }
 
 .cke_skin_v2
@@ -102,12 +103,31 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	cursor: se-resize;
 }
 
+/* Adobe AIR doesn't support *-resize cursor shape. */
+.cke_skin_v2 .cke_browser_air .cke_resizer,
+.cke_skin_v2 .cke_browser_air .cke_rtl .cke_resizer
+{
+	cursor: move;
+}
+
 .cke_skin_v2 .cke_rtl .cke_resizer
 {
 	cursor: sw-resize;
 	/* resizer_rtl.gif*/
 	background-position: 0 -828px;
 	float: left;
+}
+
+.cke_skin_v2 .cke_resizer_horizontal,
+.cke_skin_v2 .cke_rtl .cke_resizer_horizontal
+{
+	cursor: e-resize;
+}
+
+.cke_skin_v2 .cke_resizer_vertical,
+.cke_skin_v2 .cke_rtl .cke_resizer_vertical
+{
+	cursor: n-resize;
 }
 
 .cke_skin_v2 .cke_maximized .cke_resizer

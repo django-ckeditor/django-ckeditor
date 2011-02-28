@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -180,8 +180,7 @@ body .cke_dialog
 
 .cke_skin_v2 .cke_browser_ie.cke_rtl .cke_dialog_title
 {
-	position: static !important;
-	unicode-bidi: bidi-override;
+	position: static;
 }
 
 .cke_skin_v2 .cke_dialog_contents
@@ -201,6 +200,10 @@ body .cke_dialog
 .cke_skin_v2 .cke_rtl .cke_dialog_footer
 {
 	text-align: left;
+}
+
+.cke_skin_v2 .cke_dialog_footer .cke_resizer {
+	margin-top: 21px;
 }
 
 /* tabs */
@@ -336,12 +339,42 @@ body .cke_dialog
 	border-width: 1px;
 }
 
+/* Opera/IE doesn't leave enough padding in text input for cursor to blink in RTL. (#6087) */
+.cke_skin_v2 .cke_browser_ie.cke_rtl input.cke_dialog_ui_input_text,
+.cke_skin_v2 .cke_browser_opera.cke_rtl input.cke_dialog_ui_input_text,
+.cke_skin_v2 .cke_browser_ie.cke_rtl input.cke_dialog_ui_input_password,
+.cke_skin_v2 .cke_browser_opera.cke_rtl input.cke_dialog_ui_input_password
+{
+	padding-right: 2px
+}
+
+/* Compensate the padding added above on container. */
+.cke_skin_v2 .cke_browser_ie.cke_rtl div.cke_dialog_ui_input_text,
+.cke_skin_v2 .cke_browser_opera.cke_rtl div.cke_dialog_ui_input_text,
+.cke_skin_v2 .cke_browser_ie.cke_rtl div.cke_dialog_ui_input_password,
+.cke_skin_v2 .cke_browser_opera.cke_rtl div.cke_dialog_ui_input_password
+{
+	padding-left: 2px;
+}
+
+.cke_skin_v2 .cke_browser_ie.cke_rtl .cke_dialog_ui_vbox_child,
+.cke_skin_v2 .cke_browser_ie.cke_rtl .cke_dialog_ui_hbox_child,
+.cke_skin_v2 .cke_browser_ie.cke_rtl .cke_dialog_ui_hbox_first,
+.cke_skin_v2 .cke_browser_ie.cke_rtl .cke_dialog_ui_hbox_last
+{
+	padding-right: 2px !important;
+}
+
 .cke_skin_v2 div.cke_dialog_ui_input_text,
 .cke_skin_v2 div.cke_dialog_ui_input_password
 {
 	background-color: white;
 	border: 1px solid #a0a0a0;
 	padding: 1px 0px;
+}
+
+.cke_skin_v2 .cke_browser_ie.cke_rtl div.cke_dialog_ui_input_text {
+	padding-right: 1px;
 }
 
 .cke_skin_v2 textarea.cke_dialog_ui_input_textarea
@@ -404,6 +437,12 @@ body .cke_dialog
 	cursor: default;
 }
 
+.cke_skin_v2 a.cke_dialog_ui_button_ok span,
+.cke_skin_v2 a.cke_dialog_ui_button_cancel span
+{
+	width:60px;
+}
+
 .cke_skin_v2 span.cke_dialog_ui_button
 {
 	border: #737357 1px solid;
@@ -457,8 +496,12 @@ body .cke_dialog
 
 .cke_skin_v2 .cke_dialog_footer_buttons span.cke_dialog_ui_button
 {
-	width: 60px;
 	margin: 7px 0;
+}
+
+.cke_skin_v2 .cke_browser_ie7 .cke_dialog_footer_buttons
+{
+	position: static;
 }
 
 .cke_skin_v2 strong
@@ -539,7 +582,7 @@ body .cke_dialog
 	background-color: white;
 }
 
-.cke_skin_v2 iframe.cke_dialog_ui_input_file
+.cke_skin_v2 .cke_dialog_ui_input_file
 {
 	width: 100%;
 	height: 25px;
@@ -609,20 +652,29 @@ body .cke_dialog
 {
 	border: outset 1px;
 	cursor: pointer;
-	cursor: hand;
 }
 
-.cke_skin_v2 .cke_dialog  #ImagePreviewBox
+.cke_skin_v2 .cke_dialog  .ImagePreviewBox
 {
-	white-space : normal;
 	border : 2px ridge black;
 	overflow : scroll;
-	height : 160px;
+	height : 210px;
 	width : 230px;
 	padding : 2px;
 	background-color : white;
 }
-.cke_skin_v2 .cke_dialog  #ImagePreviewLoader
+
+.cke_skin_v2 .cke_dialog .ImagePreviewBox table td {
+	white-space: normal;
+}
+
+/* Fix iframedialog's height doesn't stretch to 100% #4863.*/
+.cke_skin_v2 .cke_browser_iequirks .cke_dialog_page_contents
+{
+	_position: absolute;
+}
+
+.cke_skin_v2 .cke_dialog  .ImagePreviewLoader
 {
 	position: absolute;
 	white-space : normal;
@@ -637,7 +689,7 @@ body .cke_dialog
 	background-color : #e4e4e4;
 }
 
-.cke_skin_v2 .cke_dialog  #FlashPreviewBox
+.cke_skin_v2 .cke_dialog  .FlashPreviewBox
 {
 	white-space : normal;
 	border : 2px ridge black;
@@ -646,6 +698,27 @@ body .cke_dialog
 	width : 390px;
 	padding : 2px;
 	background-color : white;
+}
+
+.cke_skin_v2 .cke_dialog .cke_pastetext
+{
+	width: 346px;
+	height: 170px;
+}
+
+.cke_skin_v2 .cke_dialog .cke_pastetext textarea
+{
+	width: 340px;
+	height: 170px;
+	resize: none;
+}
+
+.cke_skin_v2 .cke_dialog iframe.cke_pasteframe
+{
+	width: 346px;
+	height: 130px;
+	background-color: white;
+	border: 1px solid black;
 }
 
 .cke_skin_v2 .cke_dialog .cke_dark_background
@@ -664,7 +737,6 @@ body .cke_dialog
 .cke_skin_v2 .cke_dialog .cke_hand
 {
 	cursor: pointer;
-	cursor: hand;
 }
 
 .cke_skin_v2 .cke_disabled
@@ -696,7 +768,6 @@ body .cke_dialog
 {
 	display: inline;
 	cursor: pointer;
-	cursor: hand;
 	font-weight: bold;
 	position: relative;
 	top: 3px;
@@ -705,6 +776,11 @@ body .cke_dialog
 .cke_skin_v2 .cke_dialog_body .cke_label
 {
 	display: none;
+}
+
+.cke_skin_v2 .cke_dialog_body label.cke_required
+{
+	font-weight: bold;
 }
 
 .cke_skin_v2 .cke_hc .cke_dialog_body .cke_label
@@ -740,4 +816,27 @@ body .cke_dialog
 .cke_skin_v2 a.cke_smile:hover img
 {
 	border-color: #C7C78F;
+}
+
+
+/**
+ * Styles specific to "cellProperties" dialog.
+ */
+
+.cke_skin_v2 .cke_dialog_contents a.colorChooser
+{
+	display:block;
+	margin-top:12px;
+	margin-left: 10px;
+	width: 40px;
+}
+
+.cke_skin_v2 .cke_dialog_contents a.colorChooser .cke_dialog_ui_button
+{
+	width:100%;
+}
+
+.cke_skin_v2 .cke_rtl .cke_dialog_contents a.colorChooser
+{
+	margin-right: 10px;
 }

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -8,19 +8,34 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * default configuration settings.
  */
 
+/**
+ * Used in conjuction with {@link CKEDITOR.config.enterMode} and
+ * {@link CKEDITOR.config.shiftEnterMode} to make the editor produce &lt;p&gt;
+ * tags when using the ENTER key.
+ * @constant
+ */
 CKEDITOR.ENTER_P	= 1;
+
+/**
+ * Used in conjuction with {@link CKEDITOR.config.enterMode} and
+ * {@link CKEDITOR.config.shiftEnterMode} to make the editor produce &lt;br&gt;
+ * tags when using the ENTER key.
+ * @constant
+ */
 CKEDITOR.ENTER_BR	= 2;
+
+/**
+ * Used in conjuction with {@link CKEDITOR.config.enterMode} and
+ * {@link CKEDITOR.config.shiftEnterMode} to make the editor produce &lt;div&gt;
+ * tags when using the ENTER key.
+ * @constant
+ */
 CKEDITOR.ENTER_DIV	= 3;
 
 /**
- * Holds the default configuration settings. Changes to this object are
+ * @namespace Holds the default configuration settings. Changes to this object are
  * reflected in all editor instances, if not specificaly specified for those
  * instances.
- * @namespace
- * @example
- * // All editor created after the following setting will not load custom
- * // configuration files.
- * CKEDITOR.config.customConfig = '';
  */
 CKEDITOR.config =
 {
@@ -56,7 +71,7 @@ CKEDITOR.config =
 	 * The base href URL used to resolve relative and absolute URLs in the
 	 * editor content.
 	 * @type String
-	 * @default '' (empty string)
+	 * @default '' (empty)
 	 * @example
 	 * config.baseHref = 'http://www.example.com/path/';
 	 */
@@ -76,14 +91,28 @@ CKEDITOR.config =
 
 	/**
 	 * The writting direction of the language used to write the editor
-	 * contents. Allowed values are 'ltr' for Left-To-Right language (like
-	 * English), or 'rtl' for Right-To-Left languages (like Arabic).
-	 * @default 'ltr'
+	 * contents. Allowed values are:
+	 * <ul>
+	 *     <li>'ui' - which indicate content direction will be the same with the user interface language direction;</li>
+	 *     <li>'ltr' - for Left-To-Right language (like English);</li>
+	 *     <li>'rtl' - for Right-To-Left languages (like Arabic).</li>
+	 * </ul>
+	 * @default 'ui'
 	 * @type String
 	 * @example
 	 * config.contentsLangDirection = 'rtl';
 	 */
-	contentsLangDirection : 'ltr',
+	contentsLangDirection : 'ui',
+
+	/**
+	 * Language code of  the writting language which is used to author the editor
+	 * contents.
+	 * @default Same value with editor's UI language.
+	 * @type String
+	 * @example
+	 * config.contentsLanguage = 'fr';
+	 */
+	contentsLanguage : '',
 
 	/**
 	 * The user interface language localization to use. If empty, the editor
@@ -130,6 +159,18 @@ CKEDITOR.config =
 	enterMode : CKEDITOR.ENTER_P,
 
 	/**
+	 * Force the respect of {@link CKEDITOR.config.enterMode} as line break regardless of the context,
+	 * E.g. If {@link CKEDITOR.config.enterMode} is set to {@link CKEDITOR.ENTER_P},
+	 * press enter key inside a 'div' will create a new paragraph with 'p' instead of 'div'.
+	 * @since 3.2.1
+	 * @default false
+	 * @example
+	 * // Not recommended.
+	 * config.forceEnterMode = true;
+	 */
+	forceEnterMode : false,
+
+	/**
 	 * Just like the {@link CKEDITOR.config.enterMode} setting, it defines the behavior for the SHIFT+ENTER key.
 	 * The allowed values are the following constants, and their relative
 	 * behavior:
@@ -168,19 +209,29 @@ CKEDITOR.config =
 
 	/**
 	 * Sets the "id" attribute to be used on the body element of the editing
-	 * area.
+	 * area. This can be useful when reusing the original CSS file you're using
+	 * on your live website and you want to assing to the editor the same id
+	 * you're using for the region that'll hold the contents. In this way,
+	 * id specific CSS rules will be enabled.
 	 * @since 3.1
 	 * @type String
-	 * @default ''
+	 * @default '' (empty)
+	 * @example
+	 * config.bodyId = 'contents_id';
 	 */
 	bodyId : '',
 
 	/**
 	 * Sets the "class" attribute to be used on the body element of the editing
-	 * area.
+	 * area. This can be useful when reusing the original CSS file you're using
+	 * on your live website and you want to assing to the editor the same class
+	 * name you're using for the region that'll hold the contents. In this way,
+	 * class specific CSS rules will be enabled.
 	 * @since 3.1
 	 * @type String
-	 * @default ''
+	 * @default '' (empty)
+	 * @example
+	 * config.bodyClass = 'contents';
 	 */
 	bodyClass : '',
 
@@ -217,7 +268,64 @@ CKEDITOR.config =
 	 * @type String
 	 * @example
 	 */
-	plugins : 'about,a11yhelp,basicstyles,blockquote,button,clipboard,colorbutton,colordialog,contextmenu,div,elementspath,enterkey,entities,filebrowser,find,flash,font,format,forms,horizontalrule,htmldataprocessor,image,indent,justify,keystrokes,link,list,maximize,newpage,pagebreak,pastefromword,pastetext,popup,preview,print,removeformat,resize,save,scayt,smiley,showblocks,showborders,sourcearea,stylescombo,table,tabletools,specialchar,tab,templates,toolbar,undo,wysiwygarea,wsc',
+	plugins :
+		'about,' +
+		'a11yhelp,' +
+		'basicstyles,' +
+		'bidi,' +
+		'blockquote,' +
+		'button,' +
+		'clipboard,' +
+		'colorbutton,' +
+		'colordialog,' +
+		'contextmenu,' +
+		'dialogadvtab,' +
+		'div,' +
+		'elementspath,' +
+		'enterkey,' +
+		'entities,' +
+		'filebrowser,' +
+		'find,' +
+		'flash,' +
+		'font,' +
+		'format,' +
+		'forms,' +
+		'horizontalrule,' +
+		'htmldataprocessor,' +
+		'iframe,' +
+		'image,' +
+		'indent,' +
+		'justify,' +
+		'keystrokes,' +
+		'link,' +
+		'list,' +
+		'liststyle,' +
+		'maximize,' +
+		'newpage,' +
+		'pagebreak,' +
+		'pastefromword,' +
+		'pastetext,' +
+		'popup,' +
+		'preview,' +
+		'print,' +
+		'removeformat,' +
+		'resize,' +
+		'save,' +
+		'scayt,' +
+		'smiley,' +
+		'showblocks,' +
+		'showborders,' +
+		'sourcearea,' +
+		'stylescombo,' +
+		'table,' +
+		'tabletools,' +
+		'specialchar,' +
+		'tab,' +
+		'templates,' +
+		'toolbar,' +
+		'undo,' +
+		'wysiwygarea,' +
+		'wsc',
 
 	/**
 	 * List of additional plugins to be loaded. This is a tool setting which
@@ -242,7 +350,7 @@ CKEDITOR.config =
 
 	/**
 	 * List of regular expressions to be executed over the input HTML,
-	 * indicating code that must stay untouched.
+	 * indicating HTML source code that matched must <strong>not</strong> present in WYSIWYG mode for editing.
 	 * @type Array
 	 * @default [] (empty array)
 	 * @example
@@ -303,5 +411,21 @@ CKEDITOR.config =
 	 */
 	baseFloatZIndex : 10000
 };
+
+/**
+ * Indicates that some of the editor features, like alignment and text
+ * direction, should used the "computed value" of the feature to indicate it's
+ * on/off state, instead of using the "real value".<br />
+ * <br />
+ * If enabled, in a left to right written document, the "Left Justify"
+ * alignment button will show as active, even if the aligment style is not
+ * explicitly applied to the current paragraph in the editor.
+ * @name CKEDITOR.config.useComputedState
+ * @type Boolean
+ * @default true
+ * @since 3.4
+ * @example
+ * config.useComputedState = false;
+ */
 
 // PACKAGER_RENAME( CKEDITOR.config )

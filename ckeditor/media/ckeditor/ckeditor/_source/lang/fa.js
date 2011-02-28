@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -56,6 +56,7 @@ CKEDITOR.lang['fa'] =
 	superscript		: 'بالانویس',
 	horizontalrule	: 'گنجاندن خط ِافقی',
 	pagebreak		: 'گنجاندن شکستگی ِپایان ِبرگه',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'برداشتن پیوند',
 	undo			: 'واچیدن',
 	redo			: 'بازچیدن',
@@ -105,22 +106,44 @@ CKEDITOR.lang['fa'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
+		width			: 'پهنا',
+		height			: 'درازا',
+		align			: 'چینش',
+		alignLeft		: 'چپ',
+		alignRight		: 'راست',
+		alignCenter		: 'وسط',
+		alignTop		: 'بالا',
+		alignMiddle		: 'وسط',
+		alignBottom		: 'پائین',
+		invalidHeight	: 'Height must be a number.', // MISSING
+		invalidWidth	: 'Width must be a number.', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
+	},
+
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'گنجاندن نویسهٴ ویژه',
-		title		: 'گزینش نویسهٴویژه'
+		title		: 'گزینش نویسهٴویژه',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'گنجاندن/ویرایش ِپیوند',
+		other 		: '<سایر>',
 		menu		: 'ویرایش پیوند',
 		title		: 'پیوند',
 		info		: 'اطلاعات پیوند',
@@ -144,9 +167,7 @@ CKEDITOR.lang['fa'] =
 		popupFullScreen	: 'تمامصفحه (IE)',
 		popupScrollBars	: 'میلههای پیمایش',
 		popupDependent	: 'وابسته (Netscape)',
-		popupWidth		: 'پهنا',
 		popupLeft		: 'موقعیت ِچپ',
-		popupHeight		: 'درازا',
 		popupTop		: 'موقعیت ِبالا',
 		id				: 'Id', // MISSING
 		langDir			: 'جهتنمای زبان',
@@ -182,6 +203,30 @@ CKEDITOR.lang['fa'] =
 		errorName	: 'لطفا نام لنگر را بنویسید'
 	},
 
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Numbered List Properties', // MISSING
+		bulletedTitle		: 'Bulleted List Properties', // MISSING
+		type				: 'Type', // MISSING
+		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
+		circle				: 'Circle', // MISSING
+		disc				: 'Disc', // MISSING
+		square				: 'Square', // MISSING
+		none				: 'None', // MISSING
+		notset				: '<not set>', // MISSING
+		armenian			: 'Armenian numbering', // MISSING
+		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
+		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
+		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
+		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
+	},
+
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -208,15 +253,9 @@ CKEDITOR.lang['fa'] =
 		rows		: 'سطرها',
 		columns		: 'ستونها',
 		border		: 'اندازهٴ لبه',
-		align		: 'چینش',
-		alignLeft	: 'چپ',
-		alignCenter	: 'وسط',
-		alignRight	: 'راست',
-		width		: 'پهنا',
 		widthPx		: 'پیکسل',
 		widthPc		: 'درصد',
 		widthUnit	: 'width unit', // MISSING
-		height		: 'درازا',
 		cellSpace	: 'فاصلهٴ میان سلولها',
 		cellPad		: 'فاصلهٴ پرشده در سلول',
 		caption		: 'عنوان',
@@ -252,9 +291,6 @@ CKEDITOR.lang['fa'] =
 			wordWrap		: 'Word Wrap', // MISSING
 			hAlign			: 'Horizontal Alignment', // MISSING
 			vAlign			: 'Vertical Alignment', // MISSING
-			alignTop		: 'Top', // MISSING
-			alignMiddle		: 'Middle', // MISSING
-			alignBottom		: 'Bottom', // MISSING
 			alignBaseline	: 'Baseline', // MISSING
 			bgColor			: 'Background Color', // MISSING
 			borderColor		: 'Border Color', // MISSING
@@ -375,24 +411,17 @@ CKEDITOR.lang['fa'] =
 		btnUpload	: 'به سرور بفرست',
 		upload		: 'انتقال به سرور',
 		alt			: 'متن جایگزین',
-		width		: 'پهنا',
-		height		: 'درازا',
 		lockRatio	: 'قفلکردن ِنسبت',
 		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'بازنشانی اندازه',
 		border		: 'لبه',
 		hSpace		: 'فاصلهٴ افقی',
 		vSpace		: 'فاصلهٴ عمودی',
-		align		: 'چینش',
-		alignLeft	: 'چپ',
-		alignRight	: 'راست',
 		alertUrl	: 'لطفا URL تصویر را بنویسید',
 		linkTab		: 'پیوند',
 		button2Img	: 'Do you want to transform the selected image button on a simple image?', // MISSING
 		img2Button	: 'Do you want to transform the selected image on a image button?', // MISSING
 		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
 		validateBorder	: 'Border must be a whole number.', // MISSING
 		validateHSpace	: 'HSpace must be a whole number.', // MISSING
 		validateVSpace	: 'VSpace must be a whole number.' // MISSING
@@ -416,16 +445,10 @@ CKEDITOR.lang['fa'] =
 		accessAlways	: 'Always', // MISSING
 		accessSameDomain: 'Same domain', // MISSING
 		accessNever		: 'Never', // MISSING
-		align			: 'چینش',
-		alignLeft		: 'چپ',
 		alignAbsBottom	: 'پائین مطلق',
 		alignAbsMiddle	: 'وسط مطلق',
 		alignBaseline	: 'خطپایه',
-		alignBottom		: 'پائین',
-		alignMiddle		: 'وسط',
-		alignRight		: 'راست',
 		alignTextTop	: 'متن بالا',
-		alignTop		: 'بالا',
 		quality			: 'Quality', // MISSING
 		qualityBest		: 'Best', // MISSING
 		qualityHigh		: 'High', // MISSING
@@ -439,13 +462,9 @@ CKEDITOR.lang['fa'] =
 		windowMode		: 'Window mode', // MISSING
 		flashvars		: 'Variables for Flash', // MISSING
 		bgcolor			: 'رنگ پسزمینه',
-		width			: 'پهنا',
-		height			: 'درازا',
 		hSpace			: 'فاصلهٴ افقی',
 		vSpace			: 'فاصلهٴ عمودی',
 		validateSrc		: 'لطفا URL پیوند را بنویسید',
-		validateWidth	: 'Width must be a number.', // MISSING
-		validateHeight	: 'Height must be a number.', // MISSING
 		validateHSpace	: 'HSpace must be a number.', // MISSING
 		validateVSpace	: 'VSpace must be a number.' // MISSING
 	},
@@ -476,7 +495,8 @@ CKEDITOR.lang['fa'] =
 	smiley :
 	{
 		toolbar	: 'خندانک',
-		title	: 'گنجاندن خندانک'
+		title	: 'گنجاندن خندانک',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
@@ -503,9 +523,9 @@ CKEDITOR.lang['fa'] =
 	clipboard :
 	{
 		title		: 'چسباندن',
-		cutError	: 'تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای برش را انجام دهد. لطفا با دکمههای صفحهکلید این کار را انجام دهید (Ctrl+X).',
-		copyError	: 'تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای کپیکردن را انجام دهد. لطفا با دکمههای صفحهکلید این کار را انجام دهید (Ctrl+C).',
-		pasteMsg	: 'لطفا متن را با کلیدهای (<STRONG>Ctrl+V</STRONG>) در این جعبهٴ متنی بچسبانید و <STRONG>پذیرش</STRONG> را بزنید.',
+		cutError	: 'تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای برش را انجام دهد. لطفا با دکمههای صفحهکلید این کار را انجام دهید (Ctrl/Cmd+X).',
+		copyError	: 'تنظیمات امنیتی مرورگر شما اجازه نمیدهد که ویرایشگر به طور خودکار عملکردهای کپیکردن را انجام دهد. لطفا با دکمههای صفحهکلید این کار را انجام دهید (Ctrl/Cmd+C).',
+		pasteMsg	: 'لطفا متن را با کلیدهای (<STRONG>Ctrl/Cmd+V</STRONG>) در این جعبهٴ متنی بچسبانید و <STRONG>پذیرش</STRONG> را بزنید.',
 		securityMsg	: 'به خاطر تنظیمات امنیتی مرورگر شما، ویرایشگر نمیتواند دسترسی مستقیم به دادههای clipboard داشته باشد. شما باید دوباره آنرا در این پنجره بچسبانید.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +548,7 @@ CKEDITOR.lang['fa'] =
 	{
 		button			: 'الگوها',
 		title			: 'الگوهای محتویات',
+		options : 'Template Options', // MISSING
 		insertOption	: 'محتویات کنونی جایگزین شوند',
 		selectPromptMsg	: 'لطفا الگوی موردنظر را برای بازکردن در ویرایشگر برگزینید<br>(محتویات کنونی از دست خواهند رفت):',
 		emptyListMsg	: '(الگوئی تعریف نشده است)'
@@ -578,6 +599,15 @@ CKEDITOR.lang['fa'] =
 		remove				: 'Remove Div' // MISSING
   	},
 
+	iframe :
+	{
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
+	},
+
 	font :
 	{
 		label		: 'قلم',
@@ -610,7 +640,7 @@ CKEDITOR.lang['fa'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
+		'696969' : 'Dark Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -626,7 +656,7 @@ CKEDITOR.lang['fa'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
+		'A9A9A9' : 'Dim Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -648,6 +678,7 @@ CKEDITOR.lang['fa'] =
 	scayt :
 	{
 		title			: 'Spell Check As You Type', // MISSING
+		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: 'Enable SCAYT', // MISSING
 		disable			: 'Disable SCAYT', // MISSING
 		about			: 'About SCAYT', // MISSING
@@ -659,9 +690,23 @@ CKEDITOR.lang['fa'] =
 		ignoreAll		: 'Ignore All', // MISSING
 		addWord			: 'Add Word', // MISSING
 		emptyDic		: 'Dictionary name should not be empty.', // MISSING
+
 		optionsTab		: 'Options', // MISSING
+		allCaps			: 'Ignore All-Caps Words', // MISSING
+		ignoreDomainNames : 'Ignore Domain Names', // MISSING
+		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
+		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
+
 		languagesTab	: 'Languages', // MISSING
+
 		dictionariesTab	: 'Dictionaries', // MISSING
+		dic_field_name	: 'Dictionary name', // MISSING
+		dic_create		: 'Create', // MISSING
+		dic_restore		: 'Restore', // MISSING
+		dic_delete		: 'Delete', // MISSING
+		dic_rename		: 'Rename', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
+
 		aboutTab		: 'About' // MISSING
 	},
 
@@ -678,10 +723,11 @@ CKEDITOR.lang['fa'] =
 
 	fakeobjects :
 	{
-		anchor	: 'Anchor', // MISSING
-		flash	: 'Flash Animation', // MISSING
-		div		: 'Page Break', // MISSING
-		unknown	: 'Unknown Object' // MISSING
+		anchor		: 'Anchor', // MISSING
+		flash		: 'Flash Animation', // MISSING
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
+		unknown		: 'Unknown Object' // MISSING
 	},
 
 	resize : 'Drag to resize', // MISSING
@@ -689,11 +735,18 @@ CKEDITOR.lang['fa'] =
 	colordialog :
 	{
 		title		: 'Select color', // MISSING
+		options	:	'Color Options', // MISSING
 		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
+		selected	: 'Selected Color', // MISSING
 		clear		: 'Clear' // MISSING
 	},
 
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarExpand	: 'Expand Toolbar', // MISSING
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

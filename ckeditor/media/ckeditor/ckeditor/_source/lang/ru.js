@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -56,6 +56,7 @@ CKEDITOR.lang['ru'] =
 	superscript		: 'Надстрочный индекс',
 	horizontalrule	: 'Вставить горизонтальную линию',
 	pagebreak		: 'Вставить разрыв страницы',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'Убрать ссылку',
 	undo			: 'Отменить',
 	redo			: 'Повторить',
@@ -105,22 +106,44 @@ CKEDITOR.lang['ru'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
+		langDirLTR		: 'Left to Right (LTR)', // MISSING
+		langDirRTL		: 'Right to Left (RTL)', // MISSING
+		styles			: 'Style', // MISSING
+		cssClasses		: 'Stylesheet Classes', // MISSING
+		width			: 'Ширина',
+		height			: 'Высота',
+		align			: 'Выравнивание',
+		alignLeft		: 'По левому краю',
+		alignRight		: 'По правому краю',
+		alignCenter		: 'По центру',
+		alignTop		: 'По верху',
+		alignMiddle		: 'Посередине',
+		alignBottom		: 'Понизу',
+		invalidHeight	: 'Высота задается числом.',
+		invalidWidth	: 'Ширина задается числом.',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, недоступно</span>'
+	},
+
+	contextmenu :
+	{
+		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Вставить специальный символ',
-		title		: 'Выберите специальный символ'
+		title		: 'Выберите специальный символ',
+		options : 'Special Character Options' // MISSING
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Вставить/Редактировать ссылку',
+		other 		: '<другой>',
 		menu		: 'Вставить ссылку',
 		title		: 'Ссылка',
 		info		: 'Информация ссылки',
@@ -144,9 +167,7 @@ CKEDITOR.lang['ru'] =
 		popupFullScreen	: 'Полный экран (IE)',
 		popupScrollBars	: 'Полосы прокрутки',
 		popupDependent	: 'Зависимый (Netscape)',
-		popupWidth		: 'Ширина',
 		popupLeft		: 'Позиция слева',
-		popupHeight		: 'Высота',
 		popupTop		: 'Позиция сверху',
 		id				: 'Id',
 		langDir			: 'Направление языка',
@@ -182,6 +203,30 @@ CKEDITOR.lang['ru'] =
 		errorName	: 'Пожалуйста, введите имя якоря'
 	},
 
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Numbered List Properties', // MISSING
+		bulletedTitle		: 'Bulleted List Properties', // MISSING
+		type				: 'Type', // MISSING
+		start				: 'Start', // MISSING
+		validateStartNumber				:'List start number must be a whole number.', // MISSING
+		circle				: 'Circle', // MISSING
+		disc				: 'Disc', // MISSING
+		square				: 'Square', // MISSING
+		none				: 'None', // MISSING
+		notset				: '<not set>', // MISSING
+		armenian			: 'Armenian numbering', // MISSING
+		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
+		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
+		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
+		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
+		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
+		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
+		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
+		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
+	},
+
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -208,15 +253,9 @@ CKEDITOR.lang['ru'] =
 		rows		: 'Строки',
 		columns		: 'Колонки',
 		border		: 'Размер бордюра',
-		align		: 'Выравнивание',
-		alignLeft	: 'Слева',
-		alignCenter	: 'По центру',
-		alignRight	: 'Справа',
-		width		: 'Ширина',
 		widthPx		: 'пикселей',
 		widthPc		: 'процентов',
 		widthUnit	: 'width unit', // MISSING
-		height		: 'Высота',
 		cellSpace	: 'Промежуток (spacing)',
 		cellPad		: 'Отступ (padding)',
 		caption		: 'Заголовок',
@@ -252,9 +291,6 @@ CKEDITOR.lang['ru'] =
 			wordWrap		: 'Перенос по словам',
 			hAlign			: 'Выравнивание по горизонтали',
 			vAlign			: 'Выравнивание по вертикали',
-			alignTop		: 'По верху',
-			alignMiddle		: 'Посередине',
-			alignBottom		: 'По низу',
 			alignBaseline	: 'По базовой линии',
 			bgColor			: 'Цвет фона',
 			borderColor		: 'Цвет границы',
@@ -375,24 +411,17 @@ CKEDITOR.lang['ru'] =
 		btnUpload	: 'Отправить на сервер',
 		upload		: 'Закачать',
 		alt			: 'Альтернативный текст',
-		width		: 'Ширина',
-		height		: 'Высота',
 		lockRatio	: 'Сохранять пропорции',
 		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Сбросить размер',
 		border		: 'Бордюр',
 		hSpace		: 'Горизонтальный отступ',
 		vSpace		: 'Вертикальный отступ',
-		align		: 'Выравнивание',
-		alignLeft	: 'По левому краю',
-		alignRight	: 'По правому краю',
 		alertUrl	: 'Пожалуйста, введите URL изображения',
 		linkTab		: 'Ссылка',
 		button2Img	: 'Do you want to transform the selected image button on a simple image?',
 		img2Button	: 'Do you want to transform the selected image on a image button?',
 		urlMissing	: 'Отсутствует URL картинки.',
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
 		validateBorder	: 'Border must be a whole number.', // MISSING
 		validateHSpace	: 'HSpace must be a whole number.', // MISSING
 		validateVSpace	: 'VSpace must be a whole number.' // MISSING
@@ -416,16 +445,10 @@ CKEDITOR.lang['ru'] =
 		accessAlways	: 'Всегда',
 		accessSameDomain: 'Тот же домен',
 		accessNever		: 'Никогда',
-		align			: 'Выравнивание',
-		alignLeft		: 'По левому краю',
 		alignAbsBottom	: 'Абс понизу',
 		alignAbsMiddle	: 'Абс посередине',
 		alignBaseline	: 'По базовой линии',
-		alignBottom		: 'Понизу',
-		alignMiddle		: 'Посередине',
-		alignRight		: 'По правому краю',
 		alignTextTop	: 'Текст наверху',
-		alignTop		: 'По верху',
 		quality			: 'Качество',
 		qualityBest		: 'Лучшее',
 		qualityHigh		: 'Высокое',
@@ -439,13 +462,9 @@ CKEDITOR.lang['ru'] =
 		windowMode		: 'Оконный режим',
 		flashvars		: 'Переменные для Flash',
 		bgcolor			: 'Цвет фона',
-		width			: 'Ширина',
-		height			: 'Высота',
 		hSpace			: 'Горизонтальный отступ',
 		vSpace			: 'Вертикальный отступ',
 		validateSrc		: 'Пожалуйста, введите URL ссылки',
-		validateWidth	: 'Ширина задается числом.',
-		validateHeight	: 'Высота задается числом.',
 		validateHSpace	: 'Горизонтальный отступ задается числом.',
 		validateVSpace	: 'Вертикальный отступ задается числом.'
 	},
@@ -476,7 +495,8 @@ CKEDITOR.lang['ru'] =
 	smiley :
 	{
 		toolbar	: 'Смайлик',
-		title	: 'Вставить смайлик'
+		title	: 'Вставить смайлик',
+		options : 'Smiley Options' // MISSING
 	},
 
 	elementsPath :
@@ -503,9 +523,9 @@ CKEDITOR.lang['ru'] =
 	clipboard :
 	{
 		title		: 'Вставить',
-		cutError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вырезания. Пожалуйста, используйте клавиатуру для этого (Ctrl+X).',
-		copyError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции копирования. Пожалуйста, используйте клавиатуру для этого (Ctrl+C).',
-		pasteMsg	: 'Пожалуйста, вставьте текст в прямоугольник, используя сочетание клавиш (<STRONG>Ctrl+V</STRONG>), и нажмите <STRONG>OK</STRONG>.',
+		cutError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции вырезания. Пожалуйста, используйте клавиатуру для этого (Ctrl/Cmd+X).',
+		copyError	: 'Настройки безопасности вашего браузера не позволяют редактору автоматически выполнять операции копирования. Пожалуйста, используйте клавиатуру для этого (Ctrl/Cmd+C).',
+		pasteMsg	: 'Пожалуйста, вставьте текст в прямоугольник, используя сочетание клавиш (<STRONG>Ctrl/Cmd+V</STRONG>), и нажмите <STRONG>OK</STRONG>.',
 		securityMsg	: 'По причине настроек безопасности браузера, редактор не имеет доступа к данным буфера обмена напрямую. Вам необходимо вставить текст снова в это окно.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -528,6 +548,7 @@ CKEDITOR.lang['ru'] =
 	{
 		button			: 'Шаблоны',
 		title			: 'Шаблоны содержимого',
+		options : 'Template Options', // MISSING
 		insertOption	: 'Заменить текущее содержание',
 		selectPromptMsg	: 'Пожалуйста, выберете шаблон для открытия в редакторе<br>(текущее содержимое будет потеряно):',
 		emptyListMsg	: '(Ни одного шаблона не определено)'
@@ -577,6 +598,15 @@ CKEDITOR.lang['ru'] =
 		edit				: 'Редактировать Div',
 		remove				: 'Убрать Div'
   	},
+
+	iframe :
+	{
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
+	},
 
 	font :
 	{
@@ -648,6 +678,7 @@ CKEDITOR.lang['ru'] =
 	scayt :
 	{
 		title			: 'Проверка Орфографии по Мере Ввода',
+		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: 'Включить ПОМВ',
 		disable			: 'Отключить ПОМВ',
 		about			: 'О ПОМВ',
@@ -659,9 +690,23 @@ CKEDITOR.lang['ru'] =
 		ignoreAll		: 'Пропустить всё',
 		addWord			: 'Добавить слово',
 		emptyDic		: 'Имя словаря должно быть не пустым.',
+
 		optionsTab		: 'Настройки',
+		allCaps			: 'Ignore All-Caps Words', // MISSING
+		ignoreDomainNames : 'Ignore Domain Names', // MISSING
+		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
+		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
+
 		languagesTab	: 'Языки',
+
 		dictionariesTab	: 'Словари',
+		dic_field_name	: 'Dictionary name', // MISSING
+		dic_create		: 'Create', // MISSING
+		dic_restore		: 'Restore', // MISSING
+		dic_delete		: 'Delete', // MISSING
+		dic_rename		: 'Rename', // MISSING
+		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
+
 		aboutTab		: 'О словарях'
 	},
 
@@ -678,10 +723,11 @@ CKEDITOR.lang['ru'] =
 
 	fakeobjects :
 	{
-		anchor	: 'Якорь',
-		flash	: 'Flash-анимация',
-		div		: 'Разрыв страницы',
-		unknown	: 'Неизвестный объект'
+		anchor		: 'Якорь',
+		flash		: 'Flash-анимация',
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
+		unknown		: 'Неизвестный объект'
 	},
 
 	resize : 'Перетащите для изменения размера',
@@ -689,11 +735,18 @@ CKEDITOR.lang['ru'] =
 	colordialog :
 	{
 		title		: 'Выберите цвет',
+		options	:	'Color Options', // MISSING
 		highlight	: 'Выделить',
 		selected	: 'Выбранное',
 		clear		: 'Очистить'
 	},
 
 	toolbarCollapse	: 'Свернуть панель инструментов',
-	toolbarExpand	: 'Развернуть панель инструментов'
+	toolbarExpand	: 'Развернуть панель инструментов',
+
+	bidi :
+	{
+		ltr : 'Text direction from left to right', // MISSING
+		rtl : 'Text direction from right to left' // MISSING
+	}
 };

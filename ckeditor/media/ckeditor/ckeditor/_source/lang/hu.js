@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,11 +31,11 @@ CKEDITOR.lang['hu'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
+	editorTitle : 'HTML szerkesztő',
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbar	: 'Eszköztár',
+	editor	: 'HTML szerkesztő',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Forráskód',
@@ -56,6 +56,7 @@ CKEDITOR.lang['hu'] =
 	superscript		: 'Felső index',
 	horizontalrule	: 'Elválasztóvonal beillesztése',
 	pagebreak		: 'Oldaltörés beillesztése',
+	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'Hivatkozás törlése',
 	undo			: 'Visszavonás',
 	redo			: 'Ismétlés',
@@ -92,35 +93,57 @@ CKEDITOR.lang['hu'] =
 		cssStyle		: 'Stílus',
 		ok				: 'Rendben',
 		cancel			: 'Mégsem',
-		close			: 'Close', // MISSING
-		preview			: 'Preview', // MISSING
-		generalTab		: 'General', // MISSING
+		close			: 'Bezárás',
+		preview			: 'Előnézet',
+		generalTab		: 'Általános',
 		advancedTab		: 'További opciók',
-		validateNumberFailed : 'This value is not a number.', // MISSING
-		confirmNewPage	: 'Any unsaved changes to this content will be lost. Are you sure you want to load new page?', // MISSING
-		confirmCancel	: 'Some of the options have been changed. Are you sure to close the dialog?', // MISSING
-		options			: 'Options', // MISSING
-		target			: 'Target', // MISSING
-		targetNew		: 'New Window (_blank)', // MISSING
-		targetTop		: 'Topmost Window (_top)', // MISSING
-		targetSelf		: 'Same Window (_self)', // MISSING
-		targetParent	: 'Parent Window (_parent)', // MISSING
+		validateNumberFailed : 'A mezőbe csak számokat írhat.',
+		confirmNewPage	: 'Minden nem mentett változás el fog veszni! Biztosan be szeretné tölteni az oldalt?',
+		confirmCancel	: 'Az űrlap tartalma megváltozott, ám a változásokat nem rögzítette. Biztosan be szeretné zárni az űrlapot?',
+		options			: 'Beállítások',
+		target			: 'Cél',
+		targetNew		: 'Új ablak (_blank)',
+		targetTop		: 'Legfelső ablak (_top)',
+		targetSelf		: 'Aktuális ablakban (_self)',
+		targetParent	: 'Szülő ablak (_parent)',
+		langDirLTR		: 'Balról jobbra (LTR)',
+		langDirRTL		: 'Jobbról balra (RTL)',
+		styles			: 'Stílus',
+		cssClasses		: 'Stíluslap osztály',
+		width			: 'Szélesség',
+		height			: 'Magasság',
+		align			: 'Igazítás',
+		alignLeft		: 'Bal',
+		alignRight		: 'Jobbra',
+		alignCenter		: 'Középre',
+		alignTop		: 'Tetejére',
+		alignMiddle		: 'Középre',
+		alignBottom		: 'Aljára',
+		invalidHeight	: 'A magasság mezőbe csak számokat írhat.',
+		invalidWidth	: 'A szélesség mezőbe csak számokat írhat.',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
+	},
+
+	contextmenu :
+	{
+		options : 'Helyi menü opciók'
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Speciális karakter beillesztése',
-		title		: 'Speciális karakter választása'
+		title		: 'Speciális karakter választása',
+		options : 'Speciális karakter opciók'
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Hivatkozás beillesztése/módosítása',
+		other 		: '<más>',
 		menu		: 'Hivatkozás módosítása',
 		title		: 'Hivatkozás tulajdonságai',
 		info		: 'Alaptulajdonságok',
@@ -128,7 +151,7 @@ CKEDITOR.lang['hu'] =
 		upload		: 'Feltöltés',
 		advanced	: 'További opciók',
 		type		: 'Hivatkozás típusa',
-		toUrl		: 'URL', // MISSING
+		toUrl		: 'URL',
 		toAnchor	: 'Horgony az oldalon',
 		toEmail		: 'E-Mail',
 		targetFrame		: '<keretben>',
@@ -136,7 +159,7 @@ CKEDITOR.lang['hu'] =
 		targetFrameName	: 'Keret neve',
 		targetPopupName	: 'Felugró ablak neve',
 		popupFeatures	: 'Felugró ablak jellemzői',
-		popupResizable	: 'Resizable', // MISSING
+		popupResizable	: 'Átméretezés',
 		popupStatusBar	: 'Állapotsor',
 		popupLocationBar: 'Címsor',
 		popupToolbar	: 'Eszköztár',
@@ -144,11 +167,9 @@ CKEDITOR.lang['hu'] =
 		popupFullScreen	: 'Teljes képernyő (csak IE)',
 		popupScrollBars	: 'Gördítősáv',
 		popupDependent	: 'Szülőhöz kapcsolt (csak Netscape)',
-		popupWidth		: 'Szélesség',
 		popupLeft		: 'Bal pozíció',
-		popupHeight		: 'Magasság',
 		popupTop		: 'Felső pozíció',
-		id				: 'Id', // MISSING
+		id				: 'Id',
 		langDir			: 'Írás iránya',
 		langDirLTR		: 'Balról jobbra',
 		langDirRTL		: 'Jobbról balra',
@@ -182,6 +203,30 @@ CKEDITOR.lang['hu'] =
 		errorName	: 'Kérem adja meg a horgony nevét'
 	},
 
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Sorszámozott lista tulajdonságai',
+		bulletedTitle		: 'Pontozott lista tulajdonságai',
+		type				: 'Típus',
+		start				: 'Kezdőszám',
+		validateStartNumber				:'A kezdőszám nem lehet tört érték.',
+		circle				: 'Kör',
+		disc				: 'Korong',
+		square				: 'Négyzet',
+		none				: 'Nincs',
+		notset				: '<Nincs beállítva>',
+		armenian			: 'Örmény számozás',
+		georgian			: 'Grúz számozás (an, ban, gan, stb.)',
+		lowerRoman			: 'Római kisbetűs (i, ii, iii, iv, v, stb.)',
+		upperRoman			: 'Római nagybetűs (I, II, III, IV, V, stb.)',
+		lowerAlpha			: 'Kisbetűs (a, b, c, d, e, stb.)',
+		upperAlpha			: 'Nagybetűs (A, B, C, D, E, stb.)',
+		lowerGreek			: 'Görög (alpha, beta, gamma, stb.)',
+		decimal				: 'Arab számozás (1, 2, 3, stb.)',
+		decimalLeadingZero	: 'Számozás bevezető nullákkal (01, 02, 03, stb.)'
+	},
+
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -193,9 +238,9 @@ CKEDITOR.lang['hu'] =
 		notFoundMsg			: 'A keresett szöveg nem található.',
 		matchCase			: 'kis- és nagybetű megkülönböztetése',
 		matchWord			: 'csak ha ez a teljes szó',
-		matchCyclic			: 'Match cyclic', // MISSING
+		matchCyclic			: 'Ciklikus keresés',
 		replaceAll			: 'Az összes cseréje',
-		replaceSuccessMsg	: '%1 occurrence(s) replaced.' // MISSING
+		replaceSuccessMsg	: '%1 egyezőség cserélve.'
 	},
 
 	// Table Dialog
@@ -208,80 +253,71 @@ CKEDITOR.lang['hu'] =
 		rows		: 'Sorok',
 		columns		: 'Oszlopok',
 		border		: 'Szegélyméret',
-		align		: 'Igazítás',
-		alignLeft	: 'Balra',
-		alignCenter	: 'Középre',
-		alignRight	: 'Jobbra',
-		width		: 'Szélesség',
 		widthPx		: 'képpont',
 		widthPc		: 'százalék',
-		widthUnit	: 'width unit', // MISSING
-		height		: 'Magasság',
+		widthUnit	: 'Szélesség egység',
 		cellSpace	: 'Cella térköz',
 		cellPad		: 'Cella belső margó',
 		caption		: 'Felirat',
 		summary		: 'Leírás',
-		headers		: 'Headers', // MISSING
-		headersNone		: 'None', // MISSING
-		headersColumn	: 'First column', // MISSING
-		headersRow		: 'First Row', // MISSING
-		headersBoth		: 'Both', // MISSING
-		invalidRows		: 'Number of rows must be a number greater than 0.', // MISSING
-		invalidCols		: 'Number of columns must be a number greater than 0.', // MISSING
-		invalidBorder	: 'Border size must be a number.', // MISSING
-		invalidWidth	: 'Table width must be a number.', // MISSING
-		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		headers		: 'Fejlécek',
+		headersNone		: 'Nincsenek',
+		headersColumn	: 'Első oszlop',
+		headersRow		: 'Első sor',
+		headersBoth		: 'Mindkettő',
+		invalidRows		: 'A sorok számának nagyobbnak kell lenni mint 0.',
+		invalidCols		: 'Az oszlopok számának nagyobbnak kell lenni mint 0.',
+		invalidBorder	: 'A szegélyméret mezőbe csak számokat írhat.',
+		invalidWidth	: 'A szélesség mezőbe csak számokat írhat.',
+		invalidHeight	: 'A magasság mezőbe csak számokat írhat.',
+		invalidCellSpacing	: 'A cella térköz mezőbe csak számokat írhat.',
+		invalidCellPadding	: 'A cella belső margó mezőbe csak számokat írhat.',
 
 		cell :
 		{
 			menu			: 'Cella',
-			insertBefore	: 'Cella beillesztése az aktuális cella elé',
-			insertAfter		: 'Cella beillesztése az aktuális cella mögé',
+			insertBefore	: 'Beszúrás balra',
+			insertAfter		: 'Beszúrás jobbra',
 			deleteCell		: 'Cellák törlése',
 			merge			: 'Cellák egyesítése',
 			mergeRight		: 'Cellák egyesítése jobbra',
 			mergeDown		: 'Cellák egyesítése lefelé',
 			splitHorizontal	: 'Cellák szétválasztása vízszintesen',
 			splitVertical	: 'Cellák szétválasztása függőlegesen',
-			title			: 'Cell Properties', // MISSING
-			cellType		: 'Cell Type', // MISSING
-			rowSpan			: 'Rows Span', // MISSING
-			colSpan			: 'Columns Span', // MISSING
-			wordWrap		: 'Word Wrap', // MISSING
-			hAlign			: 'Horizontal Alignment', // MISSING
-			vAlign			: 'Vertical Alignment', // MISSING
-			alignTop		: 'Top', // MISSING
-			alignMiddle		: 'Middle', // MISSING
-			alignBottom		: 'Bottom', // MISSING
-			alignBaseline	: 'Baseline', // MISSING
-			bgColor			: 'Background Color', // MISSING
-			borderColor		: 'Border Color', // MISSING
-			data			: 'Data', // MISSING
-			header			: 'Header', // MISSING
-			yes				: 'Yes', // MISSING
-			no				: 'No', // MISSING
-			invalidWidth	: 'Cell width must be a number.', // MISSING
-			invalidHeight	: 'Cell height must be a number.', // MISSING
-			invalidRowSpan	: 'Rows span must be a whole number.', // MISSING
-			invalidColSpan	: 'Columns span must be a whole number.', // MISSING
-			chooseColor		: 'Choose' // MISSING
+			title			: 'Cella tulajdonságai',
+			cellType		: 'Cella típusa',
+			rowSpan			: 'Függőleges egyesítés',
+			colSpan			: 'Vízszintes egyesítés',
+			wordWrap		: 'Hosszú sorok törése',
+			hAlign			: 'Vízszintes igazítás',
+			vAlign			: 'Függőleges igazítás',
+			alignBaseline	: 'Alapvonalra',
+			bgColor			: 'Háttér színe',
+			borderColor		: 'Keret színe',
+			data			: 'Adat',
+			header			: 'Fejléc',
+			yes				: 'Igen',
+			no				: 'Nem',
+			invalidWidth	: 'A szélesség mezőbe csak számokat írhat.',
+			invalidHeight	: 'A magasság mezőbe csak számokat írhat.',
+			invalidRowSpan	: 'A függőleges egyesítés mezőbe csak számokat írhat.',
+			invalidColSpan	: 'A vízszintes egyesítés mezőbe csak számokat írhat.',
+			chooseColor		: 'Válasszon'
 		},
 
 		row :
 		{
 			menu			: 'Sor',
-			insertBefore	: 'Sor beillesztése az aktuális sor elé',
-			insertAfter		: 'Sor beillesztése az aktuális sor mögé',
+			insertBefore	: 'Beszúrás fölé',
+			insertAfter		: 'Beszúrás alá',
 			deleteRow		: 'Sorok törlése'
 		},
 
 		column :
 		{
 			menu			: 'Oszlop',
-			insertBefore	: 'Oszlop beillesztése az aktuális oszlop elé',
-			insertAfter		: 'Oszlop beillesztése az aktuális oszlop mögé',
+			insertBefore	: 'Beszúrás balra',
+			insertAfter		: 'Beszúrás jobbra',
 			deleteColumn	: 'Oszlopok törlése'
 		}
 	},
@@ -313,7 +349,7 @@ CKEDITOR.lang['hu'] =
 		menu		: 'Űrlap tulajdonságai',
 		action		: 'Adatfeldolgozást végző hivatkozás',
 		method		: 'Adatküldés módja',
-		encoding	: 'Encoding' // MISSING
+		encoding	: 'Kódolás'
 	},
 
 	// Select Field Dialog.
@@ -375,88 +411,71 @@ CKEDITOR.lang['hu'] =
 		btnUpload	: 'Küldés a szerverre',
 		upload		: 'Feltöltés',
 		alt			: 'Buborék szöveg',
-		width		: 'Szélesség',
-		height		: 'Magasság',
 		lockRatio	: 'Arány megtartása',
-		unlockRatio	: 'Unlock Ratio', // MISSING
+		unlockRatio	: 'Arány figyelmen kívül hagyása',
 		resetSize	: 'Eredeti méret',
 		border		: 'Keret',
 		hSpace		: 'Vízsz. táv',
 		vSpace		: 'Függ. táv',
-		align		: 'Igazítás',
-		alignLeft	: 'Bal',
-		alignRight	: 'Jobbra',
 		alertUrl	: 'Töltse ki a kép webcímét',
 		linkTab		: 'Hivatkozás',
-		button2Img	: 'Do you want to transform the selected image button on a simple image?', // MISSING
-		img2Button	: 'Do you want to transform the selected image on a image button?', // MISSING
-		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
-		validateBorder	: 'Border must be a whole number.', // MISSING
-		validateHSpace	: 'HSpace must be a whole number.', // MISSING
-		validateVSpace	: 'VSpace must be a whole number.' // MISSING
+		button2Img	: 'A kiválasztott képgombból sima képet szeretne csinálni?',
+		img2Button	: 'A kiválasztott képből képgombot szeretne csinálni?',
+		urlMissing	: 'Hiányzik a kép URL-je',
+		validateBorder	: 'A keret méretének egész számot kell beírni!',
+		validateHSpace	: 'Vízszintes távolságnak egész számot kell beírni!',
+		validateVSpace	: 'Függőleges távolságnak egész számot kell beírni!'
 	},
 
 	// Flash Dialog
 	flash :
 	{
 		properties		: 'Flash tulajdonságai',
-		propertiesTab	: 'Properties', // MISSING
+		propertiesTab	: 'Tulajdonságok',
 		title			: 'Flash tulajdonságai',
 		chkPlay			: 'Automata lejátszás',
 		chkLoop			: 'Folyamatosan',
 		chkMenu			: 'Flash menü engedélyezése',
-		chkFull			: 'Allow Fullscreen', // MISSING
+		chkFull			: 'Teljes képernyő engedélyezése',
  		scale			: 'Méretezés',
 		scaleAll		: 'Mindent mutat',
 		scaleNoBorder	: 'Keret nélkül',
 		scaleFit		: 'Teljes kitöltés',
-		access			: 'Script Access', // MISSING
-		accessAlways	: 'Always', // MISSING
-		accessSameDomain: 'Same domain', // MISSING
-		accessNever		: 'Never', // MISSING
-		align			: 'Igazítás',
-		alignLeft		: 'Bal',
+		access			: 'Szkript hozzáférés',
+		accessAlways	: 'Mindig',
+		accessSameDomain: 'Azonos domainről',
+		accessNever		: 'Soha',
 		alignAbsBottom	: 'Legaljára',
 		alignAbsMiddle	: 'Közepére',
 		alignBaseline	: 'Alapvonalhoz',
-		alignBottom		: 'Aljára',
-		alignMiddle		: 'Középre',
-		alignRight		: 'Jobbra',
 		alignTextTop	: 'Szöveg tetejére',
-		alignTop		: 'Tetejére',
-		quality			: 'Quality', // MISSING
-		qualityBest		: 'Best', // MISSING
-		qualityHigh		: 'High', // MISSING
-		qualityAutoHigh	: 'Auto High', // MISSING
-		qualityMedium	: 'Medium', // MISSING
-		qualityAutoLow	: 'Auto Low', // MISSING
-		qualityLow		: 'Low', // MISSING
-		windowModeWindow: 'Window', // MISSING
-		windowModeOpaque: 'Opaque', // MISSING
-		windowModeTransparent : 'Transparent', // MISSING
-		windowMode		: 'Window mode', // MISSING
-		flashvars		: 'Variables for Flash', // MISSING
+		quality			: 'Minőség',
+		qualityBest		: 'Legjobb',
+		qualityHigh		: 'Jó',
+		qualityAutoHigh	: 'Automata jó',
+		qualityMedium	: 'Közepes',
+		qualityAutoLow	: 'Automata gyenge',
+		qualityLow		: 'Gyenge',
+		windowModeWindow: 'Window',
+		windowModeOpaque: 'Opaque',
+		windowModeTransparent : 'Transparent',
+		windowMode		: 'Ablak mód',
+		flashvars		: 'Flash változók',
 		bgcolor			: 'Háttérszín',
-		width			: 'Szélesség',
-		height			: 'Magasság',
 		hSpace			: 'Vízsz. táv',
 		vSpace			: 'Függ. táv',
 		validateSrc		: 'Adja meg a hivatkozás webcímét',
-		validateWidth	: 'Width must be a number.', // MISSING
-		validateHeight	: 'Height must be a number.', // MISSING
-		validateHSpace	: 'HSpace must be a number.', // MISSING
-		validateVSpace	: 'VSpace must be a number.' // MISSING
+		validateHSpace	: 'A vízszintes távolsűág mezőbe csak számokat írhat.',
+		validateVSpace	: 'A függőleges távolsűág mezőbe csak számokat írhat.'
 	},
 
 	// Speller Pages Dialog
 	spellCheck :
 	{
 		toolbar			: 'Helyesírás-ellenőrzés',
-		title			: 'Spell Check', // MISSING
-		notAvailable	: 'Sorry, but service is unavailable now.', // MISSING
-		errorLoading	: 'Error loading application service host: %s.', // MISSING
+		title			: 'Helyesírás ellenörző',
+		notAvailable	: 'Sajnálom, de a szolgáltatás jelenleg nem elérhető.',
+		errorLoading	: 'Hiba a szolgáltatás host betöltése közben: %s.',
 		notInDic		: 'Nincs a szótárban',
 		changeTo		: 'Módosítás',
 		btnIgnore		: 'Kihagyja',
@@ -476,13 +495,14 @@ CKEDITOR.lang['hu'] =
 	smiley :
 	{
 		toolbar	: 'Hangulatjelek',
-		title	: 'Hangulatjel beszúrása'
+		title	: 'Hangulatjel beszúrása',
+		options : 'Hangulatjel opciók'
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Elements path', // MISSING
-		eleTitle : '%1 element' // MISSING
+		eleLabel : 'Elem utak',
+		eleTitle : '%1 elem'
 	},
 
 	numberedlist	: 'Számozás',
@@ -503,19 +523,19 @@ CKEDITOR.lang['hu'] =
 	clipboard :
 	{
 		title		: 'Beillesztés',
-		cutError	: 'A böngésző biztonsági beállításai nem engedélyezik a szerkesztőnek, hogy végrehajtsa a kivágás műveletet. Használja az alábbi billentyűkombinációt (Ctrl+X).',
-		copyError	: 'A böngésző biztonsági beállításai nem engedélyezik a szerkesztőnek, hogy végrehajtsa a másolás műveletet. Használja az alábbi billentyűkombinációt (Ctrl+X).',
-		pasteMsg	: 'Másolja be az alábbi mezőbe a <STRONG>Ctrl+V</STRONG> billentyűk lenyomásával, majd nyomjon <STRONG>Rendben</STRONG>-t.',
+		cutError	: 'A böngésző biztonsági beállításai nem engedélyezik a szerkesztőnek, hogy végrehajtsa a kivágás műveletet. Használja az alábbi billentyűkombinációt (Ctrl/Cmd+X).',
+		copyError	: 'A böngésző biztonsági beállításai nem engedélyezik a szerkesztőnek, hogy végrehajtsa a másolás műveletet. Használja az alábbi billentyűkombinációt (Ctrl/Cmd+X).',
+		pasteMsg	: 'Másolja be az alábbi mezőbe a <STRONG>Ctrl/Cmd+V</STRONG> billentyűk lenyomásával, majd nyomjon <STRONG>Rendben</STRONG>-t.',
 		securityMsg	: 'A böngésző biztonsági beállításai miatt a szerkesztő nem képes hozzáférni a vágólap adataihoz. Illeszd be újra ebben az ablakban.',
-		pasteArea	: 'Paste Area' // MISSING
+		pasteArea	: 'Beszúrás mező'
 	},
 
 	pastefromword :
 	{
-		confirmCleanup	: 'The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?', // MISSING
+		confirmCleanup	: 'Úgy tűnik a beillesztett szöveget Word-ből másolt át. Meg szeretné tisztítani a szöveget? (ajánlott)',
 		toolbar			: 'Beillesztés Word-ből',
 		title			: 'Beillesztés Word-ből',
-		error			: 'It was not possible to clean up the pasted data due to an internal error' // MISSING
+		error			: 'Egy belső hiba miatt nem sikerült megtisztítani a szöveget'
 	},
 
 	pasteText :
@@ -528,6 +548,7 @@ CKEDITOR.lang['hu'] =
 	{
 		button			: 'Sablonok',
 		title			: 'Elérhető sablonok',
+		options : 'Sablon opciók',
 		insertOption	: 'Kicseréli a jelenlegi tartalmat',
 		selectPromptMsg	: 'Válassza ki melyik sablon nyíljon meg a szerkesztőben<br>(a jelenlegi tartalom elveszik):',
 		emptyListMsg	: '(Nincs sablon megadva)'
@@ -538,10 +559,10 @@ CKEDITOR.lang['hu'] =
 	stylesCombo :
 	{
 		label		: 'Stílus',
-		panelTitle	: 'Formatting Styles', // MISSING
-		panelTitle1	: 'Block Styles', // MISSING
-		panelTitle2	: 'Inline Styles', // MISSING
-		panelTitle3	: 'Object Styles' // MISSING
+		panelTitle	: 'Formázási stílusok',
+		panelTitle1	: 'Blokk stílusok',
+		panelTitle2	: 'Inline stílusok',
+		panelTitle3	: 'Objektum stílusok'
 	},
 
 	format :
@@ -563,32 +584,41 @@ CKEDITOR.lang['hu'] =
 
 	div :
 	{
-		title				: 'Create Div Container', // MISSING
-		toolbar				: 'Create Div Container', // MISSING
-		cssClassInputLabel	: 'Stylesheet Classes', // MISSING
-		styleSelectLabel	: 'Style', // MISSING
-		IdInputLabel		: 'Id', // MISSING
-		languageCodeInputLabel	: ' Language Code', // MISSING
-		inlineStyleInputLabel	: 'Inline Style', // MISSING
-		advisoryTitleInputLabel	: 'Advisory Title', // MISSING
-		langDirLabel		: 'Language Direction', // MISSING
-		langDirLTRLabel		: 'Left to Right (LTR)', // MISSING
-		langDirRTLLabel		: 'Right to Left (RTL)', // MISSING
-		edit				: 'Edit Div', // MISSING
-		remove				: 'Remove Div' // MISSING
+		title				: 'DIV tároló létrehozása',
+		toolbar				: 'DIV tároló létrehozása',
+		cssClassInputLabel	: 'Stíluslap osztály',
+		styleSelectLabel	: 'Stílus',
+		IdInputLabel		: 'Azonosító',
+		languageCodeInputLabel	: ' Nyelv kódja',
+		inlineStyleInputLabel	: 'Inline stílus',
+		advisoryTitleInputLabel	: 'Tipp szöveg',
+		langDirLabel		: 'Nyelvi irány',
+		langDirLTRLabel		: 'Balról jobbra (LTR)',
+		langDirRTLLabel		: 'Jobbról balra (RTL)',
+		edit				: 'DIV szerkesztése',
+		remove				: 'DIV eltávolítása'
   	},
+
+	iframe :
+	{
+		title		: 'IFrame Properties', // MISSING
+		toolbar		: 'IFrame', // MISSING
+		noUrl		: 'Please type the iframe URL', // MISSING
+		scrolling	: 'Enable scrollbars', // MISSING
+		border		: 'Show frame border' // MISSING
+	},
 
 	font :
 	{
 		label		: 'Betűtípus',
-		voiceLabel	: 'Font', // MISSING
+		voiceLabel	: 'Betűtípus',
 		panelTitle	: 'Betűtípus'
 	},
 
 	fontSize :
 	{
 		label		: 'Méret',
-		voiceLabel	: 'Font Size', // MISSING
+		voiceLabel	: 'Betűméret',
 		panelTitle	: 'Méret'
 	},
 
@@ -596,104 +626,127 @@ CKEDITOR.lang['hu'] =
 	{
 		textColorTitle	: 'Betűszín',
 		bgColorTitle	: 'Háttérszín',
-		panelTitle		: 'Colors', // MISSING
+		panelTitle		: 'Színek',
 		auto			: 'Automatikus',
 		more			: 'További színek...'
 	},
 
 	colors :
 	{
-		'000' : 'Black', // MISSING
-		'800000' : 'Maroon', // MISSING
-		'8B4513' : 'Saddle Brown', // MISSING
-		'2F4F4F' : 'Dark Slate Gray', // MISSING
-		'008080' : 'Teal', // MISSING
-		'000080' : 'Navy', // MISSING
-		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
-		'B22222' : 'Fire Brick', // MISSING
-		'A52A2A' : 'Brown', // MISSING
-		'DAA520' : 'Golden Rod', // MISSING
-		'006400' : 'Dark Green', // MISSING
-		'40E0D0' : 'Turquoise', // MISSING
-		'0000CD' : 'Medium Blue', // MISSING
-		'800080' : 'Purple', // MISSING
-		'808080' : 'Gray', // MISSING
-		'F00' : 'Red', // MISSING
-		'FF8C00' : 'Dark Orange', // MISSING
-		'FFD700' : 'Gold', // MISSING
-		'008000' : 'Green', // MISSING
-		'0FF' : 'Cyan', // MISSING
-		'00F' : 'Blue', // MISSING
-		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
-		'FFA07A' : 'Light Salmon', // MISSING
-		'FFA500' : 'Orange', // MISSING
-		'FFFF00' : 'Yellow', // MISSING
-		'00FF00' : 'Lime', // MISSING
-		'AFEEEE' : 'Pale Turquoise', // MISSING
-		'ADD8E6' : 'Light Blue', // MISSING
-		'DDA0DD' : 'Plum', // MISSING
-		'D3D3D3' : 'Light Grey', // MISSING
-		'FFF0F5' : 'Lavender Blush', // MISSING
-		'FAEBD7' : 'Antique White', // MISSING
-		'FFFFE0' : 'Light Yellow', // MISSING
-		'F0FFF0' : 'Honeydew', // MISSING
-		'F0FFFF' : 'Azure', // MISSING
-		'F0F8FF' : 'Alice Blue', // MISSING
-		'E6E6FA' : 'Lavender', // MISSING
-		'FFF' : 'White' // MISSING
+		'000' : 'Fekete',
+		'800000' : 'Bordó',
+		'8B4513' : 'Barna',
+		'2F4F4F' : 'Sötét türkiz',
+		'008080' : 'Türkiz',
+		'000080' : 'Király kék',
+		'4B0082' : 'Indigó kék',
+		'696969' : 'Szürke',
+		'B22222' : 'Tégla vörös',
+		'A52A2A' : 'Vörös',
+		'DAA520' : 'Arany sárga',
+		'006400' : 'Sötét zöld',
+		'40E0D0' : 'Türkiz',
+		'0000CD' : 'Kék',
+		'800080' : 'Lila',
+		'808080' : 'Szürke',
+		'F00' : 'Piros',
+		'FF8C00' : 'Sötét narancs',
+		'FFD700' : 'Arany',
+		'008000' : 'Zöld',
+		'0FF' : 'Türkiz',
+		'00F' : 'Kék',
+		'EE82EE' : 'Rózsaszín',
+		'A9A9A9' : 'Sötét szürke',
+		'FFA07A' : 'Lazac',
+		'FFA500' : 'Narancs',
+		'FFFF00' : 'Citromsárga',
+		'00FF00' : 'Neon zöld',
+		'AFEEEE' : 'Világos türkiz',
+		'ADD8E6' : 'Világos kék',
+		'DDA0DD' : 'Világos lila',
+		'D3D3D3' : 'Világos szürke',
+		'FFF0F5' : 'Lavender Blush',
+		'FAEBD7' : 'Törtfehér',
+		'FFFFE0' : 'Világos sárga',
+		'F0FFF0' : 'Menta',
+		'F0FFFF' : 'Azúr kék',
+		'F0F8FF' : 'Halvány kék',
+		'E6E6FA' : 'Lavender',
+		'FFF' : 'Fehér'
 	},
 
 	scayt :
 	{
-		title			: 'Spell Check As You Type', // MISSING
-		enable			: 'Enable SCAYT', // MISSING
-		disable			: 'Disable SCAYT', // MISSING
-		about			: 'About SCAYT', // MISSING
-		toggle			: 'Toggle SCAYT', // MISSING
-		options			: 'Options', // MISSING
-		langs			: 'Languages', // MISSING
-		moreSuggestions	: 'More suggestions', // MISSING
-		ignore			: 'Ignore', // MISSING
-		ignoreAll		: 'Ignore All', // MISSING
-		addWord			: 'Add Word', // MISSING
-		emptyDic		: 'Dictionary name should not be empty.', // MISSING
-		optionsTab		: 'Options', // MISSING
-		languagesTab	: 'Languages', // MISSING
-		dictionariesTab	: 'Dictionaries', // MISSING
-		aboutTab		: 'About' // MISSING
+		title			: 'Helyesírás ellenőrzés gépelés közben',
+		opera_title		: 'Az Opera nem támogatja',
+		enable			: 'SCAYT engedélyezése',
+		disable			: 'SCAYT letiltása',
+		about			: 'SCAYT névjegy',
+		toggle			: 'SCAYT kapcsolása',
+		options			: 'Beállítások',
+		langs			: 'Nyelvek',
+		moreSuggestions	: 'További javaslatok',
+		ignore			: 'Kihagy',
+		ignoreAll		: 'Összes kihagyása',
+		addWord			: 'Szó hozzáadása',
+		emptyDic		: 'A szótár nevét meg kell adni.',
+
+		optionsTab		: 'Beállítások',
+		allCaps			: 'Nagybetűs szavak kihagyása',
+		ignoreDomainNames : 'Domain nevek kihagyása',
+		mixedCase		: 'Kis és nagybetűt is tartalmazó szavak kihagyása',
+		mixedWithDigits	: 'Számokat tartalmazó szavak kihagyása',
+
+		languagesTab	: 'Nyelvek',
+
+		dictionariesTab	: 'Szótár',
+		dic_field_name	: 'Szótár neve',
+		dic_create		: 'Létrehozás',
+		dic_restore		: 'Visszaállítás',
+		dic_delete		: 'Törlés',
+		dic_rename		: 'Átnevezés',
+		dic_info		: 'Kezdetben a felhasználói szótár böngésző sütiben tárolódik. Azonban a sütik maximális mérete korlátozott. Amikora a szótár akkora lesz, hogy már sütiben nem lehet tárolni, akkor a szótárat tárolhatja a szerveren is. Ehhez egy nevet kell megadni a szótárhoz. Amennyiben már van szerveren tárolt szótára, adja meg a nevét és kattintson a visszaállítás gombra.',
+
+		aboutTab		: 'Névjegy'
 	},
 
 	about :
 	{
-		title		: 'About CKEditor', // MISSING
-		dlgTitle	: 'About CKEditor', // MISSING
-		moreInfo	: 'For licensing information please visit our web site:', // MISSING
-		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
+		title		: 'CKEditor névjegy',
+		dlgTitle	: 'CKEditor névjegy',
+		moreInfo	: 'Licenszelési információkért kérjük látogassa meg weboldalunkat:',
+		copy		: 'Copyright &copy; $1. Minden jog fenntartva.'
 	},
 
-	maximize : 'Maximize', // MISSING
-	minimize : 'Minimize', // MISSING
+	maximize : 'Teljes méret',
+	minimize : 'Kis méret',
 
 	fakeobjects :
 	{
-		anchor	: 'Anchor', // MISSING
-		flash	: 'Flash Animation', // MISSING
-		div		: 'Page Break', // MISSING
-		unknown	: 'Unknown Object' // MISSING
+		anchor		: 'Horgony',
+		flash		: 'Flash animáció',
+		iframe		: 'IFrame', // MISSING
+		hiddenfield	: 'Hidden Field', // MISSING
+		unknown		: 'Ismeretlen objektum'
 	},
 
-	resize : 'Drag to resize', // MISSING
+	resize : 'Húzza az átméretezéshez',
 
 	colordialog :
 	{
-		title		: 'Select color', // MISSING
-		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
-		clear		: 'Clear' // MISSING
+		title		: 'Válasszon színt',
+		options	:	'Szín opciók',
+		highlight	: 'Nagyítás',
+		selected	: 'Kiválasztott',
+		clear		: 'Ürítés'
 	},
 
-	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarCollapse	: 'Eszköztár összecsukása',
+	toolbarExpand	: 'Eszköztár szétnyitása',
+
+	bidi :
+	{
+		ltr : 'Szöveg iránya balról jobbra',
+		rtl : 'Szöveg iránya jobbról balra'
+	}
 };

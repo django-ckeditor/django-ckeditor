@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -28,14 +28,10 @@ CKEDITOR.plugins.add( 'keystrokes',
 			blockedKeystrokes	= editor.keystrokeHandler.blockedKeystrokes;
 
 		for ( var i = 0 ; i < keystrokesConfig.length ; i++ )
-		{
 			keystrokes[ keystrokesConfig[i][0] ] = keystrokesConfig[i][1];
-		}
 
 		for ( i = 0 ; i < blockedConfig.length ; i++ )
-		{
 			blockedKeystrokes[ blockedConfig[i] ] = 1;
-		}
 	}
 });
 
@@ -220,7 +216,7 @@ CKEDITOR.config.keystrokes =
 
 /**
  * Fired when any keyboard key (or combination) is pressed into the editing area.
- * @name CKEDITOR#key
+ * @name CKEDITOR.editor#key
  * @event
  * @param {Number} data.keyCode A number representing the key code (or
  *		combination). It is the sum of the current key code and the

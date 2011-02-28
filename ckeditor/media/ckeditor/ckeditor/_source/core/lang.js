@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -7,6 +7,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 {
 	var loadedLangs = {};
 
+	/**
+	 * @namespace Holds language related functions.
+	 */
 	CKEDITOR.lang =
 	{
 		/**
@@ -81,12 +84,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		 * Loads a specific language file, or auto detect it. A callback is
 		 * then called when the file gets loaded.
 		 * @param {String} languageCode The code of the language file to be
-		 *		loaded. If "autoDetect" is set to true, this language will be
-		 *		used as the default one, if the detect language is not
-		 *		available in the core.
-		 * @param {Boolean} autoDetect Indicates that the function must try to
-		 *		detect the user language and load it instead.
-		 * @param {Function} callback The function to be called once the
+		 *		loaded. If null or empty, autodetection will be performed. The
+		 *		same happens if the language is not supported.
+		 * @param {String} defaultLanguage The language to be used if
+		 *		languageCode is not supported or if the autodetection fails.
+		 * @param {Function} callback A function to be called once the
 		 *		language file is loaded. Two parameters are passed to this
 		 *		function: the language code and the loaded language entries.
 		 * @example
@@ -121,6 +123,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		 * supported, a default language is then returned.
 		 * @param {String} defaultLanguage The default language to be returned
 		 *		if the user language is not supported.
+		 * @param {String} [probeLanguage] A language code to try to use,
+		 *		instead of the browser based autodetection.
 		 * @returns {String} The detected language code.
 		 * @example
 		 * alert( CKEDITOR.lang.detect( 'en' ) );  // e.g., in a German browser: "de"

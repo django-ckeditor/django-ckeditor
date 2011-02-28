@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -38,7 +38,7 @@ CKEDITOR.dialog.add( 'anchor', function( editor )
 			}
 
 			// Set name.
-			element.removeAttribute( '_cke_saved_name' );
+			element.data( 'cke-saved-name', false );
 			element.setAttribute( 'name', name );
 
 			// Insert a new anchor.
@@ -61,7 +61,7 @@ CKEDITOR.dialog.add( 'anchor', function( editor )
 
 			var selection = editor.getSelection();
 			var element = selection.getSelectedElement();
-			if ( element && element.getAttribute( '_cke_real_element_type' ) && element.getAttribute( '_cke_real_element_type' ) == 'anchor' )
+			if ( element && element.data( 'cke-real-element-type' ) && element.data( 'cke-real-element-type' ) == 'anchor' )
 			{
 				this.fakeObj = element;
 				element = editor.restoreRealElement( this.fakeObj );

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -18,6 +18,17 @@ CKEDITOR.plugins.add( 'forms',
 			'{' +
 				'border: 1px dotted #FF0000;' +
 				'padding: 2px;' +
+			'}\n' );
+
+		editor.addCss(
+			'img.cke_hidden' +
+			'{' +
+				'background-image: url(' + CKEDITOR.getUrl( this.path + 'images/hiddenfield.gif' ) + ');' +
+				'background-position: center center;' +
+				'background-repeat: no-repeat;' +
+				'border: 1px solid #a9a9a9;' +
+				'width: 16px !important;' +
+				'height: 16px !important;' +
 			'}' );
 
 		// All buttons use the same code to register. So, to avoid
@@ -120,13 +131,13 @@ CKEDITOR.plugins.add( 'forms',
 		{
 			editor.contextMenu.addListener( function( element )
 				{
-					if ( element && element.hasAscendant( 'form', true ) )
+					if ( element && element.hasAscendant( 'form', true ) && !element.isReadOnly() )
 						return { form : CKEDITOR.TRISTATE_OFF };
 				});
 
 			editor.contextMenu.addListener( function( element )
 				{
-					if ( element )
+					if ( element && !element.isReadOnly() )
 					{
 						var name = element.getName();
 
@@ -138,39 +149,80 @@ CKEDITOR.plugins.add( 'forms',
 
 						if ( name == 'input' )
 						{
-							var type = element.getAttribute( 'type' );
+							switch( element.getAttribute( 'type' ) )
+							{
+								case 'button' :
+								case 'submit' :
+								case 'reset' :
+									return { button : CKEDITOR.TRISTATE_OFF };
 
-							if ( type == 'text' || type == 'password' )
-								return { textfield : CKEDITOR.TRISTATE_OFF };
+								case 'checkbox' :
+									return { checkbox : CKEDITOR.TRISTATE_OFF };
 
-							if ( type == 'button' || type == 'submit' || type == 'reset' )
-								return { button : CKEDITOR.TRISTATE_OFF };
+								case 'radio' :
+									return { radio : CKEDITOR.TRISTATE_OFF };
 
-							if ( type == 'checkbox' )
-								return { checkbox : CKEDITOR.TRISTATE_OFF };
+								case 'image' :
+									return { imagebutton : CKEDITOR.TRISTATE_OFF };
 
-							if ( type == 'radio' )
-								return { radio : CKEDITOR.TRISTATE_OFF };
-
-							if ( type == 'image' )
-								return { imagebutton : CKEDITOR.TRISTATE_OFF };
+								default :
+									return { textfield : CKEDITOR.TRISTATE_OFF };
+							}
 						}
 
-						if ( name == 'img' && element.getAttribute( '_cke_real_element_type' ) == 'hiddenfield' )
+						if ( name == 'img' && element.data( 'cke-real-element-type' ) == 'hiddenfield' )
 							return { hiddenfield : CKEDITOR.TRISTATE_OFF };
 					}
 				});
 		}
+
+		editor.on( 'doubleclick', function( evt )
+			{
+				var element = evt.data.element;
+
+				if ( element.is( 'form' ) )
+					evt.data.dialog = 'form';
+				else if ( element.is( 'select' ) )
+					evt.data.dialog = 'select';
+				else if ( element.is( 'textarea' ) )
+					evt.data.dialog = 'textarea';
+				else if ( element.is( 'img' ) && element.data( 'cke-real-element-type' ) == 'hiddenfield' )
+					evt.data.dialog = 'hiddenfield';
+				else if ( element.is( 'input' ) )
+				{
+					switch ( element.getAttribute( 'type' ) )
+					{
+						case 'button' :
+						case 'submit' :
+						case 'reset' :
+							evt.data.dialog = 'button';
+							break;
+						case 'checkbox' :
+							evt.data.dialog = 'checkbox';
+							break;
+						case 'radio' :
+							evt.data.dialog = 'radio';
+							break;
+						case 'image' :
+							evt.data.dialog = 'imagebutton';
+							break;
+						default :
+							evt.data.dialog = 'textfield';
+							break;
+					}
+				}
+			});
 	},
 
 	afterInit : function( editor )
 	{
+		var dataProcessor = editor.dataProcessor,
+			htmlFilter = dataProcessor && dataProcessor.htmlFilter,
+			dataFilter = dataProcessor && dataProcessor.dataFilter;
+
 		// Cleanup certain IE form elements default values.
 		if ( CKEDITOR.env.ie )
 		{
-			var dataProcessor = editor.dataProcessor,
-				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
-
 			htmlFilter && htmlFilter.addRules(
 			{
 				elements :
@@ -179,14 +231,32 @@ CKEDITOR.plugins.add( 'forms',
 					{
 						var attrs = input.attributes,
 							type = attrs.type;
+						// Old IEs don't provide type for Text inputs #5522
+						if ( !type )
+							attrs.type = 'text';
 						if ( type == 'checkbox' || type == 'radio' )
 							attrs.value == 'on' && delete attrs.value;
 					}
 				}
 			} );
 		}
+
+		if ( dataFilter )
+		{
+			dataFilter.addRules(
+			{
+				elements :
+				{
+					input : function( element )
+					{
+						if ( element.attributes.type == 'hidden' )
+							return editor.createFakeParserElement( element, 'cke_hidden', 'hiddenfield' );
+					}
+				}
+			} );
+		}
 	},
-	requires : [ 'image' ]
+	requires : [ 'image', 'fakeobjects' ]
 } );
 
 if ( CKEDITOR.env.ie )
@@ -205,10 +275,7 @@ if ( CKEDITOR.env.ie )
 					return !!this.$.checked;
 				case 'value' :
 					var type = this.getAttribute( 'type' );
-					if ( type == 'checkbox' || type == 'radio' )
-						return this.$.value != 'on';
-					break;
-				default:
+					return type == 'checkbox' || type == 'radio' ? this.$.value != 'on' : this.$.value;
 			}
 		}
 

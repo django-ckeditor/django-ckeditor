@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -7,7 +7,8 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 {
 	var dialog, picker, pickerContents,
 		// Actual UI color value.
-		uiColor = editor.getUiColor();
+		uiColor = editor.getUiColor(),
+		pickerId = 'cke_uicolor_picker' + CKEDITOR.tools.getNextNumber();
 
 	function setNewPickerColor( color )
 	{
@@ -16,7 +17,7 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 			color = window.YAHOO.util.Color.hex2rgb( color.substr( 1 ) );
 		picker.setValue( color, true );
 		// Refresh picker UI.
-		picker.refresh( 'cke_uicolor_picker' );
+		picker.refresh( pickerId );
 	}
 
 	function setNewUiColor( color, force )
@@ -33,7 +34,7 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 	{
 		id : 'yuiColorPicker',
 		type : 'html',
-		html : "<div id='cke_uicolor_picker' style='width: 360px; height: 200px; position: relative;'></div>",
+		html : "<div id='" + pickerId + "' class='cke_uicolor_picker' style='width: 360px; height: 200px; position: relative;'></div>",
 		onLoad : function( event )
 		{
 			var url = CKEDITOR.getUrl(
@@ -42,7 +43,7 @@ CKEDITOR.dialog.add( 'uicolor', function( editor )
 				);
 
 			// Create new color picker widget.
-			picker = new window.YAHOO.widget.ColorPicker( "cke_uicolor_picker",
+			picker = new window.YAHOO.widget.ColorPicker( pickerId,
 				{
 					showhsvcontrols : true,
 					showhexcontrols : true,

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -38,31 +38,44 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	}
 
-	function blockNeedsExtension( block )
+	function blockNeedsExtension( block, fromSource, extendEmptyBlock )
 	{
+		if( !fromSource && ( !extendEmptyBlock ||
+			typeof extendEmptyBlock == 'function' && ( extendEmptyBlock( block ) === false ) ) )
+			return false;
+
+        // 1. For IE version >=8,  empty blocks are displayed correctly themself in wysiwiyg;
+        // 2. For the rest, at least table cell and list item need no filler space.
+        // (#6248)
+        if ( fromSource && CKEDITOR.env.ie &&
+                ( document.documentMode > 7
+                || block.name in CKEDITOR.dtd.tr
+                || block.name in CKEDITOR.dtd.$listItem ) )
+            return false;
+
 		var lastChild = lastNoneSpaceChild( block );
-		return !lastChild || lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br';
+
+		return !lastChild || lastChild &&
+				( lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.name == 'br'
+				// Some of the controls in form needs extension too,
+				// to move cursor at the end of the form. (#4791)
+				|| block.name == 'form' && lastChild.name == 'input' );
 	}
 
-	function extendBlockForDisplay( block )
+	function getBlockExtension( isOutput, emptyBlockFiller )
 	{
-		trimFillers( block, true );
-
-		if ( blockNeedsExtension( block ) )
+		return function( node )
 		{
-			if ( CKEDITOR.env.ie )
-				block.add( new CKEDITOR.htmlParser.text( '\xa0' ) );
-			else
-				block.add( new CKEDITOR.htmlParser.element( 'br', {} ) );
-		}
-	}
+			trimFillers( node, !isOutput );
 
-	function extendBlockForOutput( block )
-	{
-		trimFillers( block );
-
-		if ( blockNeedsExtension( block ) )
-			block.add( new CKEDITOR.htmlParser.text( '\xa0' ) );
+			if ( blockNeedsExtension( node, !isOutput, emptyBlockFiller ) )
+			{
+				if ( isOutput || CKEDITOR.env.ie )
+					node.add( new CKEDITOR.htmlParser.text( '\xa0' ) );
+				else
+					node.add( new CKEDITOR.htmlParser.element( 'br', {} ) );
+			}
+		};
 	}
 
 	var dtd = CKEDITOR.dtd;
@@ -79,18 +92,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	delete blockLikeTags.pre;
 	var defaultDataFilterRules =
 	{
+		elements : {
+			a : function( element )
+			{
+				var attrs = element.attributes;
+				if ( attrs && attrs[ 'data-cke-saved-name' ] )
+					attrs[ 'class' ] = ( attrs[ 'class' ] ? attrs[ 'class' ] + ' ' : '' ) + 'cke_anchor';
+			}
+		},
 		attributeNames :
 		[
 			// Event attributes (onXYZ) must not be directly set. They can become
 			// active in the editing area (IE|WebKit).
-			[ ( /^on/ ), '_cke_pa_on' ]
+			[ ( /^on/ ), 'data-cke-pa-on' ]
 		]
 	};
 
 	var defaultDataBlockFilterRules = { elements : {} };
 
 	for ( i in blockLikeTags )
-		defaultDataBlockFilterRules.elements[ i ] = extendBlockForDisplay;
+		defaultDataBlockFilterRules.elements[ i ] = getBlockExtension();
 
 	var defaultHtmlFilterRules =
 		{
@@ -106,10 +127,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			attributeNames :
 			[
 				// Attributes saved for changes and protected attributes.
-				[ ( /^_cke_(saved|pa)_/ ), '' ],
+				[ ( /^data-cke-(saved|pa)-/ ), '' ],
 
-				// All "_cke" attributes are to be ignored.
-				[ ( /^_cke.*/ ), '' ],
+				// All "data-cke-" attributes are to be ignored.
+				[ ( /^data-cke-.*/ ), '' ],
 
 				[ 'hidefocus', '' ]
 			],
@@ -123,7 +144,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( attribs )
 					{
 						// Elements marked as temporary are to be ignored.
-						if ( attribs.cke_temp )
+						if ( attribs[ 'data-cke-temp' ] )
 							return false;
 
 						// Remove duplicated attributes - #3789.
@@ -131,7 +152,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							savedAttributeName;
 						for ( var i = 0 ; i < attributeNames.length ; i++ )
 						{
-							savedAttributeName = '_cke_saved_' + attributeNames[ i ];
+							savedAttributeName = 'data-cke-saved-' + attributeNames[ i ];
 							savedAttributeName in attribs && ( delete attribs[ attributeNames[ i ] ] );
 						}
 					}
@@ -166,10 +187,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					if ( !( element.children.length ||
 							element.attributes.name ||
-							element.attributes._cke_saved_name ) )
+							element.attributes[ 'data-cke-saved-name' ] ) )
 					{
 						return false;
 					}
+				},
+
+				// Remove dummy span in webkit.
+				span: function( element )
+				{
+					if ( element.attributes[ 'class' ] == 'Apple-style-span' )
+						delete element.name;
+				},
+
+				// Empty <pre> in IE is reported with filler node (&nbsp;).
+				pre : function( element ) { CKEDITOR.env.ie && trimFillers( element ); },
+
+				html : function( element )
+				{
+					delete element.attributes.contenteditable;
+					delete element.attributes[ 'class' ];
 				},
 
 				body : function( element )
@@ -189,7 +226,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				title : function( element )
 				{
-					element.children[ 0 ].value = element.attributes[ '_cke_title' ];
+					var titleText = element.children[ 0 ];
+					titleText && ( titleText.value = element.attributes[ 'data-cke-title' ] || '' );
 				}
 			},
 
@@ -220,22 +258,48 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 		};
 
-	var defaultHtmlBlockFilterRules = { elements : {} };
-
-	for ( i in blockLikeTags )
-		defaultHtmlBlockFilterRules.elements[ i ] = extendBlockForOutput;
-
 	if ( CKEDITOR.env.ie )
 	{
 		// IE outputs style attribute in capital letters. We should convert
-		// them back to lower case.
+		// them back to lower case, while not hurting the values (#5930)
 		defaultHtmlFilterRules.attributes.style = function( value, element )
 		{
-			return value.toLowerCase();
+			return value.replace( /(^|;)([^\:]+)/g, function( match )
+				{
+					return match.toLowerCase();
+				});
 		};
 	}
 
-	var protectAttributeRegex = /<(?:a|area|img|input)[\s\S]*?\s((?:href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+)))/gi;
+	function protectReadOnly( element )
+	{
+		var attrs = element.attributes;
+
+		// We should flag that the element was locked by our code so
+		// it'll be editable by the editor functions (#6046).
+		if ( attrs.contenteditable != "false" )
+			attrs[ 'data-cke-editable' ] = attrs.contenteditable ? 'true' : 1;
+
+		attrs.contenteditable = "false";
+	}
+	function unprotectReadyOnly( element )
+	{
+		var attrs = element.attributes;
+		switch( attrs[ 'data-cke-editable' ] )
+		{
+			case 'true':	attrs.contenteditable = 'true';	break;
+			case '1':		delete attrs.contenteditable;	break;
+		}
+	}
+	// Disable form elements editing mode provided by some browers. (#5746)
+	for ( i in { input : 1, textarea : 1 } )
+	{
+		defaultDataFilterRules.elements[ i ] = protectReadOnly;
+		defaultHtmlFilterRules.elements[ i ] = unprotectReadyOnly;
+	}
+
+	var protectElementRegex = /<(a|area|img|input)\b([^>]*)>/gi,
+		protectAttributeRegex = /\b(href|src|name)\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|(?:[^ "'>]+))/gi;
 
 	var protectElementsRegex = /(?:<style(?=[ >])[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
 		encodedElementsRegex = /<cke:encoded>([^<]*)<\/cke:encoded>/gi;
@@ -247,7 +311,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function protectAttributes( html )
 	{
-		return html.replace( protectAttributeRegex, '$& _cke_saved_$1' );
+		return html.replace( protectElementRegex, function( element, tag, attributes )
+		{
+			return '<' +  tag + attributes.replace( protectAttributeRegex, function( fullAttr, attrName )
+			{
+				// We should not rewrite the existed protected attributes, e.g. clipboard content from editor. (#5218)
+				if ( attributes.indexOf( 'data-cke-saved-' + attrName ) == -1 )
+					return ' data-cke-saved-' + fullAttr + ' ' + fullAttr;
+
+				return fullAttr;
+			}) + '>';
+		});
 	}
 
 	function protectElements( html )
@@ -279,6 +353,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function protectSelfClosingElements( html )
 	{
 		return html.replace( protectSelfClosingRegex, '<cke:$1$2></cke:$1>' );
+	}
+
+	function protectPreFormatted( html )
+	{
+		return html.replace( /(<pre\b[^>]*>)(\r\n|\n)/g, '$1$2$2' );
 	}
 
 	function protectRealComments( html )
@@ -362,7 +441,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			dataProcessor.dataFilter.addRules( defaultDataFilterRules );
 			dataProcessor.dataFilter.addRules( defaultDataBlockFilterRules );
 			dataProcessor.htmlFilter.addRules( defaultHtmlFilterRules );
+
+			var defaultHtmlBlockFilterRules = { elements : {} };
+			for ( i in blockLikeTags )
+				defaultHtmlBlockFilterRules.elements[ i ] = getBlockExtension( true, editor.config.fillEmptyBlocks );
+
 			dataProcessor.htmlFilter.addRules( defaultHtmlBlockFilterRules );
+		},
+
+		onLoad : function()
+		{
+			! ( 'fillEmptyBlocks' in CKEDITOR.config ) && ( CKEDITOR.config.fillEmptyBlocks = 1 );
 		}
 	});
 
@@ -400,6 +489,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// All none-IE browsers ignore self-closed custom elements,
 			// protecting them into open-close. (#3591)
 			data = protectSelfClosingElements( data );
+
+			// Compensate one leading line break after <pre> open as browsers
+			// eat it up. (#5789)
+			data = protectPreFormatted( data );
 
 			// Call the browser to help us fixing a possibly invalid HTML
 			// structure.
@@ -447,12 +540,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 /**
  * Whether to force using "&" instead of "&amp;amp;" in elements attributes
- * values. It's not recommended to change this setting for compliance with the
- * W3C XHTML 1.0 standards
- * (<a href="http://www.w3.org/TR/xhtml1/#C_12">C.12, XHTML 1.0</a>).
+ * values, it's not recommended to change this setting for compliance with the
+ * W3C XHTML 1.0 standards (<a href="http://www.w3.org/TR/xhtml1/#C_12">C.12, XHTML 1.0</a>).
+ * @name CKEDITOR.config.forceSimpleAmpersand
+ * @name CKEDITOR.config.forceSimpleAmpersand
  * @type Boolean
  * @default false
  * @example
  * config.forceSimpleAmpersand = false;
  */
-CKEDITOR.config.forceSimpleAmpersand = false;
+
+/**
+ * Whether a filler text (non-breaking space entity - &nbsp;) will be inserted into empty block elements in HTML output,
+ * this is used to render block elements properly with line-height; When a function is instead specified,
+ * it'll be passed a {@link CKEDITOR.htmlParser.element} to decide whether adding the filler text
+ * by expecting a boolean return value.
+ * @name CKEDITOR.config.fillEmptyBlocks
+ * @since 3.5
+ * @type Boolean
+ * @default true
+ * @example
+ * config.fillEmptyBlocks = false;	// Prevent filler nodes in all empty blocks.
+ *
+ * // Prevent filler node only in float cleaners.
+ * config.fillEmptyBlocks = function( element )
+ * {
+ * 	if ( element.attributes[ 'class' ].indexOf ( 'clear-both' ) != -1 )
+ * 		return false;
+ * }
+ */

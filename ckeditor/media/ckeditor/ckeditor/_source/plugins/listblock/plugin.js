@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -9,9 +9,9 @@ CKEDITOR.plugins.add( 'listblock',
 
 	onLoad : function()
 	{
-		CKEDITOR.ui.panel.prototype.addListBlock = function( name, definiton )
+		CKEDITOR.ui.panel.prototype.addListBlock = function( name, definition )
 		{
-			return this.addBlock( name, new CKEDITOR.ui.listBlock( this.getHolderElement(), definiton ) );
+			return this.addBlock( name, new CKEDITOR.ui.listBlock( this.getHolderElement(), definition ) );
 		};
 
 		CKEDITOR.ui.listBlock = CKEDITOR.tools.createClass(
@@ -81,7 +81,7 @@ CKEDITOR.plugins.add( 'listblock',
 					add : function( value, html, title )
 					{
 						var pendingHtml = this._.pendingHtml,
-							id = 'cke_' + CKEDITOR.tools.getNextNumber();
+							id = CKEDITOR.tools.getNextId();
 
 						if ( !this._.started )
 						{
@@ -93,7 +93,7 @@ CKEDITOR.plugins.add( 'listblock',
 						this._.items[ value ] = id;
 
 						pendingHtml.push(
-							'<li id=', id, ' class=cke_panel_listItem>' +
+							'<li id=', id, ' class=cke_panel_listItem role=presentation>' +
 								'<a id="', id, '_option" _cke_focus=1 hidefocus=true' +
 									' title="', title || value, '"' +
 									' href="javascript:void(\'', value, '\')"' +
@@ -109,7 +109,7 @@ CKEDITOR.plugins.add( 'listblock',
 					{
 						this._.close();
 
-						var id = 'cke_' + CKEDITOR.tools.getNextNumber();
+						var id = CKEDITOR.tools.getNextId();
 
 						this._.groups[ title ] = id;
 
@@ -195,11 +195,14 @@ CKEDITOR.plugins.add( 'listblock',
 
 						this.element.getDocument().getById( itemId + '_option' ).setAttribute( 'aria-selected', true );
 						this.element.setAttribute( 'aria-activedescendant', itemId + '_option' );
+
+						this.onMark && this.onMark( item );
 					},
 
 					unmark : function( value )
 					{
 						this.element.getDocument().getById( this._.items[ value ] ).removeClass( 'cke_selected' );
+						this.onUnmark && this.onUnmark( this._.items[ value ] );
 					},
 
 					unmarkAll : function()
@@ -211,6 +214,8 @@ CKEDITOR.plugins.add( 'listblock',
 						{
 							doc.getById( items[ value ] ).removeClass( 'cke_selected' );
 						}
+
+						this.onUnmark && this.onUnmark();
 					},
 
 					isMarked : function( value )

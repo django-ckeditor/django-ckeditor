@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -93,7 +93,7 @@ CKEDITOR.UI_PANELBUTTON = 4;
 					return;
 
 				var panelDefinition = this._.panelDefinition || {},
-					 panelBlockDefinition = this._.panelDefinition.block,
+					panelBlockDefinition = this._.panelDefinition.block,
 					panelParentElement = panelDefinition.parent || CKEDITOR.document.getBody(),
 					panel = this._.panel = new CKEDITOR.ui.floatPanel( editor, panelParentElement, panelDefinition ),
 					block = panel.addBlock( _.id, panelBlockDefinition ),
@@ -104,7 +104,6 @@ CKEDITOR.UI_PANELBUTTON = 4;
 						if ( me.className )
 							this.element.getFirst().addClass( me.className + '_panel' );
 
-						_.oldState = me._.state;
 						me.setState( CKEDITOR.TRISTATE_ON );
 
 						_.on = 1;
@@ -113,16 +112,16 @@ CKEDITOR.UI_PANELBUTTON = 4;
 							me.onOpen();
 					};
 
-				panel.onHide = function()
+				panel.onHide = function( preventOnClose )
 					{
 						if ( me.className )
 							this.element.getFirst().removeClass( me.className + '_panel' );
 
-						me.setState( _.oldState );
+						me.setState( me.modes && me.modes[ editor.mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
 
 						_.on = 0;
 
-						if ( me.onClose )
+						if ( !preventOnClose && me.onClose )
 							me.onClose();
 					};
 
@@ -136,10 +135,10 @@ CKEDITOR.UI_PANELBUTTON = 4;
 					this.onBlock( panel, block );
 
 				block.onHide = function()
-						{
-								_.on = 0;
-								me.setState( CKEDITOR.TRISTATE_OFF );
-						};
+					{
+						_.on = 0;
+						me.setState( CKEDITOR.TRISTATE_OFF );
+					};
 			}
 		}
 	});
