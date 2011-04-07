@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 
 from django.conf import settings
@@ -146,9 +147,23 @@ def get_image_browse_urls(user=None):
             if '_thumb' in filename:
                 continue
             
+            thumb_path = get_thumb_filename(filename)
+            if os.path.exists(thumb_path):
+                visible_filename = None
+                is_image = True
+            else:
+                # File may not be an image
+                visible_filename = unicode(os.path.split(filename)[1], sys.getfilesystemencoding())
+                if len(visible_filename) > 20:
+                    visible_filename = visible_filename[0:19] + '...'
+                is_image = False
+                thumb_path = 'ckeditor/file-icons/file.png'
+            
             images.append({
-                'thumb': get_media_url(get_thumb_filename(filename)),
-                'src': get_media_url(filename)
+                'thumb': get_media_url(thumb_path),
+                'src': get_media_url(filename),
+                'visible_filename': visible_filename,
+                'is_image': is_image
             })
 
     return images

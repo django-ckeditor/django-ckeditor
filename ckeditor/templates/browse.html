@@ -11,6 +11,11 @@
 		<script type="text/javascript">
 			document.write('<style>.noscript { display: none; }</style>');
 		</script>
+		<style type="text/css">
+		a.thumb { text-align: center; display: block; float: left; width: 75px; height: 75px; word-wrap: break-word; line-height: 1.2em; overflow: hidden; }
+		a.thumb img { display: inline-block; }
+		span.filename { color: #666; font-size: 0.95em; }
+		</style>
 	</head>
 	<body>
 		<div id="page">
@@ -33,8 +38,11 @@
 					<ul class="thumbs noscript">
                         {% for image in images %}
 						<li>
-							<a class="thumb" href="{{ image.src }}">
+							<a class="thumb" href="{% if image.is_image %}{{ image.src }}{% else %}{{ image.thumb }}{% endif %}">
 								<img src="{{ image.thumb }}" />
+								{% if image.visible_filename %}
+								<span class="filename">{{ image.visible_filename }}</span>
+								{% endif %}
 							</a>
 							<div class="caption">
 								<div class="download">
