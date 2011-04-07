@@ -20,7 +20,7 @@ except ImportError:
         return fn
         
 THUMBNAIL_SIZE = (75, 75)
-    
+
 def get_available_name(name):
     """
     Returns a filename that's free on the target storage system, and
@@ -45,7 +45,7 @@ def get_thumb_filename(file_name):
 
 def create_thumbnail(filename):
     image = Image.open(filename)
-        
+    
     # Convert to RGB if necessary
     # Thanks to Limodou on DjangoSnippets.org
     # http://www.djangosnippets.org/snippets/20/
@@ -110,8 +110,12 @@ def upload(request):
     for chunk in upload.chunks():
         out.write(chunk)
     out.close()
-
-    create_thumbnail(upload_filename)
+    
+    try:
+        create_thumbnail(upload_filename)
+    except IOError, OverflowError:
+        # Assume file not an image
+        pass
 
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(upload_filename)
