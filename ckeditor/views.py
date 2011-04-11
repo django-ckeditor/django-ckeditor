@@ -180,7 +180,7 @@ def get_image_browse_urls(user=None):
                 thumb_path = get_media_url(thumb_path)
             else:
                 # File may not be an image
-                visible_filename = unicode(os.path.split(filename)[1], sys.getfilesystemencoding())
+                visible_filename = unicode(os.path.split(filename)[1], 'utf-8')
                 if len(visible_filename) > 20:
                     visible_filename = visible_filename[0:19] + '...'
                 is_image = False
