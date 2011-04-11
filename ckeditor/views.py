@@ -93,6 +93,10 @@ def get_media_url(path):
     return url.replace('//', '/')
 
 def get_upload_filename(upload_name, user):
+    
+    if isinstance(upload_name, unicode):
+        upload_name = upload_name.encode('utf-8')
+    
     # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
     if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
         user_path = user.username
@@ -142,10 +146,10 @@ def upload(request):
 
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(upload_filename)
-    return HttpResponse("""
+    return HttpResponse(u"""
     <script type='text/javascript'>
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
-    </script>""" % (request.GET['CKEditorFuncNum'], url))
+    </script>""" % (request.GET['CKEditorFuncNum'], url.decode('utf-8')))
 
 def get_image_browse_urls(user=None):
     """
