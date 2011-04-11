@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>CKEDitor | {% trans "Select an image to embed" %}</title>
+		<title>CKEDitor | {% trans "Select an file to embed" %}</title>
 		<link rel="stylesheet" href="{{ media_prefix }}galleriffic/css/basic.css" type="text/css" />
 		<link rel="stylesheet" href="{{ media_prefix }}galleriffic/css/galleriffic-2.css" type="text/css" />
 		<script type="text/javascript" src="{{ media_prefix}}galleriffic/js/jquery-1.3.2.js"></script>
@@ -22,9 +22,9 @@
 		<div id="page">
 			<div id="container">
                 {% if images %}
-    				<h2>{% trans "Browse for the image you want, then click 'Embed Image' to continue..." %}</h2>
+    				<h2>{% trans "Browse for the file you want, then click 'Embed file' to continue..." %}</h2>
                 {% else %}
-				    <h2>{% trans "No images found. Upload images using the 'Image Button' dialog's 'Upload' tab." %}</h2>
+				    <h2>{% trans "No files found. Upload files using the dialog's 'Upload' tab." %}</h2>
                 {% endif %}
 
 				<!-- Start Advanced Gallery Html Containers -->
@@ -47,7 +47,7 @@
 							</a>
 							<div class="caption">
 								<div class="download">
-									<a class="embed" href="{{ image.src }}">{% trans "Embed Image" %}</a>
+									<a class="embed" href="{{ image.src }}">{% trans "Embed File" %}</a>
 								</div>
 							</div>
 						</li>
