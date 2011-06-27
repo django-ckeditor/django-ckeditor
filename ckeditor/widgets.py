@@ -60,10 +60,11 @@ class CKEditorWidget(forms.Textarea):
         # Finish setting up DEFAULT_CONFIG - we do it here as in __init__ urls are not defined yet 
         # also we can't use lambda to try to put it in __init__ as json_encode dosen't know how to handle it
         try: 
-            self.DEFAULT_CONFIG['filebrowserUploadUrl']
+            self.config['filebrowserUploadUrl']
         except KeyError:
-            self.DEFAULT_CONFIG['filebrowserUploadUrl'] = reverse('ckeditor_upload') # shared among class
-            self.DEFAULT_CONFIG['filebrowserBrowseUrl'] = reverse('ckeditor_browse') # shared among class
+            self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload') # shared among class
+            self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse') # shared among class
+        
         
         
         if value is None: value = ''
