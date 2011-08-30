@@ -1,4 +1,11 @@
 from setuptools import setup, find_packages
+from setuptools.command.test import test
+
+
+def run_tests(self):
+    from setuptest.runtests import runtests
+    return runtests(self)
+test.run_tests = run_tests
 
 setup(
     name='django-ckeditor',
@@ -16,7 +23,11 @@ setup(
         'PIL',
     ],
     include_package_data=True,
-    classifiers = [
+    test_suite="ckeditor.tests",
+    tests_require=[
+        'django-setuptest',
+    ],
+    classifiers=[
         "Programming Language :: Python",
         "License :: OSI Approved :: BSD License",
         "Development Status :: 4 - Beta",
