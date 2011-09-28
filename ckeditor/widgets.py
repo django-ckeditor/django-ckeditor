@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
@@ -71,13 +72,10 @@ class CKEditorWidget(forms.Textarea):
         final_attrs = self.build_attrs(attrs, name=name)
         self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
         self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
-        return mark_safe(u'''<textarea%s>%s</textarea>
-        <script type="text/javascript">
-            CKEDITOR.replace("%s", %s);
-        </script>''' % (
-            flatatt(final_attrs),
-            conditional_escape(force_unicode(value)),
-            final_attrs['id'],
-            json_encode(self.config)
-            )
+        return mark_safe(render_to_string('ckeditor/widget.html', {
+            'final_attrs': flatatt(final_attrs),
+            'value': conditional_escape(force_unicode(value)),
+            'id': final_attrs['id'],
+            'config': json_encode(self.config)
+            })
         )
