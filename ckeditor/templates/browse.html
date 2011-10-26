@@ -67,13 +67,19 @@
             }
             function scale_image() {
                 var max_width = 500;
+                var max_height = 500;
                 var image = $(".advance-link > img");
                 var image_width = image.width();
-                if (image_width > max_width) {
-                    var aspect = image.height() / image_width;
-                    var image_height = max_width * aspect;
-                    image.width(max_width);
-                    image.height(image_height);
+                var image_height = image.height();
+                var aspect = image_width / image_height;
+                if(image_width/image_height > max_width/max_height) {
+                    if(image_width > max_width) {
+                        image.width(max_width);
+                        image.height(max_width / aspect);
+                    }
+                } else if(image_height > max_height) {
+                    image.height(max_height);
+                    image.width(max_height * aspect);
                 }
             }
 
