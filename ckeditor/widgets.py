@@ -1,3 +1,4 @@
+import copy
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -36,7 +37,7 @@ class CKEditorWidget(forms.Textarea):
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
         # Setup config from defaults.
-        self.config = DEFAULT_CONFIG
+        self.config = copy.deepcopy(DEFAULT_CONFIG)
 
         # Try to get valid config from settings.
         configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
