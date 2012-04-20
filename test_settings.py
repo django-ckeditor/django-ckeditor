@@ -1,4 +1,9 @@
-DATABASE_ENGINE = 'sqlite3'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'NAME': 'ckeditor.test.db',                      
+    }
+}
 
 INSTALLED_APPS = [
     'ckeditor',
