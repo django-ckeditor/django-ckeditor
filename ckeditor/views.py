@@ -119,7 +119,10 @@ def upload(request):
         out.write(chunk)
     out.close()
 
-    create_thumbnail(upload_filename)
+    try:
+        create_thumbnail(upload_filename)
+    except IOError:
+        pass
 
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(upload_filename)
@@ -152,10 +155,12 @@ def get_image_browse_urls(user=None):
             if '_thumb' in filename:
                 continue
 
-            images.append({
-                'thumb': get_media_url(get_thumb_filename(filename)),
-                'src': get_media_url(filename)
-            })
+            thumb_filename = get_thumb_filename(filename)
+            if os.path.isfile(thumb_filename):
+                images.append({
+                    'thumb': get_media_url(thumb_filename),
+                    'src': get_media_url(filename)
+                })
 
     return images
 
