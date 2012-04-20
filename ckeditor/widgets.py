@@ -49,7 +49,7 @@ class CKEditorWidget(forms.Textarea):
         if configs != None:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
-                if configs.has_key(config_name):
+                if config_name in configs:
                     config = configs[config_name]
                     # Make sure the configuration is a dictionary.
                     if not isinstance(config, dict):
