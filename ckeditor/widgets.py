@@ -13,10 +13,10 @@ from django.forms.util import flatatt
 json_encode = simplejson.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'v2',
+    'skin': 'django',
     'toolbar': 'Full',
     'height': 291,
-    'width': 618,
+    'width': 835,
     'filebrowserWindowWidth': 940,
     'filebrowserWindowHeight': 747,
 }

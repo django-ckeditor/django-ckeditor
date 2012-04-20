@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -71,6 +71,9 @@ CKEDITOR.ui.prototype =
 
 		var result = handler && handler.create.apply( this, item.args );
 
+		// Allow overrides from skin ui definitions..
+		item && ( result = CKEDITOR.tools.extend( result, this._.editor.skin[ item.type ], true ) );
+
 		// Add reference inside command object.
 		if ( command )
 			command.uiItems.push( result );
@@ -90,6 +93,8 @@ CKEDITOR.ui.prototype =
 		this._.handlers[ type ] = handler;
 	}
 };
+
+CKEDITOR.event.implementOn( CKEDITOR.ui );
 
 /**
  * (Virtual Class) Do not call this constructor. This class is not really part
@@ -113,4 +118,11 @@ CKEDITOR.ui.prototype =
  *             return new CKEDITOR.ui.button( definition );
  *         }
  *     });
+ */
+
+/**
+ * Internal event fired when a new UI element is ready
+ * @name CKEDITOR.ui#ready
+ * @event
+ * @param {Object} element The new element
  */

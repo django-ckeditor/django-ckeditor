@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -32,15 +32,21 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 (function()
 {
 	/**
-	 * Allow CKEditor to override jQuery.fn.val(). This results in ability to use val()
-	 * function on textareas as usual and having those calls synchronized with CKEditor
-	 * Rich Text Editor component.
-	 *
-	 * This config option is global and executed during plugin load.
-	 * Can't be customized across editor instances.
-	 *
+	 * Allows CKEditor to override jQuery.fn.val(), making it possible to use the val()
+	 * function on textareas, as usual, having it synchronized with CKEditor.<br>
+	 * <br>
+	 * This configuration option is global and executed during the jQuery Adapter loading.
+	 * It can't be customized across editor instances.
 	 * @type Boolean
 	 * @example
+	 * &lt;script&gt;
+	 * CKEDITOR.config.jqueryOverrideVal = true;
+	 * &lt;/script&gt;
+	 * &lt;!-- Important: The JQuery adapter is loaded *after* setting jqueryOverrideVal --&gt;
+	 * &lt;script src="/ckeditor/adapters/jquery.js"&gt;&lt;/script&gt;
+	 * @example
+	 * // ... then later in the code ...
+	 *
 	 * $( 'textarea' ).ckeditor();
 	 * // ...
 	 * $( 'textarea' ).val( 'New content' );
@@ -97,6 +103,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		 */
 		ckeditor: function( callback, config )
 		{
+			if ( !CKEDITOR.env.isCompatible )
+				return this;
+
 			if ( !jQuery.isFunction( callback ))
 			{
 				var tmp = config;

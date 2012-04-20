@@ -1,24 +1,16 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 CKEDITOR.skins.add( 'kama', (function()
 {
-	var preload = [],
-		uiColorStylesheetId = 'cke_ui_color';
-
-	if ( CKEDITOR.env.ie && CKEDITOR.env.version < 7 )
-	{
-		// For IE6, we need to preload some images, otherwhise they will be
-		// downloaded several times (CSS background bug).
-		preload.push( 'icons.png', 'images/sprites_ie6.png', 'images/dialog_sides.gif' );
-	}
+	var uiColorStylesheetId = 'cke_ui_color';
 
 	return {
-		preload		: preload,
 		editor		: { css : [ 'editor.css' ] },
 		dialog		: { css : [ 'dialog.css' ] },
+		richcombo	: { canGroup: false },
 		templates	: { css : [ 'templates.css' ] },
 		margins		: [ 0, 0, 0, 0 ],
 		init : function( editor )
@@ -147,7 +139,7 @@ CKEDITOR.skins.add( 'kama', (function()
 				{
 					var cssContent,
 						uiStyle = getStylesheet( CKEDITOR.document ),
-						cssId = '.cke_editor_' + CKEDITOR.tools.escapeCssSelector( editor.name );
+						cssId = '.' + editor.id;
 
 					var cssSelectors =
 						[
@@ -225,30 +217,6 @@ CKEDITOR.skins.add( 'kama', (function()
 						width : width + 'px',
 						height : height + 'px'
 					});
-
-				// Fix the size of the elements which have flexible lengths.
-				setTimeout( function()
-					{
-						var innerDialog = dialog.parts.dialog.getChild( [ 0, 0, 0 ] ),
-							body = innerDialog.getChild( 0 );
-
-						// tc
-						var el = innerDialog.getChild( 2 );
-						el.setStyle( 'width', ( body.$.offsetWidth ) + 'px' );
-
-						// bc
-						el = innerDialog.getChild( 7 );
-						el.setStyle( 'width', ( body.$.offsetWidth - 28 ) + 'px' );
-
-						// ml
-						el = innerDialog.getChild( 4 );
-						el.setStyle( 'height', ( body.$.offsetHeight - 31 - 14 ) + 'px' );
-
-						// mr
-						el = innerDialog.getChild( 5 );
-						el.setStyle( 'height', ( body.$.offsetHeight - 31 - 14 ) + 'px' );
-					},
-					100 );
 			});
 	}
 })();

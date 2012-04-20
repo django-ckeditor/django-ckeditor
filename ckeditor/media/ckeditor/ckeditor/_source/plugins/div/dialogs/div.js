@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
@@ -140,8 +140,8 @@
 			var containedBlocks = [], block;
 
 			// Get all ranges from the selection.
-			var selection = editor.document.getSelection();
-			var ranges = selection.getRanges();
+			var selection = editor.document.getSelection(),
+				ranges = selection.getRanges();
 			var bookmarks = selection.createBookmarks();
 			var i, iterator;
 
@@ -330,7 +330,13 @@
 								{
 									var styleName;
 									if ( ( styleName = this.getValue() ) )
-										styles[ styleName ].applyToObject( element );
+									{
+										var style = styles[ styleName ];
+										var customData = element.getCustomData( 'elementStyle' ) || '';
+
+										style.applyToObject( element );
+										element.setCustomData( 'elementStyle', customData + style._.definition.attributes.style );
+									}
 								}
 							},
 							{
@@ -386,9 +392,8 @@
 											commit : function( element )
 											{
 												// Merge with 'elementStyle', which is of higher priority.
-												var value = this.getValue(),
-														merged = [ value, element.getAttribute( 'style' ) ].join( ';' );
-												value && element.setAttribute( 'style', merged );
+												var merged = this.getValue() + ( element.getCustomData( 'elementStyle' ) || '' );
+												element.setAttribute( 'style', merged );
 											}
 										}
 								]
@@ -432,50 +437,42 @@
 			],
 			onLoad : function()
 			{
-				setupFields.call(this);
+				setupFields.call( this );
 
 				// Preparing for the 'elementStyle' field.
 				var dialog = this,
-					 stylesField = this.getContentElement( 'info', 'elementStyle' ),
-					 // Reuse the 'stylescombo' plugin's styles definition.
-					 customStylesConfig =  editor.config.stylesCombo_stylesSet,
-					 stylesSetName = customStylesConfig && customStylesConfig.split( ':' )[ 0 ];
+					 stylesField = this.getContentElement( 'info', 'elementStyle' );
 
-				if ( stylesSetName )
+				 // Reuse the 'stylescombo' plugin's styles definition.
+				editor.getStylesSet( function( stylesDefinitions )
 				{
-					CKEDITOR.stylesSet.load( stylesSetName,
-						function( stylesSet )
+					var styleName;
+
+					if ( stylesDefinitions )
+					{
+						// Digg only those styles that apply to 'div'.
+						for ( var i = 0 ; i < stylesDefinitions.length ; i++ )
 						{
-							var stylesDefinitions = stylesSet[ stylesSetName ],
-								styleName;
-
-							if ( stylesDefinitions )
+							var styleDefinition = stylesDefinitions[ i ];
+							if ( styleDefinition.element && styleDefinition.element == 'div' )
 							{
-								// Digg only those styles that apply to 'div'.
-								for ( var i = 0 ; i < stylesDefinitions.length ; i++ )
-								{
-									var styleDefinition = stylesDefinitions[ i ];
-									if ( styleDefinition.element && styleDefinition.element == 'div' )
-									{
-										styleName = styleDefinition.name;
-										styles[ styleName ] = new CKEDITOR.style( styleDefinition );
+								styleName = styleDefinition.name;
+								styles[ styleName ] = new CKEDITOR.style( styleDefinition );
 
-										// Populate the styles field options with style name.
-										stylesField.items.push( [ styleName, styleName ] );
-										stylesField.add( styleName, styleName );
-									}
-								}
+								// Populate the styles field options with style name.
+								stylesField.items.push( [ styleName, styleName ] );
+								stylesField.add( styleName, styleName );
 							}
+						}
+					}
 
+					// We should disable the content element
+					// it if no options are available at all.
+					stylesField[ stylesField.items.length > 1 ? 'enable' : 'disable' ]();
 
-							// We should disable the content element
-							// it if no options are available at all.
-							stylesField[ stylesField.items.length > 1 ? 'enable' : 'disable' ]();
-
-							// Now setup the field value manually.
-							setTimeout( function() { stylesField.setup( dialog._element ); }, 0 );
-						} );
-				}
+					// Now setup the field value manually.
+					setTimeout( function() { stylesField.setup( dialog._element ); }, 0 );
+				} );
 			},
 			onShow : function()
 			{
@@ -511,6 +508,9 @@
 			},
 			onHide : function()
 			{
+				// Remove style only when editing existing DIV. (#6315)
+				if ( command == 'editdiv' )
+					this._element.removeCustomData( 'elementStyle' );
 				delete this._element;
 			}
 		};

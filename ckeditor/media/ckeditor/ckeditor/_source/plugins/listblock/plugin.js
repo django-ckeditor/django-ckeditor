@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -9,9 +9,9 @@ CKEDITOR.plugins.add( 'listblock',
 
 	onLoad : function()
 	{
-		CKEDITOR.ui.panel.prototype.addListBlock = function( name, definiton )
+		CKEDITOR.ui.panel.prototype.addListBlock = function( name, definition )
 		{
-			return this.addBlock( name, new CKEDITOR.ui.listBlock( this.getHolderElement(), definiton ) );
+			return this.addBlock( name, new CKEDITOR.ui.listBlock( this.getHolderElement(), definition ) );
 		};
 
 		CKEDITOR.ui.listBlock = CKEDITOR.tools.createClass(
@@ -36,7 +36,8 @@ CKEDITOR.plugins.add( 'listblock',
 					keys[ 9 ]	= 'next';					// TAB
 					keys[ 38 ]	= 'prev';					// ARROW-UP
 					keys[ CKEDITOR.SHIFT + 9 ]	= 'prev';	// SHIFT + TAB
-					keys[ 32 ]	= 'click';					// SPACE
+					keys[ 32 ]	= CKEDITOR.env.ie ? 'mouseup' : 'click';					// SPACE
+					CKEDITOR.env.ie && ( keys[ 13 ] = 'mouseup' );		// Manage ENTER, since onclick is blocked in IE (#8041).
 
 					this._.pendingHtml = [];
 					this._.items = {};
@@ -81,7 +82,7 @@ CKEDITOR.plugins.add( 'listblock',
 					add : function( value, html, title )
 					{
 						var pendingHtml = this._.pendingHtml,
-							id = 'cke_' + CKEDITOR.tools.getNextNumber();
+							id = CKEDITOR.tools.getNextId();
 
 						if ( !this._.started )
 						{
@@ -93,11 +94,12 @@ CKEDITOR.plugins.add( 'listblock',
 						this._.items[ value ] = id;
 
 						pendingHtml.push(
-							'<li id=', id, ' class=cke_panel_listItem>' +
+							'<li id=', id, ' class=cke_panel_listItem role=presentation>' +
 								'<a id="', id, '_option" _cke_focus=1 hidefocus=true' +
 									' title="', title || value, '"' +
-									' href="javascript:void(\'', value, '\')"' +
-									' onclick="CKEDITOR.tools.callFunction(', this._.getClick(), ',\'', value, '\'); return false;"',
+									' href="javascript:void(\'', value, '\')" ' +
+									( CKEDITOR.env.ie ? 'onclick="return false;" onmouseup' : 'onclick' ) +		// #188
+										'="CKEDITOR.tools.callFunction(', this._.getClick(), ',\'', value, '\'); return false;"',
 									' role="option"' +
 									' aria-posinset="' + ++this._.size + '">',
 									html || value,
@@ -109,7 +111,7 @@ CKEDITOR.plugins.add( 'listblock',
 					{
 						this._.close();
 
-						var id = 'cke_' + CKEDITOR.tools.getNextNumber();
+						var id = CKEDITOR.tools.getNextId();
 
 						this._.groups[ title ] = id;
 
@@ -194,12 +196,19 @@ CKEDITOR.plugins.add( 'listblock',
 						item.addClass( 'cke_selected' );
 
 						this.element.getDocument().getById( itemId + '_option' ).setAttribute( 'aria-selected', true );
-						this.element.setAttribute( 'aria-activedescendant', itemId + '_option' );
+						this.onMark && this.onMark( item );
 					},
 
 					unmark : function( value )
 					{
-						this.element.getDocument().getById( this._.items[ value ] ).removeClass( 'cke_selected' );
+						var doc = this.element.getDocument(),
+							itemId = this._.items[ value ],
+							item = doc.getById( itemId );
+
+						item.removeClass( 'cke_selected' );
+						doc.getById( itemId + '_option' ).removeAttribute( 'aria-selected' );
+
+						this.onUnmark && this.onUnmark( item );
 					},
 
 					unmarkAll : function()
@@ -209,8 +218,13 @@ CKEDITOR.plugins.add( 'listblock',
 
 						for ( var value in items )
 						{
-							doc.getById( items[ value ] ).removeClass( 'cke_selected' );
+							var itemId = items[ value ];
+
+							doc.getById( itemId ).removeClass( 'cke_selected' );
+							doc.getById( itemId + '_option' ).removeAttribute( 'aria-selected' );
 						}
+
+						this.onUnmark && this.onUnmark();
 					},
 
 					isMarked : function( value )

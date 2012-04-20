@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -28,7 +28,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		classid : [ { type : ATTRTYPE_OBJECT, name : 'classid' } ],
 		codebase : [ { type : ATTRTYPE_OBJECT, name : 'codebase'} ],
 		pluginspage : [ { type : ATTRTYPE_EMBED, name : 'pluginspage' } ],
-		src : [ { type : ATTRTYPE_PARAM, name : 'movie' }, { type : ATTRTYPE_EMBED, name : 'src' } ],
+		src : [ { type : ATTRTYPE_PARAM, name : 'movie' }, { type : ATTRTYPE_EMBED, name : 'src' }, { type : ATTRTYPE_OBJECT, name :  'data' } ],
 		name : [ { type : ATTRTYPE_EMBED, name : 'name' } ],
 		align : [ { type : ATTRTYPE_OBJECT, name : 'align' } ],
 		title : [ { type : ATTRTYPE_OBJECT, name : 'title' }, { type : ATTRTYPE_EMBED, name : 'title' } ],
@@ -48,6 +48,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	names = [ 'allowFullScreen', 'play', 'loop', 'menu' ];
 	for ( i = 0 ; i < names.length ; i++ )
 		attributesMap[ names[i] ][0]['default'] = attributesMap[ names[i] ][1]['default'] = true;
+
+	var defaultToPixel = CKEDITOR.tools.cssLength;
 
 	function loadValue( objectNode, embedNode, paramMap )
 	{
@@ -124,7 +126,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			switch ( attrDef.type )
 			{
 				case ATTRTYPE_OBJECT:
-					if ( !objectNode )
+					// Avoid applying the data attribute when not needed (#7733)
+					if ( !objectNode || ( attrDef.name == 'data' && embedNode && !objectNode.hasAttribute( 'data' ) ) )
 						continue;
 					var value = this.getValue();
 					if ( isRemove || isCheckbox && value === attrDef[ 'default' ] )
@@ -175,8 +178,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		var previewPreloader,
 			previewAreaHtml = '<div>' + CKEDITOR.tools.htmlEncode( editor.lang.common.preview ) +'<br>' +
-			'<div id="FlashPreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div>' +
-			'<div id="FlashPreviewBox"></div></div>';
+			'<div id="cke_FlashPreviewLoader' + CKEDITOR.tools.getNextNumber() + '" style="display:none"><div class="loading">&nbsp;</div></div>' +
+			'<div id="cke_FlashPreviewBox' + CKEDITOR.tools.getNextNumber() + '" class="FlashPreviewBox"></div></div>';
 
 		return {
 			title : editor.lang.flash.title,
@@ -186,11 +189,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				// Clear previously saved elements.
 				this.fakeImage = this.objectNode = this.embedNode = null;
-				previewPreloader = new CKEDITOR.dom.element( 'embeded', editor.document );
+				previewPreloader = new CKEDITOR.dom.element( 'embed', editor.document );
 
 				// Try to detect any embed or object tag that has Flash parameters.
 				var fakeImage = this.getSelectedElement();
-				if ( fakeImage && fakeImage.getAttribute( '_cke_real_element_type' ) && fakeImage.getAttribute( '_cke_real_element_type' ) == 'flash' )
+				if ( fakeImage && fakeImage.data( 'cke-real-element-type' ) && fakeImage.data( 'cke-real-element-type' ) == 'flash' )
 				{
 					this.fakeImage = fakeImage;
 
@@ -265,12 +268,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						paramMap[ paramList.getItem( i ).getAttribute( 'name' ) ] = paramList.getItem( i );
 				}
 
-				// Apply or remove flash parameters.
-				var extraStyles = {};
-				this.commitContent( objectNode, embedNode, paramMap, extraStyles );
+				// A subset of the specified attributes/styles
+				// should also be applied on the fake element to
+				// have better visual effect. (#5240)
+				var extraStyles = {}, extraAttributes = {};
+				this.commitContent( objectNode, embedNode, paramMap, extraStyles, extraAttributes );
 
 				// Refresh the fake image.
 				var newFakeImage = editor.createFakeElement( objectNode || embedNode, 'cke_flash', 'flash', true );
+				newFakeImage.setAttributes( extraAttributes );
 				newFakeImage.setStyles( extraStyles );
 				if ( this.fakeImage )
 				{
@@ -362,47 +368,19 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									type : 'text',
 									id : 'width',
 									style : 'width:95px',
-									label : editor.lang.flash.width,
-									validate : CKEDITOR.dialog.validate.integer( editor.lang.flash.validateWidth ),
-									setup : function( objectNode, embedNode, paramMap, fakeImage )
-									{
-										loadValue.apply( this, arguments );
-										if ( fakeImage )
-										{
-											var fakeImageWidth = parseInt( fakeImage.$.style.width, 10 );
-											if ( !isNaN( fakeImageWidth ) )
-												this.setValue( fakeImageWidth );
-										}
-									},
-									commit : function( objectNode, embedNode, paramMap, extraStyles )
-									{
-										commitValue.apply( this, arguments );
-										if ( this.getValue() )
-											extraStyles.width = this.getValue() + 'px';
-									}
+									label : editor.lang.common.width,
+									validate : CKEDITOR.dialog.validate.htmlLength( editor.lang.common.invalidHtmlLength.replace( '%1', editor.lang.common.width ) ),
+									setup : loadValue,
+									commit : commitValue
 								},
 								{
 									type : 'text',
 									id : 'height',
 									style : 'width:95px',
-									label : editor.lang.flash.height,
-									validate : CKEDITOR.dialog.validate.integer( editor.lang.flash.validateHeight ),
-									setup : function( objectNode, embedNode, paramMap, fakeImage )
-									{
-										loadValue.apply( this, arguments );
-										if ( fakeImage )
-										{
-											var fakeImageHeight = parseInt( fakeImage.$.style.height, 10 );
-											if ( !isNaN( fakeImageHeight ) )
-												this.setValue( fakeImageHeight );
-										}
-									},
-									commit : function( objectNode, embedNode, paramMap, extraStyles )
-									{
-										commitValue.apply( this, arguments );
-										if ( this.getValue() )
-											extraStyles.height = this.getValue() + 'px';
-									}
+									label : editor.lang.common.height,
+									validate : CKEDITOR.dialog.validate.htmlLength( editor.lang.common.invalidHtmlLength.replace( '%1', editor.lang.common.height ) ),
+									setup : loadValue,
+									commit : commitValue
 								},
 								{
 									type : 'text',
@@ -555,24 +533,29 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								{
 									id : 'align',
 									type : 'select',
-									label : editor.lang.flash.align,
+									label : editor.lang.common.align,
 									'default' : '',
 									style : 'width : 100%;',
 									items :
 									[
 										[ editor.lang.common.notSet , ''],
-										[ editor.lang.flash.alignLeft , 'left'],
+										[ editor.lang.common.alignLeft , 'left'],
 										[ editor.lang.flash.alignAbsBottom , 'absBottom'],
 										[ editor.lang.flash.alignAbsMiddle , 'absMiddle'],
 										[ editor.lang.flash.alignBaseline , 'baseline'],
-										[ editor.lang.flash.alignBottom , 'bottom'],
-										[ editor.lang.flash.alignMiddle , 'middle'],
-										[ editor.lang.flash.alignRight , 'right'],
+										[ editor.lang.common.alignBottom , 'bottom'],
+										[ editor.lang.common.alignMiddle , 'middle'],
+										[ editor.lang.common.alignRight , 'right'],
 										[ editor.lang.flash.alignTextTop , 'textTop'],
-										[ editor.lang.flash.alignTop , 'top']
+										[ editor.lang.common.alignTop , 'top']
 									],
 									setup : loadValue,
-									commit : commitValue
+									commit : function( objectNode, embedNode, paramMap, extraStyles, extraAttributes )
+									{
+										var value = this.getValue();
+										commitValue.apply( this, arguments );
+										value && ( extraAttributes.align = value );
+									}
 								},
 								{
 									type : 'html',
@@ -678,6 +661,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						{
 							type : 'text',
 							id : 'style',
+							validate : CKEDITOR.dialog.validate.inlineStyle( editor.lang.common.invalidInlineStyle ),
 							label : editor.lang.common.cssStyle,
 							setup : loadValue,
 							commit : commitValue

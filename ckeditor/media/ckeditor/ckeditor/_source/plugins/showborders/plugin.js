@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -18,7 +18,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		( CKEDITOR.env.ie6Compat ?
 		  [
 			'.%1 table.%2,',
-			 '.%1 table.%2 td, .%1 table.%2 th,',
+			 '.%1 table.%2 td, .%1 table.%2 th',
 			 '{',
 				'border : #d3d3d3 1px dotted',
 			 '}'
@@ -40,6 +40,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		preserveState : true,
 		editorFocus : false,
+		readOnly: 1,
 
 		exec : function ( editor )
 		{
@@ -49,8 +50,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		refresh : function( editor )
 		{
-			var funcName = ( this.state == CKEDITOR.TRISTATE_ON ) ? 'addClass' : 'removeClass';
-			editor.document.getBody()[ funcName ]( 'cke_show_borders' );
+			if ( editor.document )
+			{
+				var funcName = ( this.state == CKEDITOR.TRISTATE_ON ) ? 'addClass' : 'removeClass';
+				editor.document.getBody()[ funcName ]( 'cke_show_borders' );
+			}
 		}
 	};
 
@@ -83,6 +87,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					if ( command.state != CKEDITOR.TRISTATE_DISABLED )
 						command.refresh( editor );
 				});
+
+			editor.on( 'removeFormatCleanup', function( evt )
+				{
+					var element = evt.data;
+					if ( editor.getCommand( 'showborders' ).state == CKEDITOR.TRISTATE_ON &&
+						element.is( 'table' ) && ( !element.hasAttribute( 'border' ) || parseInt( element.getAttribute( 'border' ), 10 ) <= 0 ) )
+							element.addClass( showBorderClassName );
+				});
 		},
 
 		afterInit : function( editor )
@@ -103,7 +115,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									cssClass = attributes[ 'class' ],
 									border = parseInt( attributes.border, 10 );
 
-								if ( !border || border <= 0 )
+								if ( ( !border || border <= 0 ) && ( !cssClass || cssClass.indexOf( showBorderClassName ) == -1 ) )
 									attributes[ 'class' ] = ( cssClass || '' ) + ' ' + showBorderClassName;
 							}
 						}
@@ -129,40 +141,65 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					}
 				} );
 			}
-
-			// Table dialog must be aware of it.
-			CKEDITOR.on( 'dialogDefinition', function( ev )
-				{
-					if ( ev.editor != editor )
-						return;
-
-					var dialogName = ev.data.name;
-
-					if ( dialogName == 'table' || dialogName == 'tableProperties' )
-					{
-						var dialogDefinition = ev.data.definition,
-							infoTab = dialogDefinition.getContents( 'info' ),
-							borderField = infoTab.get( 'txtBorder' ),
-							originalCommit = borderField.commit;
-
-						borderField.commit = CKEDITOR.tools.override( originalCommit, function( org )
-						{
-							return function( data, selectedTable )
-								{
-									org.apply( this, arguments );
-									var value = parseInt( this.getValue(), 10 );
-									selectedTable[ ( !value || value <= 0 ) ? 'addClass' : 'removeClass' ]( showBorderClassName );
-								};
-						} );
-					}
-				});
 		}
-
 	});
+
+	// Table dialog must be aware of it.
+	CKEDITOR.on( 'dialogDefinition', function( ev )
+	{
+		var dialogName = ev.data.name;
+
+		if ( dialogName == 'table' || dialogName == 'tableProperties' )
+		{
+			var dialogDefinition = ev.data.definition,
+				infoTab = dialogDefinition.getContents( 'info' ),
+				borderField = infoTab.get( 'txtBorder' ),
+				originalCommit = borderField.commit;
+
+			borderField.commit = CKEDITOR.tools.override( originalCommit, function( org )
+			{
+				return function( data, selectedTable )
+					{
+						org.apply( this, arguments );
+						var value = parseInt( this.getValue(), 10 );
+						selectedTable[ ( !value || value <= 0 ) ? 'addClass' : 'removeClass' ]( showBorderClassName );
+					};
+			} );
+
+			var advTab = dialogDefinition.getContents( 'advanced' ),
+				classField = advTab && advTab.get( 'advCSSClasses' );
+
+			if ( classField )
+			{
+				classField.setup = CKEDITOR.tools.override( classField.setup, function( originalSetup )
+					{
+						return function()
+							{
+								originalSetup.apply( this, arguments );
+								this.setValue( this.getValue().replace( /cke_show_border/, '' ) );
+							};
+					});
+
+				classField.commit = CKEDITOR.tools.override( classField.commit, function( originalCommit )
+					{
+						return function( data, element )
+							{
+								originalCommit.apply( this, arguments );
+
+								if ( !parseInt( element.getAttribute( 'border' ), 10 ) )
+									element.addClass( 'cke_show_border' );
+							};
+					});
+			}
+		}
+	});
+
 } )();
 
 /**
  * Whether to automatically enable the "show borders" command when the editor loads.
+ * (ShowBorders in FCKeditor)
+ * @name CKEDITOR.config.startupShowBorders
  * @type Boolean
  * @default true
  * @example

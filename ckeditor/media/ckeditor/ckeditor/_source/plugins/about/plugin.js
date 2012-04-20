@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -11,6 +11,7 @@ CKEDITOR.plugins.add( 'about',
 		var command = editor.addCommand( 'about', new CKEDITOR.dialogCommand( 'about' ) );
 		command.modes = { wysiwyg:1, source:1 };
 		command.canUndo = false;
+		command.readOnly = 1;
 
 		editor.ui.addButton( 'About',
 			{

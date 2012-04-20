@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -45,15 +45,23 @@ CKEDITOR.plugins.add( 'table',
 				} );
 		}
 
+		editor.on( 'doubleclick', function( evt )
+			{
+				var element = evt.data.element;
+
+				if ( element.is( 'table' ) )
+					evt.data.dialog = 'tableProperties';
+			});
+
 		// If the "contextmenu" plugin is loaded, register the listeners.
 		if ( editor.contextMenu )
 		{
 			editor.contextMenu.addListener( function( element, selection )
 				{
-					if ( !element )
+					if ( !element || element.isReadOnly() )
 						return null;
 
-					var isTable	= element.is( 'table' ) || element.hasAscendant( 'table' );
+					var isTable = element.hasAscendant( 'table', 1 );
 
 					if ( isTable )
 					{

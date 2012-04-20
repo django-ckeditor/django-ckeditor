@@ -1,11 +1,16 @@
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 .cke_skin_office2003 .cke_button_source .cke_icon
 {
 	background-position: 0 0;
+}
+
+.cke_skin_office2003 .cke_button_docProps .cke_icon
+{
+	background-position: 0 -16px;
 }
 
 .cke_skin_office2003 .cke_button_newpage .cke_icon
@@ -248,6 +253,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	background-position: 0 -416px;
 }
 
+.cke_skin_office2003 .cke_mixed_dir_content .cke_button_numberedlist .cke_icon
+{
+	background-position: 0 -1217px;
+}
+
+.cke_skin_office2003 .cke_mixed_dir_content .cke_button_bulletedlist .cke_icon
+{
+	background-position: 0 -1233px;
+}
+
 .cke_skin_office2003 .cke_button_outdent .cke_icon
 {
 	background-position: 0 -432px;
@@ -256,6 +271,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_office2003 .cke_button_indent .cke_icon
 {
 	background-position: 0 -448px;
+}
+
+.cke_skin_office2003 .cke_mixed_dir_content .cke_button_indent .cke_icon
+{
+	background-position: 0 -1265px;
+}
+
+.cke_skin_office2003 .cke_mixed_dir_content .cke_button_outdent .cke_icon
+{
+	background-position: 0 -1249px;
 }
 
 .cke_skin_office2003 .cke_button_justifyleft .cke_icon
@@ -321,4 +346,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_office2003 .cke_button_removediv .cke_icon
 {
 	background-position: 0 -1200px;
+}
+
+.cke_skin_office2003 .cke_button_bidirtl .cke_icon
+{
+	background-position: 0 -1072px;
+}
+
+.cke_skin_office2003 .cke_button_bidiltr .cke_icon
+{
+	background-position: 0 -1056px;
+}
+.cke_skin_office2003 .cke_button_iframe .cke_icon
+{
+	background-position: 0 -1279px;
 }

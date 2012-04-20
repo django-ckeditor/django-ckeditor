@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['fr'] =
@@ -31,11 +31,11 @@ CKEDITOR.lang['fr'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
+	editorTitle : 'Éditeur de Texte Enrichi, %1, appuyez sur ALT-0 pour l\'aide.',
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Éditeur de Texte Enrichi',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Source',
@@ -56,6 +56,7 @@ CKEDITOR.lang['fr'] =
 	superscript		: 'Exposant',
 	horizontalrule	: 'Ligne horizontale',
 	pagebreak		: 'Saut de page',
+	pagebreakAlt		: 'Saut de page',
 	unlink			: 'Supprimer le lien',
 	undo			: 'Annuler',
 	redo			: 'Rétablir',
@@ -92,35 +93,61 @@ CKEDITOR.lang['fr'] =
 		cssStyle		: 'Style',
 		ok				: 'OK',
 		cancel			: 'Annuler',
-		close			: 'Close', // MISSING
-		preview			: 'Preview', // MISSING
+		close			: 'Fermer',
+		preview			: 'Aperçu',
 		generalTab		: 'Général',
 		advancedTab		: 'Avancé',
 		validateNumberFailed : 'Cette valeur n\'est pas un nombre.',
-		confirmNewPage	: 'Les changements non sauvegardés seront perdus. Etes-vous sûr de vouloir charger une nouvelle page?',
-		confirmCancel	: 'Certaines options ont été modifiées. Etes-vous sûr de vouloir fermer?',
-		options			: 'Options', // MISSING
-		target			: 'Target', // MISSING
-		targetNew		: 'New Window (_blank)', // MISSING
-		targetTop		: 'Topmost Window (_top)', // MISSING
-		targetSelf		: 'Same Window (_self)', // MISSING
-		targetParent	: 'Parent Window (_parent)', // MISSING
+		confirmNewPage	: 'Les changements non sauvegardés seront perdus. Êtes-vous sûr de vouloir charger une nouvelle page?',
+		confirmCancel	: 'Certaines options ont été modifiées. Êtes-vous sûr de vouloir fermer?',
+		options			: 'Options',
+		target			: 'Cible (Target)',
+		targetNew		: 'Nouvelle fenêtre (_blank)',
+		targetTop		: 'Fenêtre supérieure (_top)',
+		targetSelf		: 'Même fenêtre (_self)',
+		targetParent	: 'Fenêtre parent (_parent)',
+		langDirLTR		: 'Gauche à Droite (LTR)',
+		langDirRTL		: 'Droite à Gauche (RTL)',
+		styles			: 'Style',
+		cssClasses		: 'Classes de style',
+		width			: 'Largeur',
+		height			: 'Hauteur',
+		align			: 'Alignement',
+		alignLeft		: 'Gauche',
+		alignRight		: 'Droite',
+		alignCenter		: 'Centré',
+		alignTop		: 'Haut',
+		alignMiddle		: 'Milieu',
+		alignBottom		: 'Bas',
+		invalidHeight	: 'La hauteur doit être un nombre.',
+		invalidWidth	: 'La largeur doit être un nombre.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, Indisponible</span>'
+	},
+
+	contextmenu :
+	{
+		options : 'Options du menu contextuel'
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Insérer un caractère spécial',
-		title		: 'Sélectionnez un caractère'
+		title		: 'Sélectionnez un caractère',
+		options : 'Options des caractères spéciaux'
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Lien',
+		other 		: '<autre>',
 		menu		: 'Editer le lien',
 		title		: 'Lien',
 		info		: 'Infos sur le lien',
@@ -128,7 +155,7 @@ CKEDITOR.lang['fr'] =
 		upload		: 'Envoyer',
 		advanced	: 'Avancé',
 		type		: 'Type de lien',
-		toUrl		: 'URL', // MISSING
+		toUrl		: 'URL',
 		toAnchor	: 'Transformer le lien en ancre dans le texte',
 		toEmail		: 'E-mail',
 		targetFrame		: '<cadre>',
@@ -144,9 +171,7 @@ CKEDITOR.lang['fr'] =
 		popupFullScreen	: 'Plein écran (IE)',
 		popupScrollBars	: 'Barres de défilement',
 		popupDependent	: 'Dépendante (Netscape)',
-		popupWidth		: 'Largeur',
 		popupLeft		: 'Position gauche',
-		popupHeight		: 'Hauteur',
 		popupTop		: 'Position haute',
 		id				: 'Id',
 		langDir			: 'Sens d\'écriture',
@@ -154,18 +179,19 @@ CKEDITOR.lang['fr'] =
 		langDirRTL		: 'Droite à gauche',
 		acccessKey		: 'Touche d\'accessibilité',
 		name			: 'Nom',
-		langCode		: 'Code de langue',
-		tabIndex		: 'Index de tabulation',
-		advisoryTitle	: 'Description (title)',
+		langCode			: 'Code de langue',
+		tabIndex			: 'Index de tabulation',
+		advisoryTitle		: 'Description (title)',
 		advisoryContentType	: 'Type de contenu (ex: text/html)',
-		cssClasses		: 'Classe du CSS',
+		cssClasses		: 'Classe CSS',
 		charset			: 'Charset de la cible',
 		styles			: 'Style',
-		selectAnchor	: 'Sélectionner l\'ancre',
+		rel			: 'Relation',
+		selectAnchor		: 'Sélectionner l\'ancre',
 		anchorName		: 'Par nom d\'ancre',
-		anchorId		: 'Par ID d\'élément',
-		emailAddress	: 'Adresse E-Mail',
-		emailSubject	: 'Sujet du message',
+		anchorId			: 'Par ID d\'élément',
+		emailAddress		: 'Adresse E-Mail',
+		emailSubject		: 'Sujet du message',
 		emailBody		: 'Corps du message',
 		noAnchors		: '(Aucune ancre disponible dans ce document)',
 		noUrl			: 'Veuillez entrer l\'adresse du lien',
@@ -179,7 +205,32 @@ CKEDITOR.lang['fr'] =
 		menu		: 'Editer l\'ancre',
 		title		: 'Propriétés de l\'ancre',
 		name		: 'Nom de l\'ancre',
-		errorName	: 'Veuillez entrer le nom de l\'ancre'
+		errorName	: 'Veuillez entrer le nom de l\'ancre.',
+		remove		: 'Remove Anchor' // MISSING
+	},
+
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Propriétés de la liste numérotée',
+		bulletedTitle		: 'Propriétés de la liste à puces',
+		type				: 'Type',
+		start				: 'Début',
+		validateStartNumber				:'Le premier élément de la liste doit être un nombre entier.',
+		circle				: 'Cercle',
+		disc				: 'Disque',
+		square				: 'Carré',
+		none				: 'Aucun',
+		notset				: '<Non défini>',
+		armenian			: 'Numération arménienne',
+		georgian			: 'Numération géorgienne (an, ban, gan, etc.)',
+		lowerRoman			: 'Nombres romains minuscules (i, ii, iii, iv, v, etc.)',
+		upperRoman			: 'Nombres romains majuscules (I, II, III, IV, V, etc.)',
+		lowerAlpha			: 'Alphabétique minuscules (a, b, c, d, e, etc.)',
+		upperAlpha			: 'Alphabétique majuscules (A, B, C, D, E, etc.)',
+		lowerGreek			: 'Grec minuscule (alpha, beta, gamma, etc.)',
+		decimal				: 'Décimal (1, 2, 3, etc.)',
+		decimalLeadingZero	: 'Décimal précédé par un 0 (01, 02, 03, etc.)'
 	},
 
 	// Find And Replace Dialog
@@ -191,6 +242,7 @@ CKEDITOR.lang['fr'] =
 		findWhat			: 'Expression à trouver: ',
 		replaceWith			: 'Remplacer par: ',
 		notFoundMsg			: 'Le texte spécifié ne peut être trouvé.',
+		findOptions			: 'Find Options', // MISSING
 		matchCase			: 'Respecter la casse',
 		matchWord			: 'Mot entier uniquement',
 		matchCyclic			: 'Boucler',
@@ -208,15 +260,9 @@ CKEDITOR.lang['fr'] =
 		rows		: 'Lignes',
 		columns		: 'Colonnes',
 		border		: 'Taille de la bordure',
-		align		: 'Alignement du contenu',
-		alignLeft	: 'Gauche',
-		alignCenter	: 'Centré',
-		alignRight	: 'Droite',
-		width		: 'Largeur',
 		widthPx		: 'pixels',
 		widthPc		: '% pourcents',
-		widthUnit	: 'width unit', // MISSING
-		height		: 'Hauteur',
+		widthUnit	: 'unité de largeur',
 		cellSpace	: 'Espacement des cellules',
 		cellPad		: 'Marge interne des cellules',
 		caption		: 'Titre du tableau',
@@ -231,8 +277,8 @@ CKEDITOR.lang['fr'] =
 		invalidBorder	: 'La taille de la bordure doit être un nombre.',
 		invalidWidth	: 'La largeur du tableau doit être un nombre.',
 		invalidHeight	: 'La hauteur du tableau doit être un nombre.',
-		invalidCellSpacing	: 'L\'espacement des cellules doit être un nombre.',
-		invalidCellPadding	: 'La marge intérieure des cellules doit être un nombre.',
+		invalidCellSpacing	: 'L\'espacement des cellules doit être un nombre positif.',
+		invalidCellPadding	: 'La marge intérieure des cellules doit être un nombre positif.',
 
 		cell :
 		{
@@ -245,16 +291,13 @@ CKEDITOR.lang['fr'] =
 			mergeDown		: 'Fusionner en bas',
 			splitHorizontal	: 'Fractionner horizontalement',
 			splitVertical	: 'Fractionner verticalement',
-			title			: 'Propriétés de Cellule',
-			cellType		: 'Type de Cellule',
-			rowSpan			: 'Fusion de Lignes',
-			colSpan			: 'Fusion de Colonnes',
-			wordWrap		: 'Word Wrap', // MISSING
+			title			: 'Propriétés de la cellule',
+			cellType		: 'Type de cellule',
+			rowSpan			: 'Fusion de lignes',
+			colSpan			: 'Fusion de colonnes',
+			wordWrap		: 'Césure',
 			hAlign			: 'Alignement Horizontal',
 			vAlign			: 'Alignement Vertical',
-			alignTop		: 'Haut',
-			alignMiddle		: 'Milieu',
-			alignBottom		: 'Bas',
 			alignBaseline	: 'Bas du texte',
 			bgColor			: 'Couleur d\'arrière-plan',
 			borderColor		: 'Couleur de Bordure',
@@ -266,7 +309,7 @@ CKEDITOR.lang['fr'] =
 			invalidHeight	: 'La Hauteur de Cellule doit être un nombre.',
 			invalidRowSpan	: 'La fusion de lignes doit être un nombre entier.',
 			invalidColSpan	: 'La fusion de colonnes doit être un nombre entier.',
-			chooseColor		: 'Choose' // MISSING
+			chooseColor		: 'Choisissez'
 		},
 
 		row :
@@ -375,27 +418,19 @@ CKEDITOR.lang['fr'] =
 		btnUpload	: 'Envoyer sur le serveur',
 		upload		: 'Envoyer',
 		alt			: 'Texte de remplacement',
-		width		: 'Largeur',
-		height		: 'Hauteur',
-		lockRatio	: 'Garder les proportions',
-		unlockRatio	: 'Unlock Ratio', // MISSING
+		lockRatio	: 'Conserver les proportions',
 		resetSize	: 'Taille d\'origine',
 		border		: 'Bordure',
 		hSpace		: 'Espacement horizontal',
 		vSpace		: 'Espacement vertical',
-		align		: 'Alignement',
-		alignLeft	: 'Gauche',
-		alignRight	: 'Droite',
 		alertUrl	: 'Veuillez entrer l\'adresse de l\'image',
 		linkTab		: 'Lien',
 		button2Img	: 'Voulez-vous transformer le bouton image sélectionné en simple image?',
 		img2Button	: 'Voulez-vous transformer l\'image en bouton image?',
-		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
-		validateBorder	: 'Border must be a whole number.', // MISSING
-		validateHSpace	: 'HSpace must be a whole number.', // MISSING
-		validateVSpace	: 'VSpace must be a whole number.' // MISSING
+		urlMissing	: 'L\'adresse source de l\'image est manquante.',
+		validateBorder	: 'Bordure doit être un entier.',
+		validateHSpace	: 'HSpace doit être un entier.',
+		validateVSpace	: 'VSpace doit être un entier.'
 	},
 
 	// Flash Dialog
@@ -416,16 +451,10 @@ CKEDITOR.lang['fr'] =
 		accessAlways	: 'Toujours',
 		accessSameDomain: 'Même domaine',
 		accessNever		: 'Jamais',
-		align			: 'Alignement',
-		alignLeft		: 'Gauche',
 		alignAbsBottom	: 'Bas absolu',
 		alignAbsMiddle	: 'Milieu absolu',
 		alignBaseline	: 'Bas du texte',
-		alignBottom		: 'Bas',
-		alignMiddle		: 'Milieu',
-		alignRight		: 'Droite',
 		alignTextTop	: 'Haut du texte',
-		alignTop		: 'Haut',
 		quality			: 'Qualité',
 		qualityBest		: 'Meilleure',
 		qualityHigh		: 'Haute',
@@ -439,13 +468,9 @@ CKEDITOR.lang['fr'] =
 		windowMode		: 'Mode fenêtre',
 		flashvars		: 'Variables du Flash',
 		bgcolor			: 'Couleur d\'arrière-plan',
-		width			: 'Largeur',
-		height			: 'Hauteur',
 		hSpace			: 'Espacement horizontal',
 		vSpace			: 'Espacement vertical',
 		validateSrc		: 'L\'adresse ne doit pas être vide.',
-		validateWidth	: 'La largeur doit être un nombre.',
-		validateHeight	: 'La hauteur doit être un nombre.',
 		validateHSpace	: 'L\'espacement horizontal doit être un nombre.',
 		validateVSpace	: 'L\'espacement vertical doit être un nombre.'
 	},
@@ -457,7 +482,7 @@ CKEDITOR.lang['fr'] =
 		title			: 'Vérifier l\'orthographe',
 		notAvailable	: 'Désolé, le service est indisponible actuellement.',
 		errorLoading	: 'Erreur du chargement du service depuis l\'hôte : %s.',
-		notInDic		: 'N\'existe pas dans le dictionnaire',
+		notInDic		: 'N\'existe pas dans le dictionnaire.',
 		changeTo		: 'Modifier pour',
 		btnIgnore		: 'Ignorer',
 		btnIgnoreAll	: 'Ignorer tout',
@@ -466,22 +491,23 @@ CKEDITOR.lang['fr'] =
 		btnUndo			: 'Annuler',
 		noSuggestions	: '- Aucune suggestion -',
 		progress		: 'Vérification de l\'orthographe en cours...',
-		noMispell		: 'Vérification de l\'orthographe terminée : aucune erreur trouvée',
-		noChanges		: 'Vérification de l\'orthographe terminée : Aucun mot corrigé',
-		oneChange		: 'Vérification de l\'orthographe terminée : Un seul mot corrigé',
-		manyChanges		: 'Vérification de l\'orthographe terminée : %1 mots corrigés',
+		noMispell		: 'Vérification de l\'orthographe terminée : aucune erreur trouvée.',
+		noChanges		: 'Vérification de l\'orthographe terminée : Aucun mot corrigé.',
+		oneChange		: 'Vérification de l\'orthographe terminée : Un seul mot corrigé.',
+		manyChanges		: 'Vérification de l\'orthographe terminée : %1 mots corrigés.',
 		ieSpellDownload	: 'La vérification d\'orthographe n\'est pas installée. Voulez-vous la télécharger maintenant?'
 	},
 
 	smiley :
 	{
-		toolbar	: 'Emoticon',
-		title	: 'Insérer un émoticon'
+		toolbar	: 'Émoticones',
+		title	: 'Insérer un émoticone',
+		options : 'Options des émoticones'
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Elements path', // MISSING
+		eleLabel : 'Elements path',
 		eleTitle : '%1 éléments'
 	},
 
@@ -503,11 +529,11 @@ CKEDITOR.lang['fr'] =
 	clipboard :
 	{
 		title		: 'Coller',
-		cutError	: 'Les paramètres de sécurité de votre navigateur ne permettent pas à l\'éditeur d\'exécuter automatiquement l\'opération "couper". Veuillez utiliser le raccourci clavier (Ctrl+X).',
-		copyError	: 'Les paramètres de sécurité de votre navigateur ne permettent pas à l\'éditeur d\'exécuter automatiquement des opérations de copie. Veuillez utiliser le raccourci clavier (Ctrl+C).',
-		pasteMsg	: 'Veuillez coller le texte dans la zone suivante en utilisant le raccourci clavier (<strong>Ctrl+V</strong>) et cliquez sur OK',
+		cutError	: 'Les paramètres de sécurité de votre navigateur ne permettent pas à l\'éditeur d\'exécuter automatiquement l\'opération "couper". Veuillez utiliser le raccourci clavier (Ctrl/Cmd+X).',
+		copyError	: 'Les paramètres de sécurité de votre navigateur ne permettent pas à l\'éditeur d\'exécuter automatiquement des opérations de copie. Veuillez utiliser le raccourci clavier (Ctrl/Cmd+C).',
+		pasteMsg	: 'Veuillez coller le texte dans la zone suivante en utilisant le raccourci clavier (<strong>Ctrl/Cmd+V</strong>) et cliquez sur OK.',
 		securityMsg	: 'A cause des paramètres de sécurité de votre navigateur, l\'éditeur n\'est pas en mesure d\'accéder directement à vos données contenues dans le presse-papier. Vous devriez réessayer de coller les données dans la fenêtre.',
-		pasteArea	: 'Paste Area' // MISSING
+		pasteArea	: 'Coller la zone'
 	},
 
 	pastefromword :
@@ -515,7 +541,7 @@ CKEDITOR.lang['fr'] =
 		confirmCleanup	: 'Le texte à coller semble provenir de Word. Désirez-vous le nettoyer avant de coller?',
 		toolbar			: 'Coller depuis Word',
 		title			: 'Coller depuis Word',
-		error			: 'It was not possible to clean up the pasted data due to an internal error' // MISSING
+		error			: 'Il n\'a pas été possible de nettoyer les données collées à la suite d\'une erreur interne.'
 	},
 
 	pasteText :
@@ -528,6 +554,7 @@ CKEDITOR.lang['fr'] =
 	{
 		button			: 'Modèles',
 		title			: 'Contenu des modèles',
+		options : 'Options des modèles',
 		insertOption	: 'Remplacer le contenu actuel',
 		selectPromptMsg	: 'Veuillez sélectionner le modèle pour l\'ouvrir dans l\'éditeur',
 		emptyListMsg	: '(Aucun modèle disponible)'
@@ -538,7 +565,7 @@ CKEDITOR.lang['fr'] =
 	stylesCombo :
 	{
 		label		: 'Styles',
-		panelTitle	: 'Formatting Styles', // MISSING
+		panelTitle	: 'Styles de mise en page',
 		panelTitle1	: 'Styles de blocs',
 		panelTitle2	: 'Styles en ligne',
 		panelTitle3	: 'Styles d\'objet'
@@ -563,20 +590,29 @@ CKEDITOR.lang['fr'] =
 
 	div :
 	{
-		title				: 'Create Div Container', // MISSING
-		toolbar				: 'Create Div Container', // MISSING
-		cssClassInputLabel	: 'Stylesheet Classes', // MISSING
-		styleSelectLabel	: 'Style', // MISSING
-		IdInputLabel		: 'Id', // MISSING
-		languageCodeInputLabel	: ' Language Code', // MISSING
-		inlineStyleInputLabel	: 'Inline Style', // MISSING
-		advisoryTitleInputLabel	: 'Advisory Title', // MISSING
-		langDirLabel		: 'Language Direction', // MISSING
-		langDirLTRLabel		: 'Left to Right (LTR)', // MISSING
-		langDirRTLLabel		: 'Right to Left (RTL)', // MISSING
-		edit				: 'Edit Div', // MISSING
-		remove				: 'Remove Div' // MISSING
+		title				: 'Créer un container DIV',
+		toolbar				: 'Créer un container DIV',
+		cssClassInputLabel	: 'Classe CSS',
+		styleSelectLabel	: 'Style',
+		IdInputLabel		: 'Id',
+		languageCodeInputLabel	: 'Code de langue',
+		inlineStyleInputLabel	: 'Style en ligne',
+		advisoryTitleInputLabel	: 'Advisory Title',
+		langDirLabel		: 'Sens d\'écriture',
+		langDirLTRLabel		: 'Gauche à droite (LTR)',
+		langDirRTLLabel		: 'Droite à gauche (RTL)',
+		edit				: 'Éditer la DIV',
+		remove				: 'Enlever la DIV'
   	},
+
+	iframe :
+	{
+		title		: 'Propriétés de la IFrame',
+		toolbar		: 'IFrame',
+		noUrl		: 'Veuillez entrer l\'adresse du lien de la IFrame',
+		scrolling	: 'Permettre à la barre de défilement',
+		border		: 'Afficher une bordure de la IFrame'
+	},
 
 	font :
 	{
@@ -596,58 +632,59 @@ CKEDITOR.lang['fr'] =
 	{
 		textColorTitle	: 'Couleur de texte',
 		bgColorTitle	: 'Couleur d\'arrière plan',
-		panelTitle		: 'Colors', // MISSING
+		panelTitle		: 'Couleurs',
 		auto			: 'Automatique',
 		more			: 'Plus de couleurs...'
 	},
 
 	colors :
 	{
-		'000' : 'Black', // MISSING
-		'800000' : 'Maroon', // MISSING
-		'8B4513' : 'Saddle Brown', // MISSING
-		'2F4F4F' : 'Dark Slate Gray', // MISSING
-		'008080' : 'Teal', // MISSING
-		'000080' : 'Navy', // MISSING
-		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
-		'B22222' : 'Fire Brick', // MISSING
-		'A52A2A' : 'Brown', // MISSING
-		'DAA520' : 'Golden Rod', // MISSING
-		'006400' : 'Dark Green', // MISSING
-		'40E0D0' : 'Turquoise', // MISSING
-		'0000CD' : 'Medium Blue', // MISSING
-		'800080' : 'Purple', // MISSING
-		'808080' : 'Gray', // MISSING
-		'F00' : 'Red', // MISSING
-		'FF8C00' : 'Dark Orange', // MISSING
-		'FFD700' : 'Gold', // MISSING
-		'008000' : 'Green', // MISSING
-		'0FF' : 'Cyan', // MISSING
-		'00F' : 'Blue', // MISSING
-		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
-		'FFA07A' : 'Light Salmon', // MISSING
-		'FFA500' : 'Orange', // MISSING
-		'FFFF00' : 'Yellow', // MISSING
-		'00FF00' : 'Lime', // MISSING
-		'AFEEEE' : 'Pale Turquoise', // MISSING
-		'ADD8E6' : 'Light Blue', // MISSING
-		'DDA0DD' : 'Plum', // MISSING
-		'D3D3D3' : 'Light Grey', // MISSING
-		'FFF0F5' : 'Lavender Blush', // MISSING
-		'FAEBD7' : 'Antique White', // MISSING
-		'FFFFE0' : 'Light Yellow', // MISSING
-		'F0FFF0' : 'Honeydew', // MISSING
-		'F0FFFF' : 'Azure', // MISSING
-		'F0F8FF' : 'Alice Blue', // MISSING
-		'E6E6FA' : 'Lavender', // MISSING
-		'FFF' : 'White' // MISSING
+		'000' : 'Noir',
+		'800000' : 'Marron',
+		'8B4513' : 'Brun moyen',
+		'2F4F4F' : 'Vert sombre',
+		'008080' : 'Canard',
+		'000080' : 'Bleu marine',
+		'4B0082' : 'Indigo',
+		'696969' : 'Gris foncé',
+		'B22222' : 'Rouge brique',
+		'A52A2A' : 'Brun',
+		'DAA520' : 'Or terni',
+		'006400' : 'Vert foncé',
+		'40E0D0' : 'Turquoise',
+		'0000CD' : 'Bleu royal',
+		'800080' : 'Pourpre',
+		'808080' : 'Gris',
+		'F00' : 'Rouge',
+		'FF8C00' : 'Orange foncé',
+		'FFD700' : 'Or',
+		'008000' : 'Vert',
+		'0FF' : 'Cyan',
+		'00F' : 'Bleu',
+		'EE82EE' : 'Violet',
+		'A9A9A9' : 'Gris moyen',
+		'FFA07A' : 'Saumon',
+		'FFA500' : 'Orange',
+		'FFFF00' : 'Jaune',
+		'00FF00' : 'Lime',
+		'AFEEEE' : 'Turquoise clair',
+		'ADD8E6' : 'Bleu clair',
+		'DDA0DD' : 'Prune',
+		'D3D3D3' : 'Gris clair',
+		'FFF0F5' : 'Fard Lavande',
+		'FAEBD7' : 'Blanc antique',
+		'FFFFE0' : 'Jaune clair',
+		'F0FFF0' : 'Honeydew',
+		'F0FFFF' : 'Azur',
+		'F0F8FF' : 'Bleu Alice',
+		'E6E6FA' : 'Lavande',
+		'FFF' : 'Blanc'
 	},
 
 	scayt :
 	{
-		title			: 'Vérification d\'Orthographe en Cours de Frappe (SCAYT: Spell Check As You Type)',
+		title			: 'Vérification de l\'Orthographe en Cours de Frappe (SCAYT)',
+		opera_title		: 'Non supporté par Opera',
 		enable			: 'Activer SCAYT',
 		disable			: 'Désactiver SCAYT',
 		about			: 'A propos de SCAYT',
@@ -659,41 +696,120 @@ CKEDITOR.lang['fr'] =
 		ignoreAll		: 'Ignorer Tout',
 		addWord			: 'Ajouter le mot',
 		emptyDic		: 'Le nom du dictionnaire ne devrait pas être vide.',
+
 		optionsTab		: 'Options',
+		allCaps			: 'Ignorer les mots entierement en majuscules',
+		ignoreDomainNames : 'Ignorer les noms de domaines',
+		mixedCase		: 'Ignorer les mots à casse multiple',
+		mixedWithDigits	: 'Ignorer les mots contenant des chiffres',
+
 		languagesTab	: 'Langues',
+
 		dictionariesTab	: 'Dictionnaires',
-		aboutTab		: 'A propos de'
+		dic_field_name	: 'Nom du dictionnaire',
+		dic_create		: 'Créer',
+		dic_restore		: 'Restaurer',
+		dic_delete		: 'Effacer',
+		dic_rename		: 'Renommer',
+		dic_info		: 'Initiallement, le dictionnaire de l\'utilisateur est stocké dans un cookie. Cependant, les cookies sont limités en taille. Quand le dictionnaire atteint une taille qu\'il n\'est plus possible de stocker dans un cookie, il peut alors être stocké sur nos serveurs. Afin de stocker votre dictionnaire personnel sur nos serveurs, vous devez spécifier un nom pour ce dictionnaire. Si vous avez déjà un dictionnaire stocké, merci de taper son nom puis cliquer sur Restaurer pour le récupérer.',
+
+		aboutTab		: 'À propos de'
 	},
 
 	about :
 	{
 		title		: 'A propos de CKEditor',
 		dlgTitle	: 'A propos de CKEditor',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
 		moreInfo	: 'Pour les informations de licence, veuillez visiter notre site web:',
 		copy		: 'Copyright &copy; $1. Tous droits réservés.'
 	},
 
 	maximize : 'Agrandir',
-	minimize : 'Minimize', // MISSING
+	minimize : 'Minimiser',
 
 	fakeobjects :
 	{
-		anchor	: 'Ancre',
-		flash	: 'Animation Flash',
-		div		: 'Saut de Page',
-		unknown	: 'Objet Inconnu'
+		anchor		: 'Ancre',
+		flash		: 'Animation Flash',
+		iframe		: 'IFrame',
+		hiddenfield	: 'Champ caché',
+		unknown		: 'Objet inconnu'
 	},
 
-	resize : 'Glisser pour modifier la taille',
+	resize : 'Déplacer pour modifier la taille',
 
 	colordialog :
 	{
-		title		: 'Select color', // MISSING
-		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
-		clear		: 'Clear' // MISSING
+		title		: 'Choisir une couleur',
+		options	:	'Option des couleurs',
+		highlight	: 'Détails',
+		selected	: 'Couleur choisie',
+		clear		: 'Effacer'
 	},
 
-	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarCollapse	: 'Enrouler la barre d\'outils',
+	toolbarExpand	: 'Dérouler la barre d\'outils',
+
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
+	bidi :
+	{
+		ltr : 'Direction du texte de la gauche vers la droite',
+		rtl : 'Direction du texte de la droite vers la gauche'
+	},
+
+	docprops :
+	{
+		label : 'Propriétés du document',
+		title : 'Propriétés du document',
+		design : 'Design', // MISSING
+		meta : 'Métadonnées',
+		chooseColor : 'Choisissez',
+		other : '<autre>',
+		docTitle :	'Titre de la page',
+		charset : 	'Encodage de caractère',
+		charsetOther : 'Autre encodage de caractère',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Europe Centrale',
+		charsetCT : 'Chinois Traditionnel (Big5)',
+		charsetCR : 'Cyrillique',
+		charsetGR : 'Grec',
+		charsetJP : 'Japonais',
+		charsetKR : 'Coréen',
+		charsetTR : 'Turc',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Occidental',
+		docType : 'Type de document',
+		docTypeOther : 'Autre type de document',
+		xhtmlDec : 'Inclure les déclarations XHTML',
+		bgColor : 'Couleur de fond',
+		bgImage : 'Image de fond',
+		bgFixed : 'Image fixe sans défilement',
+		txtColor : 'Couleur de texte',
+		margin : 'Marges',
+		marginTop : 'Haut',
+		marginLeft : 'Gauche',
+		marginRight : 'Droite',
+		marginBottom : 'Bas',
+		metaKeywords : 'Mots-clés (séparés par des virgules)',
+		metaDescription : 'Description',
+		metaAuthor : 'Auteur',
+		metaCopyright : 'Copyright', // MISSING
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
+	}
 };

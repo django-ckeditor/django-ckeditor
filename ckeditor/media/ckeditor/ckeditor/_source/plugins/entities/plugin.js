@@ -1,17 +1,16 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 (function()
 {
+	// Base HTML entities.
+	var htmlbase = 'nbsp,gt,lt,amp';
+
 	var entities =
-
-		// Base HTML entities.
-		'nbsp,gt,lt,quot,' +
-
 		// Latin-1 Entities
-		'iexcl,cent,pound,curren,yen,brvbar,sect,uml,copy,ordf,laquo,' +
+		'quot,iexcl,cent,pound,curren,yen,brvbar,sect,uml,copy,ordf,laquo,' +
 		'not,shy,reg,macr,deg,plusmn,sup2,sup3,acute,micro,para,middot,' +
 		'cedil,sup1,ordm,raquo,frac14,frac12,frac34,iquest,times,divide,' +
 
@@ -46,7 +45,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		'omicron,pi,rho,sigmaf,sigma,tau,upsilon,phi,chi,psi,omega,thetasym,' +
 		'upsih,piv';
 
-	function buildTable( entities )
+	/**
+	 * Create a mapping table between one character and its entity form from a list of entity names.
+	 * @param reverse {Boolean} Whether to create a reverse map from the entity string form to an actual character.
+	 */
+	function buildTable( entities, reverse )
 	{
 		var table = {},
 			regex = [];
@@ -58,36 +61,43 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				nbsp	: '\u00A0',		// IE | FF
 				shy		: '\u00AD',		// IE
 				gt		: '\u003E',		// IE | FF |   --   | Opera
-				lt		: '\u003C'		// IE | FF | Safari | Opera
+				lt		: '\u003C',		// IE | FF | Safari | Opera
+				amp : '\u0026'		// ALL
 			};
 
 		entities = entities.replace( /\b(nbsp|shy|gt|lt|amp)(?:,|$)/g, function( match, entity )
 			{
-				table[ specialTable[ entity ] ] = '&' + entity + ';';
-				regex.push( specialTable[ entity ] );
+				var org = reverse ? '&' + entity + ';' : specialTable[ entity ],
+					result = reverse ? specialTable[ entity ] : '&' + entity + ';';
+
+				table[ org ] = result;
+				regex.push( org );
 				return '';
 			});
 
-		// Transforms the entities string into an array.
-		entities = entities.split( ',' );
-
-		// Put all entities inside a DOM element, transforming them to their
-		// final chars.
-		var div = document.createElement( 'div' ),
-			chars;
-		div.innerHTML = '&' + entities.join( ';&' ) + ';';
-		chars = div.innerHTML;
-		div = null;
-
-		// Add all chars to the table.
-		for ( var i = 0 ; i < chars.length ; i++ )
+		if ( !reverse && entities )
 		{
-			var charAt = chars.charAt( i );
-			table[ charAt ] = '&' + entities[ i ] + ';';
-			regex.push( charAt );
+			// Transforms the entities string into an array.
+			entities = entities.split( ',' );
+
+			// Put all entities inside a DOM element, transforming them to their
+			// final chars.
+			var div = document.createElement( 'div' ),
+				chars;
+			div.innerHTML = '&' + entities.join( ';&' ) + ';';
+			chars = div.innerHTML;
+			div = null;
+
+			// Add all chars to the table.
+			for ( var i = 0 ; i < chars.length ; i++ )
+			{
+				var charAt = chars.charAt( i );
+				table[ charAt ] = '&' + entities[ i ] + ';';
+				regex.push( charAt );
+			}
 		}
 
-		table.regex = regex.join( '' );
+		table.regex = regex.join( reverse ? '|' : '' );
 
 		return table;
 	}
@@ -98,46 +108,64 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			var config = editor.config;
 
-			if ( !config.entities )
-				return;
-
 			var dataProcessor = editor.dataProcessor,
 				htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 
 			if ( htmlFilter )
 			{
-				var selectedEntities = entities;
+				// Mandatory HTML base entities.
+				var selectedEntities = '';
 
-				if ( config.entities_latin )
-					selectedEntities += ',' + latin;
+				if ( config.basicEntities !== false )
+					selectedEntities += htmlbase;
 
-				if ( config.entities_greek )
-					selectedEntities += ',' + greek;
+				if ( config.entities )
+				{
+					selectedEntities += ',' + entities;
+					if ( config.entities_latin )
+						selectedEntities += ',' + latin;
 
-				if ( config.entities_additional )
-					selectedEntities += ',' + config.entities_additional;
+					if ( config.entities_greek )
+						selectedEntities += ',' + greek;
+
+					if ( config.entities_additional )
+						selectedEntities += ',' + config.entities_additional;
+				}
 
 				var entitiesTable = buildTable( selectedEntities );
 
-				// Create the Regex used to find entities in the text.
-				var entitiesRegex = '[' + entitiesTable.regex + ']';
+				// Create the Regex used to find entities in the text, leave it matches nothing if entities are empty.
+				var entitiesRegex = entitiesTable.regex ? '[' + entitiesTable.regex + ']' : 'a^';
 				delete entitiesTable.regex;
 
-				if ( config.entities_processNumerical )
+				if ( config.entities && config.entities_processNumerical )
 					entitiesRegex = '[^ -~]|' + entitiesRegex ;
 
 				entitiesRegex = new RegExp( entitiesRegex, 'g' );
 
+				function getEntity( character )
+				{
+					return config.entities_processNumerical == 'force' || !entitiesTable[ character ] ?
+						   '&#' + character.charCodeAt(0) + ';'
+							: entitiesTable[ character ];
+				}
+
+				// Decode entities that the browsers has transformed
+				// at first place.
+				var baseEntitiesTable = buildTable( [ htmlbase, 'shy' ].join( ',' ) , true ),
+					baseEntitiesRegex = new RegExp( baseEntitiesTable.regex, 'g' );
+
 				function getChar( character )
 				{
-					return entitiesTable[ character ] || ( '&#' + character.charCodeAt(0) + ';' );
+					return baseEntitiesTable[ character ];
 				}
 
 				htmlFilter.addRules(
 					{
 						text : function( text )
 						{
-							return text.replace( entitiesRegex, getChar );
+							return text.replace( baseEntitiesRegex, getChar )
+									.replace( entitiesRegex, getEntity );
 						}
 					});
 			}
@@ -146,9 +174,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 })();
 
 /**
- * Whether to use HTML entities in the output.
+ * Whether to escape basic HTML entities in the document, including:
+ * <ul>
+ * <li><code>nbsp</code></li>
+ * <li><code>gt</code></li>
+ * <li><code>lt</code></li>
+ * <li><code>amp</code></li>
+ * </ul>
+ * <strong>Note:</strong> It should not be subject to change unless when outputting a non-HTML data format like BBCode.
  * @type Boolean
- * @default true
+ * @default <code>true</code>
+ * @example
+ * config.basicEntities = false;
+ */
+CKEDITOR.config.basicEntities = true;
+
+/**
+ * Whether to use HTML entities in the output.
+ * @name CKEDITOR.config.entities
+ * @type Boolean
+ * @default <code>true</code>
  * @example
  * config.entities = false;
  */
@@ -156,10 +201,11 @@ CKEDITOR.config.entities = true;
 
 /**
  * Whether to convert some Latin characters (Latin alphabet No&#46; 1, ISO 8859-1)
- * to HTML entities. The list of entities can be found at the
+ * to HTML entities. The list of entities can be found in the
  * <a href="http://www.w3.org/TR/html4/sgml/entities.html#h-24.2.1">W3C HTML 4.01 Specification, section 24.2.1</a>.
+ * @name CKEDITOR.config.entities_latin
  * @type Boolean
- * @default true
+ * @default <code>true</code>
  * @example
  * config.entities_latin = false;
  */
@@ -168,33 +214,37 @@ CKEDITOR.config.entities_latin = true;
 /**
  * Whether to convert some symbols, mathematical symbols, and Greek letters to
  * HTML entities. This may be more relevant for users typing text written in Greek.
- * The list of entities can be found at the
+ * The list of entities can be found in the
  * <a href="http://www.w3.org/TR/html4/sgml/entities.html#h-24.3.1">W3C HTML 4.01 Specification, section 24.3.1</a>.
+ * @name CKEDITOR.config.entities_greek
  * @type Boolean
- * @default true
+ * @default <code>true</code>
  * @example
  * config.entities_greek = false;
  */
 CKEDITOR.config.entities_greek = true;
 
 /**
- * Whether to convert all remaining characters, not comprised in the ASCII
- * character table, to their relative numeric representation of HTML entity.
- * For example, the phrase "This is Chinese: &#27721;&#35821;." is outputted
+ * Whether to convert all remaining characters not included in the ASCII
+ * character table to their relative decimal numeric representation of HTML entity.
+ * When set to <code>force</code>, it will convert all entities into this format.
+ * For example the phrase "This is Chinese: &#27721;&#35821;." is output
  * as "This is Chinese: &amp;#27721;&amp;#35821;."
- * @type Boolean
- * @default false
+ * @name CKEDITOR.config.entities_processNumerical
+ * @type Boolean|String
+ * @default <code>false</code>
  * @example
  * config.entities_processNumerical = true;
+ * config.entities_processNumerical = 'force';		//Converts from "&nbsp;" into "&#160;";
  */
-CKEDITOR.config.entities_processNumerical = false;
 
 /**
- * An additional list of entities to be used. It's a string containing each
- * entry separated by a comma. Entities names or number must be used, exclusing
- * the "&amp;" preffix and the ";" termination.
- * @default '#39'  // The single quote (') character.
+ * A comma separated list of  additional entities to be used. Entity names
+ * or numbers must be used in a form that excludes the "&amp;" prefix and the ";" ending.
+ * @name CKEDITOR.config.entities_additional
+ * @default <code>'#39'</code>  (The single quote (') character.)
  * @type String
  * @example
+ * config.entities_additional = '#1049';		// Adds Cyrillic capital letter Short I (&#1049;).
  */
 CKEDITOR.config.entities_additional = '#39';

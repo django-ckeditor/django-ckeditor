@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -12,7 +12,19 @@ CKEDITOR.plugins.add( 'iframedialog',
 	requires : [ 'dialog' ],
 	onLoad : function()
 	{
-		CKEDITOR.dialog.addIframe = function( name, title, src, width, height, onContentLoad )
+		/**
+		 * An iframe base dialog.
+		 * @param {String} name Name of the dialog
+		 * @param {String} title Title of the dialog
+		 * @param {Number} minWidth Minimum width of the dialog
+		 * @param {Number} minHeight Minimum height of the dialog
+		 * @param {Function} [onContentLoad] Function called when the iframe has been loaded.
+		 * If it isn't specified, the inner frame is notified of the dialog events ('load',
+		 * 'resize', 'ok' and 'cancel') on a function called 'onDialogEvent'
+		 * @param {Object} [userDefinition] Additional properties for the dialog definition
+		 * @example
+		 */
+		CKEDITOR.dialog.addIframe = function( name, title, src, minWidth, minHeight, onContentLoad, userDefinition )
 		{
 			var element =
 			{
@@ -24,12 +36,49 @@ CKEDITOR.plugins.add( 'iframedialog',
 
 			if ( typeof( onContentLoad ) == 'function' )
 				element.onContentLoad = onContentLoad;
+			else
+				element.onContentLoad = function()
+				{
+					var element = this.getElement(),
+						childWindow = element.$.contentWindow;
+
+					// If the inner frame has defined a "onDialogEvent" function, setup listeners
+					if ( childWindow.onDialogEvent )
+					{
+						var dialog = this.getDialog(),
+							notifyEvent = function(e)
+							{
+								return childWindow.onDialogEvent(e);
+							};
+
+						dialog.on( 'ok', notifyEvent );
+						dialog.on( 'cancel', notifyEvent );
+						dialog.on( 'resize', notifyEvent );
+
+						// Clear listeners
+						dialog.on( 'hide', function(e)
+							{
+								dialog.removeListener( 'ok', notifyEvent );
+								dialog.removeListener( 'cancel', notifyEvent );
+								dialog.removeListener( 'resize', notifyEvent );
+
+								e.removeListener();
+							} );
+
+						// Notify child iframe of load:
+						childWindow.onDialogEvent( {
+								name : 'load',
+								sender : this,
+								editor : dialog._.editor
+							} );
+					}
+				};
 
 			var definition =
 			{
 				title : title,
-				minWidth : width,
-				minHeight : height,
+				minWidth : minWidth,
+				minHeight : minHeight,
 				contents :
 				[
 					{
@@ -41,7 +90,10 @@ CKEDITOR.plugins.add( 'iframedialog',
 				]
 			};
 
-			return this.add( name, function(){ return definition; } );
+			for ( var i in userDefinition )
+				definition[i] = userDefinition[i];
+
+			this.add( name, function(){ return definition; } );
 		};
 
 		(function()
@@ -53,7 +105,7 @@ CKEDITOR.plugins.add( 'iframedialog',
 			 * @constructor
 			 * @param {CKEDITOR.dialog} dialog
 			 * Parent dialog object.
-			 * @param {CKEDITOR.dialog.uiElementDefinition} elementDefinition
+			 * @param {CKEDITOR.dialog.definition.uiElement} elementDefinition
 			 * The element definition. Accepted fields:
 			 * <ul>
 			 * 	<li><strong>src</strong> (Required) The src field of the iframe. </li>
@@ -74,7 +126,7 @@ CKEDITOR.plugins.add( 'iframedialog',
 					contentLoad = elementDefinition.onContentLoad && CKEDITOR.tools.bind( elementDefinition.onContentLoad, this ),
 					cssWidth = CKEDITOR.tools.cssLength( elementDefinition.width ),
 					cssHeight = CKEDITOR.tools.cssLength( elementDefinition.height );
-				_.frameId = CKEDITOR.tools.getNextNumber() + '_iframe';
+				_.frameId = CKEDITOR.tools.getNextId() + '_iframe';
 
 				// IE BUG: Parent container does not resize to contain the iframe automatically.
 				dialog.on( 'load', function()

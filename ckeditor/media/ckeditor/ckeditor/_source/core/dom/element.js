@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -88,7 +88,7 @@ CKEDITOR.dom.element.setMarker = function( database, element, name, value )
 CKEDITOR.dom.element.clearAllMarkers = function( database )
 {
 	for ( var i in database )
-		CKEDITOR.dom.element.clearMarkers( database, database[i], true );
+		CKEDITOR.dom.element.clearMarkers( database, database[i], 1 );
 };
 
 CKEDITOR.dom.element.clearMarkers = function( database, element, removeFromDatabase )
@@ -307,12 +307,17 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 
 		/**
 		 * Moves the selection focus to this element.
+		 * @function
+		 * @param  {Boolean} defer Whether to asynchronously defer the
+		 * 		execution by 100 ms.
 		 * @example
 		 * var element = CKEDITOR.document.getById( 'myTextarea' );
 		 * <b>element.focus()</b>;
 		 */
-		focus : function()
+		focus : ( function()
 		{
+			function exec()
+			{
 			// IE throws error if the element is not visible.
 			try
 			{
@@ -320,7 +325,16 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			}
 			catch (e)
 			{}
-		},
+			}
+
+			return function( defer )
+			{
+				if ( defer )
+					CKEDITOR.tools.setTimeout( exec, 100, this );
+				else
+					exec.call( this );
+			};
+		})(),
 
 		/**
 		 * Gets the inner HTML of this element.
@@ -415,6 +429,13 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 							name = 'className';
 							break;
 
+						case 'http-equiv':
+							name = 'httpEquiv';
+							break;
+
+						case 'name':
+							return this.$.name;
+
 						case 'tabindex':
 							var tabIndex = standard.call( this, name );
 
@@ -439,7 +460,8 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 						}
 
 						case 'hspace':
-							return this.$.hspace;
+						case 'value':
+							return this.$[ name ];
 
 						case 'style':
 							// IE does not return inline styles via getAttribute(). See #2947.
@@ -613,7 +635,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			// Cache the lowercased name inside a closure.
 			var nodeName = this.$.nodeName.toLowerCase();
 
-			if ( CKEDITOR.env.ie )
+			if ( CKEDITOR.env.ie && ! ( document.documentMode > 8 ) )
 			{
 				var scopeName = this.$.scopeName;
 				if ( scopeName != 'HTML' )
@@ -697,17 +719,31 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			return false;
 		},
 
-		isEditable : function()
+		/**
+		 * Decide whether one element is able to receive cursor.
+		 * @param {Boolean} [textCursor=true] Only consider element that could receive text child.
+		 */
+		isEditable : function( textCursor )
 		{
-			// Get the element name.
 			var name = this.getName();
 
-			// Get the element DTD (defaults to span for unknown elements).
-			var dtd = !CKEDITOR.dtd.$nonEditable[ name ]
-						&& ( CKEDITOR.dtd[ name ] || CKEDITOR.dtd.span );
+			if ( this.isReadOnly()
+					|| this.getComputedStyle( 'display' ) == 'none'
+					|| this.getComputedStyle( 'visibility' ) == 'hidden'
+					|| CKEDITOR.dtd.$nonEditable[ name ] )
+			{
+				return false;
+			}
 
-			// In the DTD # == text node.
-			return ( dtd && dtd['#'] );
+			if ( textCursor !== false )
+			{
+				// Get the element DTD (defaults to span for unknown elements).
+				var dtd = CKEDITOR.dtd[ name ] || CKEDITOR.dtd.span;
+				// In the DTD # == text node.
+				return ( dtd && dtd[ '#'] );
+			}
+
+			return true;
 		},
 
 		isIdentical : function( otherElement )
@@ -721,14 +757,14 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			var thisLength = thisAttribs.length,
 				otherLength = otherAttribs.length;
 
-			if ( !CKEDITOR.env.ie && thisLength != otherLength )
-				return false;
-
 			for ( var i = 0 ; i < thisLength ; i++ )
 			{
 				var attribute = thisAttribs[ i ];
 
-				if ( ( !CKEDITOR.env.ie || ( attribute.specified && attribute.nodeName != '_cke_expando' ) ) && attribute.nodeValue != otherElement.getAttribute( attribute.nodeName ) )
+				if ( attribute.nodeName == '_moz_dirty' )
+					continue;
+
+				if ( ( !CKEDITOR.env.ie || ( attribute.specified && attribute.nodeName != 'data-cke-expando' ) ) && attribute.nodeValue != otherElement.getAttribute( attribute.nodeName ) )
 					return false;
 			}
 
@@ -739,7 +775,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 				for ( i = 0 ; i < otherLength ; i++ )
 				{
 					attribute = otherAttribs[ i ];
-					if ( attribute.specified && attribute.nodeName != '_cke_expando'
+					if ( attribute.specified && attribute.nodeName != 'data-cke-expando'
 							&& attribute.nodeValue != this.getAttribute( attribute.nodeName ) )
 						return false;
 				}
@@ -756,7 +792,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		 */
 		isVisible : function()
 		{
-			var isVisible = !!this.$.offsetHeight && this.getComputedStyle( 'visibility' ) != 'hidden',
+			var isVisible = ( this.$.offsetHeight || this.$.offsetWidth ) && this.getComputedStyle( 'visibility' ) != 'hidden',
 				elementWindow,
 				elementWindowFrame;
 
@@ -773,18 +809,44 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 				}
 			}
 
-			return isVisible;
+			return !!isVisible;
 		},
 
 		/**
-		 * Indicates that the element has defined attributes.
+		 * Whether it's an empty inline elements which has no visual impact when removed.
+		 */
+		isEmptyInlineRemoveable : function()
+		{
+			if ( !CKEDITOR.dtd.$removeEmpty[ this.getName() ] )
+				return false;
+
+			var children = this.getChildren();
+			for ( var i = 0, count = children.count(); i < count; i++ )
+			{
+				var child = children.getItem( i );
+
+				if ( child.type == CKEDITOR.NODE_ELEMENT && child.data( 'cke-bookmark' ) )
+					continue;
+
+				if ( child.type == CKEDITOR.NODE_ELEMENT && !child.isEmptyInlineRemoveable()
+					|| child.type == CKEDITOR.NODE_TEXT && CKEDITOR.tools.trim( child.getText() ) )
+				{
+					return false;
+				}
+			}
+			return true;
+		},
+
+		/**
+		 * Checks if the element has any defined attributes.
+		 * @function
 		 * @returns {Boolean} True if the element has attributes.
 		 * @example
-		 * var element = CKEDITOR.dom.element.createFromHtml( '<div title="Test">Example</div>' );
-		 * alert( <b>element.hasAttributes()</b> );  "true"
+		 * var element = CKEDITOR.dom.element.createFromHtml( '&lt;div title="Test"&gt;Example&lt;/div&gt;' );
+		 * alert( <b>element.hasAttributes()</b> );  // "true"
 		 * @example
-		 * var element = CKEDITOR.dom.element.createFromHtml( '<div>Example</div>' );
-		 * alert( <b>element.hasAttributes()</b> );  "false"
+		 * var element = CKEDITOR.dom.element.createFromHtml( '&lt;div&gt;Example&lt;/div&gt;' );
+		 * alert( <b>element.hasAttributes()</b> );  // "false"
 		 */
 		hasAttributes :
 			CKEDITOR.env.ie && ( CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat ) ?
@@ -809,7 +871,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 									return true;
 
 							// Attributes to be ignored.
-							case '_cke_expando' :
+							case 'data-cke-expando' :
 								continue;
 
 							/*jsl:fallthru*/
@@ -825,21 +887,46 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			:
 				function()
 				{
-					var attributes = this.$.attributes;
-					return ( attributes.length > 1 || ( attributes.length == 1 && attributes[0].nodeName != '_cke_expando' ) );
+					var attrs = this.$.attributes,
+						attrsNum = attrs.length;
+
+					// The _moz_dirty attribute might get into the element after pasting (#5455)
+					var execludeAttrs = { 'data-cke-expando' : 1, _moz_dirty : 1 };
+
+					return attrsNum > 0 &&
+						( attrsNum > 2 ||
+							!execludeAttrs[ attrs[0].nodeName ] ||
+							( attrsNum == 2 && !execludeAttrs[ attrs[1].nodeName ] ) );
 				},
 
 		/**
-		 * Indicates whether a specified attribute is defined for this element.
+		 * Checks if the specified attribute is defined for this element.
 		 * @returns {Boolean} True if the specified attribute is defined.
-		 * @param (String) name The attribute name.
+		 * @param {String} name The attribute name.
 		 * @example
 		 */
-		hasAttribute : function( name )
+		hasAttribute : (function()
 		{
-			var $attr = this.$.attributes.getNamedItem( name );
-			return !!( $attr && $attr.specified );
-		},
+			function standard( name )
+			{
+				var $attr = this.$.attributes.getNamedItem( name );
+				return !!( $attr && $attr.specified );
+			}
+
+			return ( CKEDITOR.env.ie && CKEDITOR.env.version < 8 ) ?
+					function( name )
+					{
+						// On IE < 8 the name attribute cannot be retrieved
+						// right after the element creation and setting the
+						// name with setAttribute.
+						if ( name == 'name' )
+							return !!this.$.name;
+
+						return standard.call( this, name );
+					}
+				:
+					standard;
+		})(),
 
 		/**
 		 * Hides this element (display:none).
@@ -873,6 +960,67 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 					target.appendChild( $.removeChild( child ) );
 			}
 		},
+
+		/**
+		 * Merges sibling elements that are identical to this one.<br>
+		 * <br>
+		 * Identical child elements are also merged. For example:<br>
+		 * &lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt;&lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt; =&gt; &lt;b&gt;&lt;i&gt;&lt;/i&gt;&lt;/b&gt;
+		 * @function
+		 * @param {Boolean} [inlineOnly] Allow only inline elements to be merged. Defaults to "true".
+		 */
+		mergeSiblings : ( function()
+		{
+			function mergeElements( element, sibling, isNext )
+			{
+				if ( sibling && sibling.type == CKEDITOR.NODE_ELEMENT )
+				{
+					// Jumping over bookmark nodes and empty inline elements, e.g. <b><i></i></b>,
+					// queuing them to be moved later. (#5567)
+					var pendingNodes = [];
+
+					while ( sibling.data( 'cke-bookmark' )
+						|| sibling.isEmptyInlineRemoveable() )
+					{
+						pendingNodes.push( sibling );
+						sibling = isNext ? sibling.getNext() : sibling.getPrevious();
+						if ( !sibling || sibling.type != CKEDITOR.NODE_ELEMENT )
+							return;
+					}
+
+					if ( element.isIdentical( sibling ) )
+					{
+						// Save the last child to be checked too, to merge things like
+						// <b><i></i></b><b><i></i></b> => <b><i></i></b>
+						var innerSibling = isNext ? element.getLast() : element.getFirst();
+
+						// Move pending nodes first into the target element.
+						while( pendingNodes.length )
+							pendingNodes.shift().move( element, !isNext );
+
+						sibling.moveChildren( element, !isNext );
+						sibling.remove();
+
+						// Now check the last inner child (see two comments above).
+						if ( innerSibling && innerSibling.type == CKEDITOR.NODE_ELEMENT )
+							innerSibling.mergeSiblings();
+					}
+				}
+			}
+
+			return function( inlineOnly )
+				{
+					if ( ! ( inlineOnly === false
+							|| CKEDITOR.dtd.$removeEmpty[ this.getName() ]
+							|| this.is( 'a' ) ) )	// Merge empty links and anchors also. (#5567)
+					{
+						return;
+					}
+
+					mergeElements( this, this.getNext(), true );
+					mergeElements( this, this.getPrevious() );
+				};
+		} )(),
 
 		/**
 		 * Shows this element (display it).
@@ -920,6 +1068,18 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 						this.$.tabIndex = value;
 					else if ( name == 'checked' )
 						this.$.checked = value;
+					else
+						standard.apply( this, arguments );
+					return this;
+				};
+			}
+			else if ( CKEDITOR.env.ie8Compat && CKEDITOR.env.secure )
+			{
+				return function( name, value )
+				{
+					// IE8 throws error when setting src attribute to non-ssl value. (#7847)
+					if ( name == 'src' && value.match( /^http:\/\// ) )
+						try { standard.apply( this, arguments ); } catch( e ){}
 					else
 						standard.apply( this, arguments );
 					return this;
@@ -1087,11 +1247,13 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 				function()
 				{
 					this.$.style.MozUserSelect = 'none';
+					this.on( 'dragstart', function( evt ) { evt.data.preventDefault(); } );
 				}
 			: CKEDITOR.env.webkit ?
 				function()
 				{
 					this.$.style.KhtmlUserSelect = 'none';
+					this.on( 'dragstart', function( evt ) { evt.data.preventDefault(); } );
 				}
 			:
 				function()
@@ -1137,10 +1299,9 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 		getDocumentPosition : function( refDocument )
 		{
 			var x = 0, y = 0,
-				body = this.getDocument().getBody(),
-				quirks = this.getDocument().$.compatMode == 'BackCompat';
-
-			var doc = this.getDocument();
+				doc = this.getDocument(),
+				body = doc.getBody(),
+				quirks = doc.$.compatMode == 'BackCompat';
 
 			if ( document.documentElement[ "getBoundingClientRect" ] )
 			{
@@ -1397,8 +1558,8 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 			this.moveChildren( newNode );
 
 			// Replace the node.
-			this.$.parentNode.replaceChild( newNode.$, this.$ );
-			newNode.$._cke_expando = this.$._cke_expando;
+			this.getParent() && this.$.parentNode.replaceChild( newNode.$, this.$ );
+			newNode.$[ 'data-cke-expando' ] = this.$[ 'data-cke-expando' ];
 			this.$ = newNode.$;
 		},
 
@@ -1437,5 +1598,94 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype,
 					if ( !event.data.getTarget().hasClass( 'cke_enable_context_menu' ) )
 						event.data.preventDefault();
 				} );
+		},
+
+		/**
+		 * Gets element's direction. Supports both CSS 'direction' prop and 'dir' attr.
+		 */
+		getDirection : function( useComputed )
+		{
+			return useComputed ?
+				this.getComputedStyle( 'direction' )
+					// Webkit: offline element returns empty direction (#8053).
+					|| this.getDirection()
+					|| this.getDocument().$.dir
+					|| this.getDocument().getBody().getDirection( 1 )
+				: this.getStyle( 'direction' ) || this.getAttribute( 'dir' );
+		},
+
+		/**
+		 * Gets, sets and removes custom data to be stored as HTML5 data-* attributes.
+		 * @param {String} name The name of the attribute, excluding the 'data-' part.
+		 * @param {String} [value] The value to set. If set to false, the attribute will be removed.
+		 * @example
+		 * element.data( 'extra-info', 'test' );   // appended the attribute data-extra-info="test" to the element
+		 * alert( element.data( 'extra-info' ) );  // "test"
+		 * element.data( 'extra-info', false );    // remove the data-extra-info attribute from the element
+		 */
+		data : function ( name, value )
+		{
+			name = 'data-' + name;
+			if ( value === undefined )
+				return this.getAttribute( name );
+			else if ( value === false )
+				this.removeAttribute( name );
+			else
+				this.setAttribute( name, value );
+
+			return null;
 		}
 	});
+
+( function()
+{
+	var sides = {
+		width : [ "border-left-width", "border-right-width","padding-left", "padding-right" ],
+		height : [ "border-top-width", "border-bottom-width", "padding-top",  "padding-bottom" ]
+	};
+
+	function marginAndPaddingSize( type )
+	{
+		var adjustment = 0;
+		for ( var i = 0, len = sides[ type ].length; i < len; i++ )
+			adjustment += parseInt( this.getComputedStyle( sides [ type ][ i ] ) || 0, 10 ) || 0;
+		return adjustment;
+	}
+
+	/**
+	 * Sets the element size considering the box model.
+	 * @name CKEDITOR.dom.element.prototype.setSize
+	 * @function
+	 * @param {String} type The dimension to set. It accepts "width" and "height".
+	 * @param {Number} size The length unit in px.
+	 * @param {Boolean} isBorderBox Apply the size based on the border box model.
+	 */
+	CKEDITOR.dom.element.prototype.setSize = function( type, size, isBorderBox )
+		{
+			if ( typeof size == 'number' )
+			{
+				if ( isBorderBox && !( CKEDITOR.env.ie && CKEDITOR.env.quirks ) )
+					size -= marginAndPaddingSize.call( this, type );
+
+				this.setStyle( type, size + 'px' );
+			}
+		};
+
+	/**
+	 * Gets the element size, possibly considering the box model.
+	 * @name CKEDITOR.dom.element.prototype.getSize
+	 * @function
+	 * @param {String} type The dimension to get. It accepts "width" and "height".
+	 * @param {Boolean} isBorderBox Get the size based on the border box model.
+	 */
+	CKEDITOR.dom.element.prototype.getSize = function( type, isBorderBox )
+		{
+			var size = Math.max( this.$[ 'offset' + CKEDITOR.tools.capitalize( type )  ],
+				this.$[ 'client' + CKEDITOR.tools.capitalize( type )  ] ) || 0;
+
+			if ( isBorderBox )
+				size -= marginAndPaddingSize.call( this, type );
+
+			return size;
+		};
+})();

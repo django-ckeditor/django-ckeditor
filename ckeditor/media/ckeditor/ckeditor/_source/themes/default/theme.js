@@ -1,10 +1,17 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
+/**
+ * @name CKEDITOR.theme
+ * @class
+ */
+
 CKEDITOR.themes.add( 'default', (function()
 {
+	var hiddenSkins = {};
+
 	function checkSharedSpace( editor, spaceName )
 	{
 		var container,
@@ -21,8 +28,10 @@ CKEDITOR.themes.add( 'default', (function()
 		{
 			// Creates an HTML structure that reproduces the editor class hierarchy.
 			var html =
-				'<span class="cke_shared">' +
-				'<span class="' + editor.skinClass + ' cke_editor_' + editor.name + '">' +
+				'<span class="cke_shared "' +
+				' dir="'+ editor.lang.dir + '"' +
+				'>' +
+				'<span class="' + editor.skinClass + ' ' + editor.id + ' cke_editor_' + editor.name + '">' +
 				'<span class="' + CKEDITOR.env.cssClass + '">' +
 				'<span class="cke_wrapper cke_' + editor.lang.dir + '">' +
 				'<span class="cke_editor">' +
@@ -39,6 +48,10 @@ CKEDITOR.themes.add( 'default', (function()
 
 			// Get the deeper inner <div>.
 			container = mainContainer.getChild( [0,0,0,0] );
+
+			// Save a reference to the shared space container.
+			!editor.sharedSpaces && ( editor.sharedSpaces = {} );
+			editor.sharedSpaces[ spaceName ] = container;
 
 			// When the editor gets focus, we show the space container, hiding others.
 			editor.on( 'focus', function()
@@ -65,7 +78,7 @@ CKEDITOR.themes.add( 'default', (function()
 		return container;
 	}
 
-	return {
+	return /** @lends CKEDITOR.theme */ {
 		build : function( editor, themePath )
 		{
 			var name = editor.name,
@@ -110,14 +123,20 @@ CKEDITOR.themes.add( 'default', (function()
 			sharedTop		&& ( sharedTop.setHtml( topHtml )		, topHtml = '' );
 			sharedBottoms	&& ( sharedBottoms.setHtml( bottomHtml ), bottomHtml = '' );
 
+			var hideSkin = '<style>.' + editor.skinClass + '{visibility:hidden;}</style>';
+			if ( hiddenSkins[ editor.skinClass ] )
+				hideSkin = '';
+			else
+				hiddenSkins[ editor.skinClass ] = 1;
+
 			var container = CKEDITOR.dom.element.createFromHtml( [
 				'<span' +
 					' id="cke_', name, '"' +
-					' onmousedown="return false;"' +
-					' class="', editor.skinClass, ' cke_editor_', name, '"' +
+					' class="', editor.skinClass, ' ', editor.id, ' cke_editor_', name, '"' +
 					' dir="', editor.lang.dir, '"' +
 					' title="', ( CKEDITOR.env.gecko ? ' ' : '' ), '"' +
 					' lang="', editor.langCode, '"' +
+						( CKEDITOR.env.webkit? ' tabindex="' + tabIndex + '"' : '' ) +
 					' role="application"' +
 					' aria-labelledby="cke_', name, '_arialbl"' +
 					( style ? ' style="' + style + '"' : '' ) +
@@ -126,12 +145,12 @@ CKEDITOR.themes.add( 'default', (function()
 					'<span class="' , CKEDITOR.env.cssClass, '" role="presentation">' +
 						'<span class="cke_wrapper cke_', editor.lang.dir, '" role="presentation">' +
 							'<table class="cke_editor" border="0" cellspacing="0" cellpadding="0" role="presentation"><tbody>' +
-								'<tr', topHtml		? '' : ' style="display:none"', '><td id="cke_top_'		, name, '" class="cke_top" role="presentation">'	, topHtml		, '</td></tr>' +
-								'<tr', contentsHtml	? '' : ' style="display:none"', '><td id="cke_contents_', name, '" class="cke_contents" style="height:', height, '" role="presentation">', contentsHtml, '</td></tr>' +
-								'<tr', bottomHtml	? '' : ' style="display:none"', '><td id="cke_bottom_'	, name, '" class="cke_bottom" role="presentation">'	, bottomHtml	, '</td></tr>' +
+								'<tr', topHtml		? '' : ' style="display:none"', ' role="presentation"><td id="cke_top_'		, name, '" class="cke_top" role="presentation">'	, topHtml		, '</td></tr>' +
+								'<tr', contentsHtml	? '' : ' style="display:none"', ' role="presentation"><td id="cke_contents_', name, '" class="cke_contents" style="height:', height, '" role="presentation">', contentsHtml, '</td></tr>' +
+								'<tr', bottomHtml	? '' : ' style="display:none"', ' role="presentation"><td id="cke_bottom_'	, name, '" class="cke_bottom" role="presentation">'	, bottomHtml	, '</td></tr>' +
 							'</tbody></table>' +
 							//Hide the container when loading skins, later restored by skin css.
-							'<style>.', editor.skinClass, '{visibility:hidden;}</style>' +
+							hideSkin +
 						'</span>' +
 					'</span>' +
 				'</span>' ].join( '' ) );
@@ -157,6 +176,18 @@ CKEDITOR.themes.add( 'default', (function()
 			// Disable browser context menu for editor's chrome.
 			container.disableContextMenu();
 
+			// Use a class to indicate that the current selection is in different direction than the UI.
+			editor.on( 'contentDirChanged', function( evt )
+			{
+				var func = ( editor.lang.dir != evt.data ? 'add' : 'remove' ) + 'Class';
+
+				container.getChild( 1 )[ func ]( 'cke_mixed_dir_content' );
+
+				// Put the mixed direction class on the respective element also for shared spaces.
+				var toolbarSpace = this.sharedSpaces && this.sharedSpaces[ this.config.toolbarLocation ];
+				toolbarSpace && toolbarSpace.getParent().getParent()[ func ]( 'cke_mixed_dir_content' );
+			});
+
 			editor.fireOnce( 'themeLoaded' );
 			editor.fireOnce( 'uiReady' );
 		},
@@ -166,7 +197,7 @@ CKEDITOR.themes.add( 'default', (function()
 			var baseIdNumber = CKEDITOR.tools.getNextNumber();
 
 			var element = CKEDITOR.dom.element.createFromHtml( [
-					'<div class="cke_editor_' + editor.name.replace('.', '\\.') + '_dialog cke_skin_', editor.skinName,
+					'<div class="', editor.id, '_dialog cke_editor_', editor.name.replace('.', '\\.'), '_dialog cke_skin_', editor.skinName,
 						'" dir="', editor.lang.dir, '"' +
 						' lang="', editor.langCode, '"' +
 						' role="dialog"' +
@@ -179,10 +210,14 @@ CKEDITOR.themes.add( 'default', (function()
 								'<div id="%title#" class="%title" role="presentation"></div>' +
 								'<a id="%close_button#" class="%close_button" href="javascript:void(0)" title="' +  editor.lang.common.close+'" role="button"><span class="cke_label">X</span></a>' +
 								'<div id="%tabs#" class="%tabs" role="tablist"></div>' +
-								'<table class="%contents" role="presentation"><tr>' +
+								'<table class="%contents" role="presentation">' +
+								'<tr>' +
 								  '<td id="%contents#" class="%contents" role="presentation"></td>' +
-								'</tr></table>' +
-								'<div id="%footer#" class="%footer" role="presentation"></div>' +
+								'</tr>' +
+								'<tr>' +
+								  '<td id="%footer#" class="%footer" role="presentation"></td>' +
+								'</tr>' +
+								'</table>' +
 							'</div>' +
 							'<div id="%tl#" class="%tl"></div>' +
 							'<div id="%tc#" class="%tc"></div>' +
@@ -207,6 +242,20 @@ CKEDITOR.themes.add( 'default', (function()
 				title = body.getChild( 0 ),
 				close = body.getChild( 1 );
 
+			// IFrame shim for dialog that masks activeX in IE. (#7619)
+			if ( CKEDITOR.env.ie && !CKEDITOR.env.ie6Compat )
+			{
+				var isCustomDomain = CKEDITOR.env.isCustomDomain(),
+					src = 'javascript:void(function(){' + encodeURIComponent( 'document.open();' + ( isCustomDomain ? ( 'document.domain="' + document.domain + '";' ) : '' ) + 'document.close();' ) + '}())',
+					iframe = CKEDITOR.dom.element.createFromHtml( '<iframe' +
+  							' frameBorder="0"' +
+							' class="cke_iframe_shim"' +
+  							' src="' + src + '"' +
+							' tabIndex="-1"' +
+  							'></iframe>' );
+				iframe.appendTo( body.getParent() );
+			}
+
 			// Make the Title and Close Button unselectable.
 			title.unselectable();
 			close.unselectable();
@@ -221,49 +270,43 @@ CKEDITOR.themes.add( 'default', (function()
 					close		: close,
 					tabs		: body.getChild( 2 ),
 					contents	: body.getChild( [ 3, 0, 0, 0 ] ),
-					footer		: body.getChild( 4 )
+					footer		: body.getChild( [ 3, 0, 1, 0 ] )
 				}
 			};
 		},
 
 		destroy : function( editor )
 		{
-			var container = editor.container;
-
-			/*
-			 * IE BUG: Removing the editor DOM elements while the selection is inside
-			 * the editing area would break IE7/8's selection system. So we need to put
-			 * the selection back to the parent document without scrolling the window.
-			 * (#3812)
-			 */
-			if ( CKEDITOR.env.ie )
-			{
-				container.setStyle( 'display', 'none' );
-
-				var $range = document.body.createTextRange();
-				$range.moveToElementText( container.$ );
-				try
-				{
-					// Putting the selection to a display:none element - this will certainly
-					// fail. But! We've just put the selection document back to the parent
-					// document without scrolling the window!
-					$range.select();
-				}
-				catch ( e ) {}
-			}
+			var container = editor.container,
+				element = editor.element;
 
 			if ( container )
-				container.remove();
-
-			if ( editor.elementMode == CKEDITOR.ELEMENT_MODE_REPLACE )
 			{
-				editor.element.show();
+				container.clearCustomData();
+				container.remove();
+			}
+
+			if ( element )
+			{
+				element.clearCustomData();
+				editor.elementMode == CKEDITOR.ELEMENT_MODE_REPLACE && element.show();
 				delete editor.element;
 			}
 		}
 	};
 })() );
 
+/**
+ * Returns the DOM element that represents a theme space. The default theme defines
+ * three spaces, namely "top", "contents" and "bottom", representing the main
+ * blocks that compose the editor interface.
+ * @param {String} spaceName The space name.
+ * @returns {CKEDITOR.dom.element} The element that represents the space.
+ * @example
+ * // Hide the bottom space in the UI.
+ * var bottom = editor.getThemeSpace( 'bottom' );
+ * bottom.setStyle( 'display', 'none' );
+ */
 CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 {
 	var spacePrefix = 'cke_' + spaceName;
@@ -272,39 +315,62 @@ CKEDITOR.editor.prototype.getThemeSpace = function( spaceName )
 	return space;
 };
 
+/**
+ * Resizes the editor interface.
+ * @param {Number|String} width The new width. It can be an pixels integer or a
+ *		CSS size value.
+ * @param {Number|String} height The new height. It can be an pixels integer or
+ *		a CSS size value.
+ * @param {Boolean} [isContentHeight] Indicates that the provided height is to
+ *		be applied to the editor contents space, not to the entire editor
+ *		interface. Defaults to false.
+ * @param {Boolean} [resizeInner] Indicates that the first inner interface
+ *		element must receive the size, not the outer element. The default theme
+ *		defines the interface inside a pair of span elements
+ *		(&lt;span&gt;&lt;span&gt;...&lt;/span&gt;&lt;/span&gt;). By default the
+ *		first span element receives the sizes. If this parameter is set to
+ *		true, the second span is sized instead.
+ * @example
+ * editor.resize( 900, 300 );
+ * @example
+ * editor.resize( '100%', 450, true );
+ */
 CKEDITOR.editor.prototype.resize = function( width, height, isContentHeight, resizeInner )
 {
-	var numberRegex = /^\d+$/;
-	if ( numberRegex.test( width ) )
-		width += 'px';
-
 	var container = this.container,
 		contents = CKEDITOR.document.getById( 'cke_contents_' + this.name ),
+		contentsFrame = CKEDITOR.env.webkit && this.document && this.document.getWindow().$.frameElement,
 		outer = resizeInner ? container.getChild( 1 ) : container;
 
-	// Resize the width first.
-	// WEBKIT BUG: Webkit requires that we put the editor off from display when we
-	// resize it. If we don't, the browser crashes!
-	CKEDITOR.env.webkit && outer.setStyle( 'display', 'none' );
-	outer.setStyle( 'width', width );
-	if ( CKEDITOR.env.webkit )
-	{
-		outer.$.offsetWidth;
-		outer.setStyle( 'display', '' );
-	}
+	// Set as border box width. (#5353)
+	outer.setSize( 'width',  width, true );
+
+	// WebKit needs to refresh the iframe size to avoid rendering issues. (1/2) (#8348)
+	contentsFrame && ( contentsFrame.style.width = '1%' );
 
 	// Get the height delta between the outer table and the content area.
 	// If we're setting the content area's height, then we don't need the delta.
 	var delta = isContentHeight ? 0 : ( outer.$.offsetHeight || 0 ) - ( contents.$.clientHeight || 0 );
 	contents.setStyle( 'height', Math.max( height - delta, 0 ) + 'px' );
 
+	// WebKit needs to refresh the iframe size to avoid rendering issues. (2/2) (#8348)
+	contentsFrame && ( contentsFrame.style.width = '100%' );
+
 	// Emit a resize event.
 	this.fire( 'resize' );
 };
 
-CKEDITOR.editor.prototype.getResizable = function()
+/**
+ * Gets the element that can be freely used to check the editor size. This method
+ * is mainly used by the resize plugin, which adds a UI handle that can be used
+ * to resize the editor.
+ * @param {Boolean} forContents Whether to return the "contents" part of the theme instead of the container.
+ * @returns {CKEDITOR.dom.element} The resizable element.
+ * @example
+ */
+CKEDITOR.editor.prototype.getResizable = function( forContents )
 {
-	return this.container.getChild( 1 );
+	return forContents ? CKEDITOR.document.getById( 'cke_contents_' + this.name ) : this.container;
 };
 
 /**
@@ -331,4 +397,11 @@ CKEDITOR.editor.prototype.getResizable = function()
  * {
  *     top : 'someElementId'
  * };
+ */
+
+/**
+ * Fired after the editor instance is resized through
+ * the {@link CKEDITOR.editor.prototype.resize} method.
+ * @name CKEDITOR.editor#resize
+ * @event
  */
