@@ -18,7 +18,7 @@ DEFAULT_CONFIG = {
     'height': 291,
     'width': 835,
     'filebrowserWindowWidth': 940,
-    'filebrowserWindowHeight': 747,
+    'filebrowserWindowHeight': 725,
 }
 
 
