@@ -6,6 +6,8 @@ import sys
 
 PATH = os.path.split(os.path.abspath(os.path.join(os.path.dirname(sys.argv[0]))))[0]
 
+DEBUG = True
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
