@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -55,6 +55,9 @@ CKEDITOR.dialog.add( 'about', function( editor )
 								'<p>' +
 									'CKEditor ' + CKEDITOR.version + ' (revision ' + CKEDITOR.revision + ')<br>' +
 									'<a href="http://ckeditor.com/">http://ckeditor.com</a>' +
+								'</p>' +
+								'<p>' +
+									lang.help.replace( '$1', '<a href="http://docs.cksource.com/CKEditor_3.x/Users_Guide/Quick_Reference">' + lang.userGuide + '</a>' ) +
 								'</p>' +
 								'<p>' +
 									lang.moreInfo + '<br>' +

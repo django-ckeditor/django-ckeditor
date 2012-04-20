@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -42,7 +42,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		var toLoad = [];
 
 		// Look for pending template files to get loaded.
-		for ( var i = 0 ; i < templateFiles.length ; i++ )
+		for ( var i = 0, count = templateFiles.length ; i < count ; i++ )
 		{
 			if ( !loadedTemplatesFiles[ templateFiles[ i ] ] )
 			{
@@ -51,7 +51,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 		}
 
-		if ( toLoad.length > 0 )
+		if ( toLoad.length )
 			CKEDITOR.scriptLoader.load( toLoad, callback );
 		else
 			setTimeout( callback, 0 );
@@ -68,7 +68,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * @example
  * config.templates = 'my_templates';
  */
-CKEDITOR.config.templates = 'default';
 
 /**
  * The list of templates definition files to load.

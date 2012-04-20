@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -22,6 +22,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_kama .cke_toolbox
 {
 	clear: both;
+	/* Define the padding-bottom otherwise the collapser button will not be clickable #4932*/
+	padding-bottom: 1px;
 }
 
 .cke_skin_kama a.cke_toolbox_collapser,
@@ -77,14 +79,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	background-position: 4px -1408px; /* +2px +3px */
 }
 
-.cke_skin_kama .cke_toolbar
-{
-	display: inline;
-}
-
 .cke_skin_kama .cke_separator
 {
-	display: none;
+	display: inline-block;
+	border-left: solid 1px #D3D3D3;
+	margin: 3px 2px 0;
+	height: 16px;
+
+	/* These are for IE < 8, but it's ok for the others */
+	vertical-align: top;
 }
 
 .cke_skin_kama .cke_break
@@ -171,15 +174,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	border-width: 3px;
 }
 
-.cke_skin_kama .cke_button a.cke_disabled,
-.cke_skin_kama .cke_browser_ie a:hover.cke_button .cke_disabled
+.cke_skin_kama .cke_button a.cke_disabled *
 {
 	filter: alpha(opacity=30); /* IE */
 	opacity: 0.3; /* Safari, Opera and Mozilla */
 }
 
-.cke_skin_kama .cke_hc .cke_button a.cke_disabled,
-.cke_skin_kama .cke_browser_ie.cke_hc a:hover.cke_button .cke_disabled
+/* IE with zoom != 100% will distort the icons otherwise #4821 */
+.cke_skin_kama .cke_browser_ie .cke_button a.cke_disabled *,
+.cke_skin_kama .cke_browser_ie a:hover.cke_button .cke_disabled *
+{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale'), alpha(opacity=30);
+}
+.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button a.cke_disabled *,
+.cke_skin_kama .cke_browser_ie .cke_rtl a:hover.cke_button .cke_disabled *
+{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale'), alpha(opacity=30);
+}
+.cke_skin_kama .cke_browser_ie6 .cke_button a.cke_disabled *,
+.cke_skin_kama .cke_browser_ie6 a:hover.cke_button .cke_disabled *,
+.cke_skin_kama .cke_browser_ie .cke_button.cke_noalphafix a.cke_disabled *
+{
+	filter: alpha(opacity=30);
+}
+
+.cke_skin_kama .cke_hc .cke_button a.cke_disabled *,
+.cke_skin_kama .cke_browser_ie.cke_hc a:hover.cke_button .cke_disabled *
 {
 	filter: alpha(opacity=60);
 	opacity: 0.6;
@@ -197,6 +217,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	padding: 2px 4px;
 }
 
+.cke_skin_kama .cke_button a:hover,
+.cke_skin_kama .cke_button a:focus,
+.cke_skin_kama .cke_button a:active	/* IE */
+{
+	background-color: #dff1ff;
+}
+
 .cke_skin_kama .cke_button a:hover.cke_on,
 .cke_skin_kama .cke_button a:focus.cke_on,
 .cke_skin_kama .cke_button a:active.cke_on	/* IE */
@@ -204,19 +231,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	background-color: #86caff;
 }
 
-.cke_skin_kama .cke_button a:hover.cke_off,
-.cke_skin_kama .cke_button a:focus.cke_off,
-.cke_skin_kama .cke_button a:active.cke_off	/* IE */
-{
-	background-color: #dff1ff;
-}
-
-.cke_skin_kama .cke_hc .cke_button a:hover.cke_on,
-.cke_skin_kama .cke_hc .cke_button a:focus.cke_on,
-.cke_skin_kama .cke_hc .cke_button a:active.cke_on,	/* IE */
-.cke_skin_kama .cke_hc .cke_button a:hover.cke_off,
-.cke_skin_kama .cke_hc .cke_button a:focus.cke_off,
-.cke_skin_kama .cke_hc .cke_button a:active.cke_off	/* IE */
+.cke_skin_kama .cke_hc .cke_button a:hover,
+.cke_skin_kama .cke_hc .cke_button a:focus,
+.cke_skin_kama .cke_hc .cke_button a:active	/* IE */
 {
 	padding: 0 2px !important;
 	border-width: 3px;
@@ -231,13 +248,30 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	width: 16px;
 	height: 16px;
 	display: inline-block;
-	float: left;
+	cursor: default;
 }
 
 .cke_skin_kama .cke_rtl .cke_button .cke_icon
 {
-	float: right;
+	background-image: url(icons_rtl.png);
 }
+/* IE with zoom != 100% will distort the icons otherwise #4821 */
+.cke_skin_kama .cke_browser_ie .cke_button .cke_icon
+{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale');
+}
+.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button .cke_icon
+{
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale');
+}
+.cke_skin_kama .cke_browser_ie6 .cke_button .cke_icon,
+.cke_skin_kama .cke_browser_ie6 .cke_rtl .cke_button .cke_icon,
+.cke_skin_kama .cke_browser_ie .cke_button.cke_noalphafix .cke_icon,
+.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button.cke_noalphafix .cke_icon
+{
+	filter: ;
+}
+
 
 .cke_skin_kama .cke_button .cke_label
 {
@@ -246,14 +280,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	padding-left: 3px;
 	line-height: 18px;
 	vertical-align: middle;
-	float: left;
-}
-
-.cke_skin_kama .cke_rtl .cke_button .cke_label
-{
-	padding-left: 0;
-	padding-right: 3px;
-	float: right;
 }
 
 .cke_skin_kama .cke_hc .cke_button .cke_label
@@ -285,18 +311,17 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	background-image: url(images/sprites.png);
 	_background-image: url(images/sprites_ie6.png);
 	background-repeat: no-repeat;
-	float: left;
+	cursor: default;
 }
 
-.cke_skin_kama .cke_rtl .cke_button .cke_buttonarrow
+/* IE with zoom != 100% will distort the icons otherwise #4821 */
+.cke_skin_kama .cke_browser_ie .cke_button .cke_buttonarrow
 {
-	background-position: 0 -1469px; /* (0, -5) */
-	float: right;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale');
 }
-
-.cke_skin_kama .cke_hc .cke_button .cke_buttonarrow
+.cke_skin_kama .cke_browser_ie6 .cke_button .cke_buttonarrow
 {
-	display: none;
+	filter: ;
 }
 
 /*** Firefox 2 ***/
@@ -323,6 +348,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_kama .cke_browser_gecko .cke_rtl.cke_button a.cke_off,
 .cke_skin_kama .cke_browser_gecko .cke_rtl .cke_button .cke_icon,
 .cke_skin_kama .cke_browser_gecko .cke_rtl .cke_button .cke_buttonarrow,
+.cke_skin_kama .cke_browser_gecko .cke_rtl .cke_separator,
 .cke_skin_kama .cke_browser_gecko .cke_rtl .cke_toolbar_start
 {
 	float: right;
@@ -338,18 +364,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_skin_kama .cke_browser_gecko .cke_rtl .cke_break
 {
 	float: right;
-}
-
-/*** IE ***/
-
-/* The biggest problem with IE is the RTL support (and float:right). It's
-   totally broken, and quite delicate. IE8 fixed these issues. */
-
-.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button .cke_icon,
-.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button .cke_label,
-.cke_skin_kama .cke_browser_ie .cke_rtl .cke_button .cke_buttonarrow
-{
-	float: none;
 }
 
 /*** WebKit ***/
@@ -370,31 +384,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 /*** Mixed Fixes ***/
 
-.cke_skin_kama .cke_browser_ie8 .cke_button .cke_label,
-.cke_skin_kama .cke_browser_opera .cke_button .cke_label,
-.cke_skin_kama .cke_browser_webkit .cke_button .cke_label
+.cke_skin_kama .cke_browser_ie .cke_button .cke_label
 {
-	line-height: 20px;
+	line-height: 16px;
 }
-
-.cke_skin_kama .cke_browser_opera.cke_browser_quirks .cke_button .cke_label,
-.cke_skin_kama .cke_browser_iequirks .cke_button .cke_label
-{
-	line-height: 17px;
-}
-
-/* IE8 strict button valign correction */
-.cke_skin_kama .cke_browser_ie8 .cke_button .cke_label
-{
-	vertical-align: top;
-}
-
-.cke_skin_kama .cke_browser_iequirks.cke_browser_ie8 .cke_button .cke_label
-{
-	/* revert previous */
-	vertical-align: middle;
-}
-/* END IE8 strict button valign correction */
 
 /* Fix cursor shape consistency on toolbar combos (#4031) */
 .cke_skin_kama .cke_browser_ie .cke_rcombo,
@@ -412,10 +405,4 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 .cke_shared .cke_skin_kama .cke_browser_ie .cke_toolbox
 {
 	padding-bottom: 0;
-}
-
-.cke_skin_kama .cke_browser_gecko .cke_toolbox
-{
-	/* Define the padding-bottom otherwise the collapser button will not be clicable in FF */
-	padding-bottom: 1px;
 }

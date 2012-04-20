@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -27,6 +27,23 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * CKEDITOR.plugins.add( 'sample',
  * {
  *     requires : [ 'button', 'selection' ]
+ * });
+ */
+
+/**
+ * A list of language files available for this plugin. These files are stored inside
+ * the "lang" directory, which is inside the plugin directory, follow the name
+ * pattern of "langCode.js", and contain a language definition created with {@link CKEDITOR.pluginDefinition#setLang}.
+ * While the plugin is being loaded, the editor checks this list to see if
+ * a language file of the current editor language ({@link CKEDITOR.editor#langCode})
+ * is available, and if so, loads it. Otherwise, the file represented by the first list item
+ * in the list is loaded.
+ * @name CKEDITOR.pluginDefinition.prototype.lang
+ * @type Array
+ * @example
+ * CKEDITOR.plugins.add( 'sample',
+ * {
+ *     lang : [ 'en', 'fr' ]
  * });
  */
 

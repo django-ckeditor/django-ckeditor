@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -11,9 +11,21 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		init : function( editor )
 		{
-			var specialKeys = editor.specialKeys;
-			specialKeys[ 13 ] = enter;
-			specialKeys[ CKEDITOR.SHIFT + 13 ] = shiftEnter;
+			editor.addCommand( 'enter', {
+				modes : { wysiwyg:1 },
+				editorFocus : false,
+				exec : function( editor ){ enter( editor ); }
+			});
+
+			editor.addCommand( 'shiftEnter', {
+				modes : { wysiwyg:1 },
+				editorFocus : false,
+				exec : function( editor ){ shiftEnter( editor ); }
+			});
+
+			var keystrokes = editor.keystrokeHandler.keystrokes;
+			keystrokes[ 13 ] = 'enter';
+			keystrokes[ CKEDITOR.SHIFT + 13 ] = 'shiftEnter';
 		}
 	});
 
@@ -24,7 +36,59 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// Get the range for the current selection.
 			range = range || getRange( editor );
 
+			// We may not have valid ranges to work on, like when inside a
+			// contenteditable=false element.
+			if ( !range )
+				return;
+
 			var doc = range.document;
+
+			var atBlockStart = range.checkStartOfBlock(),
+				atBlockEnd = range.checkEndOfBlock(),
+				path = new CKEDITOR.dom.elementPath( range.startContainer ),
+				block = path.block;
+
+			if ( atBlockStart && atBlockEnd )
+			{
+				// Exit the list when we're inside an empty list item block. (#5376)
+				if ( block && ( block.is( 'li' ) || block.getParent().is( 'li' ) ) )
+				{
+					editor.execCommand( 'outdent' );
+					return;
+				}
+
+				if ( block && block.getParent().is( 'blockquote' ) )
+				{
+					block.breakParent( block.getParent() );
+
+					// If we were at the start of <blockquote>, there will be an empty element before it now.
+					if ( !block.getPrevious().getFirst( CKEDITOR.dom.walker.invisible(1) ) )
+						block.getPrevious().remove();
+
+					// If we were at the end of <blockquote>, there will be an empty element after it now.
+					if ( !block.getNext().getFirst( CKEDITOR.dom.walker.invisible(1) ) )
+						block.getNext().remove();
+
+					range.moveToElementEditStart( block );
+					range.select();
+					return;
+				}
+			}
+			// Don't split <pre> if we're in the middle of it, act as shift enter key.
+			else if ( block && block.is( 'pre' ) )
+			{
+				if ( !atBlockEnd )
+				{
+					enterBr( editor, mode, range, forceMode );
+					return;
+				}
+			}
+			// Don't split caption blocks. (#7944)
+			else if ( block && CKEDITOR.dtd.$captionBlock[ block.getName() ] )
+			{
+				enterBr( editor, mode, range, forceMode );
+				return;
+			}
 
 			// Determine the block element to be used.
 			var blockTag = ( mode == CKEDITOR.ENTER_DIV ? 'div' : 'p' );
@@ -51,13 +115,14 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( node.is( 'li' ) )
 				{
 					nextBlock.breakParent( node );
-					nextBlock.move( nextBlock.getNext(), true );
+					nextBlock.move( nextBlock.getNext(), 1 );
 				}
 			}
 			else if ( previousBlock && ( node = previousBlock.getParent() ) && node.is( 'li' ) )
 			{
 				previousBlock.breakParent( node );
-				range.moveToElementEditStart( previousBlock.getNext() );
+				node = previousBlock.getNext();
+				range.moveToElementEditStart( node );
 				previousBlock.move( previousBlock.getPrevious() );
 			}
 
@@ -80,21 +145,16 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 			else
 			{
-
-				if ( isStartOfBlock && isEndOfBlock && previousBlock.is( 'li' ) )
-				{
-					editor.execCommand( 'outdent' );
-					return;
-				}
-
-				var newBlock;
+				var newBlock,
+					newBlockDir;
 
 				if ( previousBlock )
 				{
 					// Do not enter this block if it's a header tag, or we are in
 					// a Shift+Enter (#77). Create a new block element instead
 					// (later in the code).
-					if ( !forceMode && !headerTagRegex.test( previousBlock.getName() ) )
+					if ( previousBlock.is( 'li' ) ||
+							! ( headerTagRegex.test( previousBlock.getName() ) || previousBlock.is( 'pre' ) ) )
 					{
 						// Otherwise, duplicate the previous block.
 						newBlock = previousBlock.clone();
@@ -104,7 +164,20 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					newBlock = nextBlock.clone();
 
 				if ( !newBlock )
-					newBlock = doc.createElement( blockTag );
+				{
+					// We have already created a new list item. (#6849)
+					if ( node && node.is( 'li' ) )
+						newBlock = node;
+					else
+					{
+						newBlock = doc.createElement( blockTag );
+						if ( previousBlock && ( newBlockDir = previousBlock.getDirection() ) )
+							newBlock.setAttribute( 'dir', newBlockDir );
+					}
+				}
+				// Force the enter block unless we're talking of a list item.
+				else if ( forceMode && !newBlock.is( 'li' ) )
+					newBlock.renameNode( blockTag );
 
 				// Recreate the inline elements tree, which was available
 				// before hitting enter, so the same styles will be available in
@@ -131,7 +204,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				if ( !CKEDITOR.env.ie )
 					newBlock.appendBogus();
 
-				range.insertNode( newBlock );
+				if ( !newBlock.getParent() )
+					range.insertNode( newBlock );
+
+				// list item start number should not be duplicated (#7330), but we need
+				// to remove the attribute after it's onto the DOM tree because of old IEs (#7581).
+				newBlock.is( 'li' ) && newBlock.removeAttribute( 'value' );
 
 				// This is tricky, but to make the new block visible correctly
 				// we must select it.
@@ -180,6 +258,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// Get the range for the current selection.
 			range = range || getRange( editor );
 
+			// We may not have valid ranges to work on, like when inside a
+			// contenteditable=false element.
+			if ( !range )
+				return;
+
 			var doc = range.document;
 
 			// Determine the block element to be used.
@@ -203,15 +286,28 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// If we are at the end of a header block.
 			if ( !forceMode && isEndOfBlock && headerTagRegex.test( startBlockTag ) )
 			{
-				// Insert a <br> after the current paragraph.
-				doc.createElement( 'br' ).insertAfter( startBlock );
+				var newBlock,
+					newBlockDir;
 
-				// A text node is required by Gecko only to make the cursor blink.
-				if ( CKEDITOR.env.gecko )
-					doc.createText( '' ).insertAfter( startBlock );
+				if ( ( newBlockDir = startBlock.getDirection() ) )
+				{
+					newBlock = doc.createElement( 'div' );
+					newBlock.setAttribute( 'dir', newBlockDir );
+					newBlock.insertAfter( startBlock );
+					range.setStart( newBlock, 0 );
+				}
+				else
+				{
+					// Insert a <br> after the current paragraph.
+					doc.createElement( 'br' ).insertAfter( startBlock );
 
-				// IE has different behaviors regarding position.
-				range.setStartAt( startBlock.getNext(), CKEDITOR.env.ie ? CKEDITOR.POSITION_BEFORE_START : CKEDITOR.POSITION_AFTER_START );
+					// A text node is required by Gecko only to make the cursor blink.
+					if ( CKEDITOR.env.gecko )
+						doc.createText( '' ).insertAfter( startBlock );
+
+					// IE has different behaviors regarding position.
+					range.setStartAt( startBlock.getNext(), CKEDITOR.env.ie ? CKEDITOR.POSITION_BEFORE_START : CKEDITOR.POSITION_AFTER_START );
+				}
 			}
 			else
 			{
@@ -219,7 +315,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 				isPre = ( startBlockTag == 'pre' );
 
-				if ( isPre )
+				// Gecko prefers <br> as line-break inside <pre> (#4711).
+				if ( isPre && !CKEDITOR.env.gecko )
 					lineBreak = doc.createText( CKEDITOR.env.ie ? '\r' : '\n' );
 				else
 					lineBreak = doc.createElement( 'br' );
@@ -227,29 +324,27 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				range.deleteContents();
 				range.insertNode( lineBreak );
 
-				// A text node is required by Gecko only to make the cursor blink.
-				// We need some text inside of it, so the bogus <br> is properly
-				// created.
-				if ( !CKEDITOR.env.ie )
-					doc.createText( '\ufeff' ).insertAfter( lineBreak );
-
-				// If we are at the end of a block, we must be sure the bogus node is available in that block.
-				if ( isEndOfBlock && !CKEDITOR.env.ie )
-					lineBreak.getParent().appendBogus();
-
-				// Now we can remove the text node contents, so the caret doesn't
-				// stop on it.
-				if ( !CKEDITOR.env.ie )
-					lineBreak.getNext().$.nodeValue = '';
 				// IE has different behavior regarding position.
 				if ( CKEDITOR.env.ie )
 					range.setStartAt( lineBreak, CKEDITOR.POSITION_AFTER_END );
 				else
+				{
+					// A text node is required by Gecko only to make the cursor blink.
+					// We need some text inside of it, so the bogus <br> is properly
+					// created.
+					doc.createText( '\ufeff' ).insertAfter( lineBreak );
+
+					// If we are at the end of a block, we must be sure the bogus node is available in that block.
+					if ( isEndOfBlock )
+						lineBreak.getParent().appendBogus();
+
+					// Now we can remove the text node contents, so the caret doesn't
+					// stop on it.
+					lineBreak.getNext().$.nodeValue = '';
+
 					range.setStartAt( lineBreak.getNext(), CKEDITOR.POSITION_AFTER_START );
 
-				// Scroll into view, for non IE.
-				if ( !CKEDITOR.env.ie )
-				{
+					// Scroll into view, for non IE.
 					var dummy = null;
 
 					// BR is not positioned in Opera and Webkit.
@@ -283,13 +378,20 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 	function shiftEnter( editor )
 	{
-		// On SHIFT+ENTER we want to enforce the mode to be respected, instead
+		// Only effective within document.
+		if ( editor.mode != 'wysiwyg' )
+			return false;
+
+		// On SHIFT+ENTER:
+		// 1. We want to enforce the mode to be respected, instead
 		// of cloning the current block. (#77)
-		return enter( editor, editor.config.shiftEnterMode, true );
+		return enter( editor, editor.config.shiftEnterMode, 1 );
 	}
 
 	function enter( editor, mode, forceMode )
 	{
+		forceMode = editor.config.forceEnterMode || forceMode;
+
 		// Only effective within document.
 		if ( editor.mode != 'wysiwyg' )
 			return false;
@@ -301,21 +403,23 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		setTimeout( function()
 			{
 				editor.fire( 'saveSnapshot' );	// Save undo step.
-				if ( mode == CKEDITOR.ENTER_BR || editor.getSelection().getStartElement().hasAscendant( 'pre', true ) )
+
+				if ( mode == CKEDITOR.ENTER_BR )
 					enterBr( editor, mode, null, forceMode );
 				else
 					enterBlock( editor, mode, null, forceMode );
+
+				editor.fire( 'saveSnapshot' );
 
 			}, 0 );
 
 		return true;
 	}
 
-
 	function getRange( editor )
 	{
 		// Get the selection ranges.
-		var ranges = editor.getSelection().getRanges();
+		var ranges = editor.getSelection().getRanges( true );
 
 		// Delete the contents of all ranges except the first one.
 		for ( var i = ranges.length - 1 ; i > 0 ; i-- )

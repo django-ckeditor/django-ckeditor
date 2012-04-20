@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -23,7 +23,7 @@ CKEDITOR.dialog.add( 'checkspell', function( editor )
 			' style="display:none;color:red;font-size:16px;font-weight:bold;padding-top:160px;text-align:center;z-index:11;">' +
 		'</div><iframe' +
 			' src=""' +
-			' style="width:485px;background-color:#f1f1e3;height:380px"' +
+			' style="width:100%;background-color:#f1f1e3;"' +
 			' frameborder="0"' +
 			' name="' + iframeId + '"' +
 			' id="' + iframeId + '"' +
@@ -31,7 +31,7 @@ CKEDITOR.dialog.add( 'checkspell', function( editor )
 		'</iframe>';
 
 	var wscCoreUrl = editor.config.wsc_customLoaderScript || ( protocol +
-			'//loader.spellchecker.net/sproxy_fck/sproxy.php'
+			'//loader.webspellchecker.net/sproxy_fck/sproxy.php'
 			+ '?plugin=fck2'
 			+ '&customerid=' + editor.config.wsc_customerId
 			+ '&cmd=script&doc=wsc&schema=22'
@@ -129,6 +129,7 @@ CKEDITOR.dialog.add( 'checkspell', function( editor )
 		{
 			var contentArea = this.getContentElement( 'general', 'content' ).getElement();
 			contentArea.setHtml( pasteArea );
+			contentArea.getChild( 2 ).setStyle( 'height', this._.contentSize.height + 'px' );
 
 			if ( typeof( window.doSpell ) != 'function' )
 			{
@@ -166,11 +167,26 @@ CKEDITOR.dialog.add( 'checkspell', function( editor )
 					{
 						type : 'html',
 						id : 'content',
-						style : 'width:485;height:380px',
-						html : '<div></div>'
+						html : ''
 					}
 				]
 			}
 		]
 	};
+});
+
+// Expand the spell-check frame when dialog resized. (#6829)
+CKEDITOR.dialog.on( 'resize', function( evt )
+{
+	var data = evt.data,
+		dialog = data.dialog;
+
+	if ( dialog._.name == 'checkspell' )
+	{
+		var content = dialog.getContentElement( 'general', 'content' ).getElement(),
+			iframe = content && content.getChild( 2 );
+
+		iframe && iframe.setSize( 'height', data.height );
+		iframe && iframe.setSize( 'width', data.width );
+	}
 });

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -29,7 +29,7 @@ if ( CKEDITOR.status == 'unloaded' )
 			// If not the basic code is not ready it, just mark it to be loaded.
 			if ( CKEDITOR.status != 'basic_ready' )
 			{
-				CKEDITOR.loadFullCore._load = true;
+				CKEDITOR.loadFullCore._load = 1;
 				return;
 			}
 
@@ -77,9 +77,9 @@ if ( CKEDITOR.status == 'unloaded' )
 		 * // Disable the auto-replace feature.
 		 * <b>CKEDITOR.replaceByClassEnabled</b> = false;
 		 */
-		CKEDITOR.replaceByClassEnabled = true;
+		CKEDITOR.replaceByClassEnabled = 1;
 
-		var createInstance = function( elementOrIdOrName, config, creationFunction )
+		var createInstance = function( elementOrIdOrName, config, creationFunction, data )
 		{
 			if ( CKEDITOR.env.isCompatible )
 			{
@@ -87,7 +87,7 @@ if ( CKEDITOR.status == 'unloaded' )
 				if ( CKEDITOR.loadFullCore )
 					CKEDITOR.loadFullCore();
 
-				var editor = creationFunction( elementOrIdOrName, config );
+				var editor = creationFunction( elementOrIdOrName, config, data );
 				CKEDITOR.add( editor );
 				return editor;
 			}
@@ -125,21 +125,19 @@ if ( CKEDITOR.status == 'unloaded' )
 		 * @param {Object} [config] The specific configurations to apply to this
 		 *		editor instance. Configurations set here will override global CKEditor
 		 *		settings.
+		 * @param {String} [data] Since 3.3. Initial value for the instance.
 		 * @returns {CKEDITOR.editor} The editor instance created.
 		 * @example
 		 * &lt;div id="editorSpace"&gt;&lt:/div&gt;
 		 * ...
 		 * <b>CKEDITOR.appendTo( 'editorSpace' )</b>;
 		 */
-		CKEDITOR.appendTo = function( elementOrId, config )
+		CKEDITOR.appendTo = function( elementOrId, config, data )
 		{
-			return createInstance( elementOrId, config, CKEDITOR.editor.appendTo );
+			return createInstance( elementOrId, config, CKEDITOR.editor.appendTo, data );
 		};
 
-		/**
-		 * @ignore
-		 * Documented at ckeditor.js.
-		 */
+		// Documented at ckeditor.js.
 		CKEDITOR.add = function( editor )
 		{
 			// For now, just put the editor in the pending list. It will be
@@ -173,9 +171,8 @@ if ( CKEDITOR.status == 'unloaded' )
 
 			for ( var i = 0 ; i < textareas.length ; i++ )
 			{
-				var config = null;
-				var textarea = textareas[i];
-				var name = textarea.name;
+				var config = null,
+					textarea = textareas[i];
 
 				// The "name" and/or "id" attribute must exist.
 				if ( !textarea.name && !textarea.id )
@@ -186,7 +183,7 @@ if ( CKEDITOR.status == 'unloaded' )
 					// The textarea class name could be passed as the function
 					// parameter.
 
-					var classRegex = new RegExp( '(?:^| )' + arguments[0] + '(?:$| )' );
+					var classRegex = new RegExp( '(?:^|\\s)' + arguments[0] + '(?:$|\\s)' );
 
 					if ( !classRegex.test( textarea.className ) )
 						continue;

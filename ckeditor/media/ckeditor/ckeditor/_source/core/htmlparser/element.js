@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -34,11 +34,20 @@ CKEDITOR.htmlParser.element = function( name, attributes )
 	 */
 	this.children = [];
 
-	var tagName = attributes._cke_real_element_type || name;
+	var tagName = attributes[ 'data-cke-real-element-type' ] || name || '';
+
+	// Reveal the real semantic of our internal custom tag name (#6639).
+	var internalTag = tagName.match( /^cke:(.*)/ );
+  	internalTag && ( tagName = internalTag[ 1 ] );
 
 	var dtd			= CKEDITOR.dtd,
-		isBlockLike	= !!( dtd.$nonBodyContent[ tagName ] || dtd.$block[ tagName ] || dtd.$listItem[ tagName ] || dtd.$tableContent[ tagName ] || dtd.$nonEditable[ tagName ] || tagName == 'br' ),
-		isEmpty		= !!dtd.$empty[ name ];
+		isBlockLike	= !!( dtd.$nonBodyContent[ tagName ]
+				|| dtd.$block[ tagName ]
+				|| dtd.$listItem[ tagName ]
+				|| dtd.$tableContent[ tagName ]
+				|| dtd.$nonEditable[ tagName ]
+				|| tagName == 'br' ),
+		isEmpty = !!dtd.$empty[ name ];
 
 	this.isEmpty	= isEmpty;
 	this.isUnknown	= !dtd[ name ];
@@ -48,6 +57,61 @@ CKEDITOR.htmlParser.element = function( name, attributes )
 	{
 		isBlockLike : isBlockLike,
 		hasInlineStarted : isEmpty || !isBlockLike
+	};
+};
+
+/**
+ *  Object presentation of  CSS style declaration text.
+ *  @param {CKEDITOR.htmlParser.element|String} elementOrStyleText A html parser element or the inline style text.
+ */
+CKEDITOR.htmlParser.cssStyle = function()
+{
+	 var styleText,
+		arg = arguments[ 0 ],
+		rules = {};
+
+	styleText = arg instanceof CKEDITOR.htmlParser.element ? arg.attributes.style : arg;
+
+	// html-encoded quote might be introduced by 'font-family'
+	// from MS-Word which confused the following regexp. e.g.
+	//'font-family: &quot;Lucida, Console&quot;'
+	( styleText || '' )
+		.replace( /&quot;/g, '"' )
+		.replace( /\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g,
+			function( match, name, value )
+			{
+				name == 'font-family' && ( value = value.replace( /["']/g, '' ) );
+				rules[ name.toLowerCase() ] = value;
+			});
+
+	return {
+
+		rules : rules,
+
+		/**
+		 *  Apply the styles onto the specified element or object.
+		 * @param {CKEDITOR.htmlParser.element|CKEDITOR.dom.element|Object} obj
+		 */
+		populate : function( obj )
+		{
+			var style = this.toString();
+			if ( style )
+			{
+				obj instanceof CKEDITOR.dom.element ?
+					obj.setAttribute( 'style', style ) :
+					obj instanceof CKEDITOR.htmlParser.element ?
+						obj.attributes.style = style :
+						obj.style = style;
+			}
+		},
+
+		toString : function()
+		{
+			var output = [];
+			for ( var i in rules )
+				rules[ i ] && output.push( i, ':', rules[ i ], ';' );
+			return output.join( '' );
+		}
 	};
 };
 
@@ -118,7 +182,7 @@ CKEDITOR.htmlParser.element = function( name, attributes )
 				{
 					var writer = new CKEDITOR.htmlParser.basicWriter();
 					CKEDITOR.htmlParser.fragment.prototype.writeChildrenHtml.call( element, writer, filter );
-					element.children = new CKEDITOR.htmlParser.fragment.fromHtml( writer.getHtml() ).children;
+					element.children = new CKEDITOR.htmlParser.fragment.fromHtml( writer.getHtml(), 0, element.clone() ).children;
 					isChildrenFiltered = 1;
 				}
 			};
@@ -154,6 +218,10 @@ CKEDITOR.htmlParser.element = function( name, attributes )
 					// filter but not the children.
 					if ( !writeName )
 					{
+						// Fix broken parent refs.
+						for ( var c = 0, length = this.children.length ; c < length ; c++ )
+							this.children[ c ].parent = element.parent;
+
 						this.writeChildrenHtml.call( element, writer, isChildrenFiltered ? null : filter );
 						return;
 					}

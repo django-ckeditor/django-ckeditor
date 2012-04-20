@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -13,6 +13,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		modes : { wysiwyg:1, source:1 },
 		canUndo : false,
+		readOnly : 1,
 		exec : function( editor )
 		{
 			var sHTML,
@@ -24,7 +25,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				sHTML = editor.getData()
 						.replace( /<head>/, '$&' + baseTag )
-						.replace( /[^>]*(?=<\/title>)/, editor.lang.preview );
+						.replace( /[^>]*(?=<\/title>)/, '$& &mdash; ' + editor.lang.preview );
 			}
 			else
 			{
@@ -83,9 +84,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			if ( !isCustomDomain )
 			{
-				oWindow.document.open();
-				oWindow.document.write( sHTML );
-				oWindow.document.close();
+				var doc = oWindow.document;
+				doc.open();
+				doc.write( sHTML );
+				doc.close();
+
+				// Chrome will need this to show the embedded. (#8016)
+				CKEDITOR.env.webkit && setTimeout( function() { doc.body.innerHTML += ''; }, 0 );
 			}
 		}
 	};

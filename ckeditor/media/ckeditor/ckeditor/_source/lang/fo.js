@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -14,7 +14,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 /**
- * Constains the dictionary of language entries.
+ * Contains the dictionary of language entries.
  * @namespace
  */
 CKEDITOR.lang['fo'] =
@@ -31,11 +31,11 @@ CKEDITOR.lang['fo'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
+	editorTitle : 'Rich text editor, %1, trýst ALT og 0 fyri vegleiðing.',
 
 	// ARIA descriptions.
-	toolbar	: 'Toolbar', // MISSING
-	editor	: 'Rich Text Editor', // MISSING
+	toolbars	: 'Editor toolbars', // MISSING
+	editor		: 'Rich Text Editor',
 
 	// Toolbar buttons without dialogs.
 	source			: 'Kelda',
@@ -56,6 +56,7 @@ CKEDITOR.lang['fo'] =
 	superscript		: 'Hækkað skrift',
 	horizontalrule	: 'Ger vatnrætta linju',
 	pagebreak		: 'Ger síðuskift',
+	pagebreakAlt		: 'Síðuskift',
 	unlink			: 'Strika tilknýti',
 	undo			: 'Angra',
 	redo			: 'Vend aftur',
@@ -92,43 +93,69 @@ CKEDITOR.lang['fo'] =
 		cssStyle		: 'Typografi',
 		ok				: 'Góðkent',
 		cancel			: 'Avlýst',
-		close			: 'Close', // MISSING
-		preview			: 'Preview', // MISSING
+		close			: 'Lat aftur',
+		preview			: 'Frumsýn',
 		generalTab		: 'Generelt',
 		advancedTab		: 'Fjølbroytt',
-		validateNumberFailed : 'This value is not a number.', // MISSING
-		confirmNewPage	: 'Any unsaved changes to this content will be lost. Are you sure you want to load new page?', // MISSING
-		confirmCancel	: 'Some of the options have been changed. Are you sure to close the dialog?', // MISSING
-		options			: 'Options', // MISSING
-		target			: 'Target', // MISSING
-		targetNew		: 'New Window (_blank)', // MISSING
-		targetTop		: 'Topmost Window (_top)', // MISSING
-		targetSelf		: 'Same Window (_self)', // MISSING
-		targetParent	: 'Parent Window (_parent)', // MISSING
+		validateNumberFailed : 'Hetta er ikki eitt tal.',
+		confirmNewPage	: 'Allar ikki goymdar broytingar í hesum innihaldið hvørva. Skal nýggj síða lesast kortini?',
+		confirmCancel	: 'Nakrir valmøguleikar eru broyttir. Ert tú vísur í, at dialogurin skal latast aftur?',
+		options			: 'Options',
+		target			: 'Target',
+		targetNew		: 'Nýtt vindeyga (_blank)',
+		targetTop		: 'Vindeyga ovast (_top)',
+		targetSelf		: 'Sama vindeyga (_self)',
+		targetParent	: 'Upphavligt vindeyga (_parent)',
+		langDirLTR		: 'Frá vinstru til høgru (LTR)',
+		langDirRTL		: 'Frá høgru til vinstru (RTL)',
+		styles			: 'Style',
+		cssClasses		: 'Stylesheet Classes',
+		width			: 'Breidd',
+		height			: 'Hædd',
+		align			: 'Justering',
+		alignLeft		: 'Vinstra',
+		alignRight		: 'Høgra',
+		alignCenter		: 'Miðsett',
+		alignTop		: 'Ovast',
+		alignMiddle		: 'Miðja',
+		alignBottom		: 'Botnur',
+		invalidHeight	: 'Hædd má vera eitt tal.',
+		invalidWidth	: 'Breidd má vera eitt tal.',
+		invalidCssLength	: 'Value specified for the "%1" field must be a positive number with or without a valid CSS measurement unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
+		invalidHtmlLength	: 'Value specified for the "%1" field must be a positive number with or without a valid HTML measurement unit (px or %).', // MISSING
+		invalidInlineStyle	: 'Value specified for the inline style must consist of one or more tuples with the format of "name : value", separated by semi-colons.', // MISSING
+		cssLengthTooltip	: 'Enter a number for a value in pixels or a number with a valid CSS unit (px, %, in, cm, mm, em, ex, pt, or pc).', // MISSING
 
 		// Put the voice-only part of the label in the span.
-		unavailable		: '%1<span class="cke_accessibility">, unavailable</span>' // MISSING
+		unavailable		: '%1<span class="cke_accessibility">, ikki tøkt</span>'
+	},
+
+	contextmenu :
+	{
+		options : 'Context Menu Options'
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Set inn sertekn',
-		title		: 'Vel sertekn'
+		title		: 'Vel sertekn',
+		options : 'Møguleikar við serteknum'
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Ger/broyt tilknýti',
+		other 		: '<annað>',
 		menu		: 'Broyt tilknýti',
 		title		: 'Tilknýti',
 		info		: 'Tilknýtis upplýsingar',
-		target		: 'Mál',
+		target		: 'Target',
 		upload		: 'Send til ambætaran',
 		advanced	: 'Fjølbroytt',
 		type		: 'Tilknýtisslag',
-		toUrl		: 'URL', // MISSING
+		toUrl		: 'URL',
 		toAnchor	: 'Tilknýti til marknastein í tekstinum',
 		toEmail		: 'Teldupostur',
 		targetFrame		: '<ramma>',
@@ -136,7 +163,7 @@ CKEDITOR.lang['fo'] =
 		targetFrameName	: 'Vís navn vindeygans',
 		targetPopupName	: 'Popup vindeygans navn',
 		popupFeatures	: 'Popup vindeygans víðkaðu eginleikar',
-		popupResizable	: 'Resizable', // MISSING
+		popupResizable	: 'Stødd kann broytast',
 		popupStatusBar	: 'Støðufrágreiðingarbjálki',
 		popupLocationBar: 'Adressulinja',
 		popupToolbar	: 'Amboðsbjálki',
@@ -144,28 +171,27 @@ CKEDITOR.lang['fo'] =
 		popupFullScreen	: 'Fullur skermur (IE)',
 		popupScrollBars	: 'Rullibjálki',
 		popupDependent	: 'Bundið (Netscape)',
-		popupWidth		: 'Breidd',
 		popupLeft		: 'Frástøða frá vinstru',
-		popupHeight		: 'Hædd',
 		popupTop		: 'Frástøða frá íerva',
-		id				: 'Id', // MISSING
+		id				: 'Id',
 		langDir			: 'Tekstkós',
 		langDirLTR		: 'Frá vinstru til høgru (LTR)',
 		langDirRTL		: 'Frá høgru til vinstru (RTL)',
-		acccessKey		: 'Snarvegisknappur',
+		acccessKey		: 'Snarvegisknöttur',
 		name			: 'Navn',
-		langCode		: 'Tekstkós',
-		tabIndex		: 'Inntriv indeks',
-		advisoryTitle	: 'Vegleiðandi heiti',
+		langCode			: 'Tekstkós',
+		tabIndex			: 'Tabulator indeks',
+		advisoryTitle		: 'Vegleiðandi heiti',
 		advisoryContentType	: 'Vegleiðandi innihaldsslag',
 		cssClasses		: 'Typografi klassar',
 		charset			: 'Atknýtt teknsett',
 		styles			: 'Typografi',
-		selectAnchor	: 'Vel ein marknastein',
+		rel			: 'Relationship', // MISSING
+		selectAnchor		: 'Vel ein marknastein',
 		anchorName		: 'Eftir navni á marknasteini',
-		anchorId		: 'Eftir element Id',
-		emailAddress	: 'Teldupost-adressa',
-		emailSubject	: 'Evni',
+		anchorId			: 'Eftir element Id',
+		emailAddress		: 'Teldupost-adressa',
+		emailSubject		: 'Evni',
 		emailBody		: 'Breyðtekstur',
 		noAnchors		: '(Eingir marknasteinar eru í hesum dokumentið)',
 		noUrl			: 'Vinarliga skriva tilknýti (URL)',
@@ -179,7 +205,32 @@ CKEDITOR.lang['fo'] =
 		menu		: 'Eginleikar fyri marknastein',
 		title		: 'Eginleikar fyri marknastein',
 		name		: 'Heiti marknasteinsins',
-		errorName	: 'Vinarliga rita marknasteinsins heiti'
+		errorName	: 'Vinarliga rita marknasteinsins heiti',
+		remove		: 'Remove Anchor' // MISSING
+	},
+
+	// List style dialog
+	list:
+	{
+		numberedTitle		: 'Eginleikar fyri lista við tølum',
+		bulletedTitle		: 'Eginleikar fyri lista við prikkum',
+		type				: 'Slag',
+		start				: 'Byrjan',
+		validateStartNumber				:'Byrjunartalið fyri lista má vera eitt heiltal.',
+		circle				: 'Sirkul',
+		disc				: 'Disc',
+		square				: 'Fýrkantur',
+		none				: 'Einki',
+		notset				: '<ikki sett>',
+		armenian			: 'Armensk talskipan',
+		georgian			: 'Georgisk talskipan (an, ban, gan, osv.)',
+		lowerRoman			: 'Lítil rómaratøl (i, ii, iii, iv, v, etc.)',
+		upperRoman			: 'Stór rómaratøl (I, II, III, IV, V, etc.)',
+		lowerAlpha			: 'Lítlir bókstavir (a, b, c, d, e, etc.)',
+		upperAlpha			: 'Stórir bókstavir (A, B, C, D, E, etc.)',
+		lowerGreek			: 'Grikskt við lítlum (alpha, beta, gamma, etc.)',
+		decimal				: 'Vanlig tøl (1, 2, 3, etc.)',
+		decimalLeadingZero	: 'Tøl við null frammanfyri (01, 02, 03, etc.)'
 	},
 
 	// Find And Replace Dialog
@@ -191,11 +242,12 @@ CKEDITOR.lang['fo'] =
 		findWhat			: 'Finn:',
 		replaceWith			: 'Yvirskriva við:',
 		notFoundMsg			: 'Leititeksturin varð ikki funnin',
-		matchCase			: 'Munur á stórum og smáðum bókstavum',
+		findOptions			: 'Find Options', // MISSING
+		matchCase			: 'Munur á stórum og smáum bókstavum',
 		matchWord			: 'Bert heil orð',
-		matchCyclic			: 'Match cyclic', // MISSING
+		matchCyclic			: 'Match cyclic',
 		replaceAll			: 'Yvirskriva alt',
-		replaceSuccessMsg	: '%1 occurrence(s) replaced.' // MISSING
+		replaceSuccessMsg	: '%1 úrslit broytt.'
 	},
 
 	// Table Dialog
@@ -208,31 +260,25 @@ CKEDITOR.lang['fo'] =
 		rows		: 'Røðir',
 		columns		: 'Kolonnur',
 		border		: 'Bordabreidd',
-		align		: 'Justering',
-		alignLeft	: 'Vinstrasett',
-		alignCenter	: 'Miðsett',
-		alignRight	: 'Høgrasett',
-		width		: 'Breidd',
 		widthPx		: 'pixels',
 		widthPc		: 'prosent',
-		widthUnit	: 'width unit', // MISSING
-		height		: 'Hædd',
+		widthUnit	: 'breiddar unit',
 		cellSpace	: 'Fjarstøða millum meskar',
 		cellPad		: 'Meskubreddi',
 		caption		: 'Tabellfrágreiðing',
 		summary		: 'Samandráttur',
-		headers		: 'Headers', // MISSING
-		headersNone		: 'None', // MISSING
-		headersColumn	: 'First column', // MISSING
-		headersRow		: 'First Row', // MISSING
-		headersBoth		: 'Both', // MISSING
-		invalidRows		: 'Number of rows must be a number greater than 0.', // MISSING
-		invalidCols		: 'Number of columns must be a number greater than 0.', // MISSING
-		invalidBorder	: 'Border size must be a number.', // MISSING
-		invalidWidth	: 'Table width must be a number.', // MISSING
-		invalidHeight	: 'Table height must be a number.', // MISSING
-		invalidCellSpacing	: 'Cell spacing must be a number.', // MISSING
-		invalidCellPadding	: 'Cell padding must be a number.', // MISSING
+		headers		: 'Yvirskriftir',
+		headersNone		: 'Eingin',
+		headersColumn	: 'Fyrsta kolonna',
+		headersRow		: 'Fyrsta rað',
+		headersBoth		: 'Báðir',
+		invalidRows		: 'Talið av røðum má vera eitt tal størri enn 0.',
+		invalidCols		: 'Talið av kolonnum má vera eitt tal størri enn 0.',
+		invalidBorder	: 'Borda-stødd má vera eitt tal.',
+		invalidWidth	: 'Tabell-breidd má vera eitt tal.',
+		invalidHeight	: 'Tabell-hædd má vera eitt tal.',
+		invalidCellSpacing	: 'Cell spacing má vera eitt tal.',
+		invalidCellPadding	: 'Cell padding má vera eitt tal.',
 
 		cell :
 		{
@@ -245,28 +291,25 @@ CKEDITOR.lang['fo'] =
 			mergeDown		: 'Flætta saman',
 			splitHorizontal	: 'Kloyv meska vatnrætt',
 			splitVertical	: 'Kloyv meska loddrætt',
-			title			: 'Cell Properties', // MISSING
-			cellType		: 'Cell Type', // MISSING
-			rowSpan			: 'Rows Span', // MISSING
-			colSpan			: 'Columns Span', // MISSING
-			wordWrap		: 'Word Wrap', // MISSING
-			hAlign			: 'Horizontal Alignment', // MISSING
-			vAlign			: 'Vertical Alignment', // MISSING
-			alignTop		: 'Top', // MISSING
-			alignMiddle		: 'Middle', // MISSING
-			alignBottom		: 'Bottom', // MISSING
-			alignBaseline	: 'Baseline', // MISSING
-			bgColor			: 'Background Color', // MISSING
-			borderColor		: 'Border Color', // MISSING
-			data			: 'Data', // MISSING
-			header			: 'Header', // MISSING
-			yes				: 'Yes', // MISSING
-			no				: 'No', // MISSING
-			invalidWidth	: 'Cell width must be a number.', // MISSING
-			invalidHeight	: 'Cell height must be a number.', // MISSING
-			invalidRowSpan	: 'Rows span must be a whole number.', // MISSING
-			invalidColSpan	: 'Columns span must be a whole number.', // MISSING
-			chooseColor		: 'Choose' // MISSING
+			title			: 'Mesku eginleikar',
+			cellType		: 'Mesku slag',
+			rowSpan			: 'Ræð spenni',
+			colSpan			: 'Kolonnu spenni',
+			wordWrap		: 'Orðkloyving',
+			hAlign			: 'Horisontal plasering',
+			vAlign			: 'Loddrøtt plasering',
+			alignBaseline	: 'Basislinja',
+			bgColor			: 'Bakgrundslitur',
+			borderColor		: 'Bordalitur',
+			data			: 'Data',
+			header			: 'Header',
+			yes				: 'Ja',
+			no				: 'Nei',
+			invalidWidth	: 'Meskubreidd má vera eitt tal.',
+			invalidHeight	: 'Meskuhædd má vera eitt tal.',
+			invalidRowSpan	: 'Raðspennið má vera eitt heiltal.',
+			invalidColSpan	: 'Kolonnuspennið má vera eitt heiltal.',
+			chooseColor		: 'Vel'
 		},
 
 		row :
@@ -313,7 +356,7 @@ CKEDITOR.lang['fo'] =
 		menu		: 'Eginleikar fyri Form',
 		action		: 'Hending',
 		method		: 'Háttur',
-		encoding	: 'Encoding' // MISSING
+		encoding	: 'Encoding'
 	},
 
 	// Select Field Dialog.
@@ -375,88 +418,70 @@ CKEDITOR.lang['fo'] =
 		btnUpload	: 'Send til ambætaran',
 		upload		: 'Send',
 		alt			: 'Alternativur tekstur',
-		width		: 'Breidd',
-		height		: 'Hædd',
 		lockRatio	: 'Læs lutfallið',
-		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Upprunastødd',
 		border		: 'Bordi',
 		hSpace		: 'Høgri breddi',
 		vSpace		: 'Vinstri breddi',
-		align		: 'Justering',
-		alignLeft	: 'Vinstra',
-		alignRight	: 'Høgra',
 		alertUrl	: 'Rita slóðina til myndina',
 		linkTab		: 'Tilknýti',
-		button2Img	: 'Do you want to transform the selected image button on a simple image?', // MISSING
-		img2Button	: 'Do you want to transform the selected image on a image button?', // MISSING
-		urlMissing	: 'Image source URL is missing.', // MISSING
-		validateWidth	: 'Width must be a whole number.', // MISSING
-		validateHeight	: 'Height must be a whole number.', // MISSING
-		validateBorder	: 'Border must be a whole number.', // MISSING
-		validateHSpace	: 'HSpace must be a whole number.', // MISSING
-		validateVSpace	: 'VSpace must be a whole number.' // MISSING
+		button2Img	: 'Skal valdi myndaknøttur gerast til vanliga mynd?',
+		img2Button	: 'Skal valda mynd gerast til myndaknøtt?',
+		urlMissing	: 'URL til mynd manglar.',
+		validateBorder	: 'Bordi má vera eitt heiltal.',
+		validateHSpace	: 'HSpace má vera eitt heiltal.',
+		validateVSpace	: 'VSpace má vera eitt heiltal.'
 	},
 
 	// Flash Dialog
 	flash :
 	{
 		properties		: 'Flash eginleikar',
-		propertiesTab	: 'Properties', // MISSING
+		propertiesTab	: 'Eginleikar',
 		title			: 'Flash eginleikar',
 		chkPlay			: 'Avspælingin byrjar sjálv',
 		chkLoop			: 'Endurspæl',
 		chkMenu			: 'Ger Flash skrá virkna',
-		chkFull			: 'Allow Fullscreen', // MISSING
+		chkFull			: 'Loyv fullan skerm',
  		scale			: 'Skalering',
 		scaleAll		: 'Vís alt',
 		scaleNoBorder	: 'Eingin bordi',
 		scaleFit		: 'Neyv skalering',
-		access			: 'Script Access', // MISSING
-		accessAlways	: 'Always', // MISSING
-		accessSameDomain: 'Same domain', // MISSING
-		accessNever		: 'Never', // MISSING
-		align			: 'Justering',
-		alignLeft		: 'Vinstra',
+		access			: 'Script atgongd',
+		accessAlways	: 'Altíð',
+		accessSameDomain: 'Sama navnaøki',
+		accessNever		: 'Ongantíð',
 		alignAbsBottom	: 'Abs botnur',
 		alignAbsMiddle	: 'Abs miðja',
 		alignBaseline	: 'Basislinja',
-		alignBottom		: 'Botnur',
-		alignMiddle		: 'Miðja',
-		alignRight		: 'Høgra',
 		alignTextTop	: 'Tekst toppur',
-		alignTop		: 'Ovast',
-		quality			: 'Quality', // MISSING
-		qualityBest		: 'Best', // MISSING
-		qualityHigh		: 'High', // MISSING
-		qualityAutoHigh	: 'Auto High', // MISSING
-		qualityMedium	: 'Medium', // MISSING
-		qualityAutoLow	: 'Auto Low', // MISSING
-		qualityLow		: 'Low', // MISSING
-		windowModeWindow: 'Window', // MISSING
-		windowModeOpaque: 'Opaque', // MISSING
-		windowModeTransparent : 'Transparent', // MISSING
-		windowMode		: 'Window mode', // MISSING
-		flashvars		: 'Variables for Flash', // MISSING
+		quality			: 'Góðska',
+		qualityBest		: 'Besta',
+		qualityHigh		: 'Høg',
+		qualityAutoHigh	: 'Auto høg',
+		qualityMedium	: 'Meðal',
+		qualityAutoLow	: 'Auto Lág',
+		qualityLow		: 'Lág',
+		windowModeWindow: 'Rútur',
+		windowModeOpaque: 'Ikki transparent',
+		windowModeTransparent : 'Transparent',
+		windowMode		: 'Slag av rúti',
+		flashvars		: 'Variablar fyri Flash',
 		bgcolor			: 'Bakgrundslitur',
-		width			: 'Breidd',
-		height			: 'Hædd',
 		hSpace			: 'Høgri breddi',
 		vSpace			: 'Vinstri breddi',
 		validateSrc		: 'Vinarliga skriva tilknýti (URL)',
-		validateWidth	: 'Width must be a number.', // MISSING
-		validateHeight	: 'Height must be a number.', // MISSING
-		validateHSpace	: 'HSpace must be a number.', // MISSING
-		validateVSpace	: 'VSpace must be a number.' // MISSING
+		validateHSpace	: 'HSpace má vera eitt tal.',
+		validateVSpace	: 'VSpace má vera eitt tal.'
 	},
 
 	// Speller Pages Dialog
 	spellCheck :
 	{
 		toolbar			: 'Kanna stavseting',
-		title			: 'Spell Check', // MISSING
-		notAvailable	: 'Sorry, but service is unavailable now.', // MISSING
-		errorLoading	: 'Error loading application service host: %s.', // MISSING
+		title			: 'Kanna stavseting',
+		notAvailable	: 'Tíverri, ikki tøkt í løtuni.',
+		errorLoading	: 'Feilur við innlesing av application service host: %s.',
 		notInDic		: 'Finst ikki í orðabókini',
 		changeTo		: 'Broyt til',
 		btnIgnore		: 'Forfjóna',
@@ -476,13 +501,14 @@ CKEDITOR.lang['fo'] =
 	smiley :
 	{
 		toolbar	: 'Smiley',
-		title	: 'Vel Smiley'
+		title	: 'Vel Smiley',
+		options : 'Møguleikar fyri Smiley'
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Elements path', // MISSING
-		eleTitle : '%1 element' // MISSING
+		eleLabel : 'Slóð til elementir',
+		eleTitle : '%1 element'
 	},
 
 	numberedlist	: 'Talmerktur listi',
@@ -503,19 +529,19 @@ CKEDITOR.lang['fo'] =
 	clipboard :
 	{
 		title		: 'Innrita',
-		cutError	: 'Trygdaruppseting alnótskagans forðar tekstviðgeranum í at kvetta tekstin. Vinarliga nýt knappaborðið til at kvetta tekstin (CTRL+X).',
-		copyError	: 'Trygdaruppseting alnótskagans forðar tekstviðgeranum í at avrita tekstin. Vinarliga nýt knappaborðið til at avrita tekstin (CTRL+C).',
-		pasteMsg	: 'Vinarliga koyr tekstin í hendan rútin við knappaborðinum (<strong>CTRL+V</strong>) og klikk á <strong>Góðtak</strong>.',
+		cutError	: 'Trygdaruppseting alnótskagans forðar tekstviðgeranum í at kvetta tekstin. Vinarliga nýt knappaborðið til at kvetta tekstin (Ctrl/Cmd+X).',
+		copyError	: 'Trygdaruppseting alnótskagans forðar tekstviðgeranum í at avrita tekstin. Vinarliga nýt knappaborðið til at avrita tekstin (Ctrl/Cmd+C).',
+		pasteMsg	: 'Vinarliga koyr tekstin í hendan rútin við knappaborðinum (<strong>Ctrl/Cmd+V</strong>) og klikk á <strong>Góðtak</strong>.',
 		securityMsg	: 'Trygdaruppseting alnótskagans forðar tekstviðgeranum í beinleiðis atgongd til avritingarminnið. Tygum mugu royna aftur í hesum rútinum.',
-		pasteArea	: 'Paste Area' // MISSING
+		pasteArea	: 'Avritingarumráði'
 	},
 
 	pastefromword :
 	{
-		confirmCleanup	: 'The text you want to paste seems to be copied from Word. Do you want to clean it before pasting?', // MISSING
+		confirmCleanup	: 'Teksturin, tú roynir at seta inn, sýnist at stava frá Word. Skal teksturin reinsast fyrst?',
 		toolbar			: 'Innrita frá Word',
 		title			: 'Innrita frá Word',
-		error			: 'It was not possible to clean up the pasted data due to an internal error' // MISSING
+		error			: 'Tað eydnaðist ikki at reinsa tekstin vegna ein internan feil'
 	},
 
 	pasteText :
@@ -528,6 +554,7 @@ CKEDITOR.lang['fo'] =
 	{
 		button			: 'Skabelónir',
 		title			: 'Innihaldsskabelónir',
+		options : 'Møguleikar fyri Template',
 		insertOption	: 'Yvirskriva núverandi innihald',
 		selectPromptMsg	: 'Vinarliga vel ta skabelón, ið skal opnast í tekstviðgeranum<br>(Hetta yvirskrivar núverandi innihald):',
 		emptyListMsg	: '(Ongar skabelónir tøkar)'
@@ -538,10 +565,10 @@ CKEDITOR.lang['fo'] =
 	stylesCombo :
 	{
 		label		: 'Typografi',
-		panelTitle	: 'Formatting Styles', // MISSING
-		panelTitle1	: 'Block Styles', // MISSING
-		panelTitle2	: 'Inline Styles', // MISSING
-		panelTitle3	: 'Object Styles' // MISSING
+		panelTitle	: 'Formatterings stílir',
+		panelTitle1	: 'Blokk stílir',
+		panelTitle2	: 'Inline stílir',
+		panelTitle3	: 'Object stílir'
 	},
 
 	format :
@@ -558,37 +585,46 @@ CKEDITOR.lang['fo'] =
 		tag_h4		: 'Yvirskrift 4',
 		tag_h5		: 'Yvirskrift 5',
 		tag_h6		: 'Yvirskrift 6',
-		tag_div		: 'Normal (DIV)' // MISSING
+		tag_div		: 'Vanligt (DIV)'
 	},
 
 	div :
 	{
-		title				: 'Create Div Container', // MISSING
-		toolbar				: 'Create Div Container', // MISSING
-		cssClassInputLabel	: 'Stylesheet Classes', // MISSING
-		styleSelectLabel	: 'Style', // MISSING
-		IdInputLabel		: 'Id', // MISSING
-		languageCodeInputLabel	: ' Language Code', // MISSING
-		inlineStyleInputLabel	: 'Inline Style', // MISSING
-		advisoryTitleInputLabel	: 'Advisory Title', // MISSING
-		langDirLabel		: 'Language Direction', // MISSING
-		langDirLTRLabel		: 'Left to Right (LTR)', // MISSING
-		langDirRTLLabel		: 'Right to Left (RTL)', // MISSING
-		edit				: 'Edit Div', // MISSING
-		remove				: 'Remove Div' // MISSING
+		title				: 'Ger Div Container',
+		toolbar				: 'Ger Div Container',
+		cssClassInputLabel	: 'Stylesheet Classes',
+		styleSelectLabel	: 'Style',
+		IdInputLabel		: 'Id',
+		languageCodeInputLabel	: ' Language Code',
+		inlineStyleInputLabel	: 'Inline Style',
+		advisoryTitleInputLabel	: 'Advisory Title',
+		langDirLabel		: 'Language Direction',
+		langDirLTRLabel		: 'Vinstru til høgru (LTR)',
+		langDirRTLLabel		: 'Høgru til vinstru (RTL)',
+		edit				: 'Redigera Div',
+		remove				: 'Strika Div'
   	},
+
+	iframe :
+	{
+		title		: 'Møguleikar fyri IFrame',
+		toolbar		: 'IFrame',
+		noUrl		: 'Vinarliga skriva URL til iframe',
+		scrolling	: 'Loyv scrollbars',
+		border		: 'Vís frame kant'
+	},
 
 	font :
 	{
 		label		: 'Skrift',
-		voiceLabel	: 'Font', // MISSING
+		voiceLabel	: 'Skrift',
 		panelTitle	: 'Skrift'
 	},
 
 	fontSize :
 	{
 		label		: 'Skriftstødd',
-		voiceLabel	: 'Font Size', // MISSING
+		voiceLabel	: 'Skriftstødd',
 		panelTitle	: 'Skriftstødd'
 	},
 
@@ -596,104 +632,184 @@ CKEDITOR.lang['fo'] =
 	{
 		textColorTitle	: 'Tekstlitur',
 		bgColorTitle	: 'Bakgrundslitur',
-		panelTitle		: 'Colors', // MISSING
+		panelTitle		: 'Litir',
 		auto			: 'Automatiskt',
 		more			: 'Fleiri litir...'
 	},
 
 	colors :
 	{
-		'000' : 'Black', // MISSING
-		'800000' : 'Maroon', // MISSING
-		'8B4513' : 'Saddle Brown', // MISSING
-		'2F4F4F' : 'Dark Slate Gray', // MISSING
-		'008080' : 'Teal', // MISSING
-		'000080' : 'Navy', // MISSING
-		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dim Gray', // MISSING
-		'B22222' : 'Fire Brick', // MISSING
-		'A52A2A' : 'Brown', // MISSING
-		'DAA520' : 'Golden Rod', // MISSING
-		'006400' : 'Dark Green', // MISSING
-		'40E0D0' : 'Turquoise', // MISSING
-		'0000CD' : 'Medium Blue', // MISSING
-		'800080' : 'Purple', // MISSING
-		'808080' : 'Gray', // MISSING
-		'F00' : 'Red', // MISSING
-		'FF8C00' : 'Dark Orange', // MISSING
-		'FFD700' : 'Gold', // MISSING
-		'008000' : 'Green', // MISSING
-		'0FF' : 'Cyan', // MISSING
-		'00F' : 'Blue', // MISSING
-		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dark Gray', // MISSING
-		'FFA07A' : 'Light Salmon', // MISSING
-		'FFA500' : 'Orange', // MISSING
-		'FFFF00' : 'Yellow', // MISSING
-		'00FF00' : 'Lime', // MISSING
-		'AFEEEE' : 'Pale Turquoise', // MISSING
-		'ADD8E6' : 'Light Blue', // MISSING
-		'DDA0DD' : 'Plum', // MISSING
-		'D3D3D3' : 'Light Grey', // MISSING
-		'FFF0F5' : 'Lavender Blush', // MISSING
-		'FAEBD7' : 'Antique White', // MISSING
-		'FFFFE0' : 'Light Yellow', // MISSING
-		'F0FFF0' : 'Honeydew', // MISSING
-		'F0FFFF' : 'Azure', // MISSING
-		'F0F8FF' : 'Alice Blue', // MISSING
-		'E6E6FA' : 'Lavender', // MISSING
-		'FFF' : 'White' // MISSING
+		'000' : 'Svart',
+		'800000' : 'Maroon',
+		'8B4513' : 'Saðilsbrúnt',
+		'2F4F4F' : 'Dark Slate Gray',
+		'008080' : 'Teal',
+		'000080' : 'Navy',
+		'4B0082' : 'Indigo',
+		'696969' : 'Myrkagrátt',
+		'B22222' : 'Fire Brick',
+		'A52A2A' : 'Brúnt',
+		'DAA520' : 'Gullstavur',
+		'006400' : 'Myrkagrønt',
+		'40E0D0' : 'Turquoise',
+		'0000CD' : 'Meðal blátt',
+		'800080' : 'Purple',
+		'808080' : 'Grátt',
+		'F00' : 'Reytt',
+		'FF8C00' : 'Myrkt appelsingult',
+		'FFD700' : 'Gull',
+		'008000' : 'Grønt',
+		'0FF' : 'Cyan',
+		'00F' : 'Blátt',
+		'EE82EE' : 'Violet',
+		'A9A9A9' : 'Døkt grátt',
+		'FFA07A' : 'Ljósur laksur',
+		'FFA500' : 'Appelsingult',
+		'FFFF00' : 'Gult',
+		'00FF00' : 'Lime',
+		'AFEEEE' : 'Pale Turquoise',
+		'ADD8E6' : 'Ljósablátt',
+		'DDA0DD' : 'Plum',
+		'D3D3D3' : 'Ljósagrátt',
+		'FFF0F5' : 'Lavender Blush',
+		'FAEBD7' : 'Klassiskt hvítt',
+		'FFFFE0' : 'Ljósagult',
+		'F0FFF0' : 'Hunangsdøggur',
+		'F0FFFF' : 'Azure',
+		'F0F8FF' : 'Alice Blátt',
+		'E6E6FA' : 'Lavender',
+		'FFF' : 'Hvítt'
 	},
 
 	scayt :
 	{
-		title			: 'Spell Check As You Type', // MISSING
-		enable			: 'Enable SCAYT', // MISSING
-		disable			: 'Disable SCAYT', // MISSING
-		about			: 'About SCAYT', // MISSING
-		toggle			: 'Toggle SCAYT', // MISSING
-		options			: 'Options', // MISSING
-		langs			: 'Languages', // MISSING
-		moreSuggestions	: 'More suggestions', // MISSING
-		ignore			: 'Ignore', // MISSING
-		ignoreAll		: 'Ignore All', // MISSING
-		addWord			: 'Add Word', // MISSING
-		emptyDic		: 'Dictionary name should not be empty.', // MISSING
-		optionsTab		: 'Options', // MISSING
-		languagesTab	: 'Languages', // MISSING
-		dictionariesTab	: 'Dictionaries', // MISSING
-		aboutTab		: 'About' // MISSING
+		title			: 'Kanna stavseting, meðan tú skrivar',
+		opera_title		: 'Ikki stuðlað í Opera',
+		enable			: 'Loyv SCAYT',
+		disable			: 'Nokta SCAYT',
+		about			: 'Um SCAYT',
+		toggle			: 'Toggle SCAYT',
+		options			: 'Uppseting',
+		langs			: 'Tungumál',
+		moreSuggestions	: 'Fleiri tilráðingar',
+		ignore			: 'Ignorera',
+		ignoreAll		: 'Ignorera alt',
+		addWord			: 'Legg orð afturat',
+		emptyDic		: 'Heiti á orðabók eigur ikki at vera tómt.',
+
+		optionsTab		: 'Uppseting',
+		allCaps			: 'Loyp orð við bert stórum stavum um',
+		ignoreDomainNames : 'loyp økisnøvn um',
+		mixedCase		: 'Loyp orð við blandaðum smáum og stórum stavum um',
+		mixedWithDigits	: 'Loyp orð við tølum um',
+
+		languagesTab	: 'Tungumál',
+
+		dictionariesTab	: 'Orðabøkur',
+		dic_field_name	: 'Orðabókanavn',
+		dic_create		: 'Upprætta nýggja',
+		dic_restore		: 'Endurskapa',
+		dic_delete		: 'Strika',
+		dic_rename		: 'Broyt',
+		dic_info		: 'Upprunaliga er brúkara-orðabókin goymd í eini cookie í tínum egna kaga. Men hesar eru avmarkaðar í stødd. Tá brúkara-orðabókin veksur seg ov stóra til eina cookie, so er møguligt at goyma hana á ambætara okkara. Fyri at goyma persónligu orðabókina á ambætaranum eigur tú at velja eitt navn til tína skuffu. Hevur tú longu goymt eina orðabók, so vinarliga skriva navnið og klikk á knøttin Endurskapa.',
+
+		aboutTab		: 'Um'
 	},
 
 	about :
 	{
-		title		: 'About CKEditor', // MISSING
-		dlgTitle	: 'About CKEditor', // MISSING
-		moreInfo	: 'For licensing information please visit our web site:', // MISSING
-		copy		: 'Copyright &copy; $1. All rights reserved.' // MISSING
+		title		: 'Um CKEditor',
+		dlgTitle	: 'Um CKEditor',
+		help	: 'Check $1 for help.', // MISSING
+		userGuide : 'CKEditor User\'s Guide', // MISSING
+		moreInfo	: 'Licens upplýsingar finnast á heimasíðu okkara:',
+		copy		: 'Copyright &copy; $1. All rights reserved.'
 	},
 
-	maximize : 'Maximize', // MISSING
-	minimize : 'Minimize', // MISSING
+	maximize : 'Maksimera',
+	minimize : 'Minimera',
 
 	fakeobjects :
 	{
-		anchor	: 'Anchor', // MISSING
-		flash	: 'Flash Animation', // MISSING
-		div		: 'Page Break', // MISSING
-		unknown	: 'Unknown Object' // MISSING
+		anchor		: 'Anchor',
+		flash		: 'Flash Animation',
+		iframe		: 'IFrame',
+		hiddenfield	: 'Fjaldur teigur',
+		unknown		: 'Ókent Object'
 	},
 
-	resize : 'Drag to resize', // MISSING
+	resize : 'Drag fyri at broyta stødd',
 
 	colordialog :
 	{
-		title		: 'Select color', // MISSING
-		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected', // MISSING
-		clear		: 'Clear' // MISSING
+		title		: 'Vel lit',
+		options	:	'Litmøguleikar',
+		highlight	: 'Framheva',
+		selected	: 'Valdur litur',
+		clear		: 'Strika'
 	},
 
-	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar' // MISSING
+	toolbarCollapse	: 'Lat Toolbar aftur',
+	toolbarExpand	: 'Vís Toolbar',
+
+	toolbarGroups :
+	{
+		document : 'Document', // MISSING
+		clipboard : 'Clipboard/Undo', // MISSING
+		editing : 'Editing', // MISSING
+		forms : 'Forms', // MISSING
+		basicstyles : 'Basic Styles', // MISSING
+		paragraph : 'Paragraph', // MISSING
+		links : 'Links', // MISSING
+		insert : 'Insert', // MISSING
+		styles : 'Styles', // MISSING
+		colors : 'Colors', // MISSING
+		tools : 'Tools' // MISSING
+	},
+
+	bidi :
+	{
+		ltr : 'Tekstkós frá vinstru til høgru',
+		rtl : 'Tekstkós frá høgru til vinstru'
+	},
+
+	docprops :
+	{
+		label : 'Eginleikar fyri dokument',
+		title : 'Eginleikar fyri dokument',
+		design : 'Design', // MISSING
+		meta : 'META-upplýsingar',
+		chooseColor : 'Vel',
+		other : '<annað>',
+		docTitle :	'Síðuheiti',
+		charset : 	'Teknsett koda',
+		charsetOther : 'Onnur teknsett koda',
+		charsetASCII : 'ASCII', // MISSING
+		charsetCE : 'Miðeuropa',
+		charsetCT : 'Kinesiskt traditionelt (Big5)',
+		charsetCR : 'Cyrilliskt',
+		charsetGR : 'Grikst',
+		charsetJP : 'Japanskt',
+		charsetKR : 'Koreanskt',
+		charsetTR : 'Turkiskt',
+		charsetUN : 'Unicode (UTF-8)', // MISSING
+		charsetWE : 'Vestureuropa',
+		docType : 'Dokumentslag yvirskrift',
+		docTypeOther : 'Annað dokumentslag yvirskrift',
+		xhtmlDec : 'Viðfest XHTML deklaratiónir',
+		bgColor : 'Bakgrundslitur',
+		bgImage : 'Leið til bakgrundsmynd (URL)',
+		bgFixed : 'Læst bakgrund (rullar ikki)',
+		txtColor : 'Tekstlitur',
+		margin : 'Síðubreddar',
+		marginTop : 'Ovast',
+		marginLeft : 'Vinstra',
+		marginRight : 'Høgra',
+		marginBottom : 'Niðast',
+		metaKeywords : 'Dokument index lyklaorð (sundurbýtt við komma)',
+		metaDescription : 'Dokumentlýsing',
+		metaAuthor : 'Høvundur',
+		metaCopyright : 'Upphavsrættindi',
+		previewHtml : '<p>This is some <strong>sample text</strong>. You are using <a href="javascript:void(0)">CKEditor</a>.</p>' // MISSING
+	}
 };

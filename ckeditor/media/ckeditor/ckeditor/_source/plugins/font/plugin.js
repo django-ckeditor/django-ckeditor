@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -29,6 +29,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				vars[ styleType ] = values[ i ] = parts[ 1 ] || name;
 
 				styles[ name ] = new CKEDITOR.style( styleDefinition, vars );
+				styles[ name ]._.definition.name = name;
 			}
 			else
 				names.splice( i--, 1 );
@@ -55,7 +56,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						var name = names[ i ];
 
 						// Add the tag entry to the panel list.
-						this.add( name, '<span style="font-' + styleType + ':' + values[ i ] + '">' + name + '</span>', name );
+						this.add( name, styles[ name ].buildPreview(), name );
 					}
 				},
 

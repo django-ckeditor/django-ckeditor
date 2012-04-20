@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -34,12 +34,14 @@ CKEDITOR.plugins.add( 'sourcearea',
 							textarea.setAttributes(
 								{
 									dir : 'ltr',
-									tabIndex : editor.tabIndex,
+									tabIndex : CKEDITOR.env.webkit ? -1 : editor.tabIndex,
 									'role' : 'textbox',
 									'aria-label' : editor.lang.editorTitle.replace( '%1', editor.name )
 								});
 							textarea.addClass( 'cke_source' );
 							textarea.addClass( 'cke_enable_context_menu' );
+
+							editor.readOnly && textarea.setAttribute( 'readOnly', 'readonly' );
 
 							var styles =
 							{
@@ -71,17 +73,6 @@ CKEDITOR.plugins.add( 'sourcearea',
 								editor.on( 'resize', onResize );
 								win.on( 'resize', onResize );
 								setTimeout( onResize, 0 );
-							}
-							else
-							{
-								// By some yet unknown reason, we must stop the
-								// mousedown propagation for the textarea,
-								// otherwise it's not possible to place the caret
-								// inside of it (non IE).
-								textarea.on( 'mousedown', function( evt )
-									{
-										evt.data.stopPropagation();
-									} );
 							}
 
 							// Reset the holder element and append the
@@ -115,7 +106,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 							setTimeout( function()
 							{
 								editor.mode = 'source';
-								editor.fire( 'mode' );
+								editor.fire( 'mode', { previousMode : editor._.previousMode } );
 							},
 							( CKEDITOR.env.gecko || CKEDITOR.env.webkit ) ? 100 : 0 );
 						},
@@ -138,6 +129,7 @@ CKEDITOR.plugins.add( 'sourcearea',
 
 						unload : function( holderElement )
 						{
+							textarea.clearCustomData();
 							editor.textarea = textarea = null;
 
 							if ( onResize )
@@ -155,6 +147,17 @@ CKEDITOR.plugins.add( 'sourcearea',
 							textarea.focus();
 						}
 					});
+			});
+
+		editor.on( 'readOnly', function()
+			{
+				if ( editor.mode == 'source' )
+				{
+					if ( editor.readOnly )
+						editor.textarea.setAttribute( 'readOnly', 'readonly' );
+					else
+						editor.textarea.removeAttribute( 'readOnly' );
+				}
 			});
 
 		editor.addCommand( 'source', sourcearea.commands.source );
@@ -190,7 +193,8 @@ CKEDITOR.plugins.sourcearea =
 		source :
 		{
 			modes : { wysiwyg:1, source:1 },
-
+			editorFocus : false,
+			readOnly : 1,
 			exec : function( editor )
 			{
 				if ( editor.mode == 'wysiwyg' )

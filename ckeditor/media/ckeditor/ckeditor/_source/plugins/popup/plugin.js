@@ -1,9 +1,9 @@
 ﻿/*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-CKEDITOR.plugins.add( 'popup');
+CKEDITOR.plugins.add( 'popup' );
 
 CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 {
@@ -13,8 +13,9 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 	 * @param {String} url The url of the external file browser.
 	 * @param {String} width Popup window width.
 	 * @param {String} height Popup window height.
+	 * @param {String} options Popup window features.
 	 */
-	popup : function( url, width, height )
+	popup : function( url, width, height, options )
 	{
 		width = width || '80%';
 		height = height || '70%';
@@ -32,8 +33,9 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 			height = 420;
 
 		var top = parseInt( ( window.screen.height - height ) / 2, 10 ),
-			left = parseInt( ( window.screen.width  - width ) / 2, 10 ),
-			options = 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes' +
+			left = parseInt( ( window.screen.width  - width ) / 2, 10 );
+
+		options = ( options || 'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes' ) +
 			',width='  + width +
 			',height=' + height +
 			',top='  + top +
@@ -52,11 +54,11 @@ CKEDITOR.tools.extend( CKEDITOR.editor.prototype,
 			popupWindow.focus();
 			popupWindow.location.href = url;
 		}
-		catch (e)
+		catch ( e )
 		{
 			popupWindow = window.open( url, null, options, true );
 		}
 
-		return true ;
+		return true;
 	}
 });
