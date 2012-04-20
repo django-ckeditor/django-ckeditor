@@ -1,0 +1,1 @@
+CKEditor uploads dropped here.
