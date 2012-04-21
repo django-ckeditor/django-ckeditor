@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -106,7 +106,12 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 						return;
 					}
 
-					this.commit();
+					if ( !_.committed )
+					{
+						_.list.commit();
+						_.committed = 1;
+					}
+
 					var value = this.getValue();
 					if ( value )
 						_.list.mark( value );
@@ -125,13 +130,12 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 					var element = CKEDITOR.document.getById( id ).getChild( 1 );
 					element.focus();
 				},
-				clickFn : clickFn
+				execute : clickFn
 			};
 
 			editor.on( 'mode', function()
 				{
 					this.setState( this.modes[ editor.mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
-					this.setValue( '' );
 				},
 				this );
 
@@ -156,9 +160,6 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 					// Avoid subsequent focus grab on editor document.
 					ev.preventDefault();
 				});
-
-			// For clean up
-			instance.keyDownFn = keyDownFn;
 
 			output.push(
 				'<span class="cke_rcombo">',
@@ -197,7 +198,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 						'<span>' +
 							'<span id="' + id + '_text" class="cke_text cke_inline_label">' + this.label + '</span>' +
 						'</span>' +
-						'<span class=cke_openbutton>' + ( CKEDITOR.env.hc ? '<span>&#9660;</span>' : CKEDITOR.env.air ?  '&nbsp;' : '' ) + '</span>' +	// BLACK DOWN-POINTING TRIANGLE
+						'<span class=cke_openbutton>' + ( CKEDITOR.env.hc ? '<span>&#9660;</span>' : '' ) + '</span>' +	// BLACK DOWN-POINTING TRIANGLE
 					'</a>' +
 				'</span>' +
 				'</span>' );
@@ -235,16 +236,16 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 						me.onOpen();
 				};
 
-			panel.onHide = function( preventOnClose )
+			panel.onHide = function()
 				{
 					if ( me.className )
 						this.element.getFirst().removeClass( me.className + '_panel' );
 
-					me.setState( me.modes && me.modes[ editor.mode ] ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
+					me.setState( CKEDITOR.TRISTATE_OFF );
 
 					me._.on = 0;
 
-					if ( !preventOnClose && me.onClose )
+					if ( me.onClose )
 						me.onClose();
 				};
 
@@ -290,18 +291,16 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 			this._.value = value;
 
 			var textElement = this.document.getById( 'cke_' + this.id + '_text' );
-			if ( textElement )
-			{
-				if ( !( value || text ) )
-				{
-					text = this.label;
-					textElement.addClass( 'cke_inline_label' );
-				}
-				else
-					textElement.removeClass( 'cke_inline_label' );
 
-				textElement.setHtml( typeof text != 'undefined' ? text : value );
+			if ( !( value || text ) )
+			{
+				text = this.label;
+				textElement.addClass( 'cke_inline_label' );
 			}
+			else
+				textElement.removeClass( 'cke_inline_label' );
+
+			textElement.setHtml( typeof text != 'undefined' ? text : value );
 		},
 
 		getValue : function()
@@ -347,13 +346,7 @@ CKEDITOR.ui.richCombo = CKEDITOR.tools.createClass(
 
 		commit : function()
 		{
-			if ( !this._.committed )
-			{
-				this._.list.commit();
-				this._.committed = 1;
-				CKEDITOR.ui.fire( 'ready', this );
-			}
-			this._.committed = 1;
+			this._.list.commit();
 		},
 
 		setState : function( state )

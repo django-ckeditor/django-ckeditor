@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -31,11 +31,11 @@ CKEDITOR.lang['vi'] =
 	 * Screenreader titles. Please note that screenreaders are not always capable
 	 * of reading non-English words. So be careful while translating it.
 	 */
-	editorTitle : 'Bộ soạn thảo, %1, nhấn ALT + 0 để xem hướng dẫn.',
+	editorTitle : 'Rich text editor, %1, press ALT 0 for help.', // MISSING
 
 	// ARIA descriptions.
-	toolbar	: 'Thanh công cụ',
-	editor	: 'Bộ soạn thảo',
+	toolbar	: 'Toolbar', // MISSING
+	editor	: 'Rich Text Editor', // MISSING
 
 	// Toolbar buttons without dialogs.
 	source			: 'Mã HTML',
@@ -49,15 +49,14 @@ CKEDITOR.lang['vi'] =
 	underline		: 'Gạch chân',
 	bold			: 'Đậm',
 	italic			: 'Nghiêng',
-	selectAll		: 'Chọn tất cả',
-	removeFormat	: 'Xoá định dạng',
+	selectAll		: 'Chọn Tất cả',
+	removeFormat	: 'Xoá Định dạng',
 	strike			: 'Gạch xuyên ngang',
 	subscript		: 'Chỉ số dưới',
 	superscript		: 'Chỉ số trên',
-	horizontalrule	: 'Chèn đường phân cách ngang',
-	pagebreak		: 'Chèn ngắt trang',
-	pagebreakAlt		: 'Page Break', // MISSING
-	unlink			: 'Xoá liên kết',
+	horizontalrule	: 'Chèn Đường phân cách ngang',
+	pagebreak		: 'Chèn Ngắt trang',
+	unlink			: 'Xoá Liên kết',
 	undo			: 'Khôi phục thao tác',
 	redo			: 'Làm lại thao tác',
 
@@ -68,7 +67,7 @@ CKEDITOR.lang['vi'] =
 		url				: 'URL',
 		protocol		: 'Giao thức',
 		upload			: 'Tải lên',
-		uploadSubmit	: 'Tải lên máy chủ',
+		uploadSubmit	: 'Tải lên Máy chủ',
 		image			: 'Hình ảnh',
 		flash			: 'Flash',
 		form			: 'Biểu mẫu',
@@ -83,82 +82,60 @@ CKEDITOR.lang['vi'] =
 		notSet			: '<không thiết lập>',
 		id				: 'Định danh',
 		name			: 'Tên',
-		langDir			: 'Hướng ngôn ngữ',
-		langDirLtr		: 'Trái sang phải (LTR)',
-		langDirRtl		: 'Phải sang trái (RTL)',
-		langCode		: 'Mã ngôn ngữ',
+		langDir			: 'Đường dẫn Ngôn ngữ',
+		langDirLtr		: 'Trái sang Phải (LTR)',
+		langDirRtl		: 'Phải sang Trái (RTL)',
+		langCode		: 'Mã Ngôn ngữ',
 		longDescr		: 'Mô tả URL',
 		cssClass		: 'Lớp Stylesheet',
-		advisoryTitle	: 'Nhan đề hướng dẫn',
-		cssStyle		: 'Kiểu (style)',
+		advisoryTitle	: 'Advisory Title',
+		cssStyle		: 'Mẫu',
 		ok				: 'Đồng ý',
 		cancel			: 'Bỏ qua',
-		close			: 'Đóng',
-		preview			: 'Xem trước',
-		generalTab		: 'Tab chung',
-		advancedTab		: 'Tab mở rộng',
+		close			: 'Close', // MISSING
+		preview			: 'Preview', // MISSING
+		generalTab		: 'Chung',
+		advancedTab		: 'Mở rộng',
 		validateNumberFailed : 'Giá trị này không phải là số.',
-		confirmNewPage	: 'Mọi thay đổi không được lưu lại, nội dung này sẽ bị mất. Bạn có chắc chắn muốn tải một trang mới?',
+		confirmNewPage	: 'Mọi thay đổi không được không được lưu lại của nội dung này sẽ bị mất. Bạn có chắc chắn muốn tải một trang mới?',
 		confirmCancel	: 'Một vài tùy chọn đã bị thay đổi. Bạn có chắc chắn muốn đóng hộp thoại?',
-		options			: 'Tùy chọn',
-		target			: 'Đích đến',
-		targetNew		: 'Cửa sổ mới (_blank)',
-		targetTop		: 'Cửa sổ trên cùng (_top)',
-		targetSelf		: 'Tại trang (_self)',
-		targetParent	: 'Cửa sổ cha (_parent)',
-		langDirLTR		: 'Left to Right (LTR)', // MISSING
-		langDirRTL		: 'Right to Left (RTL)', // MISSING
-		styles			: 'Style', // MISSING
-		cssClasses		: 'Stylesheet Classes', // MISSING
-		width			: 'Chiều rộng',
-		height			: 'chiều cao',
-		align			: 'Vị trí',
-		alignLeft		: 'Trái',
-		alignRight		: 'Phải',
-		alignCenter		: 'Giữa',
-		alignTop		: 'Trên',
-		alignMiddle		: 'Giữa',
-		alignBottom		: 'Dưới',
-		invalidHeight	: 'Chiều cao phải là số nguyên.',
-		invalidWidth	: 'Chiều rộng phải là số nguyên.',
+		options			: 'Options', // MISSING
+		target			: 'Target', // MISSING
+		targetNew		: 'New Window (_blank)', // MISSING
+		targetTop		: 'Topmost Window (_top)', // MISSING
+		targetSelf		: 'Same Window (_self)', // MISSING
+		targetParent	: 'Parent Window (_parent)', // MISSING
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, không có</span>'
 	},
 
-	contextmenu :
-	{
-		options : 'Tùy chọn menu bổ xung'
-	},
-
 	// Special char dialog.
 	specialChar		:
 	{
-		toolbar		: 'Chèn ký tự đặc biệt',
-		title		: 'Hãy chọn ký tự đặc biệt',
-		options : 'Tùy chọn các ký tự đặc biệt'
+		toolbar		: 'Chèn Ký tự đặc biệt',
+		title		: 'Hãy chọn Ký tự đặc biệt'
 	},
 
 	// Link dialog.
 	link :
 	{
-		toolbar		: 'Chèn/Sửa liên kết',
-		other 		: '<khác>',
-		menu		: 'Sửa liên kết',
+		toolbar		: 'Chèn/Sửa Liên kết',
+		menu		: 'Sửa Liên kết',
 		title		: 'Liên kết',
-		info		: 'Thông tin liên kết',
+		info		: 'Thông tin Liên kết',
 		target		: 'Đích',
 		upload		: 'Tải lên',
 		advanced	: 'Mở rộng',
-		type		: 'Kiểu liên kết',
-		toUrl		: 'URL',
+		type		: 'Kiểu Liên kết',
+		toUrl		: 'URL', // MISSING
 		toAnchor	: 'Neo trong trang này',
 		toEmail		: 'Thư điện tử',
 		targetFrame		: '<khung>',
 		targetPopup		: '<cửa sổ popup>',
-		targetFrameName	: 'Tên khung đích',
-		targetPopupName	: 'Tên cửa sổ Popup',
-		popupFeatures	: 'Đặc điểm của cửa sổ Popup',
+		targetFrameName	: 'Tên Khung đích',
+		targetPopupName	: 'Tên Cửa sổ Popup',
+		popupFeatures	: 'Đặc điểm của Cửa sổ Popup',
 		popupResizable	: 'Có thể thay đổi kích cỡ',
 		popupStatusBar	: 'Thanh trạng thái',
 		popupLocationBar: 'Thanh vị trí',
@@ -167,70 +144,48 @@ CKEDITOR.lang['vi'] =
 		popupFullScreen	: 'Toàn màn hình (IE)',
 		popupScrollBars	: 'Thanh cuộn',
 		popupDependent	: 'Phụ thuộc (Netscape)',
-		popupLeft		: 'Vị trí bên trái',
-		popupTop		: 'Vị trí phía trên',
+		popupWidth		: 'Rộng',
+		popupLeft		: 'Vị trí Trái',
+		popupHeight		: 'Cao',
+		popupTop		: 'Vị trí Trên',
 		id				: 'Định danh',
-		langDir			: 'Hướng ngôn ngữ',
-		langDirLTR		: 'Trái sang phải (LTR)',
-		langDirRTL		: 'Phải sang trái (RTL)',
-		acccessKey		: 'Phím hỗ trợ truy cập',
+		langDir			: 'Đường dẫn Ngôn ngữ',
+		langDirLTR		: 'Trái sang Phải (LTR)',
+		langDirRTL		: 'Phải sang Trái (RTL)',
+		acccessKey		: 'Phím Hỗ trợ truy cập',
 		name			: 'Tên',
-		langCode		: 'Mã ngôn ngữ',
+		langCode		: 'Đường dẫn Ngôn ngữ',
 		tabIndex		: 'Chỉ số của Tab',
-		advisoryTitle	: 'Nhan đề hướng dẫn',
-		advisoryContentType	: 'Nội dung hướng dẫn',
+		advisoryTitle	: 'Advisory Title',
+		advisoryContentType	: 'Advisory Content Type',
 		cssClasses		: 'Lớp Stylesheet',
 		charset			: 'Bảng mã của tài nguyên được liên kết đến',
-		styles			: 'Kiểu (style)',
-		selectAnchor	: 'Chọn một điểm neo',
-		anchorName		: 'Theo tên điểm neo',
-		anchorId		: 'Theo định danh thành phần',
+		styles			: 'Mẫu',
+		selectAnchor	: 'Chọn một Neo',
+		anchorName		: 'Theo Tên Neo',
+		anchorId		: 'Theo Định danh Thành phần',
 		emailAddress	: 'Thư điện tử',
-		emailSubject	: 'Tiêu đề thông điệp',
-		emailBody		: 'Nội dung thông điệp',
-		noAnchors		: '(Không có điểm neo nào trong tài liệu)',
-		noUrl			: 'Hãy đưa vào đường dẫn liên kết (URL)',
+		emailSubject	: 'Tiêu đề Thông điệp',
+		emailBody		: 'Nội dung Thông điệp',
+		noAnchors		: '(Không có Neo nào trong tài liệu)',
+		noUrl			: 'Hãy đưa vào Liên kết URL',
 		noEmail			: 'Hãy đưa vào địa chỉ thư điện tử'
 	},
 
 	// Anchor dialog
 	anchor :
 	{
-		toolbar		: 'Chèn/Sửa điểm neo',
-		menu		: 'Thuộc tính điểm neo',
-		title		: 'Thuộc tính điểm neo',
-		name		: 'Tên của điểm neo',
-		errorName	: 'Hãy nhập vào tên của điểm neo'
-	},
-
-	// List style dialog
-	list:
-	{
-		numberedTitle		: 'Thuộc tính danh sách có thứ tự',
-		bulletedTitle		: 'Thuộc tính danh sách không thứ tự',
-		type				: 'Kiểu loại',
-		start				: 'Bắt đầu',
-		validateStartNumber				:'List start number must be a whole number.', // MISSING
-		circle				: 'Khuyên tròn',
-		disc				: 'Hình đĩa',
-		square				: 'Hình vuông',
-		none				: 'Không gì cả',
-		notset				: '<không thiết lập>',
-		armenian			: 'Số theo kiểu Armenian',
-		georgian			: 'Số theo kiểu Georgian (an, ban, gan...)',
-		lowerRoman			: 'Số La Mã kiểu thường (i, ii, iii, iv, v...)',
-		upperRoman			: 'Số La Mã kiểu HOA (I, II, III, IV, V...)',
-		lowerAlpha			: 'Kiểu abc thường (a, b, c, d, e...)',
-		upperAlpha			: 'Kiểu ABC HOA (A, B, C, D, E...)',
-		lowerGreek			: 'Kiểu Hy Lạp (alpha, beta, gamma...)',
-		decimal				: 'Kiểu số (1, 2, 3 ...)',
-		decimalLeadingZero	: 'Kiểu số (01, 02, 03...)'
+		toolbar		: 'Chèn/Sửa Neo',
+		menu		: 'Thuộc tính Neo',
+		title		: 'Thuộc tính Neo',
+		name		: 'Tên của Neo',
+		errorName	: 'Hãy nhập vào tên của Neo'
 	},
 
 	// Find And Replace Dialog
 	findAndReplace :
 	{
-		title				: 'Tìm kiếm và thay thế',
+		title				: 'Tìm kiếm và Thay Thế',
 		find				: 'Tìm kiếm',
 		replace				: 'Thay thế',
 		findWhat			: 'Tìm chuỗi:',
@@ -239,7 +194,7 @@ CKEDITOR.lang['vi'] =
 		matchCase			: 'Phân biệt chữ hoa/thường',
 		matchWord			: 'Giống toàn bộ từ',
 		matchCyclic			: 'Giống một phần',
-		replaceAll			: 'Thay thế tất cả',
+		replaceAll			: 'Thay thế Tất cả',
 		replaceSuccessMsg	: '%1 vị trí đã được thay thế.'
 	},
 
@@ -249,48 +204,57 @@ CKEDITOR.lang['vi'] =
 		toolbar		: 'Bảng',
 		title		: 'Thuộc tính bảng',
 		menu		: 'Thuộc tính bảng',
-		deleteTable	: 'Xóa bảng',
-		rows		: 'Số hàng',
-		columns		: 'Số cột',
-		border		: 'Kích thước đường viền',
-		widthPx		: 'Điểm ảnh (px)',
-		widthPc		: 'Phần trăm (%)',
-		widthUnit	: 'Đơn vị',
-		cellSpace	: 'Khoảng cách giữa các ô',
-		cellPad		: 'Khoảng đệm giữ ô và nội dung',
+		deleteTable	: 'Xóa Bảng',
+		rows		: 'Hàng',
+		columns		: 'Cột',
+		border		: 'Cỡ Đường viền',
+		align		: 'Canh lề',
+		alignLeft	: 'Trái',
+		alignCenter	: 'Giữa',
+		alignRight	: 'Phải',
+		width		: 'Rộng',
+		widthPx		: 'điểm (px)',
+		widthPc		: '%',
+		widthUnit	: 'width unit', // MISSING
+		height		: 'Cao',
+		cellSpace	: 'Khoảng cách Ô',
+		cellPad		: 'Đệm Ô',
 		caption		: 'Đầu đề',
 		summary		: 'Tóm lược',
 		headers		: 'Đầu đề',
 		headersNone		: 'Không có',
-		headersColumn	: 'Cột đầu tiên',
-		headersRow		: 'Hàng đầu tiên',
+		headersColumn	: 'Cột Đầu tiên',
+		headersRow		: 'Hàng Đầu tiên',
 		headersBoth		: 'Cả hai',
 		invalidRows		: 'Số lượng hàng phải là một số lớn hơn 0.',
 		invalidCols		: 'Số lượng cột phải là một số lớn hơn 0.',
 		invalidBorder	: 'Kích cỡ của đường biên phải là một số nguyên.',
-		invalidWidth	: 'Chiều rộng của bảng phải là một số nguyên.',
-		invalidHeight	: 'Chiều cao của bảng phải là một số nguyên.',
+		invalidWidth	: 'Chiều rộng của Bảng phải là một số nguyên.',
+		invalidHeight	: 'Chiều cao của Bảng phải là một số nguyên.',
 		invalidCellSpacing	: 'Khoảng cách giữa các ô phải là một số nguyên.',
-		invalidCellPadding	: 'Khoảng đệm giữa ô và nội dung phải là một số nguyên.',
+		invalidCellPadding	: 'Đệm giữa các ô phải là một số nguyên.',
 
 		cell :
 		{
 			menu			: 'Ô',
-			insertBefore	: 'Chèn ô Phía trước',
-			insertAfter		: 'Chèn ô Phía sau',
-			deleteCell		: 'Xoá ô',
-			merge			: 'Kết hợp ô',
-			mergeRight		: 'Kết hợp sang phải',
-			mergeDown		: 'Kết hợp xuống dưới',
-			splitHorizontal	: 'Phân tách ô theo chiều ngang',
-			splitVertical	: 'Phân tách ô theo chiều dọc',
-			title			: 'Thuộc tính của ô',
-			cellType		: 'Kiểu của ô',
+			insertBefore	: 'Chèn Ô Phía trước',
+			insertAfter		: 'Chèn Ô Phía sau',
+			deleteCell		: 'Xoá Ô',
+			merge			: 'Kết hợp Ô',
+			mergeRight		: 'Kết hợp Sang phải',
+			mergeDown		: 'Kết hợp Xuống dưới',
+			splitHorizontal	: 'Tách ngang Ô',
+			splitVertical	: 'Tách dọc Ô',
+			title			: 'Thuộc tính của Ô',
+			cellType		: 'Kiểu của Ô',
 			rowSpan			: 'Kết hợp hàng',
 			colSpan			: 'Kết hợp cột',
-			wordWrap		: 'Chữ liền hàng',
+			wordWrap		: 'Word Wrap',
 			hAlign			: 'Canh lề ngang',
 			vAlign			: 'Canh lề dọc',
+			alignTop		: 'Trên cùng',
+			alignMiddle		: 'Chính giữa',
+			alignBottom		: 'Dưới cùng',
 			alignBaseline	: 'Đường cơ sở',
 			bgColor			: 'Màu nền',
 			borderColor		: 'Màu viền',
@@ -298,46 +262,46 @@ CKEDITOR.lang['vi'] =
 			header			: 'Đầu đề',
 			yes				: 'Có',
 			no				: 'Không',
-			invalidWidth	: 'Chiều rộng của ô phải là một số nguyên.',
-			invalidHeight	: 'Chiều cao của ô phải là một số nguyên.',
+			invalidWidth	: 'Chiều rộng của Ô phải là một số nguyên.',
+			invalidHeight	: 'Chiều cao của Ô phải là một số nguyên.',
 			invalidRowSpan	: 'Số hàng kết hợp phải là một số nguyên.',
 			invalidColSpan	: 'Số cột kết hợp phải là một số nguyên.',
-			chooseColor		: 'Chọn màu'
+			chooseColor		: 'Choose' // MISSING
 		},
 
 		row :
 		{
 			menu			: 'Hàng',
-			insertBefore	: 'Chèn hàng phía trước',
-			insertAfter		: 'Chèn hàng phía sau',
-			deleteRow		: 'Xoá hàng'
+			insertBefore	: 'Chèn Hàng Phía trước',
+			insertAfter		: 'Chèn Hàng Phía sau',
+			deleteRow		: 'Xoá Hàng'
 		},
 
 		column :
 		{
 			menu			: 'Cột',
-			insertBefore	: 'Chèn cột phía trước',
-			insertAfter		: 'Chèn cột phía sau',
-			deleteColumn	: 'Xoá cột'
+			insertBefore	: 'Chèn Cột Phía trước',
+			insertAfter		: 'Chèn Cột Phía sau',
+			deleteColumn	: 'Xoá Cột'
 		}
 	},
 
 	// Button Dialog.
 	button :
 	{
-		title		: 'Thuộc tính của nút',
-		text		: 'Chuỗi hiển thị (giá trị)',
+		title		: 'Thuộc tính Nút',
+		text		: 'Chuỗi hiển thị (Giá trị)',
 		type		: 'Kiểu',
-		typeBtn		: 'Nút bấm',
-		typeSbm		: 'Nút gửi',
-		typeRst		: 'Nút nhập lại'
+		typeBtn		: 'Nút Bấm',
+		typeSbm		: 'Nút Gửi',
+		typeRst		: 'Nút Nhập lại'
 	},
 
 	// Checkbox and Radio Button Dialogs.
 	checkboxAndRadio :
 	{
-		checkboxTitle : 'Thuộc tính nút kiểm',
-		radioTitle	: 'Thuộc tính nút chọn',
+		checkboxTitle : 'Thuộc tính Nút kiểm',
+		radioTitle	: 'Thuộc tính Nút chọn',
 		value		: 'Giá trị',
 		selected	: 'Được chọn'
 	},
@@ -345,8 +309,8 @@ CKEDITOR.lang['vi'] =
 	// Form Dialog.
 	form :
 	{
-		title		: 'Thuộc tính biểu mẫu',
-		menu		: 'Thuộc tính biểu mẫu',
+		title		: 'Thuộc tính Biểu mẫu',
+		menu		: 'Thuộc tính Biểu mẫu',
 		action		: 'Hành động',
 		method		: 'Phương thức',
 		encoding	: 'Bảng mã'
@@ -355,7 +319,7 @@ CKEDITOR.lang['vi'] =
 	// Select Field Dialog.
 	select :
 	{
-		title		: 'Thuộc tính ô chọn',
+		title		: 'Thuộc tính Ô chọn',
 		selectInfo	: 'Thông tin',
 		opAvail		: 'Các tùy chọn có thể sử dụng',
 		value		: 'Giá trị',
@@ -369,25 +333,25 @@ CKEDITOR.lang['vi'] =
 		btnUp		: 'Lên',
 		btnDown		: 'Xuống',
 		btnSetValue : 'Giá trị được chọn',
-		btnDelete	: 'Nút xoá'
+		btnDelete	: 'Xoá'
 	},
 
 	// Textarea Dialog.
 	textarea :
 	{
-		title		: 'Thuộc tính vùng văn bản',
-		cols		: 'Số cột',
-		rows		: 'Số hàng'
+		title		: 'Thuộc tính Vùng văn bản',
+		cols		: 'Cột',
+		rows		: 'Hàng'
 	},
 
 	// Text Field Dialog.
 	textfield :
 	{
-		title		: 'Thuộc tính trường văn bản',
+		title		: 'Thuộc tính Trường văn bản',
 		name		: 'Tên',
 		value		: 'Giá trị',
-		charWidth	: 'Độ rộng của ký tự',
-		maxChars	: 'Số ký tự tối đa',
+		charWidth	: 'Rộng',
+		maxChars	: 'Số Ký tự tối đa',
 		type		: 'Kiểu',
 		typeText	: 'Ký tự',
 		typePass	: 'Mật khẩu'
@@ -396,7 +360,7 @@ CKEDITOR.lang['vi'] =
 	// Hidden Field Dialog.
 	hidden :
 	{
-		title	: 'Thuộc tính trường ẩn',
+		title	: 'Thuộc tính Trường ẩn',
 		name	: 'Tên',
 		value	: 'Giá trị'
 	},
@@ -404,27 +368,34 @@ CKEDITOR.lang['vi'] =
 	// Image Dialog.
 	image :
 	{
-		title		: 'Thuộc tính của ảnh',
-		titleButton	: 'Thuộc tính nút của ảnh',
-		menu		: 'Thuộc tính của ảnh',
-		infoTab		: 'Thông tin của ảnh',
-		btnUpload	: 'Tải lên máy chủ',
+		title		: 'Thuộc tính Hình ảnh',
+		titleButton	: 'Thuộc tính Nút hình ảnh',
+		menu		: 'Thuộc tính Hình ảnh',
+		infoTab		: 'Thông tin Hình ảnh',
+		btnUpload	: 'Tải lên Máy chủ',
 		upload		: 'Tải lên',
-		alt			: 'Chú thích ảnh',
+		alt			: 'Chú thích Hình ảnh',
+		width		: 'Rộng',
+		height		: 'Cao',
 		lockRatio	: 'Giữ nguyên tỷ lệ',
-		unlockRatio	: 'Phá bỏ tỷ lệ',
+		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Kích thước gốc',
 		border		: 'Đường viền',
-		hSpace		: 'Khoảng đệm ngang',
-		vSpace		: 'Khoảng đệm dọc',
-		alertUrl	: 'Hãy đưa vào đường dẫn của ảnh',
-		linkTab		: 'Tab liên kết',
-		button2Img	: 'Bạn có muốn chuyển nút bấm bằng ảnh được chọn thành ảnh?',
-		img2Button	: 'Bạn có muốn chuyển đổi ảnh được chọn thành nút bấm bằng ảnh?',
-		urlMissing	: 'Thiếu đường dẫn hình ảnh',
-		validateBorder	: 'Chiều rộng của đường viền phải là một số nguyên dương',
-		validateHSpace	: 'Khoảng đệm ngang phải là một số nguyên dương',
-		validateVSpace	: 'Khoảng đệm dọc phải là một số nguyên dương'
+		hSpace		: 'HSpace',
+		vSpace		: 'VSpace',
+		align		: 'Vị trí',
+		alignLeft	: 'Trái',
+		alignRight	: 'Phải',
+		alertUrl	: 'Hãy đưa vào URL của hình ảnh',
+		linkTab		: 'Liên kết',
+		button2Img	: 'Bạn có muốn chuyển nút bấm bằng hình ảnh được chọn thành hình ảnh?',
+		img2Button	: 'Bạn có muốn chuyển đổi hình ảnh được chọn thành nút bấm bằng hình ảnh?',
+		urlMissing	: 'Image source URL is missing.', // MISSING
+		validateWidth	: 'Width must be a whole number.', // MISSING
+		validateHeight	: 'Height must be a whole number.', // MISSING
+		validateBorder	: 'Border must be a whole number.', // MISSING
+		validateHSpace	: 'HSpace must be a whole number.', // MISSING
+		validateVSpace	: 'VSpace must be a whole number.' // MISSING
 	},
 
 	// Flash Dialog
@@ -435,53 +406,63 @@ CKEDITOR.lang['vi'] =
 		title			: 'Thuộc tính Flash',
 		chkPlay			: 'Tự động chạy',
 		chkLoop			: 'Lặp',
-		chkMenu			: 'Cho phép bật menu của Flash',
-		chkFull			: 'Cho phép toàn màn hình',
+		chkMenu			: 'Cho phép bật Menu của Flash',
+		chkFull			: 'Cho phép Toàn màn hình',
  		scale			: 'Tỷ lệ',
 		scaleAll		: 'Hiển thị tất cả',
 		scaleNoBorder	: 'Không đường viền',
 		scaleFit		: 'Vừa vặn',
-		access			: 'Truy cập mã',
+		access			: 'Truy cập Mã',
 		accessAlways	: 'Luôn luôn',
 		accessSameDomain: 'Cùng tên miền',
 		accessNever		: 'Không bao giờ',
+		align			: 'Vị trí',
+		alignLeft		: 'Trái',
 		alignAbsBottom	: 'Dưới tuyệt đối',
 		alignAbsMiddle	: 'Giữa tuyệt đối',
 		alignBaseline	: 'Đường cơ sở',
+		alignBottom		: 'Dưới',
+		alignMiddle		: 'Giữa',
+		alignRight		: 'Phải',
 		alignTextTop	: 'Phía trên chữ',
+		alignTop		: 'Trên',
 		quality			: 'Chất lượng',
-		qualityBest		: 'Tốt nhất',
+		qualityBest		: 'TỐt nhất',
 		qualityHigh		: 'Cao',
-		qualityAutoHigh	: 'Cao tự động',
+		qualityAutoHigh	: 'Cao Tự động',
 		qualityMedium	: 'Trung bình',
-		qualityAutoLow	: 'Thấp tự động',
+		qualityAutoLow	: 'Thấp Tự động',
 		qualityLow		: 'Thấp',
 		windowModeWindow: 'Cửa sổ',
 		windowModeOpaque: 'Mờ đục',
 		windowModeTransparent : 'Trong suốt',
-		windowMode		: 'Chế độ cửa sổ',
+		windowMode		: 'Chế độ Cửa sổ',
 		flashvars		: 'Các biến số dành cho Flash',
 		bgcolor			: 'Màu nền',
-		hSpace			: 'Khoảng đệm ngang',
-		vSpace			: 'Khoảng đệm dọc',
-		validateSrc		: 'Hãy đưa vào đường dẫn liên kết',
-		validateHSpace	: 'Khoảng đệm ngang phải là số nguyên.',
-		validateVSpace	: 'Khoảng đệm dọc phải là số nguyên.'
+		width			: 'Rộng',
+		height			: 'Cao',
+		hSpace			: 'HSpace',
+		vSpace			: 'VSpace',
+		validateSrc		: 'Hãy đưa vào Liên kết URL',
+		validateWidth	: 'Chiều rộng phải là số nguyên.',
+		validateHeight	: 'Chiều cao phải là số nguyên.',
+		validateHSpace	: 'HSpace phải là số nguyên.',
+		validateVSpace	: 'VSpace phải là số nguyên.'
 	},
 
 	// Speller Pages Dialog
 	spellCheck :
 	{
-		toolbar			: 'Kiểm tra chính tả',
-		title			: 'Kiểm tra chính tả',
+		toolbar			: 'Kiểm tra Chính tả',
+		title			: 'Kiểm tra Chính tả',
 		notAvailable	: 'Xin lỗi, dịch vụ này hiện tại không có.',
 		errorLoading	: 'Lỗi khi đang nạp dịch vụ ứng dụng: %s.',
 		notInDic		: 'Không có trong từ điển',
 		changeTo		: 'Chuyển thành',
 		btnIgnore		: 'Bỏ qua',
-		btnIgnoreAll	: 'Bỏ qua tất cả',
+		btnIgnoreAll	: 'Bỏ qua Tất cả',
 		btnReplace		: 'Thay thế',
-		btnReplaceAll	: 'Thay thế tất cả',
+		btnReplaceAll	: 'Thay thế Tất cả',
 		btnUndo			: 'Phục hồi lại',
 		noSuggestions	: '- Không đưa ra gợi ý về từ -',
 		progress		: 'Đang tiến hành kiểm tra chính tả...',
@@ -495,13 +476,12 @@ CKEDITOR.lang['vi'] =
 	smiley :
 	{
 		toolbar	: 'Hình biểu lộ cảm xúc (mặt cười)',
-		title	: 'Chèn hình biểu lộ cảm xúc (mặt cười)',
-		options : 'Tùy chọn hình  biểu lộ cảm xúc'
+		title	: 'Chèn Hình biểu lộ cảm xúc (mặt cười)'
 	},
 
 	elementsPath :
 	{
-		eleLabel : 'Nhãn thành phần',
+		eleLabel : 'Elements path', // MISSING
 		eleTitle : '%1 thành phần'
 	},
 
@@ -518,16 +498,16 @@ CKEDITOR.lang['vi'] =
 		block	: 'Canh đều'
 	},
 
-	blockquote : 'Khối trích dẫn',
+	blockquote : 'Khối Trích dẫn',
 
 	clipboard :
 	{
 		title		: 'Dán',
-		cutError	: 'Các thiết lập bảo mật của trình duyệt không cho phép trình biên tập tự động thực thi lệnh cắt. Hãy sử dụng bàn phím cho lệnh này (Ctrl/Cmd+X).',
-		copyError	: 'Các thiết lập bảo mật của trình duyệt không cho phép trình biên tập tự động thực thi lệnh sao chép. Hãy sử dụng bàn phím cho lệnh này (Ctrl/Cmd+C).',
-		pasteMsg	: 'Hãy dán nội dung vào trong khung bên dưới, sử dụng tổ hợp phím (<STRONG>Ctrl/Cmd+V</STRONG>) và nhấn vào nút <STRONG>Đồng ý</STRONG>.',
+		cutError	: 'Các thiết lập bảo mật của trình duyệt không cho phép trình biên tập tự động thực thi lệnh cắt. Hãy sử dụng bàn phím cho lệnh này (Ctrl+X).',
+		copyError	: 'Các thiết lập bảo mật của trình duyệt không cho phép trình biên tập tự động thực thi lệnh sao chép. Hãy sử dụng bàn phím cho lệnh này (Ctrl+C).',
+		pasteMsg	: 'Hãy dán nội dung vào trong khung bên dưới, sử dụng tổ hợp phím (<STRONG>Ctrl+V</STRONG>) và nhấn vào nút <STRONG>Đồng ý</STRONG>.',
 		securityMsg	: 'Do thiết lập bảo mật của trình duyệt nên trình biên tập không thể truy cập trực tiếp vào nội dung đã sao chép. Bạn cần phải dán lại nội dung vào cửa sổ này.',
-		pasteArea	: 'Khu vực dán'
+		pasteArea	: 'Paste Area' // MISSING
 	},
 
 	pastefromword :
@@ -548,21 +528,20 @@ CKEDITOR.lang['vi'] =
 	{
 		button			: 'Mẫu dựng sẵn',
 		title			: 'Nội dung Mẫu dựng sẵn',
-		options : 'Tùy chọn mẫu dựng sẵn',
 		insertOption	: 'Thay thế nội dung hiện tại',
-		selectPromptMsg	: 'Hãy chọn mẫu dựng sẵn để mở trong trình biên tập<br>(nội dung hiện tại sẽ bị mất):',
-		emptyListMsg	: '(Không có mẫu dựng sẵn nào được định nghĩa)'
+		selectPromptMsg	: 'Hãy chọn Mẫu dựng sẵn để mở trong trình biên tập<br>(nội dung hiện tại sẽ bị mất):',
+		emptyListMsg	: '(Không có Mẫu dựng sẵn nào được định nghĩa)'
 	},
 
-	showBlocks : 'Hiển thị các khối',
+	showBlocks : 'Hiển thị các Khối',
 
 	stylesCombo :
 	{
 		label		: 'Kiểu',
-		panelTitle	: 'Phong cách định dạng',
-		panelTitle1	: 'Kiểu khối',
-		panelTitle2	: 'Kiểu trực tiếp',
-		panelTitle3	: 'Kiểu đối tượng'
+		panelTitle	: 'Formatting Styles', // MISSING
+		panelTitle1	: 'Kiểu Khối',
+		panelTitle2	: 'Kiểu Trực tiếp',
+		panelTitle3	: 'Kiểu Đối tượng'
 	},
 
 	format :
@@ -570,8 +549,8 @@ CKEDITOR.lang['vi'] =
 		label		: 'Định dạng',
 		panelTitle	: 'Định dạng',
 
-		tag_p		: 'Bình thường (P)',
-		tag_pre		: 'Đã thiết lập',
+		tag_p		: 'Normal',
+		tag_pre		: 'Formatted',
 		tag_address	: 'Address',
 		tag_h1		: 'Heading 1',
 		tag_h2		: 'Heading 2',
@@ -579,34 +558,25 @@ CKEDITOR.lang['vi'] =
 		tag_h4		: 'Heading 4',
 		tag_h5		: 'Heading 5',
 		tag_h6		: 'Heading 6',
-		tag_div		: 'Bình thường (DIV)'
+		tag_div		: 'Normal (DIV)'
 	},
 
 	div :
 	{
-		title				: 'Tạo khối các thành phần',
-		toolbar				: 'Tạo khối các thành phần',
-		cssClassInputLabel	: 'Các lớp CSS',
-		styleSelectLabel	: 'Kiểu (style)',
-		IdInputLabel		: 'Định danh (id)',
-		languageCodeInputLabel	: 'Mã ngôn ngữ',
-		inlineStyleInputLabel	: 'Kiểu nội dòng',
-		advisoryTitleInputLabel	: 'Nhan đề hướng dẫn',
-		langDirLabel		: 'Hướng ngôn ngữ',
-		langDirLTRLabel		: 'Trái sang phải (LTR)',
-		langDirRTLLabel		: 'Phải qua trái (RTL)',
-		edit				: 'Chỉnh sửa',
-		remove				: 'Xóa bỏ'
+		title				: 'Create Div Container', // MISSING
+		toolbar				: 'Create Div Container', // MISSING
+		cssClassInputLabel	: 'Stylesheet Classes', // MISSING
+		styleSelectLabel	: 'Style', // MISSING
+		IdInputLabel		: 'Id', // MISSING
+		languageCodeInputLabel	: ' Language Code', // MISSING
+		inlineStyleInputLabel	: 'Inline Style', // MISSING
+		advisoryTitleInputLabel	: 'Advisory Title', // MISSING
+		langDirLabel		: 'Language Direction', // MISSING
+		langDirLTRLabel		: 'Left to Right (LTR)', // MISSING
+		langDirRTLLabel		: 'Right to Left (RTL)', // MISSING
+		edit				: 'Edit Div', // MISSING
+		remove				: 'Remove Div' // MISSING
   	},
-
-	iframe :
-	{
-		title		: 'IFrame Properties', // MISSING
-		toolbar		: 'IFrame', // MISSING
-		noUrl		: 'Please type the iframe URL', // MISSING
-		scrolling	: 'Enable scrollbars', // MISSING
-		border		: 'Show frame border' // MISSING
-	},
 
 	font :
 	{
@@ -626,7 +596,7 @@ CKEDITOR.lang['vi'] =
 	{
 		textColorTitle	: 'Màu chữ',
 		bgColorTitle	: 'Màu nền',
-		panelTitle		: 'Màu sắc',
+		panelTitle		: 'Colors', // MISSING
 		auto			: 'Tự động',
 		more			: 'Màu khác...'
 	},
@@ -640,7 +610,7 @@ CKEDITOR.lang['vi'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dark Gray', // MISSING
+		'696969' : 'Dim Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -656,7 +626,7 @@ CKEDITOR.lang['vi'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dim Gray', // MISSING
+		'A9A9A9' : 'Dark Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -678,7 +648,6 @@ CKEDITOR.lang['vi'] =
 	scayt :
 	{
 		title			: 'Kiểm tra chính tả ngay khi gõ chữ (SCAYT)',
-		opera_title		: 'Không hỗ trợ trên trình duyệt Opera',
 		enable			: 'Bật SCAYT',
 		disable			: 'Tắt SCAYT',
 		about			: 'Thông tin về SCAYT',
@@ -687,26 +656,12 @@ CKEDITOR.lang['vi'] =
 		langs			: 'Ngôn ngữ',
 		moreSuggestions	: 'Đề xuất thêm',
 		ignore			: 'Bỏ qua',
-		ignoreAll		: 'Bỏ qua tất cả',
-		addWord			: 'Thêm từ',
+		ignoreAll		: 'Bỏ qua Tất cả',
+		addWord			: 'Thêm Từ',
 		emptyDic		: 'Tên của từ điển không được để trống.',
-
 		optionsTab		: 'Tùy chọn',
-		allCaps			: 'Không phân biệt chữ HOA chữ thường',
-		ignoreDomainNames : 'Bỏ qua tên miền',
-		mixedCase		: 'Không phân biệt loại chữ',
-		mixedWithDigits	: 'Không phân biệt chữ và số',
-
-		languagesTab	: 'Tab ngôn ngữ',
-
+		languagesTab	: 'Ngôn ngữ',
 		dictionariesTab	: 'Từ điển',
-		dic_field_name	: 'Tên từ điển',
-		dic_create		: 'Tạo',
-		dic_restore		: 'Phục hồi',
-		dic_delete		: 'Xóa',
-		dic_rename		: 'Thay tên',
-		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
-
 		aboutTab		: 'Thông tin'
 	},
 
@@ -719,34 +674,26 @@ CKEDITOR.lang['vi'] =
 	},
 
 	maximize : 'Phóng to tối đa',
-	minimize : 'Thu nhỏ',
+	minimize : 'Minimize', // MISSING
 
 	fakeobjects :
 	{
-		anchor		: 'Điểm neo',
-		flash		: 'Flash',
-		iframe		: 'IFrame', // MISSING
-		hiddenfield	: 'Hidden Field', // MISSING
-		unknown		: 'Đối tượng không rõ ràng'
+		anchor	: 'Neo',
+		flash	: 'Hoạt họa Flash',
+		div		: 'Ngắt Trang',
+		unknown	: 'Đối tượng không rõ ràng'
 	},
 
 	resize : 'Kéo rê để thay đổi kích cỡ',
 
 	colordialog :
 	{
-		title		: 'Chọn màu',
-		options	:	'Color Options', // MISSING
-		highlight	: 'Màu chọn',
-		selected	: 'Màu đã chọn',
-		clear		: 'Xóa bỏ'
+		title		: 'Select color', // MISSING
+		highlight	: 'Highlight', // MISSING
+		selected	: 'Selected', // MISSING
+		clear		: 'Clear' // MISSING
 	},
 
-	toolbarCollapse	: 'Thu gọn thanh công cụ',
-	toolbarExpand	: 'Mở rộng thnah công cụ',
-
-	bidi :
-	{
-		ltr : 'Text direction from left to right', // MISSING
-		rtl : 'Text direction from right to left' // MISSING
-	}
+	toolbarCollapse	: 'Collapse Toolbar', // MISSING
+	toolbarExpand	: 'Expand Toolbar' // MISSING
 };

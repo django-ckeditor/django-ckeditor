@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 (function()
@@ -35,8 +35,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								resetFromWord();
 							});
 					}
-					else
-						resetFromWord();
 				}
 			});
 
@@ -45,11 +43,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					label : editor.lang.pastefromword.toolbar,
 					command : 'pastefromword'
-				});
-
-			editor.on( 'pasteState', function( evt )
-				{
-					editor.getCommand( 'pastefromword' ).setState( evt.data );
 				});
 
 			editor.on( 'paste', function( evt )
@@ -94,13 +87,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						|| ( this.path + 'filter/default.js' ) );
 
 				// Load with busy indicator.
-				CKEDITOR.scriptLoader.load( filterFilePath, callback, null, true );
+				CKEDITOR.scriptLoader.load( filterFilePath, callback, null, false, true );
 			}
 
 			return !isLoaded;
-		},
-
-		requires : [ 'clipboard' ]
+		}
 	});
 })();
 

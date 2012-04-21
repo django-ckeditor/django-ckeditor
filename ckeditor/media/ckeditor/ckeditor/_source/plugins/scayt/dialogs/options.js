@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -11,49 +11,44 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 		tags = [],
 		i,
 		contents = [],
-		userDicActive = 0,
+		userDicActive = false,
 		dic_buttons = [
 			// [0] contains buttons for creating
 			"dic_create,dic_restore",
 			// [1] contains buton for manipulation
 			"dic_rename,dic_delete"
 		],
-		optionsIds = [ 'mixedCase', 'mixedWithDigits', 'allCaps', 'ignoreDomainNames' ];
+		optionsIds= [ 'mixedCase','mixedWithDigits','allCaps','ignoreDomainNames' ];
 
 	// common operations
 
-	function getBOMAllOptions()
-	{
+	function getBOMAllOptions () {
 		 return document.forms.optionsbar["options"];
 	}
-	function getBOMAllLangs()
-	{
+	function getBOMAllLangs () {
 		 return document.forms.languagesbar["scayt_lang"];
 	}
 
-	function setCheckedValue( radioObj, newValue )
-	{
-		if ( !radioObj )
+	function setCheckedValue(radioObj, newValue) {
+		if (!radioObj)
 			return;
 		var radioLength = radioObj.length;
-		if ( radioLength == undefined )
-		{
-			radioObj.checked = radioObj.value == newValue.toString();
+		if (radioLength == undefined) {
+			radioObj.checked = (radioObj.value == newValue.toString());
 			return;
 		}
-		for ( var i = 0; i < radioLength; i++ )
-		{
+		for (var i = 0; i < radioLength; i++) {
 			radioObj[i].checked = false;
-			if ( radioObj[i].value == newValue.toString() )
+			if (radioObj[i].value == newValue.toString()) {
 				radioObj[i].checked = true;
+			}
 		}
 	}
 
-	var lang = editor.lang.scayt;
 	var tags_contents =  [
 				{
 					id : 'options',
-					label : lang.optionsTab,
+					label : editor.lang.scayt.optionsTab,
 					elements : [
 						{
 							type : 'html',
@@ -82,7 +77,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 				},
 				{
 					id : 'langs',
-					label : lang.languagesTab,
+					label : editor.lang.scayt.languagesTab,
 					elements : [
 						{
 							type : 'html',
@@ -97,7 +92,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 				},
 				{
 					id : 'dictionaries',
-					label : lang.dictionariesTab,
+					label : editor.lang.scayt.dictionariesTab,
 					elements : [
 						{
 							type : 'html',
@@ -128,7 +123,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 				},
 				{
 					id : 'about',
-					label : lang.aboutTab,
+					label : editor.lang.scayt.aboutTab,
 					elements : [
 						{
 							type : 'html',
@@ -141,7 +136,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 			];
 
 	var dialogDefiniton = {
-		title : lang.title,
+		title : editor.lang.scayt.title,
 		minWidth : 360,
 		minHeight : 220,
 		onShow : function()
@@ -188,10 +183,10 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 		onCancel: function()
 		{
 			var o = getBOMAllOptions();
-			for ( var i in o )
+			for (i in o)
 				o[i].checked = false;
 
-			setCheckedValue( getBOMAllLangs(), "" );
+			setCheckedValue(getBOMAllLangs(),"");
 		},
 		contents : contents
 	};
@@ -206,21 +201,21 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 			contents[ contents.length ] = tags_contents[ i ];
 	}
 	if ( tags[2] == 1 )
-		userDicActive = 1;
+		userDicActive = true;
 
 
 	var init_with_captions = function()
 	{
 		var dialog = this,
 			lang_list = dialog.data.scayt.getLangList(),
-			buttons = [ 'dic_create', 'dic_delete', 'dic_rename', 'dic_restore' ],
+			buttons = [ 'dic_create','dic_delete','dic_rename','dic_restore' ],
 			labels = optionsIds,
 			i;
 
 		// Add buttons titles
-		if ( userDicActive )
+		if (userDicActive)
 		{
-			for ( i = 0; i < buttons.length; i++ )
+			for ( i in buttons )
 			{
 				var button = buttons[ i ];
 				doc.getById( button ).setHtml( '<span class="cke_dialog_ui_button">' + captions[ 'button_' + button]  +'</span>' );
@@ -230,7 +225,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 
 
 		// Fill options and dictionary labels.
-		if ( tags[0] == 1 )
+		if (tags[0] == 1)
 		{
 			for ( i in labels )
 			{
@@ -248,9 +243,9 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 			}
 		}
 
-		var about = '<p><img src="' + window.scayt.getAboutInfo().logoURL + '" /></p>' +
-				'<p>' + captions[ 'version' ] + window.scayt.getAboutInfo().version.toString() + '</p>' +
-				'<p>' + captions[ 'about_throwt_copy' ] + '</p>';
+		var about = '<p>' + captions[ 'about_throwt_image' ] + '</p>'+
+					'<p>' + captions[ 'version' ]  + dialog.data.scayt.version.toString() + '</p>' +
+					'<p>' + captions[ 'about_throwt_copy' ] + '</p>';
 
 		doc.getById( 'scayt_about' ).setHtml( about );
 
@@ -287,7 +282,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 		};
 
 		var langList = [];
-		if ( tags[1] ==1 )
+		if (tags[1] ==1 )
 		{
 			for ( i in lang_list.rtl )
 				langList[ langList.length ] = createOption( i, lang_list.ltr );
@@ -319,15 +314,15 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 			var err_massage = captions["err_dic_create"];
 			var suc_massage = captions["succ_dic_create"];
 
-			window.scayt.createUserDictionary( dic_name,
-				function( arg )
+			window.scayt.createUserDictionary(dic_name,
+				function(arg)
 				{
 					hide_dic_buttons ( all_buttons );
 					display_dic_buttons ( dic_buttons[1] );
 					suc_massage = suc_massage.replace("%s" , arg.dname );
 					dic_success_message (suc_massage);
 				},
-				function( arg )
+				function(arg)
 				{
 					err_massage = err_massage.replace("%s" ,arg.dname );
 					dic_error_message ( err_massage + "( "+ (arg.message || "") +")");
@@ -341,14 +336,14 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 			// try to rename dictionary
 			var err_massage = captions["err_dic_rename"] || "";
 			var suc_massage = captions["succ_dic_rename"] || "";
-			window.scayt.renameUserDictionary( dic_name,
-				function( arg )
+			window.scayt.renameUserDictionary(dic_name,
+				function(arg)
 					{
 						suc_massage = suc_massage.replace("%s" , arg.dname );
 						set_dic_name( dic_name );
 						dic_success_message ( suc_massage );
 					},
-				function( arg )
+				function(arg)
 					{
 						err_massage = err_massage.replace("%s" , arg.dname  );
 						set_dic_name( dic_name );
@@ -356,7 +351,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 					});
 		};
 
-		dic.dic_delete = function( el, dic_name , dic_buttons )
+		dic.dic_delete = function ( el, dic_name , dic_buttons )
 		{
 			var all_buttons = dic_buttons[0] + ',' + dic_buttons[1];
 			var err_massage = captions["err_dic_delete"];
@@ -364,7 +359,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 
 			// try to delete dictionary
 			window.scayt.deleteUserDictionary(
-				function( arg )
+				function(arg)
 				{
 					suc_massage = suc_massage.replace("%s" , arg.dname );
 					hide_dic_buttons ( all_buttons );
@@ -372,14 +367,14 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 					set_dic_name( "" ); // empty input field
 					dic_success_message( suc_massage );
 				},
-				function( arg )
+				function(arg)
 				{
 					err_massage = err_massage.replace("%s" , arg.dname );
 					dic_error_message(err_massage);
 				});
 		};
 
-		dic.dic_restore = dialog.dic_restore || function( el, dic_name , dic_buttons )
+		dic.dic_restore = dialog.dic_restore || function ( el, dic_name , dic_buttons )
 			{
 				// try to restore existing dictionary
 				var all_buttons = dic_buttons[0] + ',' + dic_buttons[1];
@@ -387,14 +382,14 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 				var suc_massage = captions["succ_dic_restore"];
 
 				window.scayt.restoreUserDictionary(dic_name,
-					function( arg )
+					function(arg)
 					{
 						suc_massage = suc_massage.replace("%s" , arg.dname );
 						hide_dic_buttons ( all_buttons );
 						display_dic_buttons(dic_buttons[1]);
 						dic_success_message( suc_massage );
 					},
-					function( arg )
+					function(arg)
 					{
 						err_massage = err_massage.replace("%s" , arg.dname );
 						dic_error_message( err_massage );
@@ -413,9 +408,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 				var el = id = ev.data.getTarget().getParent();
 				var id = el.getId();
 				dic[ id ].apply( null, [ el, dic_name, dic_buttons ] );
-			}
-			catch(err)
-			{
+			}catch(err){
 				dic_error_message(" Dictionary error. ");
 			}
 
@@ -438,7 +431,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 	{
 		var dialog = this;
 		// for enabled options tab
-		if ( tags[0] == 1 ){
+		if (tags[0] == 1){
 			var opto = getBOMAllOptions();
 
 			// Animate options.
@@ -473,8 +466,8 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 		//for enabled languages tab
 		if ( tags[1] == 1 )
 		{
-			var domLang = doc.getById("cke_option" + dialog.sLang);
-			setCheckedValue( domLang.$,dialog.sLang );
+			var domLang = doc.getById("cke_option"+dialog.sLang);
+			setCheckedValue(domLang.$,dialog.sLang);
 		}
 
 		// * user dictionary
@@ -494,7 +487,7 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 						display_dic_buttons( dic_buttons[0] );
 
 				},
-				function()
+				function ()
 				{
 					doc.getById( 'dic_name' ).setValue("");
 				});
@@ -503,29 +496,35 @@ CKEDITOR.dialog.add( 'scaytcheck', function( editor )
 
 	};
 
-	function dic_error_message( m )
+	function dic_error_message ( m )
 	{
 		doc.getById('dic_message').setHtml('<span style="color:red;">' + m + '</span>' );
 	}
-	function dic_success_message( m )
+	function dic_success_message ( m )
 	{
 		doc.getById('dic_message').setHtml('<span style="color:blue;">' + m + '</span>') ;
 	}
-	function display_dic_buttons( sIds )
+	function display_dic_buttons ( sIds )
 	{
+
 		sIds = String( sIds );
 		var aIds = sIds.split(',');
 		for ( var i=0, l = aIds.length; i < l ; i+=1)
+		{
 			doc.getById( aIds[i] ).$.style.display = "inline";
+		}
+
 	}
-	function hide_dic_buttons( sIds )
+	function hide_dic_buttons ( sIds )
 	{
 		sIds = String( sIds );
 		var aIds = sIds.split(',');
 		for ( var i = 0, l = aIds.length; i < l ; i += 1 )
+		{
 			doc.getById( aIds[i] ).$.style.display = "none";
+		}
 	}
-	function set_dic_name( dic_name )
+	function set_dic_name ( dic_name )
 	{
 		doc.getById('dic_name').$.value= dic_name;
 	}

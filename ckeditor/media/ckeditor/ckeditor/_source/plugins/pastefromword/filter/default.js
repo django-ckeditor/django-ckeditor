@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -60,13 +60,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				child = child.firstChild( evaluator );
 				if ( child )
 					return child;
+				else
+					continue;
 			}
 		}
 
 		return null;
 	};
 
-	// Adding a (set) of styles to the element's 'style' attributes.
+	// Adding a (set) of styles to the element's attributes.
 	elementPrototype.addStyle = function( name, value, isPrepend )
 	{
 		var styleText, addingStyleText = '';
@@ -118,11 +120,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		return result;
 	};
 
-	var cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i;
-	var emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/;		// e.g. 0px 0pt 0px
-	var romanLiternalPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$',
-		lowerRomanLiteralRegex = new RegExp( romanLiternalPattern ),
-		upperRomanLiteralRegex = new RegExp( romanLiternalPattern.toUpperCase() );
+	var cssLengthRelativeUnit = /^(\d[.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i;
+	var emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/;
 
 	var listBaseIndent = 0,
 		 previousListItemMargin;
@@ -147,10 +146,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					if ( !isNaN( bulletStyle[ 1 ] ) )
 						bulletStyle = 'decimal';
-					else if ( lowerRomanLiteralRegex.test( bulletStyle[ 1 ] ) )
-						bulletStyle = 'lower-roman';
-					else if ( upperRomanLiteralRegex.test( bulletStyle[ 1 ] ) )
-						bulletStyle = 'upper-roman';
+					// No way to distinguish between Roman numerals and Alphas,
+					// detect them as a whole.
 					else if ( /^[a-z]+$/.test( bulletStyle[ 1 ] ) )
 						bulletStyle = 'lower-alpha';
 					else if ( /^[A-Z]+$/.test( bulletStyle[ 1 ] ) )
@@ -164,11 +161,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				}
 				else
 				{
-					if ( /[l\u00B7\u2002]/.test( bulletStyle[ 1 ] ) )
+					if ( /[l\u00B7\u2002]/.test( bulletStyle[ 1 ] ) ) //l·•
 						bulletStyle = 'disc';
-					else if ( /[\u006F\u00D8]/.test( bulletStyle[ 1 ] ) )
+					else if ( /[\u006F\u00D8]/.test( bulletStyle[ 1 ] ) )  //oØ
 						bulletStyle = 'circle';
-					else if ( /[\u006E\u25C6]/.test( bulletStyle[ 1 ] ) )
+					else if ( /[\u006E\u25C6]/.test( bulletStyle[ 1 ] ) ) //n◆
 						bulletStyle = 'square';
 					else
 						bulletStyle = 'disc';
@@ -203,7 +200,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			resolveList : function( element )
 			{
 				// <cke:listbullet> indicate a list item.
-				var attrs = element.attributes,
+				var children = element.children,
+					attrs = element.attributes,
 					listMarker;
 
 				if ( ( listMarker = element.removeAnyChildWithName( 'cke:listbullet' ) )
@@ -224,7 +222,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									{
 										// Be able to deal with component/short-hand form style.
 										var values = margin.split( ' ' );
-										margin = CKEDITOR.plugins.pastefromword.utils.convertToPx( values[ 3 ] || values[ 1 ] || values [ 0 ] );
+										margin = values[ 3 ] || values[ 1 ] || values [ 0 ];
 										margin = parseInt( margin, 10 );
 
 										// Figure out the indent unit by looking at the first increament.
@@ -591,6 +589,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				stylesFilter = filters.stylesFilter,
 				elementMigrateFilter = filters.elementMigrateFilter,
 				styleMigrateFilter = CKEDITOR.tools.bind( this.filters.styleMigrateFilter, this.filters ),
+				bogusAttrFilter = filters.bogusAttrFilter,
 				createListBulletMarker = this.utils.createListBulletMarker,
 				flattenList = filters.flattenList,
 				assembleList = filters.assembleList,
@@ -757,6 +756,10 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					{
 						element.filterChildren();
 
+						var attrs = element.attributes,
+							parent = element.parent,
+							children = element.children;
+
 						// Is the paragraph actually a list item?
 						if ( resolveListItem( element ) )
 							return;
@@ -826,6 +829,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									element.attributes );
 							styleText && parent.addStyle( styleText );
 							delete element.name;
+							return;
 						}
 						// Convert the merged into a span with all attributes preserved.
 						else

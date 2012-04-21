@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -57,14 +57,12 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 		 */
 		this.lineBreakChars = '\n';
 
-		this.forceSimpleAmpersand = 0;
+		this.forceSimpleAmpersand = false;
 
-		this.sortAttributes = 1;
+		this.sortAttributes = true;
 
-		this._.indent = 0;
+		this._.indent = false;
 		this._.indentation = '';
-		// Indicate preformatted block context status. (#5789)
-		this._.inPre = 0;
 		this._.rules = {};
 
 		var dtd = CKEDITOR.dtd;
@@ -73,35 +71,35 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 		{
 			this.setRules( e,
 				{
-					indent : 1,
-					breakBeforeOpen : 1,
-					breakAfterOpen : 1,
+					indent : true,
+					breakBeforeOpen : true,
+					breakAfterOpen : true,
 					breakBeforeClose : !dtd[ e ][ '#' ],
-					breakAfterClose : 1
+					breakAfterClose : true
 				});
 		}
 
 		this.setRules( 'br',
 			{
-				breakAfterOpen : 1
+				breakAfterOpen : true
 			});
 
 		this.setRules( 'title',
 			{
-				indent : 0,
-				breakAfterOpen : 0
+				indent : false,
+				breakAfterOpen : false
 			});
 
 		this.setRules( 'style',
 			{
-				indent : 0,
-				breakBeforeClose : 1
+				indent : false,
+				breakBeforeClose : true
 			});
 
 		// Disable indentation on <pre>.
 		this.setRules( 'pre',
 			{
-			  indent : 0
+			  indent: false
 			});
 	},
 
@@ -160,7 +158,6 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 
 			if ( rules && rules.breakAfterOpen )
 				this.lineBreak();
-			tagName == 'pre' && ( this._.inPre = 1 );
 		},
 
 		/**
@@ -178,8 +175,8 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 			if ( typeof attValue == 'string' )
 			{
 				this.forceSimpleAmpersand && ( attValue = attValue.replace( /&amp;/g, '&' ) );
-				// Browsers don't always escape special character in attribute values. (#4683, #4719).
-				attValue = CKEDITOR.tools.htmlEncodeAttr( attValue );
+				// Browsers don't always escape quote in attribute values. (#4683)
+				attValue = attValue.replace( /"/g, '&quot;' );
 			}
 
 			this._.output.push( ' ', attName, '="', attValue, '"' );
@@ -209,7 +206,6 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 			}
 
 			this._.output.push( '</', tagName, '>' );
-			tagName == 'pre' && ( this._.inPre = 0 );
 
 			if ( rules && rules.breakAfterClose )
 				this.lineBreak();
@@ -227,7 +223,7 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 			if ( this._.indent )
 			{
 				this.indentation();
-				!this._.inPre  && ( text = CKEDITOR.tools.ltrim( text ) );
+				text = CKEDITOR.tools.ltrim( text );
 			}
 
 			this._.output.push( text );
@@ -256,9 +252,9 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 		 */
 		lineBreak : function()
 		{
-			if ( !this._.inPre && this._.output.length > 0 )
+			if ( this._.output.length > 0 )
 				this._.output.push( this.lineBreakChars );
-			this._.indent = 1;
+			this._.indent = true;
 		},
 
 		/**
@@ -271,9 +267,8 @@ CKEDITOR.htmlWriter = CKEDITOR.tools.createClass(
 		 */
 		indentation : function()
 		{
-			if( !this._.inPre )
-				this._.output.push( this._.indentation );
-			this._.indent = 0;
+			this._.output.push( this._.indentation );
+			this._.indent = false;
 		},
 
 		/**

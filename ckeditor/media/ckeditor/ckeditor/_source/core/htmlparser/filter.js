@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -227,52 +227,26 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		}
 	}
 
-	// Invoke filters sequentially on the array, break the iteration
-	// when it doesn't make sense to continue anymore.
 	function callItems( currentEntry )
 	{
-		var isNode = currentEntry.type
-			|| currentEntry instanceof CKEDITOR.htmlParser.fragment;
+		var isObject = ( typeof currentEntry == 'object' );
 
 		for ( var i = 0 ; i < this.length ; i++ )
 		{
-			// Backup the node info before filtering.
-			if ( isNode )
-			{
-				var orgType = currentEntry.type,
-						orgName = currentEntry.name;
-			}
-
 			var item = this[ i ],
 				ret = item.apply( window, arguments );
 
-			if ( ret === false )
-				return ret;
+			if ( typeof ret != 'undefined' )
+			{
+				if ( ret === false )
+					return false;
 
-			// We're filtering node (element/fragment).
-			if ( isNode )
-			{
-				// No further filtering if it's not anymore
-				// fitable for the subsequent filters.
-				if ( ret && ( ret.name != orgName
-					|| ret.type != orgType ) )
-				{
-					return ret;
-				}
-			}
-			// Filtering value (nodeName/textValue/attrValue).
-			else
-			{
-				// No further filtering if it's not
-				// any more values.
-				if ( typeof ret != 'string' )
+				if ( isObject && ret != currentEntry )
 					return ret;
 			}
-
-			ret != undefined && ( currentEntry = ret );
 		}
 
-		return currentEntry;
+		return null;
 	}
 })();
 

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'form', function( editor )
@@ -39,7 +39,7 @@ CKEDITOR.dialog.add( 'form', function( editor )
 			{
 				editor = this.getParentEditor();
 				element = editor.document.createElement( 'form' );
-				!CKEDITOR.env.ie && element.append( editor.document.createElement( 'br' ) );
+				element.append( editor.document.createElement( 'br' ) );
 			}
 
 			if ( isInsertMode )
@@ -84,17 +84,17 @@ CKEDITOR.dialog.add( 'form', function( editor )
 						accessKey : 'N',
 						setup : function( element )
 						{
-							this.setValue( element.data( 'cke-saved-name' ) ||
+							this.setValue( element.getAttribute( '_cke_saved_name' ) ||
 									element.getAttribute( 'name' ) ||
 									'' );
 						},
 						commit : function( element )
 						{
 							if ( this.getValue() )
-								element.data( 'cke-saved-name', this.getValue() );
+								element.setAttribute( '_cke_saved_name', this.getValue() );
 							else
 							{
-								element.data( 'cke-saved-name', false );
+								element.removeAttribute( '_cke_saved_name' );
 								element.removeAttribute( 'name' );
 							}
 						}
@@ -104,7 +104,7 @@ CKEDITOR.dialog.add( 'form', function( editor )
 						type : 'text',
 						label : editor.lang.form.action,
 						'default' : '',
-						accessKey : 'T'
+						accessKey : 'A'
 					},
 					{
 						type : 'hbox',

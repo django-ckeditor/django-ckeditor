@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -175,8 +175,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 		var previewPreloader,
 			previewAreaHtml = '<div>' + CKEDITOR.tools.htmlEncode( editor.lang.common.preview ) +'<br>' +
-			'<div id="cke_FlashPreviewLoader' + CKEDITOR.tools.getNextNumber() + '" style="display:none"><div class="loading">&nbsp;</div></div>' +
-			'<div id="cke_FlashPreviewBox' + CKEDITOR.tools.getNextNumber() + '" class="FlashPreviewBox"></div></div>';
+			'<div id="FlashPreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div>' +
+			'<div id="FlashPreviewBox"></div></div>';
 
 		return {
 			title : editor.lang.flash.title,
@@ -186,11 +186,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				// Clear previously saved elements.
 				this.fakeImage = this.objectNode = this.embedNode = null;
-				previewPreloader = new CKEDITOR.dom.element( 'embed', editor.document );
+				previewPreloader = new CKEDITOR.dom.element( 'embeded', editor.document );
 
 				// Try to detect any embed or object tag that has Flash parameters.
 				var fakeImage = this.getSelectedElement();
-				if ( fakeImage && fakeImage.data( 'cke-real-element-type' ) && fakeImage.data( 'cke-real-element-type' ) == 'flash' )
+				if ( fakeImage && fakeImage.getAttribute( '_cke_real_element_type' ) && fakeImage.getAttribute( '_cke_real_element_type' ) == 'flash' )
 				{
 					this.fakeImage = fakeImage;
 
@@ -265,15 +265,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						paramMap[ paramList.getItem( i ).getAttribute( 'name' ) ] = paramList.getItem( i );
 				}
 
-				// A subset of the specified attributes/styles
-				// should also be applied on the fake element to
-				// have better visual effect. (#5240)
-				var extraStyles = {}, extraAttributes = {};
-				this.commitContent( objectNode, embedNode, paramMap, extraStyles, extraAttributes );
+				// Apply or remove flash parameters.
+				var extraStyles = {};
+				this.commitContent( objectNode, embedNode, paramMap, extraStyles );
 
 				// Refresh the fake image.
 				var newFakeImage = editor.createFakeElement( objectNode || embedNode, 'cke_flash', 'flash', true );
-				newFakeImage.setAttributes( extraAttributes );
 				newFakeImage.setStyles( extraStyles );
 				if ( this.fakeImage )
 				{
@@ -365,8 +362,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									type : 'text',
 									id : 'width',
 									style : 'width:95px',
-									label : editor.lang.common.width,
-									validate : CKEDITOR.dialog.validate.integer( editor.lang.common.invalidWidth ),
+									label : editor.lang.flash.width,
+									validate : CKEDITOR.dialog.validate.integer( editor.lang.flash.validateWidth ),
 									setup : function( objectNode, embedNode, paramMap, fakeImage )
 									{
 										loadValue.apply( this, arguments );
@@ -388,8 +385,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									type : 'text',
 									id : 'height',
 									style : 'width:95px',
-									label : editor.lang.common.height,
-									validate : CKEDITOR.dialog.validate.integer( editor.lang.common.invalidHeight ),
+									label : editor.lang.flash.height,
+									validate : CKEDITOR.dialog.validate.integer( editor.lang.flash.validateHeight ),
 									setup : function( objectNode, embedNode, paramMap, fakeImage )
 									{
 										loadValue.apply( this, arguments );
@@ -558,29 +555,24 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								{
 									id : 'align',
 									type : 'select',
-									label : editor.lang.common.align,
+									label : editor.lang.flash.align,
 									'default' : '',
 									style : 'width : 100%;',
 									items :
 									[
 										[ editor.lang.common.notSet , ''],
-										[ editor.lang.common.alignLeft , 'left'],
+										[ editor.lang.flash.alignLeft , 'left'],
 										[ editor.lang.flash.alignAbsBottom , 'absBottom'],
 										[ editor.lang.flash.alignAbsMiddle , 'absMiddle'],
 										[ editor.lang.flash.alignBaseline , 'baseline'],
-										[ editor.lang.common.alignBottom , 'bottom'],
-										[ editor.lang.common.alignMiddle , 'middle'],
-										[ editor.lang.common.alignRight , 'right'],
+										[ editor.lang.flash.alignBottom , 'bottom'],
+										[ editor.lang.flash.alignMiddle , 'middle'],
+										[ editor.lang.flash.alignRight , 'right'],
 										[ editor.lang.flash.alignTextTop , 'textTop'],
-										[ editor.lang.common.alignTop , 'top']
+										[ editor.lang.flash.alignTop , 'top']
 									],
 									setup : loadValue,
-									commit : function( objectNode, embedNode, paramMap, extraStyles, extraAttributes )
-									{
-										var value = this.getValue();
-										commitValue.apply( this, arguments );
-										value && ( extraAttributes.align = value );
-									}
+									commit : commitValue
 								},
 								{
 									type : 'html',

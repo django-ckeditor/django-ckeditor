@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -15,17 +15,18 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  * Generaly it will point to an instance of {@link CKEDITOR.htmlDataProcessor},
  * which handles HTML data. The editor may also handle other data formats by
  * using different data processors provided by specific plugins.
- * @name CKEDITOR.editor.prototype.dataProcessor
+ * @name CKEDITOR.editor.dataProcessor
  * @type CKEDITOR.dataProcessor
  */
 
 /**
- * This class is here for documentation purposes only and is not really part of
- * the API. It serves as the base ("interface") for data processors
+ * Represents a data processor, which is responsible to translate and transform
+ * the editor data on input and output.
+ * This class is not really part of the API. It's here for documentation
+ * purposes, and serves as the base ("interface") for data processors
  * implementation.
  * @name CKEDITOR.dataProcessor
- * @class Represents a data processor, which is responsible to translate and
- *        transform the editor data on input and output.
+ * @contructor
  * @example
  */
 

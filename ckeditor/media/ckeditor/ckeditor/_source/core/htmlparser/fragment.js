@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -108,9 +108,9 @@ CKEDITOR.htmlParser.fragment = function()
 			}
 		}
 
-		function sendPendingBRs( brsToIgnore )
+		function sendPendingBRs()
 		{
-			while ( pendingBRs.length - ( brsToIgnore || 0 ) > 0 )
+			while ( pendingBRs.length )
 				currentNode.add( pendingBRs.shift() );
 		}
 
@@ -118,19 +118,20 @@ CKEDITOR.htmlParser.fragment = function()
 		{
 			target = target || currentNode || fragment;
 
-			// If the target is the fragment and this inline element can't go inside
+			// If the target is the fragment and this element can't go inside
 			// body (if fixForBody).
 			if ( fixForBody && !target.type )
 			{
 				var elementName, realElementName;
 				if ( element.attributes
 					 && ( realElementName =
-						  element.attributes[ 'data-cke-real-element-type' ] ) )
+						  element.attributes[ '_cke_real_element_type' ] ) )
 					elementName = realElementName;
 				else
 					elementName =  element.name;
-
-				if ( elementName && elementName in CKEDITOR.dtd.$inline )
+				if ( elementName
+						&& !( elementName in CKEDITOR.dtd.$body )
+						&& !( elementName in CKEDITOR.dtd.$nonBodyContent )  )
 				{
 					var savedCurrent = currentNode;
 
@@ -236,12 +237,6 @@ CKEDITOR.htmlParser.fragment = function()
 				{
 					addElement( currentNode, currentNode.parent );
 				}
-				else if ( tagName in CKEDITOR.dtd.$listItem )
-				{
-					parser.onTagOpen( 'ul', {} );
-					addPoint = currentNode;
-					reApply = true;
-				}
 				else
 				{
 					if ( nonBreakingBlocks[ currentName ] )
@@ -279,7 +274,6 @@ CKEDITOR.htmlParser.fragment = function()
 			}
 
 			checkPending( tagName );
-			sendPendingBRs();
 
 			element.parent = currentNode;
 			element.returnPoint = returnPoint;
@@ -391,16 +385,13 @@ CKEDITOR.htmlParser.fragment = function()
 
 		parser.onComment = function( comment )
 		{
-			sendPendingBRs();
-			checkPending();
 			currentNode.add( new CKEDITOR.htmlParser.comment( comment ) );
 		};
 
 		// Parse it.
 		parser.parse( fragmentHtml );
 
-		// Send all pending BRs except one, which we consider a unwanted bogus. (#5293)
-		sendPendingBRs( !CKEDITOR.env.ie && 1 );
+		sendPendingBRs();
 
 		// Close all pending nodes.
 		while ( currentNode.type )

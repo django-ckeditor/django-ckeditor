@@ -1,26 +1,9 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'button', function( editor )
 {
-	function commitAttributes( element )
-	{
-		var val = this.getValue();
-		if ( val )
-		{
-			element.attributes[ this.id ] = val;
-			if ( this.id == 'name' )
-				element.attributes[ 'data-cke-saved-name' ] = val;
-		}
-		else
-		{
-			delete element.attributes[ this.id ];
-			if ( this.id == 'name' )
-				delete element.attributes[ 'data-cke-saved-name' ];
-		}
-	}
-
 	return {
 		title : editor.lang.button.title,
 		minWidth : 350,
@@ -29,10 +12,10 @@ CKEDITOR.dialog.add( 'button', function( editor )
 		{
 			delete this.button;
 			var element = this.getParentEditor().getSelection().getSelectedElement();
-			if ( element && element.is( 'input' ) )
+			if ( element && element.getName() == "input" )
 			{
 				var type = element.getAttribute( 'type' );
-				if ( type in { button:1, reset:1, submit:1 } )
+				if ( type == "button" || type == "reset" || type == "submit" )
 				{
 					this.button = element;
 					this.setupContent( element );
@@ -41,25 +24,19 @@ CKEDITOR.dialog.add( 'button', function( editor )
 		},
 		onOk : function()
 		{
-			var editor = this.getParentEditor(),
+			var editor,
 				element = this.button,
 				isInsertMode = !element;
 
-			var fake = element ? CKEDITOR.htmlParser.fragment.fromHtml( element.getOuterHtml() ).children[ 0 ]
-					: new CKEDITOR.htmlParser.element( 'input' );
-			this.commitContent( fake );
-
-			var writer = new CKEDITOR.htmlParser.basicWriter();
-			fake.writeHtml( writer );
-			var newElement = CKEDITOR.dom.element.createFromHtml( writer.getHtml(), editor.document );
+			if ( isInsertMode )
+			{
+				editor = this.getParentEditor();
+				element = editor.document.createElement( 'input' );
+			}
 
 			if ( isInsertMode )
-				editor.insertElement( newElement );
-			else
-			{
-				newElement.replace( element );
-				editor.getSelection().selectElement( newElement );
-			}
+				editor.insertElement( element );
+			this.commitContent( { element : element } );
 		},
 		contents : [
 			{
@@ -68,18 +45,29 @@ CKEDITOR.dialog.add( 'button', function( editor )
 				title : editor.lang.button.title,
 				elements : [
 					{
-						id : 'name',
+						id : '_cke_saved_name',
 						type : 'text',
 						label : editor.lang.common.name,
 						'default' : '',
 						setup : function( element )
 						{
 							this.setValue(
-									element.data( 'cke-saved-name' ) ||
+									element.getAttribute( '_cke_saved_name' ) ||
 									element.getAttribute( 'name' ) ||
 									'' );
 						},
-						commit : commitAttributes
+						commit : function( data )
+						{
+							var element = data.element;
+
+							if ( this.getValue() )
+								element.setAttribute( '_cke_saved_name', this.getValue() );
+							else
+							{
+								element.removeAttribute( '_cke_saved_name' );
+								element.removeAttribute( 'name' );
+							}
+						}
 					},
 					{
 						id : 'value',
@@ -91,7 +79,15 @@ CKEDITOR.dialog.add( 'button', function( editor )
 						{
 							this.setValue( element.getAttribute( 'value' ) || '' );
 						},
-						commit : commitAttributes
+						commit : function( data )
+						{
+							var element = data.element;
+
+							if ( this.getValue() )
+								element.setAttribute( 'value', this.getValue() );
+							else
+								element.removeAttribute( 'value' );
+						}
 					},
 					{
 						id : 'type',
@@ -109,7 +105,28 @@ CKEDITOR.dialog.add( 'button', function( editor )
 						{
 							this.setValue( element.getAttribute( 'type' ) || '' );
 						},
-						commit : commitAttributes
+						commit : function( data )
+						{
+							var element = data.element;
+
+							if ( CKEDITOR.env.ie )
+							{
+								var elementType = element.getAttribute( 'type' );
+								var currentType = this.getValue();
+
+								if ( currentType != elementType )
+								{
+									var replace = CKEDITOR.dom.element.createFromHtml( '<input type="' + currentType +
+										'"></input>', editor.document );
+									element.copyAttributes( replace, { type : 1 } );
+									replace.replace( element );
+									editor.getSelection().selectElement( replace );
+									data.element = replace;
+								}
+							}
+							else
+								element.setAttribute( 'type', this.getValue() );
+						}
 					}
 				]
 			}

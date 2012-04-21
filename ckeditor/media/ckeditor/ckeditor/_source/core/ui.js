@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -91,8 +91,6 @@ CKEDITOR.ui.prototype =
 	}
 };
 
-CKEDITOR.event.implementOn( CKEDITOR.ui );
-
 /**
  * (Virtual Class) Do not call this constructor. This class is not really part
  *		of the API. It just illustrates the features of hanlder objects to be
@@ -115,11 +113,4 @@ CKEDITOR.event.implementOn( CKEDITOR.ui );
  *             return new CKEDITOR.ui.button( definition );
  *         }
  *     });
- */
-
-/**
- * Internal event fired when a new UI element is ready
- * @name CKEDITOR.ui#ready
- * @event
- * @param {Object} element The new element
  */

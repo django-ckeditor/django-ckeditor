@@ -1,10 +1,12 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 (function()
 {
+	var stylesManager;
+
 	CKEDITOR.plugins.add( 'stylescombo',
 	{
 		requires : [ 'richcombo', 'styles' ],
@@ -13,39 +15,20 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		{
 			var config = editor.config,
 				lang = editor.lang.stylesCombo,
-				styles = {},
-				stylesList = [];
+				pluginPath = this.path,
+				styles;
 
-			function loadStylesSet( callback )
-			{
-				editor.getStylesSet( function( stylesDefinitions )
-				{
-					if ( !stylesList.length )
-					{
-						var style,
-							styleName;
+			if ( !stylesManager )
+				stylesManager = CKEDITOR.stylesSet;
 
-						// Put all styles into an Array.
-						for ( var i = 0, count = stylesDefinitions.length ; i < count ; i++ )
-						{
-							var styleDefinition = stylesDefinitions[ i ];
+			var comboStylesSet = config.stylesCombo_stylesSet.split( ':' ),
+				styleSetName = comboStylesSet[ 0 ],
+				externalPath = comboStylesSet[ 1 ];
 
-							styleName = styleDefinition.name;
-
-							style = styles[ styleName ] = new CKEDITOR.style( styleDefinition );
-							style._name = styleName;
-							style._.enterMode = config.enterMode;
-
-							stylesList.push( style );
-						}
-
-						// Sorts the Array, so the styles get grouped by type.
-						stylesList.sort( sortStyles );
-					}
-
-					callback && callback();
-				});
-			}
+			stylesManager.addExternal( styleSetName,
+					externalPath ?
+						comboStylesSet.slice( 1 ).join( ':' ) :
+						pluginPath + 'styles/' + styleSetName + '.js', '' );
 
 			editor.ui.addRichCombo( 'Styles',
 				{
@@ -64,14 +47,36 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					{
 						var combo = this;
 
-						loadStylesSet( function()
+						CKEDITOR.stylesSet.load( styleSetName, function( stylesSet )
 							{
-								var style, styleName;
+								var stylesDefinitions = stylesSet[ styleSetName ],
+									style,
+									styleName,
+									stylesList = [];
+
+								styles = {};
+
+								// Put all styles into an Array.
+								for ( var i = 0 ; i < stylesDefinitions.length ; i++ )
+								{
+									var styleDefinition = stylesDefinitions[ i ];
+
+									styleName = styleDefinition.name;
+
+									style = styles[ styleName ] = new CKEDITOR.style( styleDefinition );
+									style._name = styleName;
+
+									stylesList.push( style );
+								}
+
+								// Sorts the Array, so the styles get grouped
+								// by type.
+								stylesList.sort( sortStyles );
 
 								// Loop over the Array, adding all items to the
 								// combo.
 								var lastType;
-								for ( var i = 0, count = stylesList.length ; i < count ; i++ )
+								for ( i = 0 ; i < stylesList.length ; i++ )
 								{
 									style = stylesList[ i ];
 									styleName = style._name;
@@ -86,7 +91,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 									combo.add(
 										styleName,
-										style.type == CKEDITOR.STYLE_OBJECT ? styleName : style.buildPreview(),
+										style.type == CKEDITOR.STYLE_OBJECT ? styleName : buildPreview( style._.definition ),
 										styleName );
 								}
 
@@ -104,9 +109,21 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						var style = styles[ value ],
 							selection = editor.getSelection();
 
+						if ( style.type == CKEDITOR.STYLE_OBJECT )
+						{
+							var element = selection.getSelectedElement();
+							if ( element )
+								style.applyToObject( element );
+
+							return;
+						}
+
 						var elementPath = new CKEDITOR.dom.elementPath( selection.getStartElement() );
 
-						style[ style.checkActive( elementPath ) ? 'remove' : 'apply' ]( editor.document );
+						if ( style.type == CKEDITOR.STYLE_INLINE && style.checkActive( elementPath ) )
+							style.remove( editor.document );
+						else
+							style.apply( editor.document );
 
 						editor.fire( 'saveSnapshot' );
 					},
@@ -121,7 +138,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									elements = elementPath.elements;
 
 								// For each element into the elements path.
-								for ( var i = 0, count = elements.length, element ; i < count ; i++ )
+								for ( var i = 0, element ; i < elements.length ; i++ )
 								{
 									element = elements[i];
 
@@ -146,11 +163,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 					onOpen : function()
 					{
-						if ( CKEDITOR.env.ie || CKEDITOR.env.webkit )
+						if ( CKEDITOR.env.ie )
 							editor.focus();
 
-						var selection = editor.getSelection(),
-							element = selection.getSelectedElement(),
+						var selection = editor.getSelection();
+
+						var element = selection.getSelectedElement(),
+							elementName = element && element.getName(),
 							elementPath = new CKEDITOR.dom.elementPath( element || selection.getStartElement() );
 
 						var counter = [ 0, 0, 0, 0 ];
@@ -161,15 +180,25 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							var style = styles[ name ],
 								type = style.type;
 
-							if ( style.checkActive( elementPath ) )
-								this.mark( name );
-							else if ( type == CKEDITOR.STYLE_OBJECT && !style.checkApplicable( elementPath ) )
+							if ( type == CKEDITOR.STYLE_OBJECT )
 							{
-								this.hideItem( name );
-								counter[ type ]--;
-							}
+								if ( element && style.element == elementName )
+								{
+									if ( style.checkElementRemovable( element, true ) )
+										this.mark( name );
 
-							counter[ type ]++;
+									counter[ type ]++;
+								}
+								else
+									this.hideItem( name );
+							}
+							else
+							{
+								if ( style.checkActive( elementPath ) )
+									this.mark( name );
+
+								counter[ type ]++;
+							}
 						}
 
 						if ( !counter[ CKEDITOR.STYLE_BLOCK ] )
@@ -182,10 +211,40 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							this.hideGroup( lang[ 'panelTitle' + String( CKEDITOR.STYLE_OBJECT ) ] );
 					}
 				});
-
-			editor.on( 'instanceReady', function() { loadStylesSet(); } );
 		}
 	});
+
+	function buildPreview( styleDefinition )
+	{
+		var html = [];
+
+		var elementName = styleDefinition.element;
+
+		// Avoid <bdo> in the preview.
+		if ( elementName == 'bdo' )
+			elementName = 'span';
+
+		html = [ '<', elementName ];
+
+		// Assign all defined attributes.
+		var attribs	= styleDefinition.attributes;
+		if ( attribs )
+		{
+			for ( var att in attribs )
+			{
+				html.push( ' ', att, '="', attribs[ att ], '"' );
+			}
+		}
+
+		// Assign the style attribute.
+		var cssStyle = CKEDITOR.style.getStyleText( styleDefinition );
+		if ( cssStyle )
+			html.push( ' style="', cssStyle, '"' );
+
+		html.push( '>', styleDefinition.name, '</', elementName, '>' );
+
+		return html.join( '' );
+	}
 
 	function sortStyles( styleA, styleB )
 	{
@@ -199,3 +258,25 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			-1;
 	}
 })();
+
+/**
+ * The "styles definition set" to load into the styles combo. The styles may
+ * be defined in the page containing the editor, or can be loaded on demand
+ * from an external file when opening the styles combo for the fist time. In
+ * the second case, if this setting contains only a name, the styles definition
+ * file will be loaded from the "styles" folder inside the stylescombo plugin
+ * folder. Otherwise, this setting has the "name:url" syntax, making it
+ * possible to set the URL from which loading the styles file.
+ * @type string
+ * @default 'default'
+ * @example
+ * // Load from the stylescombo styles folder (mystyles.js file).
+ * config.stylesCombo_stylesSet = 'mystyles';
+ * @example
+ * // Load from a relative URL.
+ * config.stylesCombo_stylesSet = 'mystyles:/editorstyles/styles.js';
+ * @example
+ * // Load from a full URL.
+ * config.stylesCombo_stylesSet = 'mystyles:http://www.example.com/editorstyles/styles.js';
+ */
+CKEDITOR.config.stylesCombo_stylesSet = 'default';

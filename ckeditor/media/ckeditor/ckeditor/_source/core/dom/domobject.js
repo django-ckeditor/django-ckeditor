@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -84,10 +84,10 @@ CKEDITOR.dom.domObject.prototype = (function()
 			{
 				var listener = nativeListeners[ eventName ] = getNativeListener( this, eventName );
 
-				if ( this.$.attachEvent )
-					this.$.attachEvent( 'on' + eventName, listener );
-				else if ( this.$.addEventListener )
+				if ( this.$.addEventListener )
 					this.$.addEventListener( eventName, listener, !!CKEDITOR.event.useCapture );
+				else if ( this.$.attachEvent )
+					this.$.attachEvent( 'on' + eventName, listener );
 			}
 
 			// Call the original implementation.
@@ -107,33 +107,13 @@ CKEDITOR.dom.domObject.prototype = (function()
 				var listener = nativeListeners && nativeListeners[ eventName ];
 				if ( listener )
 				{
-					if ( this.$.detachEvent )
-						this.$.detachEvent( 'on' + eventName, listener );
-					else if ( this.$.removeEventListener )
+					if ( this.$.removeEventListener )
 						this.$.removeEventListener( eventName, listener, false );
+					else if ( this.$.detachEvent )
+						this.$.detachEvent( 'on' + eventName, listener );
 
 					delete nativeListeners[ eventName ];
 				}
-			}
-		},
-
-		/**
-		 * Removes any listener set on this object.
-		 * To avoid memory leaks we must assure that there are no
-		 * references left after the object is no longer needed.
-		 */
-		removeAllListeners : function()
-		{
-			var nativeListeners = this.getCustomData( '_cke_nativeListeners' );
-			for ( var eventName in nativeListeners )
-			{
-				var listener = nativeListeners[ eventName ];
-				if ( this.$.detachEvent )
-					this.$.detachEvent( 'on' + eventName, listener );
-				else if ( this.$.removeEventListener )
-					this.$.removeEventListener( eventName, listener, false );
-
-				delete nativeListeners[ eventName ];
 			}
 		}
 	};
@@ -142,11 +122,6 @@ CKEDITOR.dom.domObject.prototype = (function()
 (function( domObjectProto )
 {
 	var customData = {};
-
-	CKEDITOR.on( 'reset', function()
-		{
-			customData = {};
-		});
 
 	/**
 	 * Determines whether the specified object is equal to the current object.
@@ -167,9 +142,6 @@ CKEDITOR.dom.domObject.prototype = (function()
 	/**
 	 * Sets a data slot value for this object. These values are shared by all
 	 * instances pointing to that same DOM object.
-	 * <strong>Note:</strong> The created data slot is only guarantied to be available on this unique dom node,
-	 * thus any wish to continue access it from other element clones (either created by clone node or from innerHtml)
-	 * will fail, for such usage, please use {@link CKEDITOR.dom.element::setAttribute} instead.
 	 * @name CKEDITOR.dom.domObject.prototype.setCustomData
 	 * @function
 	 * @param {String} key A key used to identify the data slot.
@@ -203,7 +175,7 @@ CKEDITOR.dom.domObject.prototype = (function()
 	 */
 	domObjectProto.getCustomData = function( key )
 	{
-		var expandoNumber = this.$[ 'data-cke-expando' ],
+		var expandoNumber = this.$._cke_expando,
 			dataSlot = expandoNumber && customData[ expandoNumber ];
 
 		return dataSlot && dataSlot[ key ];
@@ -214,7 +186,7 @@ CKEDITOR.dom.domObject.prototype = (function()
 	 */
 	domObjectProto.removeCustomData = function( key )
 	{
-		var expandoNumber = this.$[ 'data-cke-expando' ],
+		var expandoNumber = this.$._cke_expando,
 			dataSlot = expandoNumber && customData[ expandoNumber ],
 			retval = dataSlot && dataSlot[ key ];
 
@@ -225,31 +197,11 @@ CKEDITOR.dom.domObject.prototype = (function()
 	};
 
 	/**
-	 * Removes any data stored on this object.
-	 * To avoid memory leaks we must assure that there are no
-	 * references left after the object is no longer needed.
-	 * @name CKEDITOR.dom.domObject.prototype.clearCustomData
-	 * @function
-	 */
-	domObjectProto.clearCustomData = function()
-	{
-		// Clear all event listeners
-		this.removeAllListeners();
-
-		var expandoNumber = this.$[ 'data-cke-expando' ];
-		expandoNumber && delete customData[ expandoNumber ];
-	};
-
-	/**
-	 * Gets an ID that can be used to identiquely identify this DOM object in
-	 * the running session.
-	 * @name CKEDITOR.dom.domObject.prototype.getUniqueId
-	 * @function
-	 * @returns {Number} A unique ID.
+	 * @name CKEDITOR.dom.domObject.prototype.getCustomData
 	 */
 	domObjectProto.getUniqueId = function()
 	{
-		return this.$[ 'data-cke-expando' ] || ( this.$[ 'data-cke-expando' ] = CKEDITOR.tools.getNextNumber() );
+		return this.$._cke_expando || ( this.$._cke_expando = CKEDITOR.tools.getNextNumber() );
 	};
 
 	// Implement CKEDITOR.event.

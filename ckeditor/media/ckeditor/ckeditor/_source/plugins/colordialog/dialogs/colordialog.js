@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -14,173 +14,41 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 		// Reference the dialog.
 		var dialog;
 
-		var spacer =
+		function spacer()
 		{
-			type : 'html',
-			html : '&nbsp;'
+			return {
+				type : 'html',
+				html : '&nbsp;'
+			};
+		}
+
+		var table = new $el( 'table' );
+		createColorTable();
+
+		var cellMouseover = function( event )
+		{
+			var color = new $el( event.data.getTarget() ).getAttribute( 'title' );
+			$doc.getById( 'hicolor' ).setStyle( 'background-color', color );
+			$doc.getById( 'hicolortext' ).setHtml( color );
 		};
 
-		function clearSelected()
+		var cellClick = function( event )
 		{
-			$doc.getById( selHiColorId ).removeStyle( 'background-color' );
-			dialog.getContentElement( 'picker', 'selectedColor' ).setValue( '' );
-		}
-
-		function updateSelected( evt )
-		{
-			if ( ! ( evt instanceof CKEDITOR.dom.event ) )
-				evt = new CKEDITOR.dom.event( evt );
-
-			var target = evt.getTarget(),
-				color;
-
-			if ( target.getName() == 'a' && ( color = target.getChild( 0 ).getHtml() ) )
-				dialog.getContentElement( 'picker', 'selectedColor' ).setValue( color );
-		}
-
-		function updateHighlight( event )
-		{
-			if ( ! ( event instanceof CKEDITOR.dom.event ) )
-				event = event.data;
-
-			var target = event.getTarget(),
-					color;
-
-			if ( target.getName() == 'a' && ( color = target.getChild( 0 ).getHtml() ) )
-			{
-				$doc.getById( hicolorId ).setStyle( 'background-color', color );
-				$doc.getById( hicolorTextId ).setHtml( color );
-			}
-		}
-
-		function clearHighlight()
-		{
-			$doc.getById( hicolorId ).removeStyle( 'background-color' );
-			$doc.getById( hicolorTextId ).setHtml( '&nbsp;' );
-		}
-
-		var onMouseout = $tools.addFunction( clearHighlight ),
-			onClick = updateSelected,
-			onClickHandler = CKEDITOR.tools.addFunction( onClick ),
-			onFocus = updateHighlight,
-			onBlur = clearHighlight;
-
-		var onKeydownHandler = CKEDITOR.tools.addFunction( function( ev )
-		{
-			ev = new CKEDITOR.dom.event( ev );
-			var element = ev.getTarget();
-			var relative, nodeToMove;
-			var keystroke = ev.getKeystroke(),
-				rtl = editor.lang.dir == 'rtl';
-
-			switch ( keystroke )
-			{
-				// UP-ARROW
-				case 38 :
-					// relative is TR
-					if ( ( relative = element.getParent().getParent().getPrevious() ) )
-					{
-						nodeToMove = relative.getChild( [element.getParent().getIndex(), 0] );
-						nodeToMove.focus();
-						onBlur( ev, element );
-						onFocus( ev, nodeToMove );
-					}
-					ev.preventDefault();
-					break;
-				// DOWN-ARROW
-				case 40 :
-					// relative is TR
-					if ( ( relative = element.getParent().getParent().getNext() ) )
-					{
-						nodeToMove = relative.getChild( [ element.getParent().getIndex(), 0 ] );
-						if ( nodeToMove && nodeToMove.type == 1 )
-						{
-							nodeToMove.focus();
-							onBlur( ev, element );
-							onFocus( ev, nodeToMove );
-						}
-					}
-					ev.preventDefault();
-					break;
-				// SPACE
-				// ENTER is already handled as onClick
-				case 32 :
-					onClick( ev );
-					ev.preventDefault();
-					break;
-
-				// RIGHT-ARROW
-				case rtl ? 37 : 39 :
-					// relative is TD
-					if ( ( relative = element.getParent().getNext() ) )
-					{
-						nodeToMove = relative.getChild( 0 );
-						if ( nodeToMove.type == 1 )
-						{
-							nodeToMove.focus();
-							onBlur( ev, element );
-							onFocus( ev, nodeToMove );
-							ev.preventDefault( true );
-						}
-						else
-							onBlur( null, element );
-					}
-					// relative is TR
-					else if ( ( relative = element.getParent().getParent().getNext() ) )
-					{
-						nodeToMove = relative.getChild( [ 0, 0 ] );
-						if ( nodeToMove && nodeToMove.type == 1 )
-						{
-							nodeToMove.focus();
-							onBlur( ev, element );
-							onFocus( ev, nodeToMove );
-							ev.preventDefault( true );
-						}
-						else
-							onBlur( null, element );
-					}
-					break;
-
-				// LEFT-ARROW
-				case rtl ? 39 : 37 :
-					// relative is TD
-					if ( ( relative = element.getParent().getPrevious() ) )
-					{
-						nodeToMove = relative.getChild( 0 );
-						nodeToMove.focus();
-						onBlur( ev, element );
-						onFocus( ev, nodeToMove );
-						ev.preventDefault( true );
-					}
-					// relative is TR
-					else if ( ( relative = element.getParent().getParent().getPrevious() ) )
-					{
-						nodeToMove = relative.getLast().getChild( 0 );
-						nodeToMove.focus();
-						onBlur( ev, element );
-						onFocus( ev, nodeToMove );
-						ev.preventDefault( true );
-					}
-					else
-						onBlur( null, element );
-					break;
-				default :
-					// Do not stop not handled events.
-					return;
-			}
-		});
+			var color = new $el( event.data.getTarget() ).getAttribute( 'title' );
+			dialog.getContentElement( 'picker', 'selectedColor' ).setValue( color );
+		};
 
 		function createColorTable()
 		{
 			// Create the base colors array.
-			var aColors = [ '00', '33', '66', '99', 'cc', 'ff' ];
+			var aColors = ['00','33','66','99','cc','ff'];
 
 			// This function combines two ranges of three values from the color array into a row.
 			function appendColorRow( rangeA, rangeB )
 			{
 				for ( var i = rangeA ; i < rangeA + 3 ; i++ )
 				{
-					var row = table.$.insertRow( -1 );
+					var row = table.$.insertRow(-1);
 
 					for ( var j = rangeB ; j < rangeB + 3 ; j++ )
 					{
@@ -202,15 +70,8 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 				cell.setStyle( 'width', '15px' );
 				cell.setStyle( 'height', '15px' );
 
-				var index = cell.$.cellIndex + 1 + 18 * targetRow.rowIndex;
-				cell.append( CKEDITOR.dom.element.createFromHtml(
-						'<a href="javascript: void(0);" role="option"' +
-						' aria-posinset="' + index + '"' +
-						' aria-setsize="' + 13 * 18 + '"' +
-						' style="cursor: pointer;display:block;width:100%;height:100% " title="'+ CKEDITOR.tools.htmlEncode( color )+ '"' +
-						' onkeydown="CKEDITOR.tools.callFunction( ' + onKeydownHandler + ', event, this )"' +
-						' onclick="CKEDITOR.tools.callFunction(' + onClickHandler + ', event, this ); return false;"' +
-						' tabindex="-1"><span class="cke_voice_label">' + color + '</span>&nbsp;</a>', CKEDITOR.document ) );
+				// Pass unparsed color value in some markup-degradable form.
+				cell.setAttribute( 'title', color );
 			}
 
 			appendColorRow( 0, 0 );
@@ -234,18 +95,17 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 			}
 		}
 
-		var table = new $el( 'table' );
-		createColorTable();
-		var html = table.getHtml();
+		function clear()
+		{
+			$doc.getById( 'selhicolor' ).removeStyle( 'background-color' );
+			dialog.getContentElement( 'picker', 'selectedColor' ).setValue( '' );
+		}
 
-		var numbering = function( id )
-			{
-				return CKEDITOR.tools.getNextId() + '_' + id;
-			},
-			hicolorId = numbering( 'hicolor' ),
-			hicolorTextId = numbering( 'hicolortext' ),
-			selHiColorId = numbering( 'selhicolor' ),
-			tableLabelId = numbering( 'color_table_label' );
+		var clearActual = $tools.addFunction( function()
+		{
+			$doc.getById( 'hicolor' ).removeStyle( 'background-color' );
+			$doc.getById( 'hicolortext' ).setHtml( '&nbsp;' );
+		} );
 
 		return {
 			title : lang.title,
@@ -271,23 +131,15 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 							[
 								{
 									type : 'html',
-									html :	'<table role="listbox" aria-labelledby="' + tableLabelId + '" onmouseout="CKEDITOR.tools.callFunction( ' + onMouseout + ' );">' +
-											( !CKEDITOR.env.webkit ? html : '' ) +
-										'</table><span id="' + tableLabelId + '" class="cke_voice_label">' + lang.options +'</span>',
+									html : '<table onmouseout="CKEDITOR.tools.callFunction( ' + clearActual + ' );">' + table.getHtml() + '</table>',
 									onLoad : function()
 									{
 										var table = CKEDITOR.document.getById( this.domId );
-										table.on( 'mouseover', updateHighlight );
-										// In WebKit, the table content must be inserted after this event call (#6150)
-										CKEDITOR.env.webkit && table.setHtml( html );
-									},
-									focus: function()
-									{
-										var firstColor = this.getElement().getElementsByTag( 'a' ).getItem( 0 );
-										firstColor.focus();
+										table.on( 'mouseover', cellMouseover );
+										table.on( 'click', cellClick );
 									}
 								},
-								spacer,
+								spacer(),
 								{
 									type : 'vbox',
 									padding : 0,
@@ -297,14 +149,13 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 										{
 											type : 'html',
 											html : '<span>' + lang.highlight +'</span>\
-												<div id="' + hicolorId + '" style="border: 1px solid; height: 74px; width: 74px;"></div>\
-												<div id="' + hicolorTextId + '">&nbsp;</div><span>' + lang.selected + '</span>\
-												<div id="' + selHiColorId + '" style="border: 1px solid; height: 20px; width: 74px;"></div>'
+												<div id="hicolor" style="border: 1px solid; height: 74px; width: 74px;"></div>\
+												<div id="hicolortext">&nbsp;</div>\
+												<span>' + lang.selected +'</span>\
+												<div id="selhicolor" style="border: 1px solid; height: 20px; width: 74px;"></div>'
 										},
 										{
 											type : 'text',
-											label : lang.selected,
-											labelStyle: 'display:none',
 											id : 'selectedColor',
 											style : 'width: 74px',
 											onChange : function()
@@ -312,21 +163,21 @@ CKEDITOR.dialog.add( 'colordialog', function( editor )
 												// Try to update color preview with new value. If fails, then set it no none.
 												try
 												{
-													$doc.getById( selHiColorId ).setStyle( 'background-color', this.getValue() );
+													$doc.getById( 'selhicolor' ).setStyle( 'background-color', this.getValue() );
 												}
 												catch ( e )
 												{
-													clearSelected();
+													clear();
 												}
 											}
 										},
-										spacer,
+										spacer(),
 										{
 											type : 'button',
 											id : 'clear',
 											style : 'margin-top: 5px',
 											label : lang.clear,
-											onClick : clearSelected
+											onClick : clear
 										}
 									]
 								}

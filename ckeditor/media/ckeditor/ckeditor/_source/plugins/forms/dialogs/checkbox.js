@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add( 'checkbox', function( editor )
@@ -14,7 +14,7 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 
 			var element = this.getParentEditor().getSelection().getSelectedElement();
 
-			if ( element && element.getAttribute( 'type' ) == 'checkbox' )
+			if ( element && element.getAttribute( 'type' ) == "checkbox" )
 			{
 				this.checkbox = element;
 				this.setupContent( element );
@@ -31,8 +31,10 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 				editor = this.getParentEditor();
 				element = editor.document.createElement( 'input' );
 				element.setAttribute( 'type', 'checkbox' );
-				editor.insertElement( element );
 			}
+
+			if ( isInsertMode )
+				editor.insertElement( element );
 			this.commitContent( { element : element } );
 		},
 		contents : [
@@ -51,7 +53,7 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 						setup : function( element )
 						{
 							this.setValue(
-									element.data( 'cke-saved-name' ) ||
+									element.getAttribute( '_cke_saved_name' ) ||
 									element.getAttribute( 'name' ) ||
 									'' );
 						},
@@ -61,10 +63,10 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 
 							// IE failed to update 'name' property on input elements, protect it now.
 							if ( this.getValue() )
-								element.data( 'cke-saved-name', this.getValue() );
+								element.setAttribute( '_cke_saved_name', this.getValue() );
 							else
 							{
-								element.data( 'cke-saved-name', false );
+								element.removeAttribute( '_cke_saved_name' );
 								element.removeAttribute( 'name' );
 							}
 						}
@@ -89,19 +91,7 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 							if ( value && !( CKEDITOR.env.ie && value == 'on' ) )
 								element.setAttribute( 'value', value );
 							else
-							{
-								if ( CKEDITOR.env.ie )
-								{
-									// Remove attribute 'value' of checkbox (#4721).
-									var checkbox = new CKEDITOR.dom.element( 'input', element.getDocument() );
-									element.copyAttributes( checkbox, { value: 1 } );
-									checkbox.replace( element );
-									editor.getSelection().selectElement( checkbox );
-									data.element = checkbox;
-								}
-								else
-									element.removeAttribute( 'value' );
-							}
+								element.removeAttribute( 'value' );
 						}
 					},
 					{
@@ -121,8 +111,8 @@ CKEDITOR.dialog.add( 'checkbox', function( editor )
 
 							if ( CKEDITOR.env.ie )
 							{
-								var isElementChecked = !!element.getAttribute( 'checked' ),
-									isChecked = !!this.getValue();
+								var isElementChecked = !!element.getAttribute( 'checked' );
+								var isChecked = !!this.getValue();
 
 								if ( isElementChecked != isChecked )
 								{

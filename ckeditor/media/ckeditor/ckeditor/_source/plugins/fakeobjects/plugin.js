@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -12,13 +12,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			$ : function( element )
 			{
 				var attributes = element.attributes,
-					realHtml = attributes && attributes[ 'data-cke-realelement' ],
+					realHtml = attributes && attributes._cke_realelement,
 					realFragment = realHtml && new CKEDITOR.htmlParser.fragment.fromHtml( decodeURIComponent( realHtml ) ),
 					realElement = realFragment && realFragment.children[ 0 ];
 
 				// If we have width/height in the element, we must move it into
 				// the real element.
-				if ( realElement && element.attributes[ 'data-cke-resizable' ] )
+				if ( realElement && element.attributes._cke_resizable )
 				{
 					var style = element.attributes.style;
 
@@ -62,25 +62,22 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 CKEDITOR.editor.prototype.createFakeElement = function( realElement, className, realElementType, isResizable )
 {
-	var lang = this.lang.fakeobjects,
-		label = lang[ realElementType ] || lang.unknown;
+	var lang = this.lang.fakeobjects;
 
 	var attributes =
 	{
 		'class' : className,
 		src : CKEDITOR.getUrl( 'images/spacer.gif' ),
-		'data-cke-realelement' : encodeURIComponent( realElement.getOuterHtml() ),
-		'data-cke-real-node-type' : realElement.type,
-		alt : label,
-		title : label,
-		align : realElement.getAttribute( 'align' ) || ''
+		_cke_realelement : encodeURIComponent( realElement.getOuterHtml() ),
+		_cke_real_node_type : realElement.type,
+		alt : lang[ realElementType ] || lang.unknown
 	};
 
 	if ( realElementType )
-		attributes[ 'data-cke-real-element-type' ] = realElementType;
+		attributes._cke_real_element_type = realElementType;
 
 	if ( isResizable )
-		attributes[ 'data-cke-resizable' ] = isResizable;
+		attributes._cke_resizable = isResizable;
 
 	return this.document.createElement( 'img', { attributes : attributes } );
 };
@@ -88,7 +85,6 @@ CKEDITOR.editor.prototype.createFakeElement = function( realElement, className, 
 CKEDITOR.editor.prototype.createFakeParserElement = function( realElement, className, realElementType, isResizable )
 {
 	var lang = this.lang.fakeobjects,
-		label = lang[ realElementType ] || lang.unknown,
 		html;
 
 	var writer = new CKEDITOR.htmlParser.basicWriter();
@@ -99,28 +95,26 @@ CKEDITOR.editor.prototype.createFakeParserElement = function( realElement, class
 	{
 		'class' : className,
 		src : CKEDITOR.getUrl( 'images/spacer.gif' ),
-		'data-cke-realelement' : encodeURIComponent( html ),
-		'data-cke-real-node-type' : realElement.type,
-		alt : label,
-		title : label,
-		align : realElement.attributes.align || ''
+		_cke_realelement : encodeURIComponent( html ),
+		_cke_real_node_type : realElement.type,
+		alt : lang[ realElementType ] || lang.unknown
 	};
 
 	if ( realElementType )
-		attributes[ 'data-cke-real-element-type' ] = realElementType;
+		attributes._cke_real_element_type = realElementType;
 
 	if ( isResizable )
-		attributes[ 'data-cke-resizable' ] = isResizable;
+		attributes._cke_resizable = isResizable;
 
 	return new CKEDITOR.htmlParser.element( 'img', attributes );
 };
 
 CKEDITOR.editor.prototype.restoreRealElement = function( fakeElement )
 {
-	if ( fakeElement.data( 'cke-real-node-type' ) != CKEDITOR.NODE_ELEMENT )
+	if ( fakeElement.getAttribute( '_cke_real_node_type' ) != CKEDITOR.NODE_ELEMENT )
 		return null;
 
 	return CKEDITOR.dom.element.createFromHtml(
-		decodeURIComponent( fakeElement.data( 'cke-realelement' ) ),
+		decodeURIComponent( fakeElement.getAttribute( '_cke_realelement' ) ),
 		this.document );
 };

@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -9,14 +9,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
 /**
- * Creates a focusManager class instance.
- * @class Manages the focus activity in an editor instance. This class is to be
- * used mainly by UI elements coders when adding interface elements that need
- * to set the focus state of the editor.
+ * Manages the focus activity in an editor instance. This class is to be used
+ * mainly by UI elements coders when adding interface elements to CKEditor.
+ * @constructor
  * @param {CKEDITOR.editor} editor The editor instance.
  * @example
- * var focusManager = <b>new CKEDITOR.focusManager( editor )</b>;
- * focusManager.focus();
  */
 CKEDITOR.focusManager = function( editor )
 {
@@ -46,10 +43,9 @@ CKEDITOR.focusManager = function( editor )
 CKEDITOR.focusManager.prototype =
 {
 	/**
-	 * Used to indicate that the editor instance has the focus.<br />
-	 * <br />
-	 * Note that this function will not explicitelly set the focus in the
-	 * editor (for example, making the caret blinking on it). Use
+	 * Indicates that the editor instance has the focus.
+	 *
+	 * This function is not used to set the focus in the editor. Use
 	 * {@link CKEDITOR.editor#focus} for it instead.
 	 * @example
 	 * var editor = CKEDITOR.instances.editor1;
@@ -80,11 +76,10 @@ CKEDITOR.focusManager.prototype =
 	},
 
 	/**
-	 * Used to indicate that the editor instance has lost the focus.<br />
-	 * <br />
-	 * Note that this functions acts asynchronously with a delay of 100ms to
-	 * avoid subsequent blur/focus effects. If you want the "blur" to happen
-	 * immediately, use the {@link #forceBlur} function instead.
+	 * Indicates that the editor instance has lost the focus. Note that this
+	 * functions acts asynchronously with a delay of 100ms to avoid subsequent
+	 * blur/focus effects. If you want the "blur" to happen immediately, use
+	 * the {@link #forceBlur} function instead.
 	 * @example
 	 * var editor = CKEDITOR.instances.editor1;
 	 * <b>editor.focusManager.blur()</b>;
@@ -106,7 +101,7 @@ CKEDITOR.focusManager.prototype =
 	},
 
 	/**
-	 * Used to indicate that the editor instance has lost the focus. Unlike
+	 * Indicates that the editor instance has lost the focus. Unlike
 	 * {@link #blur}, this function is synchronous, marking the instance as
 	 * "blured" immediately.
 	 * @example
@@ -132,11 +127,6 @@ CKEDITOR.focusManager.prototype =
  * @name CKEDITOR.editor#focus
  * @event
  * @param {CKEDITOR.editor} editor The editor instance.
- * @example
- * editor.on( 'focus', function( e )
- *     {
- *         alert( 'The editor named ' + e.editor.name + ' is now focused' );
- *     });
  */
 
 /**
@@ -144,9 +134,4 @@ CKEDITOR.focusManager.prototype =
  * @name CKEDITOR.editor#blur
  * @event
  * @param {CKEDITOR.editor} editor The editor instance.
- * @example
- * editor.on( 'blur', function( e )
- *     {
- *         alert( 'The editor named ' + e.editor.name + ' lost the focus' );
- *     });
  */

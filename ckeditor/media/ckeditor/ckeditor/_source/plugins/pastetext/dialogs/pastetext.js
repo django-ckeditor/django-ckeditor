@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -44,17 +44,24 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								html : '<div style="white-space:normal;width:340px;">' + editor.lang.clipboard.pasteMsg + '</div>'
 							},
 							{
-								type : 'textarea',
+								type : 'html',
 								id : 'content',
-								className : 'cke_pastetext',
+								style : 'width:340px;height:170px',
+								html :
+									'<textarea style="' +
+										'width:346px;' +
+										'height:170px;' +
+										'resize: none;' +
+										'border:1px solid black;' +
+										'background-color:white">' +
+									'</textarea>',
 
 								onLoad : function()
 								{
 									var label = this.getDialog().getContentElement( 'general', 'pasteMsg' ).getElement(),
-										input = this.getElement().getElementsByTag( 'textarea' ).getItem( 0 );
+										input = this.getElement();
 
 									input.setAttribute( 'aria-labelledby', label.$.id );
-									input.setStyle( 'direction', editor.config.contentsLangDirection );
 								},
 
 								focus : function()

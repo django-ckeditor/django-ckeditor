@@ -1,13 +1,19 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
 (function()
 {
-	var flashFilenameRegex = /\.swf(?:$|\?)/i;
+	var flashFilenameRegex = /\.swf(?:$|\?)/i,
+		numberRegex = /^\d+(?:\.\d+)?$/;
 
-	var cssifyLength = CKEDITOR.tools.cssLength;
+	function cssifyLength( length )
+	{
+		if ( numberRegex.test( length ) )
+			return length + 'px';
+		return length;
+	}
 
 	function isFlashEmbed( element )
 	{
@@ -71,21 +77,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					});
 			}
 
-			editor.on( 'doubleclick', function( evt )
-				{
-					var element = evt.data.element;
-
-					if ( element.is( 'img' ) && element.data( 'cke-real-element-type' ) == 'flash' )
-						evt.data.dialog = 'flash';
-				});
-
 			// If the "contextmenu" plugin is loaded, register the listeners.
 			if ( editor.contextMenu )
 			{
 				editor.contextMenu.addListener( function( element, selection )
 					{
-						if ( element && element.is( 'img' ) && !element.isReadOnly()
-								&& element.data( 'cke-real-element-type' ) == 'flash' )
+						if ( element && element.is( 'img' ) && element.getAttribute( '_cke_real_element_type' ) == 'flash' )
 							return { flash : CKEDITOR.TRISTATE_OFF };
 					});
 			}

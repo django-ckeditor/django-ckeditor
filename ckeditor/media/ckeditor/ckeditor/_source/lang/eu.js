@@ -1,5 +1,5 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
@@ -56,7 +56,6 @@ CKEDITOR.lang['eu'] =
 	superscript		: 'Goi-indize',
 	horizontalrule	: 'Txertatu Marra Horizontala',
 	pagebreak		: 'Txertatu Orrialde-jauzia',
-	pagebreakAlt		: 'Page Break', // MISSING
 	unlink			: 'Kendu Esteka',
 	undo			: 'Desegin',
 	redo			: 'Berregin',
@@ -106,44 +105,22 @@ CKEDITOR.lang['eu'] =
 		targetTop		: 'Topmost Window (_top)', // MISSING
 		targetSelf		: 'Same Window (_self)', // MISSING
 		targetParent	: 'Parent Window (_parent)', // MISSING
-		langDirLTR		: 'Left to Right (LTR)', // MISSING
-		langDirRTL		: 'Right to Left (RTL)', // MISSING
-		styles			: 'Style', // MISSING
-		cssClasses		: 'Stylesheet Classes', // MISSING
-		width			: 'Zabalera',
-		height			: 'Altuera',
-		align			: 'Lerrokatu',
-		alignLeft		: 'Ezkerrera',
-		alignRight		: 'Eskuman',
-		alignCenter		: 'Erdian',
-		alignTop		: 'Goian',
-		alignMiddle		: 'Erdian',
-		alignBottom		: 'Behean',
-		invalidHeight	: 'Altuera zenbaki bat izan behar da.',
-		invalidWidth	: 'Zabalera zenbaki bat izan behar da.',
 
 		// Put the voice-only part of the label in the span.
 		unavailable		: '%1<span class="cke_accessibility">, erabilezina</span>'
-	},
-
-	contextmenu :
-	{
-		options : 'Context Menu Options' // MISSING
 	},
 
 	// Special char dialog.
 	specialChar		:
 	{
 		toolbar		: 'Txertatu Karaktere Berezia',
-		title		: 'Karaktere Berezia Aukeratu',
-		options : 'Special Character Options' // MISSING
+		title		: 'Karaktere Berezia Aukeratu'
 	},
 
 	// Link dialog.
 	link :
 	{
 		toolbar		: 'Txertatu/Editatu Esteka',
-		other 		: '<other>', // MISSING
 		menu		: 'Aldatu Esteka',
 		title		: 'Esteka',
 		info		: 'Estekaren Informazioa',
@@ -167,7 +144,9 @@ CKEDITOR.lang['eu'] =
 		popupFullScreen	: 'Pantaila Osoa (IE)',
 		popupScrollBars	: 'Korritze Barrak',
 		popupDependent	: 'Menpekoa (Netscape)',
+		popupWidth		: 'Zabalera',
 		popupLeft		: 'Ezkerreko  Posizioa',
+		popupHeight		: 'Altuera',
 		popupTop		: 'Goiko Posizioa',
 		id				: 'Id',
 		langDir			: 'Hizkuntzaren Norabidea',
@@ -203,30 +182,6 @@ CKEDITOR.lang['eu'] =
 		errorName	: 'Idatzi ainguraren izena'
 	},
 
-	// List style dialog
-	list:
-	{
-		numberedTitle		: 'Numbered List Properties', // MISSING
-		bulletedTitle		: 'Bulleted List Properties', // MISSING
-		type				: 'Type', // MISSING
-		start				: 'Start', // MISSING
-		validateStartNumber				:'List start number must be a whole number.', // MISSING
-		circle				: 'Circle', // MISSING
-		disc				: 'Disc', // MISSING
-		square				: 'Square', // MISSING
-		none				: 'None', // MISSING
-		notset				: '<not set>', // MISSING
-		armenian			: 'Armenian numbering', // MISSING
-		georgian			: 'Georgian numbering (an, ban, gan, etc.)', // MISSING
-		lowerRoman			: 'Lower Roman (i, ii, iii, iv, v, etc.)', // MISSING
-		upperRoman			: 'Upper Roman (I, II, III, IV, V, etc.)', // MISSING
-		lowerAlpha			: 'Lower Alpha (a, b, c, d, e, etc.)', // MISSING
-		upperAlpha			: 'Upper Alpha (A, B, C, D, E, etc.)', // MISSING
-		lowerGreek			: 'Lower Greek (alpha, beta, gamma, etc.)', // MISSING
-		decimal				: 'Decimal (1, 2, 3, etc.)', // MISSING
-		decimalLeadingZero	: 'Decimal leading zero (01, 02, 03, etc.)' // MISSING
-	},
-
 	// Find And Replace Dialog
 	findAndReplace :
 	{
@@ -253,9 +208,15 @@ CKEDITOR.lang['eu'] =
 		rows		: 'Lerroak',
 		columns		: 'Zutabeak',
 		border		: 'Ertzaren Zabalera',
+		align		: 'Lerrokatu',
+		alignLeft	: 'Ezkerrean',
+		alignCenter	: 'Erdian',
+		alignRight	: 'Eskuman',
+		width		: 'Zabalera',
 		widthPx		: 'pixel',
 		widthPc		: 'ehuneko',
 		widthUnit	: 'width unit', // MISSING
+		height		: 'Altuera',
 		cellSpace	: 'Gelaxka arteko tartea',
 		cellPad		: 'Gelaxken betegarria',
 		caption		: 'Epigrafea',
@@ -291,6 +252,9 @@ CKEDITOR.lang['eu'] =
 			wordWrap		: 'Itzulbira',
 			hAlign			: 'Lerrokatze Horizontala',
 			vAlign			: 'Lerrokatze Bertikala',
+			alignTop		: 'Goian',
+			alignMiddle		: 'Erdian',
+			alignBottom		: 'Behean',
 			alignBaseline	: 'Oinarri-lerroan',
 			bgColor			: 'Fondoaren Kolorea',
 			borderColor		: 'Ertzaren Kolorea',
@@ -411,17 +375,24 @@ CKEDITOR.lang['eu'] =
 		btnUpload	: 'Zerbitzarira bidalia',
 		upload		: 'Gora Kargatu',
 		alt			: 'Ordezko Testua',
+		width		: 'Zabalera',
+		height		: 'Altuera',
 		lockRatio	: 'Erlazioa Blokeatu',
 		unlockRatio	: 'Unlock Ratio', // MISSING
 		resetSize	: 'Tamaina Berrezarri',
 		border		: 'Ertza',
 		hSpace		: 'HSpace',
 		vSpace		: 'VSpace',
+		align		: 'Lerrokatu',
+		alignLeft	: 'Ezkerrera',
+		alignRight	: 'Eskuman',
 		alertUrl	: 'Mesedez Irudiaren URLa idatzi',
 		linkTab		: 'Esteka',
 		button2Img	: 'Aukeratutako irudi botoia, irudi normal batean eraldatu nahi duzu?',
 		img2Button	: 'Aukeratutako irudia, irudi botoi batean eraldatu nahi duzu?',
 		urlMissing	: 'Image source URL is missing.', // MISSING
+		validateWidth	: 'Width must be a whole number.', // MISSING
+		validateHeight	: 'Height must be a whole number.', // MISSING
 		validateBorder	: 'Border must be a whole number.', // MISSING
 		validateHSpace	: 'HSpace must be a whole number.', // MISSING
 		validateVSpace	: 'VSpace must be a whole number.' // MISSING
@@ -445,10 +416,16 @@ CKEDITOR.lang['eu'] =
 		accessAlways	: 'Beti',
 		accessSameDomain: 'Domeinu berdinekoak',
 		accessNever		: 'Inoiz ere ez',
+		align			: 'Lerrokatu',
+		alignLeft		: 'Ezkerrera',
 		alignAbsBottom	: 'Abs Behean',
 		alignAbsMiddle	: 'Abs Erdian',
 		alignBaseline	: 'Oinan',
+		alignBottom		: 'Behean',
+		alignMiddle		: 'Erdian',
+		alignRight		: 'Eskuman',
 		alignTextTop	: 'Testua Goian',
+		alignTop		: 'Goian',
 		quality			: 'Kalitatea',
 		qualityBest		: 'Hoberena',
 		qualityHigh		: 'Altua',
@@ -462,9 +439,13 @@ CKEDITOR.lang['eu'] =
 		windowMode		: 'Leihoaren modua',
 		flashvars		: 'Flash Aldagaiak',
 		bgcolor			: 'Atzeko kolorea',
+		width			: 'Zabalera',
+		height			: 'Altuera',
 		hSpace			: 'HSpace',
 		vSpace			: 'VSpace',
 		validateSrc		: 'Mesedez URL esteka idatzi',
+		validateWidth	: 'Zabalera zenbaki bat izan behar da.',
+		validateHeight	: 'Altuera zenbaki bat izan behar da.',
 		validateHSpace	: 'HSpace zenbaki bat izan behar da.',
 		validateVSpace	: 'VSpace zenbaki bat izan behar da.'
 	},
@@ -495,8 +476,7 @@ CKEDITOR.lang['eu'] =
 	smiley :
 	{
 		toolbar	: 'Aurpegierak',
-		title	: 'Aurpegiera Sartu',
-		options : 'Smiley Options' // MISSING
+		title	: 'Aurpegiera Sartu'
 	},
 
 	elementsPath :
@@ -523,9 +503,9 @@ CKEDITOR.lang['eu'] =
 	clipboard :
 	{
 		title		: 'Itsatsi',
-		cutError	: 'Zure web nabigatzailearen segurtasun ezarpenak testuak automatikoki moztea ez dute baimentzen. Mesedez teklatua erabili ezazu (Ctrl/Cmd+X).',
-		copyError	: 'Zure web nabigatzailearen segurtasun ezarpenak testuak automatikoki kopiatzea ez dute baimentzen. Mesedez teklatua erabili ezazu (Ctrl/Cmd+C).',
-		pasteMsg	: 'Mesedez teklatua erabilita (<STRONG>Ctrl/Cmd+V</STRONG>) ondorego eremuan testua itsatsi eta <STRONG>OK</STRONG> sakatu.',
+		cutError	: 'Zure web nabigatzailearen segurtasun ezarpenak testuak automatikoki moztea ez dute baimentzen. Mesedez teklatua erabili ezazu (Ctrl+X).',
+		copyError	: 'Zure web nabigatzailearen segurtasun ezarpenak testuak automatikoki kopiatzea ez dute baimentzen. Mesedez teklatua erabili ezazu (Ctrl+C).',
+		pasteMsg	: 'Mesedez teklatua erabilita (<STRONG>Ctrl+V</STRONG>) ondorego eremuan testua itsatsi eta <STRONG>OK</STRONG> sakatu.',
 		securityMsg	: 'Nabigatzailearen segurtasun ezarpenak direla eta, editoreak ezin du arbela zuzenean erabili. Leiho honetan berriro itsatsi behar duzu.',
 		pasteArea	: 'Paste Area' // MISSING
 	},
@@ -548,7 +528,6 @@ CKEDITOR.lang['eu'] =
 	{
 		button			: 'Txantiloiak',
 		title			: 'Eduki Txantiloiak',
-		options : 'Template Options', // MISSING
 		insertOption	: 'Ordeztu oraingo edukiak',
 		selectPromptMsg	: 'Mesedez txantiloia aukeratu editorean kargatzeko<br>(orain dauden edukiak galduko dira):',
 		emptyListMsg	: '(Ez dago definitutako txantiloirik)'
@@ -599,15 +578,6 @@ CKEDITOR.lang['eu'] =
 		remove				: 'Remove Div' // MISSING
   	},
 
-	iframe :
-	{
-		title		: 'IFrame Properties', // MISSING
-		toolbar		: 'IFrame', // MISSING
-		noUrl		: 'Please type the iframe URL', // MISSING
-		scrolling	: 'Enable scrollbars', // MISSING
-		border		: 'Show frame border' // MISSING
-	},
-
 	font :
 	{
 		label		: 'Letra-tipoa',
@@ -640,7 +610,7 @@ CKEDITOR.lang['eu'] =
 		'008080' : 'Teal', // MISSING
 		'000080' : 'Navy', // MISSING
 		'4B0082' : 'Indigo', // MISSING
-		'696969' : 'Dark Gray', // MISSING
+		'696969' : 'Dim Gray', // MISSING
 		'B22222' : 'Fire Brick', // MISSING
 		'A52A2A' : 'Brown', // MISSING
 		'DAA520' : 'Golden Rod', // MISSING
@@ -656,7 +626,7 @@ CKEDITOR.lang['eu'] =
 		'0FF' : 'Cyan', // MISSING
 		'00F' : 'Blue', // MISSING
 		'EE82EE' : 'Violet', // MISSING
-		'A9A9A9' : 'Dim Gray', // MISSING
+		'A9A9A9' : 'Dark Gray', // MISSING
 		'FFA07A' : 'Light Salmon', // MISSING
 		'FFA500' : 'Orange', // MISSING
 		'FFFF00' : 'Yellow', // MISSING
@@ -678,7 +648,6 @@ CKEDITOR.lang['eu'] =
 	scayt :
 	{
 		title			: 'Ortografia Zuzenketa Idatzi Ahala (SCAYT)',
-		opera_title		: 'Not supported by Opera', // MISSING
 		enable			: 'Gaitu SCAYT',
 		disable			: 'Desgaitu SCAYT',
 		about			: 'SCAYTi buruz',
@@ -690,23 +659,9 @@ CKEDITOR.lang['eu'] =
 		ignoreAll		: 'Denak baztertu',
 		addWord			: 'Hitza Gehitu',
 		emptyDic		: 'Hiztegiaren izena ezin da hutsik egon.',
-
 		optionsTab		: 'Aukerak',
-		allCaps			: 'Ignore All-Caps Words', // MISSING
-		ignoreDomainNames : 'Ignore Domain Names', // MISSING
-		mixedCase		: 'Ignore Words with Mixed Case', // MISSING
-		mixedWithDigits	: 'Ignore Words with Numbers', // MISSING
-
 		languagesTab	: 'Hizkuntzak',
-
 		dictionariesTab	: 'Hiztegiak',
-		dic_field_name	: 'Dictionary name', // MISSING
-		dic_create		: 'Create', // MISSING
-		dic_restore		: 'Restore', // MISSING
-		dic_delete		: 'Delete', // MISSING
-		dic_rename		: 'Rename', // MISSING
-		dic_info		: 'Initially the User Dictionary is stored in a Cookie. However, Cookies are limited in size. When the User Dictionary grows to a point where it cannot be stored in a Cookie, then the dictionary may be stored on our server. To store your personal dictionary on our server you should specify a name for your dictionary. If you already have a stored dictionary, please type its name and click the Restore button.', // MISSING
-
 		aboutTab		: 'Honi buruz'
 	},
 
@@ -723,11 +678,10 @@ CKEDITOR.lang['eu'] =
 
 	fakeobjects :
 	{
-		anchor		: 'Aingura',
-		flash		: 'Flash Animazioa',
-		iframe		: 'IFrame', // MISSING
-		hiddenfield	: 'Hidden Field', // MISSING
-		unknown		: 'Objektu ezezaguna'
+		anchor	: 'Aingura',
+		flash	: 'Flash Animazioa',
+		div		: 'Orrialde Saltoa',
+		unknown	: 'Objektu ezezaguna'
 	},
 
 	resize : 'Arrastatu tamaina aldatzeko',
@@ -735,18 +689,11 @@ CKEDITOR.lang['eu'] =
 	colordialog :
 	{
 		title		: 'Select color', // MISSING
-		options	:	'Color Options', // MISSING
 		highlight	: 'Highlight', // MISSING
-		selected	: 'Selected Color', // MISSING
+		selected	: 'Selected', // MISSING
 		clear		: 'Clear' // MISSING
 	},
 
 	toolbarCollapse	: 'Collapse Toolbar', // MISSING
-	toolbarExpand	: 'Expand Toolbar', // MISSING
-
-	bidi :
-	{
-		ltr : 'Text direction from left to right', // MISSING
-		rtl : 'Text direction from right to left' // MISSING
-	}
+	toolbarExpand	: 'Expand Toolbar' // MISSING
 };
