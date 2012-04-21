@@ -1,4 +1,6 @@
 import os
+import re
+from urlparse import urlparse, urlunparse
 from datetime import datetime
 
 from django.conf import settings
@@ -72,8 +74,12 @@ def get_media_url(path):
     else:
         url = settings.MEDIA_URL + path.replace(settings.MEDIA_ROOT, '')
 
-    # Remove any double slashes.
-    return url.replace('//', '/')
+    # remove multiple forward-slashes from the path portion of the url
+    url_parts    = list( urlparse( url ) )              # break url into a list
+    url_parts[2] = re.sub( '\/+', '/', url_parts[2] )   # replace two or more slashes with a single slash
+    url = urlunparse( url_parts )                       # reconstruct the url
+   
+    return url
 
 
 def get_upload_filename(upload_name, user):
