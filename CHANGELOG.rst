@@ -1,6 +1,12 @@
 Changelog
 =========
 
+3.6.2
+-----
+#. Include CKEditor version 3.6.2.
+#. Initial work on Django aligned theme. 
+#. Fix schema slash removal issue on media url generation. Thanks `mwcz <https://github.com/mwcz>`_ 
+
 0.0.9
 -----
 
