@@ -14,19 +14,15 @@ Required
 ~~~~~~~~
 #. Install or add django-ckeditor to your python path.
 
-#. Add ``ckeditor`` to your INSTALLED_APPS setting.
+#. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
+#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
-#. Add a CKEDITOR_MEDIA_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to the ckeditor JS and CSS media (not uploaded media). Make sure to use a trailing slash::
-
-    CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
-
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor media upload directory. Make sure you have write permissions for the path, i.e.::
+#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute filesystem path to your CKEditor media upload directory. Make sure you have write permissions for the path, i.e.::
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
 
-#. Add ckeditor url include to the project's ``urls.py`` file::
+#. Add CKEditor URL include to your project's ``urls.py`` file::
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
@@ -34,7 +30,7 @@ Optional
 ~~~~~~~~
 #. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser. 
 
-#. Add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through ckeditor, i.e.::
+#. Add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through CKEditor, i.e.::
 
        CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
        
