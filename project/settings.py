@@ -127,6 +127,7 @@ INSTALLED_APPS = (
 
     'ckeditor',
     'project',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
