@@ -1,4 +1,6 @@
 import os
+import re
+from urlparse import urlparse, urlunparse
 from datetime import datetime
 
 from django.conf import settings
@@ -72,8 +74,15 @@ def get_media_url(path):
     else:
         url = settings.MEDIA_URL + path.replace(settings.MEDIA_ROOT, '')
 
-    # Remove any double slashes.
-    return url.replace('//', '/')
+    # Remove multiple forward-slashes from the path portion of the url.
+    # Break url into a list.
+    url_parts = list(urlparse(url))
+    # Replace two or more slashes with a single slash.
+    url_parts[2] = re.sub('\/+', '/', url_parts[2])
+    # Reconstruct the url.
+    url = urlunparse(url_parts)
+
+    return url
 
 
 def get_upload_filename(upload_name, user):
@@ -129,13 +138,11 @@ def upload(request):
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
 
-def get_image_browse_urls(user=None):
+def get_image_files(user=None):
     """
     Recursively walks all dirs under upload dir and generates a list of
-    thumbnail and full image URL's for each file found.
+    full paths for each file found.
     """
-    images = []
-
     # If a user is provided and CKEDITOR_RESTRICT_BY_USER is True,
     # limit images to user specific path, but not for superusers.
     if user and not user.is_superuser and getattr(settings, \
@@ -149,13 +156,22 @@ def get_image_browse_urls(user=None):
     for root, dirs, files in os.walk(browse_path):
         for filename in [os.path.join(root, x) for x in files]:
             # bypass for thumbs
-            if '_thumb' in filename:
+            if os.path.splitext(filename)[0].endswith('_thumb'):
                 continue
+            yield filename
 
-            images.append({
-                'thumb': get_media_url(get_thumb_filename(filename)),
-                'src': get_media_url(filename)
-            })
+
+def get_image_browse_urls(user=None):
+    """
+    Recursively walks all dirs under upload dir and generates a list of
+    thumbnail and full image URL's for each file found.
+    """
+    images = []
+    for filename in get_image_files(user=user):
+        images.append({
+            'thumb': get_media_url(get_thumb_filename(filename)),
+            'src': get_media_url(filename)
+        })
 
     return images
 
@@ -163,6 +179,5 @@ def get_image_browse_urls(user=None):
 def browse(request):
     context = RequestContext(request, {
         'images': get_image_browse_urls(request.user),
-        'media_prefix': settings.CKEDITOR_MEDIA_PREFIX,
     })
     return render_to_response('browse.html', context)

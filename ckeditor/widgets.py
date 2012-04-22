@@ -13,12 +13,12 @@ from django.forms.util import flatatt
 json_encode = simplejson.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'v2',
+    'skin': 'django',
     'toolbar': 'Full',
     'height': 291,
-    'width': 618,
+    'width': 835,
     'filebrowserWindowWidth': 940,
-    'filebrowserWindowHeight': 747,
+    'filebrowserWindowHeight': 725,
 }
 
 
@@ -30,7 +30,7 @@ class CKEditorWidget(forms.Textarea):
     class Media:
         try:
             js = (
-                settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
+                settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
@@ -42,14 +42,14 @@ class CKEditorWidget(forms.Textarea):
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
         # Setup config from defaults.
-        self.config = DEFAULT_CONFIG
+        self.config = DEFAULT_CONFIG.copy()
 
         # Try to get valid config from settings.
         configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
         if configs != None:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
-                if configs.has_key(config_name):
+                if config_name in configs:
                     config = configs[config_name]
                     # Make sure the configuration is a dictionary.
                     if not isinstance(config, dict):

@@ -2,5 +2,5 @@ include AUTHORS.rst
 include LICENSE
 include CHANGELOG.rst
 include README.rst
-recursive-include ckeditor/media *
+recursive-include ckeditor/static *
 recursive-include ckeditor/templates *

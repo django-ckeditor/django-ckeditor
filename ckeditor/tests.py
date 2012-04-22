@@ -51,8 +51,13 @@ class ViewsTestCase(unittest.TestCase):
         no_prefix_url = '/media/uploads/arbitrary/path/and/filename.ext'
         self.failUnless(views.get_media_url(self.test_path) == no_prefix_url)
 
-        # Resulting URL should never include '//'.
-        self.failIf('//' in views.get_media_url(self.test_path))
+        # Resulting URL should never include '//' outside of schema.
+        settings.CKEDITOR_UPLOAD_PREFIX = \
+            'https://test.com//media////ckuploads/'
+        multi_slash_path = '//multi//////slash//path////'
+        self.failUnlessEqual(\
+            'https://test.com/media/ckuploads/multi/slash/path/', \
+            views.get_media_url(multi_slash_path))
 
     def test_get_thumb_filename(self):
         # Thumnbnail filename is the same as original

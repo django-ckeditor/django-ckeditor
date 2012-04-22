@@ -10,33 +10,33 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 Installation
 ------------
 
+Required
+~~~~~~~~
 #. Install or add django-ckeditor to your python path.
 
-#. Add ``ckeditor`` to your INSTALLED_APPS setting.
+#. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
+#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
-#. Add a CKEDITOR_MEDIA_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to the ckeditor JS and CSS media (not uploaded media). Make sure to use a trailing slash::
-
-    CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
-
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor media upload directory. Make sure you have write permissions for the path, i.e.::
+#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute filesystem path to your CKEditor media upload directory. Make sure you have write permissions for the path, i.e.::
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
 
-#. Add ckeditor url include to the project's ``urls.py`` file::
+#. Add CKEditor URL include to your project's ``urls.py`` file::
     
     (r'^ckeditor/', include('ckeditor.urls')),    
 
-#. Optionally, set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser. 
+Optional
+~~~~~~~~
+#. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser. 
 
-#. Optionally, add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through ckeditor, i.e.::
+#. Add a CKEDITOR_UPLOAD_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to media uploaded through CKEditor, i.e.::
 
        CKEDITOR_UPLOAD_PREFIX = "http://media.lawrence.com/media/ckuploads/
        
    (If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall back to MEDIA_URL with the difference of MEDIA_ROOT and the uploaded resource's full path and filename appended.)
 
-#. Optionally, add CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
+#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
 
        CKEDITOR_CONFIGS = {
            'awesome_ckeditor': {
@@ -96,4 +96,11 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
     
     admin.site.register(Post, PostAdmin)
 
+Managment Commands
+~~~~~~~~~~~~~~~~~~
+Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when starting to use django-ckeditor with existing images. Issue the command as follows::
+    
+    $ ./manage.py generateckeditorthumbnails
+
 **NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`_ for more info.
+
