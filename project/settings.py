@@ -154,3 +154,19 @@ LOGGING = {
 
 CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
 CKEDITOR_UPLOAD_PATH = PATH + "/media/uploads"
+
+CKEDITOR_CONFIGS = {
+    'basic': {
+        'toolbar': 'Basic',
+    },
+    'full': {
+        'toolbar': 'Full',
+    },
+    'custom': {
+        'toolbar': [
+            ['Bold','Italic','Underline',],
+            '/',
+            ['Styles','Format','Font','FontSize',],
+        ],
+    },
+}
