@@ -8,7 +8,7 @@ setup(
     author='Shaun Sephton',
     author_email='shaunsephton@gmail.com',
     url='http://github.com/shaunsephton/django-ckeditor',
-    packages = find_packages(),
+    packages = find_packages(exclude=['project',]),
     dependency_links = [
         'http://dist.plone.org/thirdparty/',
     ],
