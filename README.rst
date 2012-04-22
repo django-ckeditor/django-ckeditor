@@ -96,4 +96,11 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
     
     admin.site.register(Post, PostAdmin)
 
+Managment Commands
+~~~~~~~~~~~~~~~~~~
+Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when starting to use django-ckeditor with existing images. Issue the command as follows::
+    
+    $ ./manage.py generateckeditorthumbnails
+
 **NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`_ for more info.
+
