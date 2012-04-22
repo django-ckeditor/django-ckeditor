@@ -5,7 +5,12 @@ Changelog
 -----
 #. Include CKEditor version 3.6.2.
 #. Initial work on Django aligned theme. 
-#. Fix schema slash removal issue on media url generation. Thanks `mwcz <https://github.com/mwcz>`_ 
+#. Fix schema slash removal issue on media url generation. Thanks `mwcz <https://github.com/mwcz>`_
+#. Added compatibility for South. Thanks `3point2 <https://github.com/3point2>`_
+#. Prevented settings from leaking between widget instances. Thanks `3point2 <https://github.com/3point2>`_
+#. Fixed config_name conflict when verbose_name is used as first positional argument for a field. Thanks `3point2 <https://github.com/3point2>`_
+#. Refactored views to allow use of file walking with local paths. Thanks `3point2 <https://github.com/3point2>`_
+#. Added command to generate thumbnails. Thanks `3point2 <https://github.com/3point2>`_
 
 0.0.9
 -----
