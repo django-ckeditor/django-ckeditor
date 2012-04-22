@@ -11,6 +11,7 @@ Changelog
 #. Fixed config_name conflict when verbose_name is used as first positional argument for a field. Thanks `3point2 <https://github.com/3point2>`_
 #. Refactored views to allow use of file walking with local paths. Thanks `3point2 <https://github.com/3point2>`_
 #. Added command to generate thumbnails. Thanks `3point2 <https://github.com/3point2>`_
+#. Migrated from using media to static file management.
 
 0.0.9
 -----
