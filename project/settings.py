@@ -165,9 +165,9 @@ CKEDITOR_CONFIGS = {
     },
     'custom': {
         'toolbar': [
-            ['Bold','Italic','Underline',],
+            ['Bold', 'Italic', 'Underline', ],
             '/',
-            ['Styles','Format','Font','FontSize',],
+            ['Styles', 'Format', 'Font', 'FontSize', ],
         ],
     },
 }

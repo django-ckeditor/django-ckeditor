@@ -138,13 +138,11 @@ def upload(request):
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
 
-def get_image_browse_urls(user=None):
+def get_image_files(user=None):
     """
     Recursively walks all dirs under upload dir and generates a list of
-    thumbnail and full image URL's for each file found.
+    full paths for each file found.
     """
-    images = []
-
     # If a user is provided and CKEDITOR_RESTRICT_BY_USER is True,
     # limit images to user specific path, but not for superusers.
     if user and not user.is_superuser and getattr(settings, \
@@ -158,13 +156,22 @@ def get_image_browse_urls(user=None):
     for root, dirs, files in os.walk(browse_path):
         for filename in [os.path.join(root, x) for x in files]:
             # bypass for thumbs
-            if '_thumb' in filename:
+            if os.path.splitext(filename)[0].endswith('_thumb'):
                 continue
+            yield filename
 
-            images.append({
-                'thumb': get_media_url(get_thumb_filename(filename)),
-                'src': get_media_url(filename)
-            })
+
+def get_image_browse_urls(user=None):
+    """
+    Recursively walks all dirs under upload dir and generates a list of
+    thumbnail and full image URL's for each file found.
+    """
+    images = []
+    for filename in get_image_files(user=user):
+        images.append({
+            'thumb': get_media_url(get_thumb_filename(filename)),
+            'src': get_media_url(filename)
+        })
 
     return images
 
