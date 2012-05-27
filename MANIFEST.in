@@ -3,4 +3,6 @@ include LICENSE
 include CHANGELOG.rst
 include README.rst
 recursive-include ckeditor/static *
+recursive-include ckeditor/static *.asp *.php
+recursive-exclude ckeditor/static/ckeditor/ckeditor/_samples *
 recursive-include ckeditor/templates *
