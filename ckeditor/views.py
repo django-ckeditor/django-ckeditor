@@ -1,11 +1,13 @@
 import os
+import mimetypes
 import re
 from urlparse import urlparse, urlunparse
 from datetime import datetime
+import StringIO
 
 from django.conf import settings
-from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -51,8 +53,15 @@ def get_thumb_filename(file_name):
     """
     return '%s_thumb%s' % os.path.splitext(file_name)
 
+def get_image_format(extension):
+    mimetypes.init()
+    return mimetypes.types_map[extension]
 
 def create_thumbnail(filename):
+    thumbnail_filename = get_thumb_filename(filename)
+    thumbnail_format = get_image_format(os.path.splitext(filename)[1])
+    pil_format = thumbnail_format.split('/')[1]
+
     image = default_storage.open(filename)
     image = Image.open(image)
 
@@ -64,9 +73,13 @@ def create_thumbnail(filename):
 
     # scale and crop to thumbnail
     imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
-    image = ContentFile(imagefit.tostring())
-    thumbnail_filename = get_thumb_filename(filename)
-    return default_storage.save(thumbnail_filename, image)
+    thumbnail_io = StringIO.StringIO()
+    imagefit.save(thumbnail_io, format=pil_format)
+
+    thumbnail = InMemoryUploadedFile(thumbnail_io, None, thumbnail_filename, thumbnail_format,
+                                  thumbnail_io.len, None)
+
+    return default_storage.save(thumbnail_filename, thumbnail)
 
 
 def get_media_url(path):
