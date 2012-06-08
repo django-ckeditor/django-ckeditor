@@ -119,27 +119,39 @@ def upload(request):
     </script>""" % (request.GET['CKEditorFuncNum'], url))
 
 
-def get_image_files(user=None):
+def get_image_files(user=None, path=''):
     """
     Recursively walks all dirs under upload dir and generates a list of
     full paths for each file found.
     """
     # If a user is provided and CKEDITOR_RESTRICT_BY_USER is True,
     # limit images to user specific path, but not for superusers.
+    STORAGE_DIRECTORIES = 0
+    STORAGE_FILES = 1
+
     if user and not user.is_superuser and getattr(settings, \
             'CKEDITOR_RESTRICT_BY_USER', False):
         user_path = user.username
     else:
         user_path = ''
 
-    browse_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path)
+    browse_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path, path)
 
-    for root, dirs, files in os.walk(browse_path):
-        for filename in [os.path.join(root, x) for x in files]:
-            # bypass for thumbs
-            if os.path.splitext(filename)[0].endswith('_thumb'):
-                continue
-            yield filename
+    try:
+        storage_list = default_storage.listdir(browse_path)
+    except NotImplementedError:
+        return
+
+    for filename in storage_list[STORAGE_FILES]:
+        if os.path.splitext(filename)[0].endswith('_thumb'):
+            continue
+        filename = os.path.join(browse_path, filename)
+        yield filename
+
+    for directory in storage_list[STORAGE_DIRECTORIES]:
+        directory_path = os.path.join(path, directory)
+        for element in get_image_files(path=directory_path):
+            yield element
 
 
 def get_image_browse_urls(user=None):
