@@ -1,9 +1,9 @@
-import os
-import mimetypes
-import re
-from urlparse import urlparse, urlunparse
 from datetime import datetime
+import mimetypes
+import os
+import re
 import StringIO
+from urlparse import urlparse, urlunparse
 
 from django.conf import settings
 from django.core.files.storage import default_storage
