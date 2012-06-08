@@ -14,10 +14,3 @@ if 'ckeditor' in settings.INSTALLED_APPS:
                 sure you have write permissions for the path, i.e.: \
                 CKEDITOR_UPLOAD_PATH = 'content/ckeditor/' which \
                 will be added to SITE_MEDIA/MEDIA_ROOT where needed by storage engine.")
-
-    # If a CKEDITOR_UPLOAD_PATH settings has been specified, confirm it exists.
-    if getattr(settings, 'CKEDITOR_UPLOAD_PATH', None):
-        if not os.path.exists(settings.CKEDITOR_UPLOAD_PATH):
-            raise ImproperlyConfigured("django-ckeditor CKEDITOR_UPLOAD_PATH \
-                    setting error, no such file or directory: '%s'" % \
-                    settings.CKEDITOR_UPLOAD_PATH)
