@@ -154,6 +154,8 @@ def get_image_files(user=None, path=''):
         storage_list = default_storage.listdir(browse_path)
     except NotImplementedError:
         return
+    except OSError:
+        return
 
     for filename in storage_list[STORAGE_FILES]:
         if os.path.splitext(filename)[0].endswith('_thumb'):
