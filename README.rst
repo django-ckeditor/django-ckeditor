@@ -24,6 +24,9 @@ Required
 
    For the default file system storage images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
 
+   CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
+   There are issues using S3Storage from django-storages.
+
 #. Add CKEditor URL include to your project's ``urls.py`` file::
     
     (r'^ckeditor/', include('ckeditor.urls')),    
