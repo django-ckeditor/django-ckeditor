@@ -78,6 +78,7 @@ def create_thumbnail(filename):
 
     thumbnail = InMemoryUploadedFile(thumbnail_io, None, thumbnail_filename, thumbnail_format,
                                   thumbnail_io.len, None)
+    thumbnail.seek(0)
 
     return default_storage.save(thumbnail_filename, thumbnail)
 
