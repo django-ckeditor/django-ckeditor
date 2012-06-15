@@ -16,10 +16,6 @@ Installation
 
 #. Copy the ``media/ckeditor`` directory into any directory within your media root. You can override the location in your settings (see below).
 
-#. Add a CKEDITOR_MEDIA_PREFIX setting to the project's ``settings.py`` file. This setting specifies a URL prefix to the ckeditor JS and CSS media (not uploaded media). Make sure to use a trailing slash::
-
-    CKEDITOR_MEDIA_PREFIX = "/media/ckeditor/"
-
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute path to your ckeditor media upload directory. Make sure you have write permissions for the path, i.e.::
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"

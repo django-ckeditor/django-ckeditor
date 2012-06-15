@@ -168,6 +168,5 @@ def get_image_browse_urls(user=None):
 def browse(request):
     context = RequestContext(request, {
         'images': get_image_browse_urls(request.user),
-        'media_prefix': settings.CKEDITOR_MEDIA_PREFIX,
     })
     return render_to_response('browse.html', context)

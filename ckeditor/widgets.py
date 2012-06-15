@@ -9,6 +9,7 @@ from django.utils import simplejson
 
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
+from django.contrib.staticfiles import finders
 
 json_encode = simplejson.JSONEncoder().encode
 
@@ -28,16 +29,9 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
     class Media:
-        try:
-            js = (
-                settings.CKEDITOR_MEDIA_PREFIX + 'ckeditor/ckeditor.js',
-            )
-        except AttributeError:
-            raise ImproperlyConfigured("django-ckeditor requires \
-                    CKEDITOR_MEDIA_PREFIX setting. This setting specifies a \
-                    URL prefix to the ckeditor JS and CSS media (not \
-                    uploaded media). Make sure to use a trailing slash: \
-                    CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'")
+        js = (
+            settings.STATIC_URL + 'ckeditor/ckeditor.js',
+        )
 
     def __init__(self, config_name='default', *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
