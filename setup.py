@@ -8,7 +8,7 @@ def get_source_files():
 
 setup(
     name='django-ckeditor',
-    version='3.6.2',
+    version='3.6.2.1',
     description='Django admin CKEditor integration.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Shaun Sephton',
@@ -22,9 +22,9 @@ setup(
     exclude_package_data={
         'ckeditor': list(get_source_files()),
     },
-    test_suite="setuptest.SetupTestSuite",
+    test_suite="setuptest.setuptest.SetupTestSuite",
     tests_require=[
-        'django-setuptest>=0.0.6',
+        'django-setuptest>=0.1.1',
     ],
     classifiers=[
         "Programming Language :: Python",
