@@ -15,11 +15,8 @@ setup(
     author_email='shaunsephton@gmail.com',
     url='http://github.com/shaunsephton/django-ckeditor',
     packages = find_packages(exclude=['project',]),
-    dependency_links = [
-        'http://dist.plone.org/thirdparty/',
-    ],
     install_requires = [
-        'PIL',
+        'Pillow',
     ],
     include_package_data=True,
     exclude_package_data={
