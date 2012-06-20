@@ -1,4 +1,10 @@
+import os.path
 from setuptools import setup, find_packages
+
+def get_source_files():
+    for dirname, _, files in os.walk('ckeditor/static/ckeditor/ckeditor/_source'):
+        for filename in files:
+            yield os.path.join('/'.join(dirname.split('/')[1:]), filename)
 
 setup(
     name='django-ckeditor',
@@ -16,6 +22,9 @@ setup(
         'PIL',
     ],
     include_package_data=True,
+    exclude_package_data={
+        'ckeditor': list(get_source_files()),
+    },
     test_suite="setuptest.SetupTestSuite",
     tests_require=[
         'django-setuptest>=0.0.6',
