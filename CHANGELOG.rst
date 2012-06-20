@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Use Pillow instead of PIL since it builds on all systems.
+
 3.6.2
 -----
 #. Include CKEditor version 3.6.2.
