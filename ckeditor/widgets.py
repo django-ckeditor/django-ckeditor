@@ -70,8 +70,10 @@ class CKEditorWidget(forms.Textarea):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
-        self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
-        self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
+        if not 'filebrowserUploadUrl' in self.config:
+            self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
+        if not 'filebrowserBrowseUrl' in self.config:
+            self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_unicode(value)),
