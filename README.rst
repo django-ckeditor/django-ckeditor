@@ -16,11 +16,11 @@ Required
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
-
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an absolute filesystem path to your CKEditor media upload directory. Make sure you have write permissions for the path, i.e.::
 
     CKEDITOR_UPLOAD_PATH = "/home/media/media.lawrence.com/uploads"
+
+#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
 #. Add CKEditor URL include to your project's ``urls.py`` file::
     
