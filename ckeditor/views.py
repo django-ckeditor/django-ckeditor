@@ -1,12 +1,14 @@
 import os
 import re
-from urlparse import urlparse, urlunparse
+from urlparse import urlparse, urlunparse, urljoin 
 from datetime import datetime
 
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from urllib import pathname2url
+from django.core.files.storage import FileSystemStorage 
 
 try:
     from PIL import Image, ImageOps
@@ -23,23 +25,6 @@ except ImportError:
         return fn
 
 THUMBNAIL_SIZE = (75, 75)
-
-
-def get_available_name(name):
-    """
-    Returns a filename that's free on the target storage system, and
-    available for new content to be written to.
-    """
-    dir_name, file_name = os.path.split(name)
-    file_root, file_ext = os.path.splitext(file_name)
-    # If the filename already exists, keep adding an underscore (before the
-    # file extension, if one exists) to the filename until the generated
-    # filename doesn't exist.
-    while os.path.exists(name):
-        file_root += '_'
-        # file_ext includes the dot.
-        name = os.path.join(dir_name, file_root + file_ext)
-    return name
 
 
 def get_thumb_filename(file_name):
@@ -64,15 +49,24 @@ def create_thumbnail(filename):
     imagefit.save(get_thumb_filename(filename))
 
 
+def get_relative_url_from_path(prefix, path):
+    relative_url = pathname2url(path)
+    if relative_url[0] == '/':
+        relative_url = relative_url[1:]
+    return urljoin(prefix, relative_url)
+
+
 def get_media_url(path):
     """
     Determine system file's media URL.
-    """
+    """    
     upload_prefix = getattr(settings, "CKEDITOR_UPLOAD_PREFIX", None)
     if upload_prefix:
-        url = upload_prefix + path.replace(settings.CKEDITOR_UPLOAD_PATH, '')
+        url = get_relative_url_from_path(upload_prefix,
+                                         os.path.relpath(path, settings.CKEDITOR_UPLOAD_PATH))
     else:
-        url = settings.MEDIA_URL + path.replace(settings.MEDIA_ROOT, '')
+        url = get_relative_url_from_path(settings.MEDIA_URL, 
+                                         os.path.relpath(path, settings.MEDIA_ROOT))
 
     # Remove multiple forward-slashes from the path portion of the url.
     # Break url into a list.
@@ -93,18 +87,19 @@ def get_upload_filename(upload_name, user):
         user_path = ''
 
     # Generate date based path to put uploaded file.
-    date_path = datetime.now().strftime('%Y/%m/%d')
+    date_path_parts = datetime.now().strftime('%Y/%m/%d').split('/')
 
     # Complete upload path (upload_path + date_path).
     upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path, \
-            date_path)
+            *date_path_parts)
 
-    # Make sure upload_path exists.
-    if not os.path.exists(upload_path):
-        os.makedirs(upload_path)
+# not needed anymore
+#    # Make sure upload_path exists.
+#    if not os.path.exists(upload_path):
+#        os.makedirs(upload_path)
 
     # Get available name and return.
-    return get_available_name(os.path.join(upload_path, upload_name))
+    return os.path.join(upload_path, upload_name.lower())
 
 
 @csrf_exempt
@@ -117,16 +112,15 @@ def upload(request):
     """
     # Get the uploaded file from request.
     upload = request.FILES['upload']
-    upload_ext = os.path.splitext(upload.name)[1]
+    
+    #upload_ext = os.path.splitext(upload.name)[1]
+    #security considerations
 
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
-    out = open(upload_filename, 'wb+')
-
-    # Iterate through chunks and write to destination.
-    for chunk in upload.chunks():
-        out.write(chunk)
-    out.close()
+    
+    fs = FileSystemStorage()
+    upload_filename = fs.save(upload_filename, upload)
 
     create_thumbnail(upload_filename)
 
@@ -136,7 +130,6 @@ def upload(request):
     <script type='text/javascript'>
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
     </script>""" % (request.GET['CKEditorFuncNum'], url))
-
 
 def get_image_files(user=None):
     """
@@ -159,7 +152,6 @@ def get_image_files(user=None):
             if os.path.splitext(filename)[0].endswith('_thumb'):
                 continue
             yield filename
-
 
 def get_image_browse_urls(user=None):
     """
