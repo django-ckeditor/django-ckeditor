@@ -17,9 +17,10 @@
 		<div id="page">
 			<div id="container" style="width: 880px">
                 {% if images %}
-    				<h2>Browse for the image you want, then click 'Embed Image' to continue...</h2>
+                    <h2>Procure pela imagem que você deseja e então clique em "Inserir imagem" para continuar...</h2>
                 {% else %}
-				    <h2>No images found. Upload images using the 'Image Button' dialog's 'Upload' tab.</h2>
+                    <h2>Nenhuma imagem encontrada. Anexe uma imagem usando o  botão "Enviar para o servidor"
+                    na aba "Enviar".</h2>
                 {% endif %}
 
 				<!-- Start Advanced Gallery Html Containers -->
@@ -39,7 +40,7 @@
 							</a>
 							<div class="caption">
                                 <div class="submit-row">
-                                    <input href="{{ image.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                    <input href="{{ image.src }}" class="default embed" type="submit" name="_embed" value="Inserir imagem" />
                                 </div>
 							</div>
 						</li>
