@@ -51,7 +51,7 @@ class CKEditorWidget(forms.Textarea):
 
         # Try to get valid config from settings.
         configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
-        if configs != None:
+        if configs:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
                 if config_name in configs:
@@ -82,5 +82,4 @@ class CKEditorWidget(forms.Textarea):
             'value': conditional_escape(force_unicode(value)),
             'id': final_attrs['id'],
             'config': json_encode(self.config)
-            })
-        )
+        }))
