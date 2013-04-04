@@ -1,6 +1,7 @@
 import os.path
 from setuptools import setup, find_packages
 
+
 def get_source_files():
     for dirname, _, files in os.walk('ckeditor/static/ckeditor/ckeditor/_source'):
         for filename in files:
@@ -10,12 +11,12 @@ setup(
     name='django-ckeditor',
     version='3.6.2.1',
     description='Django admin CKEditor integration.',
-    long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
+    long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Shaun Sephton',
-    author_email='shaunsephton@gmail.com',
+    author_email='connect@shaunsephton.com',
     url='http://github.com/shaunsephton/django-ckeditor',
-    packages = find_packages(exclude=['project',]),
-    install_requires = [
+    packages=find_packages(exclude=['project', ]),
+    install_requires=[
         'Pillow',
     ],
     include_package_data=True,
