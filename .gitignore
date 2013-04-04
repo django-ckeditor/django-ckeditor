@@ -10,3 +10,4 @@
 ve/
 django-ckeditor.sublime-workspace
 django-ckeditor.sublime-project
+*.DS_Store
