@@ -5,15 +5,24 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
-from django.utils import simplejson
-
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
+import json
 
-json_encode = simplejson.JSONEncoder().encode
+
+json_encode = json.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'django',
+    'skin': 'moono',
+    'toolbar_Basic': [
+        ['Source', '-', 'Bold', 'Italic']
+    ],
+    'toolbar_Full': [
+        ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+        ['Image', 'Flash', 'Table', 'HorizontalRule'],
+        ['TextColor', 'BGColor'],
+        ['Smiley', 'SpecialChar'], ['Source'],
+    ],
     'toolbar': 'Full',
     'height': 291,
     'width': 835,
@@ -46,7 +55,7 @@ class CKEditorWidget(forms.Textarea):
 
         # Try to get valid config from settings.
         configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
-        if configs != None:
+        if configs:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
                 if config_name in configs:
@@ -77,5 +86,4 @@ class CKEditorWidget(forms.Textarea):
             'value': conditional_escape(force_unicode(value)),
             'id': final_attrs['id'],
             'config': json_encode(self.config)
-            })
-        )
+        }))

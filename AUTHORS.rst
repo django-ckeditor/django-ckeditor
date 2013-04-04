@@ -12,6 +12,7 @@ Contributors
 #. `chr15m <http://github.com/chr15m>`_
 #. `hedleyroos <https://github.com/hedleyroos>`_
 #. `jeffh <https://github.com/jeffh>`_
+#. `lihan <https://github.com/lihan>`_
 #. `loop0 <http://github.com/loop0>`_
 #. `mwcz <https://github.com/mwcz>`_
 #. `tomwys <https://github.com/tomwys>`_
