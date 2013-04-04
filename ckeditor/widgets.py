@@ -14,12 +14,16 @@ json_encode = json.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
     'skin': 'moono',
-    'toolbar': [
+    'toolbar_Basic': [
+        ['Source', '-', 'Bold', 'Italic']
+    ],
+    'toolbar_Full': [
         ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
         ['Image', 'Flash', 'Table', 'HorizontalRule'],
         ['TextColor', 'BGColor'],
         ['Smiley', 'SpecialChar'], ['Source'],
     ],
+    'toolbar': 'Full',
     'height': 291,
     'width': 835,
     'filebrowserWindowWidth': 940,
