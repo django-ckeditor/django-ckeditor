@@ -21,7 +21,7 @@ DEFAULT_CONFIG = {
         ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
         ['Image', 'Flash', 'Table', 'HorizontalRule'],
         ['TextColor', 'BGColor'],
-        ['Smiley', 'SpecialChar'], ['Source'],
+        ['Smiley', 'SpecialChar'], ['Source'],['pbckcode'],
     ],
     'toolbar': 'Full',
     'height': 291,
