@@ -1,24 +1,31 @@
+import os.path
 from setuptools import setup, find_packages
+
+
+def get_source_files():
+    for dirname, _, files in os.walk('ckeditor/static/ckeditor/ckeditor/_source'):
+        for filename in files:
+            yield os.path.join('/'.join(dirname.split('/')[1:]), filename)
 
 setup(
     name='django-ckeditor',
-    version='3.6.2',
+    version='4.0.2',
     description='Django admin CKEditor integration.',
-    long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
+    long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Shaun Sephton',
-    author_email='shaunsephton@gmail.com',
+    author_email='connect@shaunsephton.com',
     url='http://github.com/shaunsephton/django-ckeditor',
-    packages = find_packages(exclude=['project',]),
-    dependency_links = [
-        'http://dist.plone.org/thirdparty/',
-    ],
-    install_requires = [
-        'PIL',
+    packages=find_packages(exclude=['project', ]),
+    install_requires=[
+        'Pillow',
     ],
     include_package_data=True,
-    test_suite="setuptest.SetupTestSuite",
+    exclude_package_data={
+        'ckeditor': list(get_source_files()),
+    },
+    test_suite="setuptest.setuptest.SetupTestSuite",
     tests_require=[
-        'django-setuptest>=0.0.6',
+        'django-setuptest>=0.1.1',
     ],
     classifiers=[
         "Programming Language :: Python",

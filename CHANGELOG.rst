@@ -1,10 +1,19 @@
 Changelog
 =========
 
+4.0.2
+-----
+#. Include CKEditor version 4.0.2.
+
+3.6.2.1
+-------
+#. Remove unwanted static files from distribution.
+#. Use Pillow instead of PIL since it builds on all systems.
+
 3.6.2
 -----
 #. Include CKEditor version 3.6.2.
-#. Initial work on Django aligned theme. 
+#. Initial work on Django aligned theme.
 #. Fix schema slash removal issue on media url generation. Thanks `mwcz <https://github.com/mwcz>`_
 #. Added compatibility for South. Thanks `3point2 <https://github.com/3point2>`_
 #. Prevented settings from leaking between widget instances. Thanks `3point2 <https://github.com/3point2>`_
