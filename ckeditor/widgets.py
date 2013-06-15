@@ -7,6 +7,7 @@ from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
+from ckeditor.settings import CKEDITOR_BROWSEABLE_UPLOADED_IMAGES
 import json
 
 
@@ -80,7 +81,8 @@ class CKEditorWidget(forms.Textarea):
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
         self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
-        self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
+        if CKEDITOR_BROWSEABLE_UPLOADED_IMAGES:
+            self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_unicode(value)),

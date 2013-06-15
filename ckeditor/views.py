@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from ckeditor.settings import CKEDITOR_BROWSEABLE_UPLOADED_IMAGES
 
 try:
     from PIL import Image, ImageOps
@@ -111,16 +112,28 @@ def get_upload_filename(upload_name, user):
 def upload(request):
     """
     Uploads a file and send back its URL to CKEditor.
-
-    TODO:
-        Validate uploads
     """
     # Get the uploaded file from request.
     upload = request.FILES['upload']
+
     upload_ext = os.path.splitext(upload.name)[1]
+    if upload_ext.lower() not in (".jpg", ".jpeg", ".png", ".gif"):
+       return HttpResponse("""
+    <script type='text/javascript'>
+        alert("Invalid image extension");
+    </script>""")
+
+    try:
+        Image.open(upload)  # This is a lazy operation to check if the file is an img
+    except IOError:
+        return HttpResponse("""
+    <script type='text/javascript'>
+        alert("Image can't be read");
+    </script>""")
 
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
+
     out = open(upload_filename, 'wb+')
 
     # Iterate through chunks and write to destination.
@@ -128,7 +141,8 @@ def upload(request):
         out.write(chunk)
     out.close()
 
-    create_thumbnail(upload_filename)
+    if CKEDITOR_BROWSEABLE_UPLOADED_IMAGES:
+        create_thumbnail(upload_filename)
 
     # Respond with Javascript sending ckeditor upload url.
     url = get_media_url(upload_filename)
