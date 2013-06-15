@@ -1,6 +1,10 @@
 Changelog
 =========
 
+4.1.2
+-----
+#. Include CKEditor version 4.1.2.
+
 4.0.2
 -----
 #. Include CKEditor version 4.0.2.

@@ -9,6 +9,7 @@ Contributors
 ------------
 #. `3point2 <https://github.com/3point2>`_
 #. `buchuki <http://github.com/buchuki>`_
+#. `caumons <http://github.com/caumons>`_
 #. `chr15m <http://github.com/chr15m>`_
 #. `hedleyroos <https://github.com/hedleyroos>`_
 #. `jeffh <https://github.com/jeffh>`_

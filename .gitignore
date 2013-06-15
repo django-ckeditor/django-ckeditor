@@ -3,7 +3,9 @@
 *.swp
 .installed.cfg
 /bin/
+/build/
 /develop-eggs/
+/dist/
 /eggs/
 /parts/
 /ckeditor.db
