@@ -1,4 +1,15 @@
 <p><textarea{{ final_attrs|safe }}>{{ value }}</textarea></p>
 <script type="text/javascript">
-    CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    {% if inline_regexp %}
+    var regexp = new RegExp('{{ inline_regexp }}', 'i');
+        {{ jquery_prefix }}('textarea,input').each(function(k, v) {
+        if ({{ jquery_prefix }}(this).attr('id').match(regexp)) {
+          if (!CKEDITOR.instances[{{ jquery_prefix }}(this).attr('id')]) {
+            CKEDITOR.replace({{ jquery_prefix }}(this).attr('id'), {{ config|safe }});
+          }
+        }
+    });
+    {% else %}
+       CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    {% endif %}
 </script>
