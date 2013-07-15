@@ -48,7 +48,7 @@ class CKEditorWidget(forms.Textarea):
                     uploaded media). Make sure to use a trailing slash: \
                     CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'")
 
-    def __init__(self, config_name='default', *args, **kwargs):
+    def __init__(self, config_name='default',  *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
         # Setup config from defaults.
         self.config = DEFAULT_CONFIG.copy()
@@ -75,15 +75,33 @@ class CKEditorWidget(forms.Textarea):
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
 
+
+
     def render(self, name, value, attrs={}):
         if value is None:
             value = ''
+
         final_attrs = self.build_attrs(attrs, name=name)
+
         self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
         self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
+
+        jquery_prefix = None
+        admin_inline_regexp = None
+        admin_inline = self.config.get('admin_inline', None)
+
+        if admin_inline:
+            self.config.pop('admin_inline')
+            jquery_prefix = self.config.pop('jquery_prefix' ,'django.jQuery');
+
+            if '__prefix__' in name:
+                admin_inline_regexp = name.replace('__prefix__', '[0-9]+')
+
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_unicode(value)),
             'id': final_attrs['id'],
-            'config': json_encode(self.config)
+            'config': json_encode(self.config),
+            'inline_regexp': admin_inline_regexp,
+            'jquery_prefix': jquery_prefix
         }))
