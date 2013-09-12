@@ -83,15 +83,6 @@ CKEDITOR.on('dialogDefinition', function(ev) {
         infoTab.remove('txtVSpace');
         infoTab.remove('txtBorder');
         // infoTab.remove('cmbAlign');
-
-    } else if (dialogName == 'youtube') {
-        // Get a reference to the 'Youtube Plugin' tab.
-        var infoTab = dialogDefinition.getContents('youtubePlugin');
-        // Remove unnecessary widgets/elements from the 'Image Info' tab.
-        infoTab.remove('chkRelated');
-        infoTab.remove('chkPrivacy');
-        infoTab.remove('chkSecure');
-        infoTab.remove('chkOlderCode');
     }
 });
 
