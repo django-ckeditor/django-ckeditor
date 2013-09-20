@@ -86,11 +86,7 @@ def get_media_url(path):
 
 
 def get_upload_filename(upload_name, user):
-    # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
-    if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
-        user_path = user.username
-    else:
-        user_path = ''
+    user_path = get_user_path(user)
 
     # Generate date based path to put uploaded file.
     date_path = datetime.now().strftime('%Y/%m/%d')
@@ -145,9 +141,8 @@ def get_image_files(user=None):
     """
     # If a user is provided and CKEDITOR_RESTRICT_BY_USER is True,
     # limit images to user specific path, but not for superusers.
-    if user and not user.is_superuser and getattr(settings, \
-            'CKEDITOR_RESTRICT_BY_USER', False):
-        user_path = user.username
+    if user and not user.is_superuser:
+        user_path = get_user_path(user)
     else:
         user_path = ''
 
@@ -181,3 +176,20 @@ def browse(request):
         'images': get_image_browse_urls(request.user),
     })
     return render_to_response('browse.html', context)
+
+
+def get_user_path(user):
+    # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
+    if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
+        attr_name = 'username'
+    else:
+        attr_name = getattr(settings, 'CKEDITOR_RESTRICT_BY_USER_ATTR', None)
+
+    if attr_name is not None:
+        attr = getattr(user, attr_name, None)
+        if attr is not None:
+            if callable(attr):
+                return attr()
+            else:
+                return attr
+    return ''
