@@ -74,9 +74,7 @@ var CKBUILDER_CONFIG = {
 		'wordcount' : 1,
 		'autosave' : 1,
 		'symbol' : 1,
-		'oembed' : 1,
 		'placeholder' : 1,
-		'youtube' : 1,
 		'htmlbuttons' : 1,
 		'templates' : 1
 	},
