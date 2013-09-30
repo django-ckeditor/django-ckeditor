@@ -13,7 +13,7 @@ import json
 json_encode = json.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'moono',
+    'skin': 'moonocolor',
     'toolbar_Basic': [
         ['Source', '-', 'Bold', 'Italic']
     ],
@@ -28,6 +28,8 @@ DEFAULT_CONFIG = {
     'width': 835,
     'filebrowserWindowWidth': 940,
     'filebrowserWindowHeight': 725,
+    
+    'allowedContent': True, # disables all filtering by default (!)
 }
 
 
