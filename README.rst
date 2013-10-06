@@ -117,11 +117,11 @@ See http://django-storages.readthedocs.org/en/latest/
 
 If you want to use allowedContent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To allowedContent works, you need to disable **stylesheetparser**, because he
-disable allowedContent to works. So included this on your settings.py.
+To allowedContent works, disable **stylesheetparser** plugin.
+So included this on your settings.py.
 
 CKEDITOR_CONFIGS = {
     "default": {
-        "removePlugins": ["stylesheetparser"],
+        "removePlugins": "stylesheetparser",
     }
 }
