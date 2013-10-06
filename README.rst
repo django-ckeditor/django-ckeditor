@@ -3,6 +3,7 @@ Django CKEditor
 **Django admin CKEditor integration.**
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
+* This version also included support to django-storages (works with S3), updated ckeditor to version 4.2.1
 
 .. contents:: Contents
     :depth: 5
