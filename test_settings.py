@@ -9,4 +9,4 @@ INSTALLED_APPS = [
     'ckeditor',
 ]
 
-CKEDITOR_UPLOAD_PATH = '/tmp'
+CKEDITOR_UPLOAD_PATH = 'tmp'
