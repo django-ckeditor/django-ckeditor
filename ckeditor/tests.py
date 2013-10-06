@@ -38,27 +38,6 @@ class ViewsTestCase(unittest.TestCase):
         settings.CKEDITOR_RESTRICT_BY_USER = \
                 self.orig_CKEDITOR_RESTRICT_BY_USER
 
-    def test_get_media_url(self):
-        # If provided prefix URL with CKEDITOR_UPLOAD_PREFIX.
-        settings.CKEDITOR_UPLOAD_PREFIX = '/media/ckuploads/'
-        prefix_url = '/media/ckuploads/arbitrary/path/and/filename.ext'
-        self.failUnless(views.get_media_url(self.test_path) == prefix_url)
-
-        # If CKEDITOR_UPLOAD_PREFIX is not provided, the media URL will fall
-        # back to MEDIA_URL with the difference of MEDIA_ROOT and the
-        # uploaded resource's full path and filename appended.
-        settings.CKEDITOR_UPLOAD_PREFIX = None
-        no_prefix_url = '/media/uploads/arbitrary/path/and/filename.ext'
-        self.failUnless(views.get_media_url(self.test_path) == no_prefix_url)
-
-        # Resulting URL should never include '//' outside of schema.
-        settings.CKEDITOR_UPLOAD_PREFIX = \
-            'https://test.com//media////ckuploads/'
-        multi_slash_path = '//multi//////slash//path////'
-        self.failUnlessEqual(\
-            'https://test.com/media/ckuploads/multi/slash/path/', \
-            views.get_media_url(multi_slash_path))
-
     def test_get_thumb_filename(self):
         # Thumnbnail filename is the same as original
         # with _thumb inserted before the extension.
