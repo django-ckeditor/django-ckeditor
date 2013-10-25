@@ -1,6 +1,78 @@
 CKEditor 4 Changelog
 ====================
 
+## CKEditor 4.1.2
+
+* Added new translation: Sinhala.
+* [#10339](http://dev.ckeditor.com/ticket/10339): Fixed: Error thrown when inserted data totally stripped out after filtering and processing.
+* [#10298](http://dev.ckeditor.com/ticket/10298): Fixed: Data processor breaks attributes containing protected parts.
+* [#10367](http://dev.ckeditor.com/ticket/10367): Fixed: `editable#insertText` loses characters when `RegExp` replace controls are being inserted.
+* [#10165](http://dev.ckeditor.com/ticket/10165): [IE] Access denied error when `document.domain` has been altered.
+* [#9761](http://dev.ckeditor.com/ticket/9761): Update *Backspace* key state in `keystrokeHandler#blockedKeystrokes` when calling `editor.setReadOnly()`.
+* [#6504](http://dev.ckeditor.com/ticket/6504): Fixed: Race condition while loading several `config.customConfig` files.
+* [#10146](http://dev.ckeditor.com/ticket/10146): [Firefox] Empty lines are being removed while `config#enterMode` is `CKEDITOR.ENTER_BR`.
+* [#10360](http://dev.ckeditor.com/ticket/10360): Fixed: ARIA `role="application"` should not be used for dialogs.
+* [#10361](http://dev.ckeditor.com/ticket/10361): Fixed: ARIA `role="application"` should not be used for floating panels.
+* [#10510](http://dev.ckeditor.com/ticket/10510): Introduced unique voice labels to differentiate between different editor instances.
+* [#9945](http://dev.ckeditor.com/ticket/9945): [iOS] Scrolling not possible on iPad.
+* [#10389](http://dev.ckeditor.com/ticket/10389): Fixed: Invalid HTML in the "Text and Table" template.
+
+## CKEditor 4.1.1
+
+* Added new translation: Albanian.
+* [#10172](http://dev.ckeditor.com/ticket/10172): Pressing *Delete*/*Backspace* in an empty table cell moves the cursor to the next/previous cell.
+* [#10219](http://dev.ckeditor.com/ticket/10219): Error thrown when destroying an editor instance in parallel with a mouseup event.
+* [#10265](http://dev.ckeditor.com/ticket/10265): Wrong loop type in the Filebrowser plugin.
+* [#10249](http://dev.ckeditor.com/ticket/10249): Wrong undo/redo states at start.
+* [#10268](http://dev.ckeditor.com/ticket/10268): "Show Blocks" does not recover after switching to source view.
+* [#9995](http://dev.ckeditor.com/ticket/9995): HTML code in `textarea` should not be modified by the `htmlDataProcessor`.
+* [#10320](http://dev.ckeditor.com/ticket/10320): Justify plugin should add elements to the ACF based on current Enter mode.
+* [#10260](http://dev.ckeditor.com/ticket/10260): Fixed: Advanced Content Filter blocks `tabSpaces`. Unified `data-cke-*` attributes filtering.
+* [#10315](http://dev.ckeditor.com/ticket/10315): [Webkit] Undo manager should not record snapshots after a filling character was added/removed.
+* [#10291](http://dev.ckeditor.com/ticket/10291): [Webkit] Space after a filling character should be secured.
+* [#10330](http://dev.ckeditor.com/ticket/10330): [Webkit] The filling character is not removed on `keydown` in specific cases.
+* [#10285](http://dev.ckeditor.com/ticket/10285): Fixed: Styled text pasted from MS Word causes an infinite loop.
+* [#10131](http://dev.ckeditor.com/ticket/10131): Fixed: `undoManager#update` does not refresh the command state.
+* [#10337](http://dev.ckeditor.com/ticket/10337): Fixed: Unable to remove `<s>` using `removeformat`.
+
+## CKEditor 4.1
+
+* [#10192](http://dev.ckeditor.com/ticket/10192): Closing lists with Enter key does not work with Advanced Content Filter in several cases.
+* [#10191](http://dev.ckeditor.com/ticket/10191): Fixed allowed content rules unification, so the `filter.allowedContent` property always contains rules in the same format.
+* [#10224](http://dev.ckeditor.com/ticket/10224): Advanced Content Filter does not remove non-empty `<a>` elements anymore.
+* Minor issues in plugin integration with Advanced Content Filter:
+  * [#10166](http://dev.ckeditor.com/ticket/10166): Added transformation from the `align` attribute to `float` style to preserve backward compatibility after the introduction of Advanced Content Filter.
+  * [#10195](http://dev.ckeditor.com/ticket/10195): Image plugin no longer registers rules for links to Advanced Content Filter.
+  * [#10213](http://dev.ckeditor.com/ticket/10213): Justify plugin is now correctly registering rules to Advanced Content Filter when `config.justifyClasses` is defined.
+
+## CKEditor 4.1 RC
+
+* [#9829](http://dev.ckeditor.com/ticket/9829): Data and features activation based on editor configuration.
+
+  Brand new data filtering system that works in 2 modes:
+
+  * based on loaded features (toolbar items, plugins) - the data will be filtered according to what the editor in its
+  current configuration can handle,
+  * based on `config.allowedContent` rules - the data will be filtered and the editor features (toolbar items, commands,
+  keystrokes) will be enabled if they are allowed.
+
+  See the `datafiltering.html` sample, [guides](http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter) and [`CKEDITOR.filter` API documentation](http://docs.ckeditor.com/#!/api/CKEDITOR.filter).
+* [#9387](http://dev.ckeditor.com/ticket/9387): Reintroduced "Shared Spaces" - the ability to display toolbar and bottom editor space in selected locations and to share them by different editor instances.
+* [#9907](http://dev.ckeditor.com/ticket/9907): Added the `contentPreview` event for preview data manipulation.
+* [#9713](http://dev.ckeditor.com/ticket/9713): Introduced the `sourcedialog` plugin that brings raw HTML editing for inline editor instances.
+* Included in [#9829](http://dev.ckeditor.com/ticket/9829): Introduced new events, `toHtml` and `toDataFormat`, allowing for better integration with data processing. See API documentation: [`toHtml`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-event-toHtml), [`toDataFormat`](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-event-toDataFormat).
+* [#9981](http://dev.ckeditor.com/ticket/9981): Added ability to filter `htmlParser.fragment`, `htmlParser.element` etc. by many `htmlParser.filter`s before writing structure to an HTML string.
+* Included in [#10103](http://dev.ckeditor.com/ticket/10103):
+  * Introduced the `editor.status` property to make it easier to check the current status of the editor. See [API documentation](http://docs.ckeditor.com/#!/api/CKEDITOR.editor-property-status).
+  * Default `command` state is now `CKEDITOR.TRISTATE_DISABLE`. It will be activated on `editor.instanceReady` or immediately after being added if the editor is already initialized.
+* [#9796](http://dev.ckeditor.com/ticket/9796): Introduced `<s>` as a default tag for strikethrough, which replaces obsolete `<strike>` in HTML5.
+
+## CKEditor 4.0.3
+
+* [#10196](http://dev.ckeditor.com/ticket/10196): Fixed context menus not opening with keyboard shortcuts when Autogrow is enabled.
+* [#10212](http://dev.ckeditor.com/ticket/10212): [IE7-10] Undo command throws errors after multiple switches between Source and WYSIWYG view.
+* [#10219](http://dev.ckeditor.com/ticket/10219): [Inline editor] Error thrown after calling editor.destroy().
+
 ## CKEditor 4.0.2
 
 * [#9779](http://dev.ckeditor.com/ticket/9779): Fixed overriding `CKEDITOR.getUrl` with `CKEDITOR_GETURL`.
