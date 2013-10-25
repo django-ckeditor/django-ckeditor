@@ -13,7 +13,7 @@ import json
 json_encode = json.JSONEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'moonocolor',
+    'skin': 'moono',
     'toolbar_Basic': [
         ['Source', '-', 'Bold', 'Italic']
     ],
