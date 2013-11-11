@@ -35,9 +35,11 @@ def get_thumb_filename(file_name):
     """
     return '%s_thumb%s' % os.path.splitext(file_name)
 
+
 def get_image_format(extension):
     mimetypes.init()
     return mimetypes.types_map[extension]
+
 
 def create_thumbnail(filename):
     thumbnail_filename = get_thumb_filename(filename)
@@ -124,8 +126,8 @@ def get_image_files(user=None, path=''):
     STORAGE_DIRECTORIES = 0
     STORAGE_FILES = 1
 
-    if user and not user.is_superuser and getattr(settings, \
-            'CKEDITOR_RESTRICT_BY_USER', False):
+    if (user and not user.is_superuser
+        and getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)):
         user_path = user.username
     else:
         user_path = ''
