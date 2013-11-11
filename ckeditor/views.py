@@ -1,13 +1,12 @@
 from datetime import datetime
 import mimetypes
 import os
-import re
 import StringIO
-from urlparse import urlparse, urlunparse
 
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -17,14 +16,6 @@ try:
 except ImportError:
     import Image
     import ImageOps
-
-try:
-    from django.views.decorators.csrf import csrf_exempt
-except ImportError:
-    # monkey patch this with a dummy decorator which just returns the
-    # same function (for compatability with pre-1.1 Djangos)
-    def csrf_exempt(fn):
-        return fn
 
 THUMBNAIL_SIZE = (75, 75)
 
