@@ -1,5 +1,7 @@
 Django CKEditor
 ================
+File storage, Django 1.6 compatible fork.
+------------
 **Django admin CKEditor integration.**
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
