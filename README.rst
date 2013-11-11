@@ -1,7 +1,8 @@
 Django CKEditor
 ================
-File storage, Django 1.6 compatible fork.
-------------
+File storage, Django 1.6 compatible fork available on pypi as django-ckeditor-updated
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **Django admin CKEditor integration.**
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
@@ -19,7 +20,7 @@ Installation
 
 Required
 ~~~~~~~~
-#. Install or add django-ckeditor to your python path.
+#. Install or add django-ckeditor-updated to your python path. Note: You may not have the original django-ckeditor and django-ckeditor-updated installed at the same time.
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
