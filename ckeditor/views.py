@@ -34,16 +34,7 @@ def get_available_name(name):
     Returns a filename that's free on the target storage system, and
     available for new content to be written to.
     """
-    dir_name, file_name = os.path.split(name)
-    file_root, file_ext = os.path.splitext(file_name)
-    # If the filename already exists, keep adding an underscore (before the
-    # file extension, if one exists) to the filename until the generated
-    # filename doesn't exist.
-    while default_storage.exists(name):
-        file_root += '_'
-        # file_ext includes the dot.
-        name = os.path.join(dir_name, file_root + file_ext)
-    return name
+    return default_storage.get_available_name(name)
 
 
 def get_thumb_filename(file_name):
