@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Development
+-----------
+#. All uploade files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
+#. Upload file when editing a link (<a href>) now works properly
+
 4.0.2
 -----
 #. Include CKEditor version 4.0.2.

@@ -16,5 +16,6 @@ Contributors
 #. `loop0 <http://github.com/loop0>`_
 #. `mwcz <https://github.com/mwcz>`_
 #. `tomwys <https://github.com/tomwys>`_
+#. `riklaunim <https://github.com/riklaunim>`_
+#. `snbuback <https://github.com/snbuback>`_
 #. And others `<https://github.com/shaunsephton/django-ckeditor/graphs/contributors>`_
-
