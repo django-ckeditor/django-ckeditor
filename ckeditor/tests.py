@@ -105,3 +105,9 @@ class ViewsTestCase(unittest.TestCase):
 
         settings.CKEDITOR_RESTRICT_BY_USER = \
                 self.orig_CKEDITOR_RESTRICT_BY_USER
+
+    def test_is_image(self):
+        filepath = "ckeditor/media/test_uploads/2010/10/10/dummy.jpg"
+        self.assertTrue(views.is_image(filepath))
+
+        self.assertFalse(views.is_image("CHANGELOG.rst"))
