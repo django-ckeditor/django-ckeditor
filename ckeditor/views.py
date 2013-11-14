@@ -27,9 +27,10 @@ CKEDITOR_UPLOAD_SLUGIFY_FILENAME = getattr(settings,
 
 
 def is_image(filepath):
+    image = default_storage.open(filepath)
     try:
-        Image.open(filepath)
-    except Exception:
+        Image.open(image)
+    except IOError:
         return False
     else:
         return True
