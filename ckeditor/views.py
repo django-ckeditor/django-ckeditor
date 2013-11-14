@@ -9,6 +9,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.template.defaultfilters import slugify
 from django.template import RequestContext
 
 try:
@@ -17,7 +18,27 @@ except ImportError:
     import Image
     import ImageOps
 
+
 THUMBNAIL_SIZE = (75, 75)
+
+CKEDITOR_UPLOAD_SLUGIFY_FILENAME = getattr(settings,
+                                           "CKEDITOR_UPLOAD_SLUGIFY_FILENAME",
+                                           True)
+
+
+def is_image(filepath):
+    try:
+        Image.open(filepath)
+    except Exception:
+        return False
+    else:
+        return True
+
+
+def slugify_filename(filename):
+    u""" Slugify filename """
+    name, ext = os.path.splitext(filename)
+    return slugify(name) + ext
 
 
 def get_available_name(name):
@@ -60,8 +81,13 @@ def create_thumbnail(filename):
     thumbnail_io = StringIO.StringIO()
     imagefit.save(thumbnail_io, format=pil_format)
 
-    thumbnail = InMemoryUploadedFile(thumbnail_io, None, thumbnail_filename, thumbnail_format,
-                                  thumbnail_io.len, None)
+    thumbnail = InMemoryUploadedFile(
+        thumbnail_io,
+        None,
+        thumbnail_filename,
+        thumbnail_format,
+        thumbnail_io.len,
+        None)
     thumbnail.seek(0)
 
     return default_storage.save(thumbnail_filename, thumbnail)
@@ -85,8 +111,11 @@ def get_upload_filename(upload_name, user):
     date_path = datetime.now().strftime('%Y/%m/%d')
 
     # Complete upload path (upload_path + date_path).
-    upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path, \
-            date_path)
+    upload_path = os.path.join(
+        settings.CKEDITOR_UPLOAD_PATH, user_path, date_path)
+
+    if CKEDITOR_UPLOAD_SLUGIFY_FILENAME:
+        upload_name = slugify_filename(upload_name)
 
     return get_available_name(os.path.join(upload_path, upload_name))
 
@@ -104,13 +133,14 @@ def upload(request):
 
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
+    saved_path = default_storage.save(upload_filename, upload)
 
-    image = default_storage.save(upload_filename, upload)
+    if is_image(saved_path):
+        create_thumbnail(saved_path)
 
-    create_thumbnail(image)
+    url = get_media_url(saved_path)
 
     # Respond with Javascript sending ckeditor upload url.
-    url = get_media_url(image)
     return HttpResponse("""
     <script type='text/javascript'>
         window.parent.CKEDITOR.tools.callFunction(%s, '%s');
@@ -127,8 +157,8 @@ def get_image_files(user=None, path=''):
     STORAGE_DIRECTORIES = 0
     STORAGE_FILES = 1
 
-    if (user and not user.is_superuser
-        and getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)):
+    restrict = getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)
+    if user and not user.is_superuser and restrict:
         user_path = user.username
     else:
         user_path = ''
