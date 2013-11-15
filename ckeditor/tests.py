@@ -90,13 +90,13 @@ class ViewsTestCase(unittest.TestCase):
         # is False.
         settings.CKEDITOR_RESTRICT_BY_USER = False
         filename = views.get_upload_filename('test.jpg', self.mock_user)
-        self.failIf(filename.replace('/%s/test.jpg' % date_path, '').\
+        self.failIf(filename.replace('/{0}/test.jpg'.format(date_path), '').\
                 endswith(self.mock_user.username))
 
         # Upload to user specific path if CKEDITOR_RESTRICT_BY_USER is True.
         settings.CKEDITOR_RESTRICT_BY_USER = True
         filename = views.get_upload_filename('test.jpg', self.mock_user)
-        self.failUnless(filename.replace('/%s/test.jpg' % date_path, '').\
+        self.failUnless(filename.replace('/{0}/test.jpg'.format(date_path), '').\
                 endswith(self.mock_user.username))
 
         # Upload path should end in current date structure.
