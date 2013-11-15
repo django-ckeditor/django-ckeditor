@@ -3,8 +3,18 @@ Changelog
 
 Development
 -----------
+#. Python 3.3 compatibility
 #. All uploade files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
 #. Upload file when editing a link (<a href>) now works properly
+
+4.2.2
+-----
+#. Python 3.3 compatibility in widgets.py
+
+4.2.1
+-----
+#. Include CKEditor version 4.2.1.
+#. Support Django 1.6
 
 4.0.2
 -----
