@@ -18,6 +18,7 @@ setup(
     packages=find_packages(exclude=['project', ]),
     install_requires=[
         'Pillow',
+        'Django',
     ],
     include_package_data=True,
     exclude_package_data={
