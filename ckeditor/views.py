@@ -1,7 +1,7 @@
 from datetime import datetime
 import mimetypes
 import os
-import StringIO
+import io
 
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -55,7 +55,7 @@ def get_thumb_filename(file_name):
     Generate thumb filename by adding _thumb to end of
     filename before . (if present)
     """
-    return '%s_thumb%s' % os.path.splitext(file_name)
+    return '{0}_thumb{1}'.format(*os.path.splitext(file_name))
 
 
 def get_image_format(extension):
@@ -79,7 +79,7 @@ def create_thumbnail(filename):
 
     # scale and crop to thumbnail
     imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
-    thumbnail_io = StringIO.StringIO()
+    thumbnail_io = io.StringIO()
     imagefit.save(thumbnail_io, format=pil_format)
 
     thumbnail = InMemoryUploadedFile(
@@ -87,7 +87,7 @@ def create_thumbnail(filename):
         None,
         thumbnail_filename,
         thumbnail_format,
-        thumbnail_io.len,
+        len(thumbnail_io.getvalue()),
         None)
     thumbnail.seek(0)
 
@@ -144,8 +144,8 @@ def upload(request):
     # Respond with Javascript sending ckeditor upload url.
     return HttpResponse("""
     <script type='text/javascript'>
-        window.parent.CKEDITOR.tools.callFunction(%s, '%s');
-    </script>""" % (request.GET['CKEditorFuncNum'], url))
+        window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
+    </script>""".format(request.GET['CKEditorFuncNum'], url))
 
 
 def get_image_files(user=None, path=''):
