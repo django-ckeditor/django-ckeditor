@@ -1,6 +1,6 @@
 <p><textarea{{ final_attrs|safe }}>{{ value }}</textarea></p>
 <script type="text/javascript">
-    django.jQuery.ready(function() {
+    django.jQuery(document).ready(function() {
         CKEDITOR.replace("{{ id }}", {{ config|safe }});
     });
 </script>
