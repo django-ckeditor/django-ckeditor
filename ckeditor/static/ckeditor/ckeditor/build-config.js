@@ -14,7 +14,7 @@
  */
 
 var CKBUILDER_CONFIG = {
-	skin: 'moonocolor',
+	skin: 'moono',
 	preset: 'standard',
 	ignore: [
 		'dev',
@@ -73,12 +73,12 @@ var CKBUILDER_CONFIG = {
 		'menubutton' : 1,
 		'wordcount' : 1,
 		'autosave' : 1,
-		'symbol' : 1,
 		'placeholder' : 1,
-		'htmlbuttons' : 1,
-		'templates' : 1
+		'templates' : 1,
+		'widget' : 1,
+		'lineutils' : 1
 	},
 	languages : {
-		'en' : 1,
+		'en' : 1
 	}
 };

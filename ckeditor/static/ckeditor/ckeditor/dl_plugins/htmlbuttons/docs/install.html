@@ -1,0 +1,93 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>HTML Buttons plugin</title>
+<link href="styles.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>HTML Buttons Plugin for CKEditor</h1>
+
+<h2>Introduction</h2>
+<p>This is plugin helps creating custom buttons to insert a block of desired HTML in <a href="http://www.ckeditor.com">CKEditor</a>.</p>
+<p>Sample icons from <a href='http://tango.freedesktop.org'>Tango!</a></p>
+
+<h3 id="contact">Author:</h3>
+<p><a href="mailto:amla70@gmail.com">Alfonso Mart&iacute;nez de Lizarrondo</a></p>
+<h3>Sponsored by:</h3>
+<h3>Version history: </h3>
+<ol>
+  <li>1.0: 23-May-2012. First version.</li>
+</ol>
+
+<h2>Installation</h2>
+<h3>1. Copying the files</h3>
+<p>Extract the contents of the zip in you plugins directory, so it ends up like
+    this<br>
+    <!--<img src="installation.png" alt="Screenshot of installation" width="311" height="346" longdesc="#install">-->
+    </p>
+<pre id="--install">
+ckeditor\
+	...
+	images\
+	lang\
+	plugins\
+		...
+		htmlbuttons\
+			plugin.js
+			docs\
+				install.html
+		...
+	skins\
+	themes\
+</pre>
+<h3>2. Adding it to CKEditor</h3>
+<p>Now add the plugin in your <em>config.js</em> or custom js configuration
+file:
+<code>config.extraPlugins='htmlbuttons'; </code>
+</p>
+
+<h3>3. Define your buttons</h3>
+<p>You must add to your config a new entry defining the buttons that you want to use. For example:</p>
+<pre>
+config.htmlbuttons = [
+	{
+		name:'button1',
+		icon:'icon1.png',
+		html:'&lt;a href="http://www.google.com">Search something&lt;/a>',
+		title:'A link to Google'
+	},
+	{
+		name:'button2',
+		icon:'icon2.png',
+		html:'&lt;table>&lt;tr>&lt;td>&nbsp;&lt;/td>&lt;td>&nbsp;&lt;/td>&lt;/tr>&lt;tr>&lt;td>&nbsp;&lt;/td>&lt;td>&nbsp;&lt;/td>&lt;/tr>&lt;/table>',
+		title:'A simple table'
+	},
+	{
+		name:'button3',
+		icon:'icon3.png',
+		html:'&lt;ol>&lt;li>Item 1 &lt;ol>&lt;li>Sub item 1&lt;/li>&lt;li>Sub item 2&lt;/li>&lt;/ol>&lt;/li>&lt;/ol>',
+		title:'A nested list'
+	}
+];
+</pre>
+
+<h3>4. Add them to your toolbar</h3>
+<p>In your toolbar configuration, add a new button for each item in the place where you want the list to show up.</p>
+<p>Example</p>
+<pre>config.toolbar_Basic = [["Bold","Italic","-","NumberedList","BulletedList","-","Link","Unlink","-","Maximize", "About", '-', 'button1', 'button2', 'button3']];
+</pre>
+
+<h3>5. Use them</h3>
+<p>Now empty the cache of your browser and reload the editor, the new buttons should show up and you can insert the HTML that you have configured with each button</p>
+<!--
+<h2>Final notes</h2>
+-->
+
+<h2>Disclaimers</h2>
+<p>CKEditor is  &copy; CKSource.com</p>
+<p>Sample icons from <a href='http://tango.freedesktop.org'>Tango!</a></p>
+</body>
+</html>
