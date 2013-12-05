@@ -1,5 +1,5 @@
 CKEDITOR.plugins.add( 'figurebox', {
-    // Mir Box widget code.
+    // Miriam's Figure Box widget code.
     requires: 'widget',
 
     icons: 'figurebox',
@@ -15,7 +15,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(!figure_content)',
 
 			// Minimum HTML which is required by this widget to work.
-			requiredContent: 'figure(inside_story); div(figure_content); figcaption(inside_story_caption);',
+			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);',
 
 			inline: false,
 
@@ -31,15 +31,15 @@ CKEDITOR.plugins.add( 'figurebox', {
 				},
 				explanation: {
 					selector: '.inside_story_caption',
-					allowedContent: 'strong em; a[!href, title]'
+					allowedContent: 'strong em; a[!href]'
 				}
 			},
 
-			// Define the template of a new Simple Box widget.
-			// The template will be used when creating new instances of the Simple Box widget.
+			// Define the template of a new Figure Box widget.
+			// The template will be used when creating new instances of the Figure Box widget.
 			template:
 				'<figure class="inside_story">' +
-					'<div class="figure_content"><img src="" /></div>' +
+					'<div class="figure_content"><img src="' + this.path + '/resources/wsiwyg_image_replacement.png" /></div>' +
 					'<figcaption class="inside_story_caption">Explanation / credit here</figcaption>' +
 				'</figure>',
 
@@ -50,8 +50,8 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// so it is not a real DOM element yet. This is caused by the fact that upcasting is performed
 			// during data processing which is done on DOM represented by JavaScript objects.
 			upcast: function( element ) {
-				// Return "true" (that element needs to converted to a Simple Box widget)
-				// for all <div> elements with a "simplebox" class.
+				// Return "true" (that element needs to converted to a Figure Box widget)
+				// for all <div> elements with a "figurebox" class.
 				return element.name == 'figure' && element.hasClass( 'inside_story' );
 			}
 
