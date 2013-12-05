@@ -39,7 +39,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// The template will be used when creating new instances of the Figure Box widget.
 			template:
 				'<figure class="inside_story">' +
-					'<div class="figure_content"><img src="' + this.path + '/resources/wsiwyg_image_replacement.png" /></div>' +
+					'<div class="figure_content"><img src="' + this.path + 'resources/wsiwyg_image_replacement.png" /></div>' +
 					'<figcaption class="inside_story_caption">Explanation / credit here</figcaption>' +
 				'</figure>',
 
