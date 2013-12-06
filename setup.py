@@ -24,10 +24,6 @@ setup(
     exclude_package_data={
         'ckeditor': list(get_source_files()),
     },
-    test_suite="setuptest.setuptest.SetupTestSuite",
-    tests_require=[
-        'django-setuptest>=0.1.1',
-    ],
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
