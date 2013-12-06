@@ -131,3 +131,17 @@ CKEDITOR_CONFIGS = {
         "removePlugins": "stylesheetparser",
     }
 }
+
+
+Demo / Test application
+~~~~~~~~~~~~~~~~~~~~~~~
+If you clone the repository you will be able to run the ``ckeditor_demo`` application.
+
+#. Run python.manage.py syncdb
+
+#. Create a superuser if you want to test the widged in the admin panel
+
+#. Start the development server.
+
+There is a forms.Form on main page (/) and a model in admin that uses the widget for a model field.
+Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
