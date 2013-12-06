@@ -1,7 +1,7 @@
 from datetime import datetime
 import mimetypes
 import os
-import io
+from io import BytesIO
 import sys
 
 from django.conf import settings
@@ -80,12 +80,8 @@ def create_thumbnail(filename):
 
     # scale and crop to thumbnail
     imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
-    thumbnail_io = io.StringIO()
-    if sys.version_info >= (3, 0):
-        handle = str(thumbnail_io)
-    else:
-        handle = unicode(thumbnail_io)
-    imagefit.save(handle, format=pil_format)
+    thumbnail_io = BytesIO()
+    imagefit.save(thumbnail_io, format=pil_format)
 
     thumbnail = InMemoryUploadedFile(
         thumbnail_io,
