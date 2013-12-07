@@ -43,14 +43,6 @@ def slugify_filename(filename):
     return slugify(name) + ext
 
 
-def get_available_name(name):
-    """
-    Returns a filename that's free on the target storage system, and
-    available for new content to be written to.
-    """
-    return default_storage.get_available_name(name)
-
-
 def get_thumb_filename(file_name):
     """
     Generate thumb filename by adding _thumb to end of
@@ -119,7 +111,7 @@ def get_upload_filename(upload_name, user):
     if CKEDITOR_UPLOAD_SLUGIFY_FILENAME:
         upload_name = slugify_filename(upload_name)
 
-    return get_available_name(os.path.join(upload_path, upload_name))
+    return default_storage.get_available_name(os.path.join(upload_path, upload_name))
 
 
 @csrf_exempt
