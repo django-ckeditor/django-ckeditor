@@ -42,7 +42,7 @@ Required
 
     (r'^ckeditor/', include('ckeditor.urls')),
 
-#. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. Supported backends:
+#. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: uses PIL or Pillow
 
