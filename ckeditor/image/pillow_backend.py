@@ -15,12 +15,12 @@ from ckeditor import utils
 THUMBNAIL_SIZE = (75, 75)
 
 
-def create_thumbnail(filename):
-    thumbnail_filename = utils.get_thumb_filename(filename)
-    thumbnail_format = utils.get_image_format(os.path.splitext(filename)[1])
+def create_thumbnail(file_path):
+    thumbnail_filename = utils.get_thumb_filename(file_path)
+    thumbnail_format = utils.get_image_format(os.path.splitext(file_path)[1])
     file_format = thumbnail_format.split('/')[1]
 
-    image = default_storage.open(filename)
+    image = default_storage.open(file_path)
     image = Image.open(image)
 
     # Convert to RGB if necessary
@@ -46,8 +46,8 @@ def create_thumbnail(filename):
     return default_storage.save(thumbnail_filename, thumbnail)
 
 
-def is_image(filepath):
-    image = default_storage.open(filepath)
+def should_create_thumbnail(file_path):
+    image = default_storage.open(file_path)
     try:
         Image.open(image)
     except IOError:

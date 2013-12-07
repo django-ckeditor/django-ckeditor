@@ -48,7 +48,7 @@ def upload(request):
     saved_path = default_storage.save(upload_filename, upload)
 
     backend = image_processing.get_backend()
-    if backend.is_image(saved_path):
+    if backend.should_create_thumbnail(saved_path):
         backend.create_thumbnail(saved_path)
 
     url = utils.get_media_url(saved_path)

@@ -1,6 +1,6 @@
-def create_thumbnail(file_object, format):
+def create_thumbnail(file_path, format):
     raise NotImplementedError
 
 
-def is_image(filepath):
+def should_create_thumbnail(file_path):
     return False
