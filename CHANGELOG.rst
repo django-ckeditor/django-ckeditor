@@ -3,8 +3,11 @@ Changelog
 
 Development
 -----------
-#. Python 3.3 compatibility
-#. All uploade files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
+#. Added new demo application with selenium integration test
+#. tox setup for Python 3.3 and 2.7 testing
+#. Extracted image processing to backends. PIL/Pillow is optional now.
+#. Python 3.3 compatibility, and more fixes
+#. All uploaded files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
 #. Upload file when editing a link (<a href>) now works properly
 
 4.2.2
