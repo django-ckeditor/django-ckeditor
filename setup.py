@@ -19,7 +19,6 @@ setup(
         'ckeditor',
     ],
     install_requires=[
-        'Pillow',
         'Django',
     ],
     classifiers=[

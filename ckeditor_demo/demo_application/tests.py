@@ -6,6 +6,7 @@ from time import sleep
 from django.conf import settings
 from django.contrib.staticfiles.finders import find
 from django.test import LiveServerTestCase
+from django.test.utils import override_settings
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 
@@ -86,7 +87,8 @@ class TestAdminPanelWidget(LiveServerTestCase):
         assert os.path.isfile(expected_thumbnail_path)
         self._assert_uploaded_image_did_not_changed(expected_image_path)
         self._assert_thumbnail_is_not_empty(expected_thumbnail_path)
-        self._remove_uploads(expected_image_path, expected_thumbnail_path)
+        os.remove(expected_image_path)
+        os.remove(expected_thumbnail_path)
 
     def _get_upload_directory(self):
         date_path = datetime.now().strftime('%Y/%m/%d')
@@ -111,6 +113,14 @@ class TestAdminPanelWidget(LiveServerTestCase):
         size = os.path.getsize(path)
         assert size > 0
 
-    def _remove_uploads(self, image, thumbnail):
-        os.remove(image)
-        os.remove(thumbnail)
+
+@override_settings(CKEDITOR_IMAGE_BACKEND=None)
+class TestAdminPanelWidgetForDummyImageBackend(TestAdminPanelWidget):
+    def _assert_image_uploaded(self):
+        upload_directory = self._get_upload_directory()
+        expected_image_path = os.path.join(upload_directory, 'close.png')
+        expected_thumbnail_path = os.path.join(upload_directory, 'close_thumb.png')
+        assert os.path.isfile(expected_image_path)
+        assert not os.path.isfile(expected_thumbnail_path)
+        self._assert_uploaded_image_did_not_changed(expected_image_path)
+        os.remove(expected_image_path)

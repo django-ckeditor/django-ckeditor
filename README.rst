@@ -42,6 +42,11 @@ Required
 
     (r'^ckeditor/', include('ckeditor.urls')),
 
+#. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. Supported backends:
+
+   - ``pillow``: uses PIL or Pillow
+
+
 Optional
 ~~~~~~~~
 #. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_SLUGIFY_FILENAME`` to ``False``

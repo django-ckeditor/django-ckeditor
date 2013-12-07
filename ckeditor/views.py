@@ -1,7 +1,6 @@
 from datetime import datetime
 import mimetypes
 import os
-from io import BytesIO
 
 from django.conf import settings
 from django.core.files.storage import default_storage
@@ -12,28 +11,12 @@ from django.shortcuts import render_to_response
 from django.template.defaultfilters import slugify
 from django.template import RequestContext
 
-try:
-    from PIL import Image, ImageOps
-except ImportError:
-    import Image
-    import ImageOps
 
-
-THUMBNAIL_SIZE = (75, 75)
+from ckeditor import image_processing
 
 CKEDITOR_UPLOAD_SLUGIFY_FILENAME = getattr(settings,
                                            "CKEDITOR_UPLOAD_SLUGIFY_FILENAME",
                                            True)
-
-
-def is_image(filepath):
-    image = default_storage.open(filepath)
-    try:
-        Image.open(image)
-    except IOError:
-        return False
-    else:
-        return True
 
 
 def slugify_filename(filename):
@@ -58,21 +41,11 @@ def get_image_format(extension):
 def create_thumbnail(filename):
     thumbnail_filename = get_thumb_filename(filename)
     thumbnail_format = get_image_format(os.path.splitext(filename)[1])
-    pil_format = thumbnail_format.split('/')[1]
+    file_format = thumbnail_format.split('/')[1]
 
     image = default_storage.open(filename)
-    image = Image.open(image)
-
-    # Convert to RGB if necessary
-    # Thanks to Limodou on DjangoSnippets.org
-    # http://www.djangosnippets.org/snippets/20/
-    if image.mode not in ('L', 'RGB'):
-        image = image.convert('RGB')
-
-    # scale and crop to thumbnail
-    imagefit = ImageOps.fit(image, THUMBNAIL_SIZE, Image.ANTIALIAS)
-    thumbnail_io = BytesIO()
-    imagefit.save(thumbnail_io, format=pil_format)
+    backend = image_processing.get_backend()
+    thumbnail_io = backend.create_thumbnail(image, file_format)
 
     thumbnail = InMemoryUploadedFile(
         thumbnail_io,
@@ -128,7 +101,8 @@ def upload(request):
     upload_filename = get_upload_filename(upload.name, request.user)
     saved_path = default_storage.save(upload_filename, upload)
 
-    if is_image(saved_path):
+    backend = image_processing.get_backend()
+    if backend.is_image(saved_path):
         create_thumbnail(saved_path)
 
     url = get_media_url(saved_path)
@@ -184,9 +158,14 @@ def get_image_browse_urls(user=None):
     """
     images = []
     for filename in get_image_files(user=user):
+        src = get_media_url(filename)
+        if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
+            thumb = get_media_url(get_thumb_filename(filename))
+        else:
+            thumb = src
         images.append({
-            'thumb': get_media_url(get_thumb_filename(filename)),
-            'src': get_media_url(filename)
+            'thumb': thumb,
+            'src': src
         })
 
     return images
