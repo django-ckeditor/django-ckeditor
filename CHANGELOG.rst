@@ -1,12 +1,16 @@
 Changelog
 =========
 
-Development
------------
+4.2.4
+-----
 #. Added new demo application with selenium integration test
 #. tox setup for Python 3.3 and 2.7 testing
-#. Extracted image processing to backends. PIL/Pillow is optional now.
-#. Python 3.3 compatibility, and more fixes
+#. Extracted image processing to backends. PIL/Pillow is optional now. Other backends can be added.
+#. Fixed a bug with thumbnail generation
+
+4.2.3
+-----
+#. Python 3.3 compatibility
 #. All uploaded files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
 #. Upload file when editing a link (<a href>) now works properly
 

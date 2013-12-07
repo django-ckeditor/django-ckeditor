@@ -1,9 +1,9 @@
 Django CKEditor
 ================
-File storage, Django 1.6 compatible fork available on pypi as django-ckeditor-updated
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+**File storage, Django 1.6 compatible fork available on pypi as django-ckeditor-updated**
 **Django admin CKEditor integration.**
+Note that this fork has different configuration as the source django-ckeditor.
+
 
 Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
 
@@ -142,11 +142,20 @@ Demo / Test application
 ~~~~~~~~~~~~~~~~~~~~~~~
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
 
-#. Run python.manage.py syncdb
+#. ``pip install -r ckeditor_demo_requirements.txt``
 
-#. Create a superuser if you want to test the widged in the admin panel
+#. Run ``python.manage.py syncdb``
+
+#. Create a superuser if you want to test the widget in the admin panel
 
 #. Start the development server.
 
 There is a forms.Form on main page (/) and a model in admin that uses the widget for a model field.
 Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
+
+
+Running selenium test
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
+(You may have to fix some imports in selenium webdriver for Python 3.3).
