@@ -1,69 +1,15 @@
 from datetime import datetime
-import mimetypes
 import os
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from django.template.defaultfilters import slugify
 from django.template import RequestContext
 
-
 from ckeditor import image_processing
-
-CKEDITOR_UPLOAD_SLUGIFY_FILENAME = getattr(settings,
-                                           "CKEDITOR_UPLOAD_SLUGIFY_FILENAME",
-                                           True)
-
-
-def slugify_filename(filename):
-    u""" Slugify filename """
-    name, ext = os.path.splitext(filename)
-    return slugify(name) + ext
-
-
-def get_thumb_filename(file_name):
-    """
-    Generate thumb filename by adding _thumb to end of
-    filename before . (if present)
-    """
-    return '{0}_thumb{1}'.format(*os.path.splitext(file_name))
-
-
-def get_image_format(extension):
-    mimetypes.init()
-    return mimetypes.types_map[extension]
-
-
-def create_thumbnail(filename):
-    thumbnail_filename = get_thumb_filename(filename)
-    thumbnail_format = get_image_format(os.path.splitext(filename)[1])
-    file_format = thumbnail_format.split('/')[1]
-
-    image = default_storage.open(filename)
-    backend = image_processing.get_backend()
-    thumbnail_io = backend.create_thumbnail(image, file_format)
-
-    thumbnail = InMemoryUploadedFile(
-        thumbnail_io,
-        None,
-        thumbnail_filename,
-        thumbnail_format,
-        len(thumbnail_io.getvalue()),
-        None)
-    thumbnail.seek(0)
-
-    return default_storage.save(thumbnail_filename, thumbnail)
-
-
-def get_media_url(path):
-    """
-    Determine system file's media URL.
-    """
-    return default_storage.url(path)
+from ckeditor import utils
 
 
 def get_upload_filename(upload_name, user):
@@ -80,8 +26,8 @@ def get_upload_filename(upload_name, user):
     upload_path = os.path.join(
         settings.CKEDITOR_UPLOAD_PATH, user_path, date_path)
 
-    if CKEDITOR_UPLOAD_SLUGIFY_FILENAME:
-        upload_name = slugify_filename(upload_name)
+    if getattr(settings, "CKEDITOR_UPLOAD_SLUGIFY_FILENAME", True):
+        upload_name = utils.slugify_filename(upload_name)
 
     return default_storage.get_available_name(os.path.join(upload_path, upload_name))
 
@@ -103,9 +49,9 @@ def upload(request):
 
     backend = image_processing.get_backend()
     if backend.is_image(saved_path):
-        create_thumbnail(saved_path)
+        backend.create_thumbnail(saved_path)
 
-    url = get_media_url(saved_path)
+    url = utils.get_media_url(saved_path)
 
     # Respond with Javascript sending ckeditor upload url.
     return HttpResponse("""
@@ -158,9 +104,9 @@ def get_image_browse_urls(user=None):
     """
     images = []
     for filename in get_image_files(user=user):
-        src = get_media_url(filename)
+        src = utils.get_media_url(filename)
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
-            thumb = get_media_url(get_thumb_filename(filename))
+            thumb = utils.get_media_url(utils.get_thumb_filename(filename))
         else:
             thumb = src
         images.append({
