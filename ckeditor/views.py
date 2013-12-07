@@ -2,7 +2,6 @@ from datetime import datetime
 import mimetypes
 import os
 from io import BytesIO
-import sys
 
 from django.conf import settings
 from django.core.files.storage import default_storage
