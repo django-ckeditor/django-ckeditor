@@ -1,5 +1,5 @@
 import os.path
-from setuptools import setup, find_packages
+from distutils.core import setup
 
 
 def get_source_files():
@@ -15,15 +15,13 @@ setup(
     author='Piotr Malinski',
     author_email='riklaunim@gmail.com',
     url='https://github.com/riklaunim/django-ckeditor',
-    packages=find_packages(exclude=['project', ]),
+    packages=[
+        'ckeditor',
+    ],
     install_requires=[
         'Pillow',
         'Django',
     ],
-    include_package_data=True,
-    exclude_package_data={
-        'ckeditor': list(get_source_files()),
-    },
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
@@ -35,5 +33,4 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
-    zip_safe=False,
 )

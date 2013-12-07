@@ -90,7 +90,6 @@ class TestAdminPanelWidget(LiveServerTestCase):
 
     def _get_upload_directory(self):
         date_path = datetime.now().strftime('%Y/%m/%d')
-        print date_path
 
         # Complete upload path (upload_path + date_path).
         upload_path = os.path.join(
