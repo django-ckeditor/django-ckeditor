@@ -12,7 +12,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
-			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(!figure_content)',
+			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix)',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);',
@@ -29,9 +29,13 @@ CKEDITOR.plugins.add( 'figurebox', {
 					// is focused.
 					allowedContent: 'img[src, title, alt]{height, width}; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
 				},
-				explanation: {
-					selector: '.inside_story_caption',
+				caption: {
+					selector: '.caption_text',
 					allowedContent: 'strong em; a[!href]'
+				},
+				source: {
+					selector: '.source_text',
+					allowedContent: 'a[!href]'
 				}
 			},
 
@@ -39,8 +43,13 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// The template will be used when creating new instances of the Figure Box widget.
 			template:
 				'<figure class="inside_story">' +
-					'<div class="figure_content"><img src="' + this.path + 'resources/wsiwyg_image_replacement.png" /></div>' +
-					'<figcaption class="inside_story_caption">Explanation / credit here</figcaption>' +
+					'<div class="figure_content">' +
+					'<img src="' + this.path + 'resources/wsiwyg_image_replacement.png" /></div>' +
+					'<figcaption class="inside_story_caption">' +
+						'<div class="caption_text">Optional Caption</div>' +
+						'<div class="source_text">Image Source</div>' +
+						'<div class="clearfix"></div>' +
+					'</figcaption>' +
 				'</figure>',
 
 
