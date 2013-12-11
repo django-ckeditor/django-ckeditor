@@ -35,7 +35,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 				},
 				source: {
 					selector: '.source_text',
-					allowedContent: 'a[!href]'
+					allowedContent: 'em; a[!href]'
 				}
 			},
 
