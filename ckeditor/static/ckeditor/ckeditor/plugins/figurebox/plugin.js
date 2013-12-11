@@ -27,7 +27,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 					// Define content allowed in this nested editable. Its content will be
 					// filtered accordingly and the toolbar will be adjusted when this editable
 					// is focused.
-					allowedContent: 'img[src, title, alt]{height, width}; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+					allowedContent: 'img[src, title, alt]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
 				},
 				caption: {
 					selector: '.caption_text',
