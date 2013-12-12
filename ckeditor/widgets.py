@@ -40,8 +40,15 @@ class CKEditorWidget(forms.Textarea):
     """
     class Media:
         try:
+            # try to grab the current version (as defined in __init__.py) and append it to the JS request as
+            # cache buster
+            from ckeditor import __version__
+            version = __version__
+        except:
+            version = "unknown"
+        try:
             js = (
-                settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js?v=4.0.2-dive',
+                settings.STATIC_URL + "ckeditor/ckeditor/ckeditor.js?v=%s" % version,
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
