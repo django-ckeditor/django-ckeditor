@@ -9,7 +9,7 @@ def get_source_files():
 
 setup(
     name='django-ckeditor-updated',
-    version='4.2.5',
+    version='4.2.6',
     description='Django admin CKEditor integration.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Piotr Malinski',

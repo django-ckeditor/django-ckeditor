@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.2.5
+4.2.5 / 4.2.6
 -----
 #. Fix static files installation - switch from distutils to setuptools
 
