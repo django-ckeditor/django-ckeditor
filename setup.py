@@ -1,5 +1,5 @@
 import os.path
-from distutils.core import setup
+from setuptools import setup
 
 
 def get_source_files():
@@ -21,6 +21,7 @@ setup(
     install_requires=[
         'Django',
     ],
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
