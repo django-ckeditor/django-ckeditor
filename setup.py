@@ -1,5 +1,5 @@
 import os.path
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def get_source_files():
@@ -15,9 +15,7 @@ setup(
     author='Piotr Malinski',
     author_email='riklaunim@gmail.com',
     url='https://github.com/riklaunim/django-ckeditor',
-    packages=[
-        'ckeditor',
-    ],
+    packages=find_packages(exclude=["*.demo"]),
     install_requires=[
         'Django',
     ],
