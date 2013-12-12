@@ -1,8 +1,10 @@
 // Have to say that span elements can be editables
 // See http://dev.ckeditor.com/ticket/10932
-CKEDITOR.dtd.$editable.span = 1;
+// CKEDITOR.dtd.$editable.span = 1;
 
 
+CKEDITOR.addCss('.pquote {float:left; width:200px}');
+CKEDITOR.addCss('.pquote div.tweetwords {display: inline;}');
 
 CKEDITOR.plugins.add( 'twitterbox', {
     // Mir Box widget code.
@@ -19,7 +21,7 @@ CKEDITOR.plugins.add( 'twitterbox', {
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
-			allowedContent: 'aside(!pquote){float,width}; span(tweetquote,tweetwords);div(tweetwords){display}',
+			allowedContent: 'aside(!pquote); span(tweetquote,tweetwords);div(tweetwords)',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'div(!pquote); span(!tweetquote); div(!tweetwords)',
@@ -39,7 +41,7 @@ CKEDITOR.plugins.add( 'twitterbox', {
 			},
 
 			template:
-				'<aside class="pquote" style="float:left; width:200px;">' +
+				'<aside class="pquote">' +
 					'<div style="display:inline;" class="tweetwords">' +
 						'Type quote here' +
 					'</div>' +
