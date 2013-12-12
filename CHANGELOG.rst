@@ -1,6 +1,10 @@
 Changelog
 =========
 
+4.2.5
+-----
+#. Fix static files installation - switch from distutils to setuptools
+
 4.2.4
 -----
 #. Added new demo application with selenium integration test
