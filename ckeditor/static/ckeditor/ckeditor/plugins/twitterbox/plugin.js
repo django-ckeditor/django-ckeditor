@@ -2,9 +2,12 @@
 // See http://dev.ckeditor.com/ticket/10932
 // CKEDITOR.dtd.$editable.span = 1;
 
+var tweet_max_length = 140 - 26 - 10;   // utilitydive
 
 CKEDITOR.addCss('.pquote {float:left; width:200px}');
 CKEDITOR.addCss('.pquote div.tweetwords {display: inline;}');
+CKEDITOR.addCss('.pquote.too_long {border: 2px solid red;}');
+
 
 CKEDITOR.plugins.add( 'twitterbox', {
     // Mir Box widget code.
@@ -65,16 +68,24 @@ CKEDITOR.plugins.add( 'twitterbox', {
 					} else {
 						this.setData('tweet_value', this.element.getFirst().getText());
 					}
-
 					range = selection.getRanges()[0];
 					start_elem = range.getPreviousEditableNode().getParent();
 					range.setStartBefore(start_elem);
 					range.collapse(true);
 					selection.selectRanges([range]);
 				}
+				this.setData('tweet_max_length', tweet_max_length);
+				this.setData('tweet_too_long', true);
+
+
 			},
 			data: function() {
 				this.element.getFirst().setText(this.data.tweet_value);
+				if ( this.data.tweet_too_long ) {
+					this.element.addClass('too_long');
+				} else {
+					this.element.removeClass('too_long');
+				}
 			},
 
 

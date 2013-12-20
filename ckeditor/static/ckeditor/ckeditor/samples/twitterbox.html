@@ -1,0 +1,35 @@
+<html>
+	<head>
+
+		<script src="../ckeditor.js"></script>
+		<link rel="stylesheet" href="sample.css">
+	</head>
+
+<body>
+
+
+
+<!-- <textarea cols="80" id="editor1" name="editor1" rows="10"></textarea> -->
+
+
+<textarea cols="80" id="editor2" name="editor1" rows="10"></textarea>
+
+		<script>
+			CKEDITOR.config.extraPlugins = 'twitterbox,figurebox';
+			CKEDITOR.config.allowedContent = true;
+		    // CKEDITOR.replace( 'editor1', {} );
+		    CKEDITOR.replace( 'editor2', {
+		    	toolbar: [
+			    	{
+			    		name: 'test',
+		    			items: ['Source', 'Bold', 'Italic', '-', 'Figurebox', 'Image', 'NumberedList',
+		    			'-', 'Twitterbox',
+		    			'-', 'Figurebox',
+		    			 '-', 'Link', 'Unlink']
+		    		}
+		    	]
+
+		    } );
+		</script>
+</body>
+</html>
