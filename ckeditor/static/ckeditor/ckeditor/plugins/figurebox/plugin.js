@@ -5,9 +5,9 @@ CKEDITOR.plugins.add( 'figurebox', {
     icons: 'figurebox',
 
     init: function( editor ) {
-		editor.widgets.add( 'figurebox', {
-		    button: 'Create a box by Miriam',
 
+		editor.widgets.add( 'figurebox', {
+		    button: 'Create a figure with caption and source',
 			// Allow all HTML elements and classes that this widget requires.
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter

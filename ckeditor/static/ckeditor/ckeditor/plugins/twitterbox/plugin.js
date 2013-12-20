@@ -8,11 +8,12 @@ CKEDITOR.addCss('.pquote div.tweetwords {display: inline;}');
 
 CKEDITOR.plugins.add( 'twitterbox', {
     // Mir Box widget code.
-    requires: 'widget',
+    requires: 'widget,dialog',
 
     icons: 'twitterbox',
 
     init: function( editor ) {
+		CKEDITOR.dialog.add( 'twitterbox', this.path + 'dialogs/twitterbox.js' );
 
 		editor.widgets.add( 'twitterbox', {
 		    button: 'Create a twitter pull quote box',
@@ -22,6 +23,7 @@ CKEDITOR.plugins.add( 'twitterbox', {
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
 			allowedContent: 'aside(!pquote); span(tweetquote,tweetwords);div(tweetwords)',
+			dialog: 'twitterbox',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'div(!pquote); span(!tweetquote); div(!tweetwords)',
@@ -53,13 +55,26 @@ CKEDITOR.plugins.add( 'twitterbox', {
 				// 	'<figcaption class="inside_story_caption">Explanation / credit here</figcaption>' +
 				// '</figure>',
 
-
 			init: function() {
-				// CKEDITOR.dtd.$editable.span = 1;
-				// Pass the reference to this widget to the dialog.
-				// this.on( 'dialog', function( evt ) {
-				// 	evt.data.widget = this;
-				// }, this );
+
+				var selection = this.editor.getSelection();
+				if (selection) {
+					var selection_text = selection.getSelectedText();
+					if ( selection_text.length > 0 ) {
+						this.setData('tweet_value', selection_text);
+					} else {
+						this.setData('tweet_value', this.element.getFirst().getText());
+					}
+
+					range = selection.getRanges()[0];
+					start_elem = range.getPreviousEditableNode().getParent();
+					range.setStartBefore(start_elem);
+					range.collapse(true);
+					selection.selectRanges([range]);
+				}
+			},
+			data: function() {
+				this.element.getFirst().setText(this.data.tweet_value);
 			},
 
 
