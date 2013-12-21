@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 
 
 def slugify_filename(filename):
-    u""" Slugify filename """
+    """ Slugify filename """
     name, ext = os.path.splitext(filename)
     return slugify(name) + ext
 
