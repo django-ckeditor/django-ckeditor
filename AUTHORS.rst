@@ -1,9 +1,16 @@
 AUTHORS
 =======
 
+
+This fork
+----------
+#. `riklaunim <https://github.com/riklaunim>`_
+
+
 Created By
 ----------
 #. `shaunsephton <http://github.com/shaunsephton>`_
+
 
 Contributors
 ------------
@@ -16,5 +23,5 @@ Contributors
 #. `loop0 <http://github.com/loop0>`_
 #. `mwcz <https://github.com/mwcz>`_
 #. `tomwys <https://github.com/tomwys>`_
-#. And others `<https://github.com/shaunsephton/django-ckeditor/graphs/contributors>`_
-
+#. `snbuback <https://github.com/snbuback>`_
+#. And others `<https://github.com/**/django-ckeditor/graphs/contributors>`_

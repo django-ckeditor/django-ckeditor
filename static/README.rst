@@ -1,1 +1,0 @@
-Static media collected here.
