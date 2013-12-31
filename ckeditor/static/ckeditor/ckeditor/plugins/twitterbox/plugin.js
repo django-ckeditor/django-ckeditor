@@ -31,9 +31,11 @@ CKEDITOR.plugins.add( 'twitterbox', {
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'div(!pquote); span(!tweetquote); div(!tweetwords)',
 
+			// this is a block element
 			inline: false,
 
-			// Define two nested editable areas.
+			// Define the editable area
+			// this should arguably be disabled
 			editables: {
 				words: {
 					// Define a CSS selector used for finding the element inside the widget element.
@@ -53,14 +55,13 @@ CKEDITOR.plugins.add( 'twitterbox', {
 					'<br><span class="tweetquote">auto image + link</span>' +
 				'</aside>',
 
-				// '<figure class="inside_story">' +
-				// 	'<div class="figure_content"><img src="' + this.path + '/resources/wsiwyg_image_replacement.png" /></div>' +
-				// 	'<figcaption class="inside_story_caption">Explanation / credit here</figcaption>' +
-				// '</figure>',
 
+			// this is run whenever the widget is inserted into the editor
 			init: function() {
-
+				// if there is selected text, assume that text should be used
+				// for the tweet text
 				var selection = this.editor.getSelection();
+
 				if (selection) {
 					var selection_text = selection.getSelectedText();
 					if ( selection_text.length > 0 ) {
@@ -68,14 +69,30 @@ CKEDITOR.plugins.add( 'twitterbox', {
 					} else {
 						this.setData('tweet_value', this.element.getFirst().getText());
 					}
+
+					// a range has the start and end locations
+					// of the selection
 					range = selection.getRanges()[0];
+
+					// find the first parent that is a block
 					start_elem = range.getPreviousEditableNode().getParent();
+					while ( ! start_elem.isBlockBoundary() ) {
+						start_elem = start_elem.getParent();
+					}
+
+					// place the start of the range before
+					// the beginning of the block
 					range.setStartBefore(start_elem);
-					range.collapse(true);
+
+					// collapse the range so that end = start
+					range.collapse(toStart=true);
+
+					// and select only the new range we've created
 					selection.selectRanges([range]);
 				}
+
 				this.setData('tweet_max_length', tweet_max_length);
-				this.setData('tweet_too_long', true);
+				this.setData('tweet_too_long', false);
 
 
 			},
