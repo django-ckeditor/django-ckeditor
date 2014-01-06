@@ -6,24 +6,27 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 
 		contents : [
 			{
-				id: 'imagemodel_local',
-				label: 'Local Image',
+				id: 'image_info',
+				label: 'Image',
 				elements: [
 					{
 						id: 'imagemodellocal_json',
 						type: 'textarea',
 						label: 'json stuff',
 						inputStyle: 'display:none;',
+						setup: function(widget) {
+							this.setValue(" ");
+						},
 						onChange: function(evt) {
 							var values = JSON.parse(this.getValue());
 							var parent_dialog = this.getDialog();
-							var tab = 'imagemodel_local';
+							var tab = 'image_info';
 							var prefix = 'imagemodellocal_';
 
 							var id_area = parent_dialog.getContentElement(tab, prefix+'id');
 							id_area.setValue(values.id);
 
-							var url_area = parent_dialog.getContentElement(tab, prefix+'cropped_url');
+							var url_area = parent_dialog.getContentElement(tab, prefix+'url');
 							url_area.setValue(values.croppedUrl);
 
 							var replace_attribution_area = parent_dialog.getContentElement(tab, prefix+'replace_attribution');
@@ -52,7 +55,7 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 						'default': 'checked'
 					},
 					{
-						id: 'imagemodellocal_cropped_url',
+						id: 'image_url',
 						type: 'text',
 						setup: function(widget) {
 							this.setValue(widget.data.image_url);
@@ -64,29 +67,31 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 					{
 						id: 'imagemodellocal_attribution',
 						type: 'text',
+						inputStyle: 'display:none;',
 						setup: function(widget) {
 							this.setValue(widget.data.image_attribution);
 						},
 						commit: function(widget) {
-							widget.setData('image_attribution', this.getValue());
+							if ( this.isEnabled() ) {
+								widget.setData('image_attribution', this.getValue());
+							}
 						}
 					},
 					{
 						id: 'imagemodellocal_id',
 						type: 'text',
-						label: 'model_id'//,
-						// inputStyle: 'display:none;'
-						// setup: function(widget) {
-						// 	this.setValue(widget.data.imagemodel_id);
-						// },
-						// commit: function(widget) {
-						// 	widget.setData('imagemodel_id', this.getValue());
-						// }
+						inputStyle: 'display:none;',
+						setup: function(widget) {
+							this.setValue(widget.data.imagemodel_id);
+						},
+						commit: function(widget) {
+							widget.setData('imagemodel_id', this.getValue());
+						}
 					},
 					{
 						id: 'imagemodellocal_choose',
 						type: 'button',
-						label: 'Pick Image',
+						label: 'Pick Local Image',
 						onClick: function() {
 							url = CKEDITOR.open_thumb_url;
 							name = "";
@@ -96,24 +101,56 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 						    win.focus();
 						    return false;
 						}
-					}
-				]
-			},
-			{
-				id: 'imagemodel_offsite',
-				label: 'Offsite',
-				elements: [
-					{
-						id: 'imagemodeloffsite_url',
-						type: 'text'//,
-						// setup: function(widget) {
-						// 	this.setValue(widget.data.image_url);
-						// },
-						// commit: function(widget) {
-						// 	widget.setData('image_url', this.getValue());
-						// }
 					},
+					{
+						id: 'imageoffsite_bool',
+						type: 'checkbox',
+						label: 'Use an offsite image',
+						setup: function(widget) {
+							this.setValue( ! widget.data.is_local );
+							this.changeEnabled( );
+						},
+						onChange: function(evt) {
+							this.changeEnabled( );
+						},
+						changeEnabled: function( ) {
 
+							parent_dialog = this.getDialog();
+							offsite_bool = this.getValue();
+
+							tab = 'image_info';
+							local_elements = ['imagemodellocal_replace_attribution',
+								'imagemodellocal_attribution', 'imagemodellocal_choose'
+							];
+
+							offsite_elements = [];
+
+							if ( offsite_bool ) {
+								var local_id = parent_dialog.getContentElement(tab, 'imagemodellocal_id');
+								local_id.setValue("-1");
+							}
+
+							for (var i = local_elements.length - 1; i >= 0; i--) {
+								elem = parent_dialog.getContentElement(tab, local_elements[i]);
+
+								if ( offsite_bool ) {
+									elem.disable()
+								} else {
+									elem.enable();
+								}
+							};
+
+							for (var i = offsite_elements.length - 1; i >= 0; i--) {
+								elem = parent_dialog.getContentElement(offsite_tab, offsite_elements[i]);
+
+								if ( offsite_bool ) {
+									elem.enable()
+								} else {
+									elem.disable();
+								}
+							};
+						}
+					}
 				]
 			}
 

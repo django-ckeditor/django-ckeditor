@@ -10,34 +10,64 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 		editor.widgets.add( 'imagemodelwidget', {
 		    button: 'Insert an image',
 
-			allowedContent: 'img(image_local)[id,data-imagemodel,src,imagemodel];',
-			requiredContent: 'img[src,data-imagemodel];',
+			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption);' +
+							'div(figure_content, caption_text, source_text, clearfix);' + 
+							'img(image_local)[id,data-imagemodel,src,imagemodel];',
+			
+			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);img[src,data-imagemodel];',
 
-			template: '<img />',
 			inline: false,
-
 			dialog: 'imagemodelwidget',
 
+
+			template:
+				'<figure class="inside_story">' +
+					'<div class="figure_content">' +
+						'<img src="' + this.path + 'resources/wsiwyg_image_replacement.png" />' + 
+					'</div>' +
+					'<figcaption class="inside_story_caption">' +
+						'<div class="caption_text">Optional Caption</div>' +
+						'<div class="source_text">Image Source</div>' +
+						'<div class="clearfix"></div>' +
+					'</figcaption>' +
+				'</figure>',
+
+			// Define two nested editable areas.
+			editables: {
+				content: {
+					selector: '.figure_content',
+					allowedContent: 'img[src, title, alt, data-imagemodel]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+				},
+				caption: {
+					selector: '.caption_text',
+					allowedContent: 'strong em; a[!href]'
+				},
+				source: {
+					selector: '.source_text',
+					allowedContent: 'strong em; a[!href]'
+				}
+			},
+
 			init: function() {
-				this.setData('imagemodel_id', this.element.getAttribute('data-imagemodel'));
-				this.setData('image_url', this.element.getAttribute('src'));
-				this.setData('image_attribution', "")
-				// this.setData('height', this.element.getAttribute	)
+				var image_elem = this.element.findOne('img');
+
+				var is_offsite = Boolean(parseInt(image_elem.getAttribute('data-imagemodel')) < 0);
+
+				this.setData('image_attribution', this.element.findOne('.source_text').getHtml());
+				this.setData('image_url', image_elem.getAttribute('src'));
+				this.setData('imagemodel_id', image_elem.getAttribute('data-imagemodel'));
+				this.setData('is_local', !is_offsite);
 			},
 
 			data: function() {
-				this.element.setAttribute("data-imagemodel", this.data.imagemodel_id);
-				this.element.setAttribute("src", this.data.image_url);
-				// this.element.setAttribute("src", this.data.image_url);
+				var image_elem = this.element.findOne('img');
+				this.element.findOne('.source_text').setHtml(this.data.image_attribution);
+				image_elem.setAttribute("src", this.data.image_url);
+				image_elem.setAttribute("data-imagemodel", this.data.imagemodel_id);
 			},
 
-			// Check the elements that need to be converted to widgets.
-			//
-			// Note: The "element" argument is an instance of http://docs.ckeditor.com/#!/api/CKEDITOR.htmlParser.element
-			// so it is not a real DOM element yet. This is caused by the fact that upcasting is performed
-			// during data processing which is done on DOM represented by JavaScript objects.
 			upcast: function( element ) {
-				return element.name == 'img' && 'data-imagemodel' in element.attributes;
+				return element.name == 'figure' && element.hasClass( 'inside_story' );
 			}
 		} );
     }
