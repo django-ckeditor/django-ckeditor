@@ -13,7 +13,7 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption);' +
 							'div(figure_content, caption_text, source_text, clearfix);' + 
 							'img(image_local)[id,data-imagemodel,src,imagemodel];',
-			
+
 			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);img[src,data-imagemodel];',
 
 			inline: false,

@@ -12,36 +12,28 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 					{
 						id: 'imagemodellocal_json',
 						type: 'textarea',
-						label: 'json stuff',
 						inputStyle: 'display:none;',
-						setup: function(widget) {
-							this.setValue(" ");
-						},
-						onChange: function(evt) {
-							var values = JSON.parse(this.getValue());
+						onChange: function(evt){
+							var json_obj = JSON.parse(this.getValue());
 							var parent_dialog = this.getDialog();
 							var tab = 'image_info';
 							var prefix = 'imagemodellocal_';
 
-							var id_area = parent_dialog.getContentElement(tab, prefix+'id');
-							id_area.setValue(values.id);
+							parent_dialog.getContentElement(tab, prefix+'id').setValue(json_obj.id);
+							parent_dialog.getContentElement(tab, 'image_url').setValue(json_obj.croppedUrl);
 
-							var url_area = parent_dialog.getContentElement(tab, prefix+'url');
-							url_area.setValue(values.croppedUrl);
+							var bool_replace_attr = parent_dialog.getContentElement(tab, prefix+'replace_attribution').getValue();
 
-							var replace_attribution_area = parent_dialog.getContentElement(tab, prefix+'replace_attribution');
-							var bool_replace_attribution = replace_attribution_area.getValue();
-
-							if ( bool_replace_attribution ) {
+							if ( bool_replace_attr ) {
 								var attribution_area = parent_dialog.getContentElement(tab, prefix+'attribution');
 								var new_attribution = '';
 
-								if ( values.attribution.length ) {
-									new_attribution = values.attribution;
+								if ( json_obj.attribution.length ) {
+									new_attribution = json_obj.attribution;
 								}
 
-								if ( values.attributionUrl.length ) {
-									new_attribution = '<a href="' + values.attributionUrl + '">' + new_attribution + '</a>'
+								if ( json_obj.attributionUrl.length ) {
+									new_attribution = '<a href="' + json_obj.attributionUrl + '">' + new_attribution + '</a>';
 								}
 
 								attribution_area.setValue(new_attribution);
@@ -57,6 +49,7 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 					{
 						id: 'image_url',
 						type: 'text',
+						label: 'Image URL',
 						setup: function(widget) {
 							this.setValue(widget.data.image_url);
 						},
@@ -125,9 +118,13 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 
 							offsite_elements = [];
 
+							var url_elem = parent_dialog.getContentElement(tab, 'image_url');
+
 							if ( offsite_bool ) {
 								var local_id = parent_dialog.getContentElement(tab, 'imagemodellocal_id');
 								local_id.setValue("-1");
+							} else {
+
 							}
 
 							for (var i = local_elements.length - 1; i >= 0; i--) {
