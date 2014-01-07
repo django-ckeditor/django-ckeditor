@@ -23,7 +23,7 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 			template:
 				'<figure class="inside_story">' +
 					'<div class="figure_content">' +
-						'<img src="' + this.path + 'resources/wsiwyg_image_replacement.png" />' + 
+						'<img src="http://lorempixel.com/250/250/cats" data-imagemodel="-1" />' +
 					'</div>' +
 					'<figcaption class="inside_story_caption">' +
 						'<div class="caption_text">Optional Caption</div>' +
@@ -34,10 +34,10 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 
 			// Define two nested editable areas.
 			editables: {
-				content: {
-					selector: '.figure_content',
-					allowedContent: 'img[src, title, alt, data-imagemodel]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
-				},
+				// content: {
+				// 	selector: '.figure_content',
+				// 	allowedContent: 'img[src, title, alt, data-imagemodel]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+				// },
 				caption: {
 					selector: '.caption_text',
 					allowedContent: 'strong em; a[!href]'

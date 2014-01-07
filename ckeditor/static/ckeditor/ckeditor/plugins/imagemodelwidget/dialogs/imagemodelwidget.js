@@ -79,6 +79,12 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 						},
 						commit: function(widget) {
 							widget.setData('imagemodel_id', this.getValue());
+						},
+						onChange: function(evt) {
+							var number = ( parseInt(this.getValue()) > 0 ) ? this.getValue() : 'N/A';
+							var text = 'Image Model ID: ' + number;
+							var html_element = this.getDialog().getContentElement('advanced', 'advanced_show_id');
+							html_element.getInputElement().setText(text);
 						}
 					},
 					{
@@ -120,11 +126,15 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 
 							var url_elem = parent_dialog.getContentElement(tab, 'image_url');
 
+							var button = parent_dialog.getContentElement(tab, 'imagemodellocal_choose');
+							var button_element = button.getElement();
+
 							if ( offsite_bool ) {
 								var local_id = parent_dialog.getContentElement(tab, 'imagemodellocal_id');
 								local_id.setValue("-1");
+								button_element.setStyle('display', 'none');
 							} else {
-
+								button_element.setStyle('display', 'block');
 							}
 
 							for (var i = local_elements.length - 1; i >= 0; i--) {
@@ -148,6 +158,18 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 							};
 						}
 					}
+				]
+			},
+			{
+				id: 'advanced',
+				label: 'Advanced',
+				elements: [
+					{
+						id: 'advanced_show_id',
+						type: 'html',
+						html: ''
+					}
+
 				]
 			}
 
