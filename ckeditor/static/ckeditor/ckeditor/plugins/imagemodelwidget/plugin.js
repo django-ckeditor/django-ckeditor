@@ -23,7 +23,7 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 			template:
 				'<figure class="inside_story">' +
 					'<div class="figure_content">' +
-						'<img src="http://lorempixel.com/250/250/cats" data-imagemodel="-1" />' +
+						'<img src="http://lorempixel.com/250/250/cats/5" data-imagemodel="-1" />' +
 					'</div>' +
 					'<figcaption class="inside_story_caption">' +
 						'<div class="caption_text">Optional Caption</div>' +
@@ -34,10 +34,10 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 
 			// Define two nested editable areas.
 			editables: {
-				// content: {
-				// 	selector: '.figure_content',
-				// 	allowedContent: 'img[src, title, alt, data-imagemodel]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
-				// },
+				content: {
+					selector: '.figure_content',
+					allowedContent: 'img[src, title, alt, data-imagemodel]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+				},
 				caption: {
 					selector: '.caption_text',
 					allowedContent: 'strong em; a[!href]'
@@ -70,6 +70,35 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 				return element.name == 'figure' && element.hasClass( 'inside_story' );
 			}
 		} );
+
+
+
+		editor.addCommand( 'imwDialog',new CKEDITOR.dialogCommand( 'imagemodelwidget' ) );
+		// Register context menu option for editing widget.
+		if ( editor.contextMenu ) {
+			editor.addMenuGroup( 'imwGroup' );
+
+			editor.addMenuItem( 'imwMenuItem', {
+				label: "Change Image",
+				command: 'imwDialog',
+				group: 'imwGroup'
+			} );
+
+			editor.contextMenu.addListener( function( element ) {
+
+				if ( element.getAscendant( 'figure', true ) ) {
+
+					var fig = element.getAscendant('figure', true);
+					var w = CKEDITOR.currentInstance.widgets;
+					// debugger;
+
+					return { imwMenuItem: CKEDITOR.TRISTATE_OFF };
+				}
+			});
+		}
+
+
+
     }
 
 } );
