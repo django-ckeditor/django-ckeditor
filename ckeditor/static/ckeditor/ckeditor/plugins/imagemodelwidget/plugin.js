@@ -59,12 +59,14 @@ CKEDITOR.plugins.add( 'imagemodelwidget', {
 				this.setData('is_local', !is_offsite);
 			},
 
-			data: function() {
-				var image_elem = this.element.findOne('img');
-				this.element.findOne('.source_text').setHtml(this.data.image_attribution);
-				image_elem.setAttribute("src", this.data.image_url);
-				image_elem.setAttribute("data-imagemodel", this.data.imagemodel_id);
-			},
+			// data: function() {
+			// 	var image_elem = this.element.findOne('img');
+			// 	this.element.findOne('.source_text').setHtml(this.data.image_attribution);
+			// 	console.log(this.data);
+			// 	image_elem.setAttribute("src", this.data.image_url);
+			// 	image_elem.setAttribute("data-src", this.data.image_url);
+			// 	image_elem.setAttribute("data-imagemodel", this.data.imagemodel_id);
+			// },
 
 			upcast: function( element ) {
 				return element.name == 'figure' && element.hasClass( 'inside_story' );

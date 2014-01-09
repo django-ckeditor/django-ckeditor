@@ -173,7 +173,23 @@ CKEDITOR.dialog.add( 'imagemodelwidget', function( editor ) {
 				]
 			}
 
-		]
+		], // end of contents array
+		onShow: function() {
+			// TODO: set this.element here !
+		}
+		onOk: function() {
+			var dialog = this,
+				image_elem = this.element.findOne('img');
+
+			// this.commitContent(image_elem);
+			// this.element.findOne('.source_text').setHtml(this.data.image_attribution);
+			console.log(dialog,dialog.getValueOf( 'image_url'));
+			image_elem.setAttribute("src", this.data.image_url);
+			image_elem.setAttribute("data-src", this.data.image_url);
+			image_elem.setAttribute("data-imagemodel", this.data.imagemodel_id);
+
+			console.log()
+		}
 
 	};
 
