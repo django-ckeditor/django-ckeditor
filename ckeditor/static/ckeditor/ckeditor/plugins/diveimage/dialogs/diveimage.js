@@ -72,7 +72,7 @@
 
 		function commitDiveContent(imageElement) {
 			var imagemodel_id = this.getContentElement('advanced', 'dive_id').getValue();
-			imageElement.setAttribute('data-imagemodel', imagemodel_id);
+			imageElement.data('imagemodel', imagemodel_id);
 
 			// replace the attribution if this image is in a figurebox?
 			var replaceCredit = this.getContentElement('advanced', 'dive_replace_credit').getValue();
@@ -246,7 +246,7 @@
 			original.removeListener('abort', onImgLoadErrorEvent);
 
 			// Set Error image.
-			var noimage = CKEDITOR.getUrl(CKEDITOR.plugins.get('image').path + 'images/noimage.png');
+			var noimage = CKEDITOR.getUrl(CKEDITOR.plugins.get('diveimage').path + 'images/noimage.png');
 
 			if (this.preview)
 				this.preview.setAttribute('src', noimage);
@@ -266,7 +266,7 @@
 			previewImageId = numbering('previewImage');
 
 		return {
-			title: editor.lang.image[dialogType == 'image' ? 'title' : 'titleButton'],
+			title: editor.lang.image[dialogType == 'diveimage' ? 'title' : 'titleButton'],
 			minWidth: 420,
 			minHeight: 360,
 			onShow: function() {
@@ -317,7 +317,7 @@
 						}
 					}
 					// Fill out all fields.
-					if (dialogType == 'image')
+					if (dialogType == 'diveimage')
 						this.setupContent(LINK, link);
 				}
 
@@ -358,7 +358,7 @@
 					var imgTagName = this.imageEditMode;
 
 					// Image dialog and Input element.
-					if (dialogType == 'image' && imgTagName == 'input' && confirm(editor.lang.image.button2Img)) {
+					if (dialogType == 'diveimage' && imgTagName == 'input' && confirm(editor.lang.image.button2Img)) {
 						// Replace INPUT-> IMG
 						imgTagName = 'img';
 						this.imageElement = editor.document.createElement('img');
@@ -383,7 +383,7 @@
 				} else // Create a new image.
 				{
 					// Image dialog -> create IMG element.
-					if (dialogType == 'image')
+					if (dialogType == 'diveimage')
 						this.imageElement = editor.document.createElement('img');
 					else {
 						this.imageElement = editor.document.createElement('input');
@@ -981,19 +981,8 @@
 								}
 							}
 						}
-					}, {
-						type: 'button',
-						id: 'browse',
-						filebrowser: {
-							action: 'Browse',
-							target: 'Link:txtUrl',
-							url: editor.config.filebrowserImageBrowseLinkUrl
-						},
-						style: 'float:right',
-						hidden: true,
-						label: editor.lang.common.browseServer
-					}, {
-						id: 'cmbTarget',
+					},
+					{ id: 'cmbTarget',
 						type: 'select',
 						requiredContent: 'a[target]',
 						label: editor.lang.common.target,
@@ -1077,8 +1066,8 @@
 								}
 							}]
 						},
-						{ type: 'text',
-							id: 'txtGenLongDescr',
+						{ id: 'txtGenLongDescr',
+							type: 'text',
 							requiredContent: 'img[longdesc]',
 							label: editor.lang.common.longDescr,
 							setup: function(type, element) {
@@ -1231,7 +1220,7 @@
 							hidden: true,
 							setup: function(type, element) {
 								if (type == IMAGE) {
-									var imagemodel_id = element.getAttribute('data-imagemodel');
+									var imagemodel_id = element.data('imagemodel');
 									var field = this;
 
 									this.getDialog().dontResetSize = true;
@@ -1241,7 +1230,7 @@
 							},
 							commit: function(type, element) {
 								if (type == IMAGE && (this.getValue() || this.isChanged())) {
-									element.setAttribute('data-imagemodel', this.getValue());
+									element.data('imagemodel', this.getValue());
 								}
 							},
 							onChange: function(evt) {
