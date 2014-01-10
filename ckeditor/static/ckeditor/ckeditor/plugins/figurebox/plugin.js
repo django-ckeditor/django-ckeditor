@@ -12,7 +12,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
-			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix)',
+			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix);img[src,alt,title,data-imagemodel]{height, width}',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);',
@@ -27,7 +27,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 					// Define content allowed in this nested editable. Its content will be
 					// filtered accordingly and the toolbar will be adjusted when this editable
 					// is focused.
-					allowedContent: 'img[src, title, alt]; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+					allowedContent: 'img[src, title, alt, data-imagemodel]{height, width}; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
 				},
 				caption: {
 					selector: '.caption_text',
