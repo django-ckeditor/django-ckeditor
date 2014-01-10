@@ -545,7 +545,7 @@
 								align: 'center',
 								label: "Choose Dive Image",
 								onClick: function() {
-									url = CKEDITOR.open_thumb_url;
+									url = CKEDITOR.config.dive_open_thumb_url;
 									name = "";
 
 									// matches GRAPPELLI CUSTOM: changed width
@@ -1020,238 +1020,242 @@
 				{ id: 'advanced',
 					label: editor.lang.common.advancedTab,
 					elements: [
-					{ type: 'hbox',
-						widths: ['50%', '25%', '25%'],
-						children: [{
-							type: 'text',
-							id: 'linkId',
-							requiredContent: 'img[id]',
-							label: editor.lang.common.id,
+						{ type: 'hbox',
+							widths: ['50%', '25%', '25%'],
+							children: [{
+								type: 'text',
+								id: 'linkId',
+								requiredContent: 'img[id]',
+								label: editor.lang.common.id,
+								setup: function(type, element) {
+									if (type == IMAGE)
+										this.setValue(element.getAttribute('id'));
+								},
+								commit: function(type, element) {
+									if (type == IMAGE) {
+										if (this.getValue() || this.isChanged())
+											element.setAttribute('id', this.getValue());
+									}
+								}
+							},
+							{ id: 'cmbLangDir',
+								type: 'select',
+								requiredContent: 'img[dir]',
+								style: 'width : 100px;',
+								label: editor.lang.common.langDir,
+								'default': '',
+								items: [
+									[editor.lang.common.notSet, ''],
+									[editor.lang.common.langDirLtr, 'ltr'],
+									[editor.lang.common.langDirRtl, 'rtl']
+								],
+								setup: function(type, element) {
+									if (type == IMAGE)
+										this.setValue(element.getAttribute('dir'));
+								},
+								commit: function(type, element) {
+									if (type == IMAGE) {
+										if (this.getValue() || this.isChanged())
+											element.setAttribute('dir', this.getValue());
+									}
+								}
+							}, {
+								type: 'text',
+								id: 'txtLangCode',
+								requiredContent: 'img[lang]',
+								label: editor.lang.common.langCode,
+								'default': '',
+								setup: function(type, element) {
+									if (type == IMAGE)
+										this.setValue(element.getAttribute('lang'));
+								},
+								commit: function(type, element) {
+									if (type == IMAGE) {
+										if (this.getValue() || this.isChanged())
+											element.setAttribute('lang', this.getValue());
+									}
+								}
+							}]
+						},
+						{ type: 'text',
+							id: 'txtGenLongDescr',
+							requiredContent: 'img[longdesc]',
+							label: editor.lang.common.longDescr,
 							setup: function(type, element) {
 								if (type == IMAGE)
-									this.setValue(element.getAttribute('id'));
+									this.setValue(element.getAttribute('longDesc'));
 							},
 							commit: function(type, element) {
 								if (type == IMAGE) {
 									if (this.getValue() || this.isChanged())
-										element.setAttribute('id', this.getValue());
+										element.setAttribute('longDesc', this.getValue());
 								}
 							}
 						},
-						{ id: 'cmbLangDir',
-							type: 'select',
-							requiredContent: 'img[dir]',
-							style: 'width : 100px;',
-							label: editor.lang.common.langDir,
-							'default': '',
-							items: [
-								[editor.lang.common.notSet, ''],
-								[editor.lang.common.langDirLtr, 'ltr'],
-								[editor.lang.common.langDirRtl, 'rtl']
-							],
-							setup: function(type, element) {
-								if (type == IMAGE)
-									this.setValue(element.getAttribute('dir'));
-							},
-							commit: function(type, element) {
-								if (type == IMAGE) {
-									if (this.getValue() || this.isChanged())
-										element.setAttribute('dir', this.getValue());
+						{ type: 'hbox',
+							widths: ['50%', '50%'],
+							children: [{
+								type: 'text',
+								id: 'txtGenClass',
+								requiredContent: 'img(cke-xyz)', // Random text like 'xyz' will check if all are allowed.
+								label: editor.lang.common.cssClass,
+								'default': '',
+								setup: function(type, element) {
+									if (type == IMAGE)
+										this.setValue(element.getAttribute('class'));
+								},
+								commit: function(type, element) {
+									if (type == IMAGE) {
+										if (this.getValue() || this.isChanged())
+											element.setAttribute('class', this.getValue());
+									}
 								}
-							}
-						}, {
-							type: 'text',
-							id: 'txtLangCode',
-							requiredContent: 'img[lang]',
-							label: editor.lang.common.langCode,
-							'default': '',
-							setup: function(type, element) {
-								if (type == IMAGE)
-									this.setValue(element.getAttribute('lang'));
 							},
-							commit: function(type, element) {
-								if (type == IMAGE) {
-									if (this.getValue() || this.isChanged())
-										element.setAttribute('lang', this.getValue());
-								}
-							}
-						}]
-					},
-					{ type: 'text',
-						id: 'txtGenLongDescr',
-						requiredContent: 'img[longdesc]',
-						label: editor.lang.common.longDescr,
-						setup: function(type, element) {
-							if (type == IMAGE)
-								this.setValue(element.getAttribute('longDesc'));
-						},
-						commit: function(type, element) {
-							if (type == IMAGE) {
-								if (this.getValue() || this.isChanged())
-									element.setAttribute('longDesc', this.getValue());
-							}
-						}
-					}, {
-						type: 'hbox',
-						widths: ['50%', '50%'],
-						children: [{
-							type: 'text',
-							id: 'txtGenClass',
-							requiredContent: 'img(cke-xyz)', // Random text like 'xyz' will check if all are allowed.
-							label: editor.lang.common.cssClass,
-							'default': '',
-							setup: function(type, element) {
-								if (type == IMAGE)
-									this.setValue(element.getAttribute('class'));
-							},
-							commit: function(type, element) {
-								if (type == IMAGE) {
-									if (this.getValue() || this.isChanged())
-										element.setAttribute('class', this.getValue());
-								}
-							}
-						},
-						{ id: 'txtGenTitle',
-							type: 'text',
-							requiredContent: 'img[title]',
-							label: editor.lang.common.advisoryTitle,
-							'default': '',
-							onChange: function() {
-								updatePreview(this.getDialog());
-							},
-							setup: function(type, element) {
-								if (type == IMAGE)
-									this.setValue(element.getAttribute('title'));
-							},
-							commit: function(type, element) {
-								if (type == IMAGE) {
-									if (this.getValue() || this.isChanged())
+							{ id: 'txtGenTitle',
+								type: 'text',
+								requiredContent: 'img[title]',
+								label: editor.lang.common.advisoryTitle,
+								'default': '',
+								onChange: function() {
+									updatePreview(this.getDialog());
+								},
+								setup: function(type, element) {
+									if (type == IMAGE)
+										this.setValue(element.getAttribute('title'));
+								},
+								commit: function(type, element) {
+									if (type == IMAGE) {
+										if (this.getValue() || this.isChanged())
+											element.setAttribute('title', this.getValue());
+									} else if (type == PREVIEW) {
 										element.setAttribute('title', this.getValue());
-								} else if (type == PREVIEW) {
-									element.setAttribute('title', this.getValue());
-								} else if (type == CLEANUP) {
-									element.removeAttribute('title');
+									} else if (type == CLEANUP) {
+										element.removeAttribute('title');
+									}
+								}
+							}]
+						},
+						{ id: 'txtdlgGenStyle',
+							type: 'text',
+							requiredContent: 'img{cke-xyz}', // Random text like 'xyz' will check if all are allowed.
+							label: editor.lang.common.cssStyle,
+							validate: CKEDITOR.dialog.validate.inlineStyle(editor.lang.common.invalidInlineStyle),
+							'default': '',
+							setup: function(type, element) {
+								if (type == IMAGE) {
+									var genStyle = element.getAttribute('style');
+									if (!genStyle && element.$.style.cssText)
+										genStyle = element.$.style.cssText;
+									this.setValue(genStyle);
+
+									var height = element.$.style.height,
+										width = element.$.style.width,
+										aMatchH = (height ? height : '').match(regexGetSize),
+										aMatchW = (width ? width : '').match(regexGetSize);
+
+									this.attributesInStyle = {
+										height: !! aMatchH,
+										width: !! aMatchW
+									};
+								}
+							},
+							onChange: function() {
+								commitInternally.call(this, ['info:cmbFloat', 'info:cmbAlign',
+									'info:txtVSpace', 'info:txtHSpace',
+									'info:txtBorder',
+									'info:txtWidth', 'info:txtHeight'
+								]);
+								updatePreview(this);
+							},
+							commit: function(type, element) {
+								if (type == IMAGE && (this.getValue() || this.isChanged())) {
+									element.setAttribute('style', this.getValue());
 								}
 							}
-						}]
-					},
-					{ id: 'txtdlgGenStyle',
-						type: 'text',
-						requiredContent: 'img{cke-xyz}', // Random text like 'xyz' will check if all are allowed.
-						label: editor.lang.common.cssStyle,
-						validate: CKEDITOR.dialog.validate.inlineStyle(editor.lang.common.invalidInlineStyle),
-						'default': '',
-						setup: function(type, element) {
-							if (type == IMAGE) {
-								var genStyle = element.getAttribute('style');
-								if (!genStyle && element.$.style.cssText)
-									genStyle = element.$.style.cssText;
-								this.setValue(genStyle);
+						},
+						{ id: 'dive_json',
+							type: 'textarea',
+							inputStyle: 'display:none;',
+							hidden: true,
+							onChange: function(evt){
+								var json_obj = JSON.parse(this.getValue());
+								var d = this.getDialog();
 
-								var height = element.$.style.height,
-									width = element.$.style.width,
-									aMatchH = (height ? height : '').match(regexGetSize),
-									aMatchW = (width ? width : '').match(regexGetSize);
+								if ( json_obj.useCropped ) {
+									d.getContentElement('info', 'txtUrl').setValue(json_obj.croppedUrl);
+								} else {
+									d.getContentElement('info', 'txtUrl').setValue(json_obj.fullUrl);
+								}
 
-								this.attributesInStyle = {
-									height: !! aMatchH,
-									width: !! aMatchW
-								};
+								//need to set this AFTER changing the Url, because the in the
+								// Url onChange the id is wiped
+								d.getContentElement('advanced', 'dive_id').setValue(json_obj.id);
+
+
+								// replace the attribution if this image is in a figurebox?
+								var replaceCredit = d.getContentElement('advanced', 'dive_replace_credit').getValue();
+
+								if ( replaceCredit ) {
+									var new_credit = this.parseJsonAttribution(json_obj);
+									d.getContentElement('advanced', 'dive_credit').setValue(new_credit);
+								}
+							},
+							parseJsonAttribution: function(json_obj) {
+								var new_credit = '';
+
+								if ( json_obj.attribution.length ) {
+									new_credit = json_obj.attribution;
+								}
+
+								if ( json_obj.attributionUrl.length ) {
+									var start_link = '<a href="' + json_obj.attributionUrl + '">';
+									var link_text = new_credit.length ? new_credit : json_obj.attributionUrl
+									new_credit = start_link + link_text + '</a>';
+								}
+
+								// set this so that we will replace the current
+								// credit
+								if ( ! new_credit.length ) {
+									new_credit = ' ';
+								}
+								return new_credit;
 							}
 						},
-						onChange: function() {
-							commitInternally.call(this, ['info:cmbFloat', 'info:cmbAlign',
-								'info:txtVSpace', 'info:txtHSpace',
-								'info:txtBorder',
-								'info:txtWidth', 'info:txtHeight'
-							]);
-							updatePreview(this);
+						{ id: 'dive_replace_credit',
+							type: 'checkbox',
+							label: 'Replace Attribution',
+							'default': 'checked'
 						},
-						commit: function(type, element) {
-							if (type == IMAGE && (this.getValue() || this.isChanged())) {
-								element.setAttribute('style', this.getValue());
+						{ id: 'dive_id',
+							type: 'text',
+							hidden: true,
+							setup: function(type, element) {
+								if (type == IMAGE) {
+									var imagemodel_id = element.getAttribute('data-imagemodel');
+									var field = this;
+
+									this.getDialog().dontResetSize = true;
+
+									field.setValue(imagemodel_id); // And call this.onChange()
+								}
+							},
+							commit: function(type, element) {
+								if (type == IMAGE && (this.getValue() || this.isChanged())) {
+									element.setAttribute('data-imagemodel', this.getValue());
+								}
+							},
+							onChange: function(evt) {
+								var number = ( parseInt(this.getValue()) > 0 ) ? this.getValue() : 'N/A';
+								var text = 'Image Model ID: ' + number;
+								var html_element = this.getDialog().getContentElement('info', 'show_dive_id');
+								html_element.getInputElement().setText(text);
 							}
+						},
+						{ id: 'dive_credit',
+							type: 'text',
+							hidden: true,
+							default: ''
 						}
-					},
-					{ id: 'dive_json',
-						type: 'textarea',
-						inputStyle: 'display:none;',
-						hidden: true,
-						onChange: function(evt){
-							var json_obj = JSON.parse(this.getValue());
-							var d = this.getDialog();
-
-							d.getContentElement('info', 'txtUrl').setValue(json_obj.croppedUrl);
-
-							//need to set this AFTER changing the Url, because the in the
-							// Url onChange the id is wiped
-							d.getContentElement('advanced', 'dive_id').setValue(json_obj.id);
-
-
-							// replace the attribution if this image is in a figurebox?
-							var replaceCredit = d.getContentElement('advanced', 'dive_replace_credit').getValue();
-
-							if ( replaceCredit ) {
-								var new_credit = this.parseJsonAttribution(json_obj);
-								d.getContentElement('advanced', 'dive_credit').setValue(new_credit);
-							}
-						},
-						parseJsonAttribution: function(json_obj) {
-							var new_credit = '';
-
-							if ( json_obj.attribution.length ) {
-								new_credit = json_obj.attribution;
-							}
-
-							if ( json_obj.attributionUrl.length ) {
-								var start_link = '<a href="' + json_obj.attributionUrl + '">';
-								var link_text = new_credit.length ? new_credit : json_obj.attributionUrl
-								new_credit = start_link + link_text + '</a>';
-							}
-
-							// set this so that we will replace the current
-							// credit
-							if ( ! new_credit.length ) {
-								new_credit = ' ';
-							}
-							return new_credit;
-						}
-					},
-					{ id: 'dive_replace_credit',
-						type: 'checkbox',
-						label: 'Replace Attribution',
-						'default': 'checked'
-					},
-					{ id: 'dive_id',
-						type: 'text',
-						hidden: true,
-						setup: function(type, element) {
-							if (type == IMAGE) {
-								var imagemodel_id = element.getAttribute('data-imagemodel');
-								var field = this;
-
-								this.getDialog().dontResetSize = true;
-
-								field.setValue(imagemodel_id); // And call this.onChange()
-							}
-						},
-						commit: function(type, element) {
-							if (type == IMAGE && (this.getValue() || this.isChanged())) {
-								element.setAttribute('data-imagemodel', this.getValue());
-							}
-						},
-						onChange: function(evt) {
-							var number = ( parseInt(this.getValue()) > 0 ) ? this.getValue() : 'N/A';
-							var text = 'Image Model ID: ' + number;
-							var html_element = this.getDialog().getContentElement('info', 'show_dive_id');
-							html_element.getInputElement().setText(text);
-						}
-					},
-					{ id: 'dive_credit',
-						type: 'text',
-						hidden: true,
-						default: ''
-					},
 					]
 				}
 			]
