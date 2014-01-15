@@ -1,13 +1,12 @@
 /** Add all the CSS to display a placeholder for the ad image **/
 CKEDITOR.addCss('.integrated_ad { text-align: center; }');
-CKEDITOR.addCss('.integrated_ad .faked { background-color:blue; font-size: 40px; color: white; margin:auto; }');
 
-CKEDITOR.addCss('#integrated_horizontal .faked:before { content: "Ad: horizontal"; }');
-CKEDITOR.addCss('#integrated_horizontal .faked { width: 560px; height: 69px; line-height: 60px; }');
+CKEDITOR.addCss('#integrated_horizontal { width: 560px; height: 69px; line-height: 60px; }');
+CKEDITOR.addCss('#integrated_horizontal:before { content: "Ad: horizontal"; }');
 
-CKEDITOR.addCss('#integrated_bigbox_one .faked, #integrated_bigbox_two .faked { width: 300px; height: 250px; line-height: 200px; }');
-CKEDITOR.addCss('#integrated_bigbox_one .faked:before { content: "Ad: bigbox #1" }');
-CKEDITOR.addCss('#integrated_bigbox_two .faked:before { content: "Ad: bigbox #2" }');
+CKEDITOR.addCss('#integrated_bigbox_one, #integrated_bigbox_two { width: 300px; height: 250px; line-height: 200px; background-color:blue; font-size: 40px; color: white; margin:auto; }');
+CKEDITOR.addCss('#integrated_bigbox_one:before { content: "Ad: bigbox #1" }');
+CKEDITOR.addCss('#integrated_bigbox_two:before { content: "Ad: bigbox #2" }');
 
 CKEDITOR.plugins.add( 'adwidget', {
     requires: 'widget,dialog',
@@ -19,10 +18,10 @@ CKEDITOR.plugins.add( 'adwidget', {
 		editor.widgets.add( 'adwidget', {
 		    button: 'Insert where the ad will go',
 
-			allowedContent: 'div(integrated_ad,faked)[id];',
-			requiredContent: 'div(integrated_ad);',
+			allowedContent: 'div(integrated_ad, manually_inserted)[id];',
+			requiredContent: 'div(integrated_ad)[id];',
 
-			template: '<div class="integrated_ad" id="integrated_horizontal"><div class="faked"></div></div>',
+			template: '<div class="integrated_ad manually_inserted" id="integrated_horizontal"></div>',
 			inline: false,
 
 			dialog: 'adwidget',

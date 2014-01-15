@@ -543,7 +543,7 @@
 								type: 'button',
 								style: 'display:inline-block;margin-top:10px;',
 								align: 'center',
-								label: "Choose Dive Image",
+								label: "Choose/Upload Dive Image",
 								onClick: function() {
 									url = CKEDITOR.config.dive_open_thumb_url;
 									name = "";
