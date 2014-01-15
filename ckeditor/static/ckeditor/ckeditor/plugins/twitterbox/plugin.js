@@ -62,12 +62,11 @@ CKEDITOR.plugins.add( 'twitterbox', {
 				// for the tweet text
 				var selection = this.editor.getSelection();
 
+				this.setData('tweet_value', this.element.getFirst().getText());
 				if (selection) {
 					var selection_text = selection.getSelectedText();
 					if ( selection_text.length > 0 ) {
 						this.setData('tweet_value', selection_text);
-					} else {
-						this.setData('tweet_value', this.element.getFirst().getText());
 					}
 
 					// a range has the start and end locations
