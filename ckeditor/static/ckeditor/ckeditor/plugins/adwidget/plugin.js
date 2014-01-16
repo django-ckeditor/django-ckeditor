@@ -1,12 +1,13 @@
 /** Add all the CSS to display a placeholder for the ad image **/
-CKEDITOR.addCss('.integrated_ad { text-align: center; }');
+CKEDITOR.addCss('.integrated_ad { display: none; }');
+CKEDITOR.addCss('.integrated_ad.manually_inserted { text-align: center; }');
 
-CKEDITOR.addCss('#integrated_horizontal { width: 560px; height: 69px; line-height: 60px; }');
-CKEDITOR.addCss('#integrated_horizontal:before { content: "Ad: horizontal"; }');
+CKEDITOR.addCss('#integrated_horizontal.manually_inserted { width: 560px; height: 69px; line-height: 60px; }');
+CKEDITOR.addCss('#integrated_horizontal.manually_inserted:before { content: "Ad: horizontal"; }');
 
-CKEDITOR.addCss('#integrated_bigbox_one, #integrated_bigbox_two { width: 300px; height: 250px; line-height: 200px; background-color:blue; font-size: 40px; color: white; margin:auto; }');
-CKEDITOR.addCss('#integrated_bigbox_one:before { content: "Ad: bigbox #1" }');
-CKEDITOR.addCss('#integrated_bigbox_two:before { content: "Ad: bigbox #2" }');
+CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted, #integrated_bigbox_two { width: 300px; height: 250px; line-height: 200px; background-color:blue; font-size: 40px; color: white; margin:auto; }');
+CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted:before { content: "Ad: bigbox #1" }');
+CKEDITOR.addCss('#integrated_bigbox_two.manually_inserted:before { content: "Ad: bigbox #2" }');
 
 CKEDITOR.plugins.add( 'adwidget', {
     requires: 'widget,dialog',
@@ -40,7 +41,7 @@ CKEDITOR.plugins.add( 'adwidget', {
 			// so it is not a real DOM element yet. This is caused by the fact that upcasting is performed
 			// during data processing which is done on DOM represented by JavaScript objects.
 			upcast: function( element ) {
-				return element.name == 'div' && element.hasClass( 'integrated_ad' );
+				return element.name == 'div' && element.hasClass( 'integrated_ad' ) && element.hasClass( 'manually_inserted');
 			}
 		} );
     }
