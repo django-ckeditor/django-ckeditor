@@ -1,13 +1,15 @@
 /** Add all the CSS to display a placeholder for the ad image **/
 CKEDITOR.addCss('.integrated_ad { display: none; }');
-CKEDITOR.addCss('.integrated_ad.manually_inserted { text-align: center; }');
+CKEDITOR.addCss('.integrated_ad.manually_inserted { display:block; text-align: center;  background-color: #ccc; font-size: 15px; color: white; margin: auto;}');
 
-CKEDITOR.addCss('#integrated_horizontal.manually_inserted { width: 560px; height: 69px; line-height: 60px; }');
-CKEDITOR.addCss('#integrated_horizontal.manually_inserted:before { content: "Ad: horizontal"; }');
+var adwidget_placeholder_prefix = 'This is a place holder for an ad. The ad is: ';
 
-CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted, #integrated_bigbox_two { width: 300px; height: 250px; line-height: 200px; background-color:blue; font-size: 40px; color: white; margin:auto; }');
-CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted:before { content: "Ad: bigbox #1" }');
-CKEDITOR.addCss('#integrated_bigbox_two.manually_inserted:before { content: "Ad: bigbox #2" }');
+CKEDITOR.addCss('#integrated_horizontal.manually_inserted { width: 560px; height: 69px; }');
+CKEDITOR.addCss('#integrated_horizontal.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'horizontal"; }');
+
+CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted, #integrated_bigbox_two { width: 300px; height: 250px; }');
+CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'bigbox #1"; }');
+CKEDITOR.addCss('#integrated_bigbox_two.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'bigbox #2"; }');
 
 CKEDITOR.plugins.add( 'adwidget', {
     requires: 'widget,dialog',
