@@ -1,7 +1,7 @@
 /** Add all the CSS to display a placeholder for the ad image **/
 CKEDITOR.addCss('.integrated_ad { display: none; }');
 CKEDITOR.addCss('.integrated_ad.manually_inserted { display:block; text-align: center;  background-color: #ccc; font-size: 15px; color: white; margin: auto;}');
-CKEDITOR.addCss('.integrated_ad.manually_inserted.float_right { float: right; margin: 10px 0 10px 10px; }');
+CKEDITOR.addCss('.integrated_ad.manually_inserted.ad_style_float_right { float: right; margin: 10px 0 10px 10px; }');
 
 var adwidget_placeholder_prefix = 'This is a place holder for an ad. The ad is: ';
 
