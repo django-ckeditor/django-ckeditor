@@ -127,6 +127,11 @@ def upload(request):
     for chunk in upload.chunks():
         out.write(chunk)
     out.close()
+    # verify image
+    try:
+        Image.open(upload_filename).verify()
+    except Exception:
+        return HttpResponse('Invalid image file !!!')
 
     create_thumbnail(upload_filename)
 
