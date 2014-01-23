@@ -3,14 +3,14 @@ CKEDITOR.addCss('.integrated_ad { display: none; }');
 CKEDITOR.addCss('.integrated_ad.manually_inserted { display:block; text-align: center;  background-color: #ccc; font-size: 15px; color: white; margin: auto;}');
 CKEDITOR.addCss('.integrated_ad.manually_inserted.ad_style_float_right { float: right; margin: 10px 0 10px 10px; }');
 
-var adwidget_placeholder_prefix = 'This is a place holder for an ad. The ad is: ';
+var adwidget_css_prefix = 'This is a place holder for an ad. The ad is: ';
 
 CKEDITOR.addCss('#integrated_horizontal.manually_inserted { width: 560px; height: 69px; }');
-CKEDITOR.addCss('#integrated_horizontal.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'horizontal"; }');
+CKEDITOR.addCss('#integrated_horizontal.manually_inserted:before { content: "' + adwidget_css_prefix + 'horizontal"; }');
 
 CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted, #integrated_bigbox_two { width: 300px; height: 250px; }');
-CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'bigbox #1"; }');
-CKEDITOR.addCss('#integrated_bigbox_two.manually_inserted:before { content: "' + adwidget_placeholder_prefix + 'bigbox #2"; }');
+CKEDITOR.addCss('#integrated_bigbox_one.manually_inserted:before { content: "' + adwidget_css_prefix + 'bigbox #1"; }');
+CKEDITOR.addCss('#integrated_bigbox_two.manually_inserted:before { content: "' + adwidget_css_prefix + 'bigbox #2"; }');
 
 CKEDITOR.plugins.add( 'adwidget', {
     requires: 'widget,dialog',
@@ -32,12 +32,14 @@ CKEDITOR.plugins.add( 'adwidget', {
 
 			init: function() {
 				this.setData('current_ad_type', this.element.getId());
-				console;
-				// if ( this.element.hasClass('float_right') ) {
-				// } else{
+				all_ads = this.editor.document.find('div.integrated_ad');
+				for (var i = all_ads.count() - 1; i >= 0; i--) {
+					var current = all_ads.getItem(i);
 
-				// };
-
+					if ( ! current.hasClass('manually_inserted') ) {
+						current.remove();
+					};
+				};
 			},
 
 			data: function() {
