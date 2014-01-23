@@ -226,8 +226,8 @@
 			CKEDITOR.document.getById(imagePreviewLoaderId).setStyle('display', 'none');
 
 			// New image -> new domensions
-			if (!this.dontResetSize)
-				resetSize(this);
+			// if (!this.dontResetSize)
+			// 	resetSize(this);
 
 			if (this.firstLoad)
 				CKEDITOR.tools.setTimeout(function() {
