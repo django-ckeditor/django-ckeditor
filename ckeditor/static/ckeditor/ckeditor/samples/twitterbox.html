@@ -15,7 +15,7 @@
 <textarea cols="80" id="editor2" name="editor1" rows="10"></textarea>
 
 		<script>
-			CKEDITOR.config.extraPlugins = 'twitterbox,figurebox';
+			CKEDITOR.config.extraPlugins = 'twitterbox,figurebox,adwidget';
 			CKEDITOR.config.allowedContent = true;
 		    // CKEDITOR.replace( 'editor1', {} );
 		    CKEDITOR.replace( 'editor2', {
@@ -25,7 +25,8 @@
 		    			items: ['Source', 'Bold', 'Italic', '-', 'Figurebox', 'Image', 'NumberedList',
 		    			'-', 'Twitterbox',
 		    			'-', 'Figurebox',
-		    			 '-', 'Link', 'Unlink']
+		    			 '-', 'Link', 'Unlink',
+		    			 '-', 'Adwidget']
 		    		}
 		    	]
 
