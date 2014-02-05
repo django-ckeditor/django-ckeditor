@@ -1,4 +1,9 @@
 <p><textarea{{ final_attrs|safe }}>{{ value }}</textarea></p>
 <script type="text/javascript">
+
+    if (CKEDITOR.instances['{{ id }}']) { 
+        delete CKEDITOR.instances['{{ id }}'] 
+    };
+
     CKEDITOR.replace("{{ id }}", {{ config|safe }});
 </script>
