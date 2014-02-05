@@ -159,13 +159,13 @@
 				CKEDITOR.document.getById(imagePreviewLoaderId).setStyle('display', 'none');
 				// Create the preview before setup the dialog contents.
 				previewPreloader = new CKEDITOR.dom.element('img', editor.document);
-			this.preview = CKEDITOR.document.getById(previewImageId);
+				this.preview = CKEDITOR.document.getById(previewImageId);
 
 				// Copy of the image
 				this.originalElement = editor.document.createElement('img');
 				this.originalElement.setAttribute('alt', '');
 				this.originalElement.setCustomData('isReady', 'false');
-			var new_credit = this.getContentElement('advanced', 'dive_credit').getValue();
+				var new_credit = this.getContentElement('advanced', 'dive_credit').getValue();
 
 
 				if (link) {
@@ -449,7 +449,7 @@
 						}
 					},
 					{ id: 'show_dive_id',
-						type: 'html',
+ 						type: 'html',
 						html: ''
 					},
                     { id: 'image_expandable',
@@ -458,14 +458,77 @@
                       default: '', // Uncheck by default
                       style: 'vertical-align:bottom;',
                       setup: function(type, element) {
-                          var className = 'is_expandable', is_expandable;
+                          var className = 'is_expandable';
+                          if (type == IMAGE) {
+                          	is_expandable = element.hasClass(className);
+                            this.setValue(is_expandable);
+                          }
+                      },
+                      commit: function(type, element) {
+                        var className = 'is_expandable';
+                        if (type == IMAGE) {
+                            is_checked = this.getValue();
+                          	is_expandable = element.hasClass(className);
+
+                            // Made expandable but class doesn't exist
+                            if (is_checked && !is_expandable) {
+                                element.addClass(className);
+                            }
+                            // Value unchecked but class exists
+                            else if (!is_checked && is_expandable) {
+                                element.removeClass(className);
+                            }
+                        }
+					  }
+                    },
                           if (type == IMAGE) {
                             is_expandable = element.getAttribute('class') && element.getAttribute('class').indexOf(className) != -1;
                             this.setValue(is_expandable);
                           }
                       },
                       commit: function(type, element) {
-                        var className = 'is_expandable', is_expandable;
+                        var className = 'is_expandable';
+                        if (type == IMAGE) {
+                            is_checked = this.getValue();
+                            is_expandable = element.getAttribute('class') && element.getAttribute('class').indexOf(className) != -1;
+                            // Made expandable but class doesn't exist 
+                            if (is_checked && !is_expandable) {
+                                element.addClass(className);
+                            }
+                            // Value unchecked but class exists
+                            else if (!is_checked && is_expandable) {
+                                element.removeClass(className);
+                            } 
+                        }
+					  }
+                    },
+						children: [{
+							type: 'html',
+							id: 'htmlPreview',
+							style: 'width:95%;',
+							html: '<div id="' + imagePreviewLoaderId + '" class="ImagePreviewLoader" style="display:none">' +
+							'<div class="loading">&nbsp;</div></div>' +
+							'<img id="' + previewImageId + '" alt="" style="max-width:100%;"/>'
+							// html: '<div>' + CKEDITOR.tools.htmlEncode(editor.lang.common.preview) + '<br>' +
+							// 	 +
+							// 	'<div class="ImagePreviewBox"><table><tr><td>' +
+							// 	'<a href="javascript:void(0)" target="_blank" onclick="return false;" id="' + previewLinkId + '">' +
+							// 	'<img id="' + previewImageId + '" alt="" /></a>' +
+							// 	(editor.config.image_previewText || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' +
+							// 	'Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, ' +
+							// 	'nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.') +
+							// 	'</td></tr></table></div></div>'
+						}]
+					},
+					{ type: 'hbox',
+						children: [{
+							id: 'basic',
+							type: 'vbox',
+							children: [
+                          }
+                      },
+                      commit: function(type, element) {
+                        var className = 'is_expandable';
                         if (type == IMAGE) {
                             is_checked = this.getValue();
                             is_expandable = element.getAttribute('class') && element.getAttribute('class').indexOf(className) != -1;

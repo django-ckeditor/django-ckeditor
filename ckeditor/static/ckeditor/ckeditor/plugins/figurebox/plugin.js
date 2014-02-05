@@ -1,10 +1,22 @@
 CKEDITOR.plugins.add( 'figurebox', {
     // Miriam's Figure Box widget code.
-    requires: 'widget',
-
+    requires: 'widget,dialog',
     icons: 'figurebox',
 
+
     init: function( editor ) {
+    	CKEDITOR.dialog.add('figurebox', this.path + 'dialogs/figurebox.js');
+
+
+		if ( editor.addMenuItems ) {
+			editor.addMenuItems({
+				figurebox: {
+					label: "Change Image Display",
+					command: 'figurebox',
+					group: 'diveimage'
+				}
+			});
+		}
 
 		editor.widgets.add( 'figurebox', {
 		    button: 'Create a figure with caption and source',
@@ -12,7 +24,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
-			allowedContent: 'figure(!inside_story); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix);img[src,alt,title,data-imagemodel]{height, width}',
+			allowedContent: 'figure(!inside_story, image_portrait); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix);img[src,alt,title,data-imagemodel]{height, width}(is_expandable)',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);',
@@ -27,7 +39,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 					// Define content allowed in this nested editable. Its content will be
 					// filtered accordingly and the toolbar will be adjusted when this editable
 					// is focused.
-					allowedContent: 'img[src, title, alt, data-imagemodel]{height, width}; div(embed-container); iframe[allowfullscreen, frameborder, !src]'
+					allowedContent: 'img[src, title, alt, data-imagemodel]{height, width}(is_expandable); div(embed-container); iframe[allowfullscreen, frameborder, !src]'
 				},
 				caption: {
 					selector: '.caption_text',
@@ -52,6 +64,21 @@ CKEDITOR.plugins.add( 'figurebox', {
 					'</figcaption>' +
 				'</figure>',
 
+			init: function() {
+				if ( this.element.hasClass('image_portrait') ) {
+					this.setData('image_style_type', 'image_portrait');
+				} else {
+					this.setData('image_style_type', '');
+				}
+			},
+
+			data: function() {
+				this.element.removeClass('image_portrait');
+
+				if ( this.data.image_style_type.length ) {
+					this.element.addClass(this.data.image_style_type);
+				}
+			},
 
 			// Check the elements that need to be converted to widgets.
 			//

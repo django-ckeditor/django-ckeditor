@@ -25,7 +25,7 @@
 			// Register the dialog.
 			CKEDITOR.dialog.add( pluginName, this.path + 'dialogs/diveimage.js' );
 
-			var allowed = 'img[alt,!src,data-imagemodel]{border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}',
+			var allowed = 'img[alt,!src,data-imagemodel]{border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width}(is_expandable)',
 				required = 'img[alt,src]';
 
 			if ( CKEDITOR.dialog.isTabEnabled( editor, pluginName, 'advanced' ) )
