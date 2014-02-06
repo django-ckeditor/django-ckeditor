@@ -1002,6 +1002,65 @@
 							label: 'Replace Attribution',
 							'default': 'checked'
 						},
+						{ id: 'dive_expandable_choices',
+							type: 'select',
+							label: 'Expand Image on Click:',
+							items: [
+								['Same Image', 'dive_expand_same'],
+								['Uncropped Image', 'dive_expand_uncropped'],
+								['Other Image (enter URL)', 'dive_expand_url']
+							],
+							default: 'dive_expand_same',
+							setup: function(type, element) {
+								if (type == IMAGE) {
+									var expand_url = element.data('expandable-url');
+									var expand_type = element.data('expandable-type');
+
+									if (!expand_type) {
+										if (expand_url) {
+											expand_type = 'dive_expand_url';
+										} else {
+											expand_type = 'dive_expand_same';
+										}
+									}
+
+									// UNSAFE TODO
+									this.setValue(expand_type);
+								}
+							},
+							onChange: function(evt) {
+								var html_element = this.getDialog().getContentElement('advanced', 'dive_expandable_location');
+
+								if (this.getValue() == 'dive_expand_url') {
+									html_element.getElement().show();
+								}
+								else {
+									html_element.getElement().hide();
+								}
+							},
+							commit: function(type, element) {
+								element.data('expandable-type', this.getValue());
+							}
+						},
+						{ id: 'dive_expandable_location',
+							type: 'text',
+							hidden: true,
+							// inputStyle: 'display:none;',
+							label: 'URL of full image:',
+							setup: function(type, element) {
+								if (type==IMAGE) {
+									var expand_url = element.data('expandable-url');
+									if (expand_url) {
+										this.setValue(expand_url);
+									}
+								}
+							},
+							commit: function(type, element) {
+								if (type == IMAGE && (this.getValue() || this.isChanged())) {
+									element.data('expandable-url', this.getValue());
+								}
+							}
+						},
 						{ id: 'dive_id',
 							type: 'text',
 							hidden: true,
