@@ -963,7 +963,8 @@
 									d.getContentElement('info', 'txtUrl').setValue(json_obj.fullUrl);
 								}
 
-								d.getContentElement('advanced', 'dive_expand_url').setValue(json_obj.fullUrl);
+								d.getContentElement('advanced', 'dive_expandable_location').setValue(json_obj.fullUrl);
+								d.getContentElement('advanced', 'dive_expandable_choices').setValue('dive_expand_uncropped');
 								//need to set this AFTER changing the Url, because the in the
 								// Url onChange the id is wiped
 								d.getContentElement('advanced', 'dive_id').setValue(json_obj.id);
