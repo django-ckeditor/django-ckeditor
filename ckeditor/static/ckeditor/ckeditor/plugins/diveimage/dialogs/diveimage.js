@@ -963,6 +963,7 @@
 									d.getContentElement('info', 'txtUrl').setValue(json_obj.fullUrl);
 								}
 
+								d.getContentElement('advanced', 'dive_expand_url').setValue(json_obj.fullUrl);
 								//need to set this AFTER changing the Url, because the in the
 								// Url onChange the id is wiped
 								d.getContentElement('advanced', 'dive_id').setValue(json_obj.id);
@@ -994,6 +995,7 @@
 								if ( ! new_credit.length ) {
 									new_credit = ' ';
 								}
+
 								return new_credit;
 							}
 						},
@@ -1052,6 +1054,11 @@
 									var expand_url = element.data('expandable-url');
 									if (expand_url) {
 										this.setValue(expand_url);
+
+										var expand_type = this.getDialog().getContentElement('advanced', 'dive_expandable_choices');
+										if (expand_type.getValue() == 'dive_expand_url') {
+											this.getElement().show();
+										}
 									}
 								}
 							},
