@@ -1,7 +1,7 @@
 from django import VERSION
 django_version = VERSION[0]*100 + VERSION[1]
 
-if django_version < 107:
+if django_version < 106:
     from django.conf.urls.defaults import patterns, url
 else:
     from django.conf.urls import patterns, url    
