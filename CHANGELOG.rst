@@ -1,6 +1,11 @@
 Changelog
 =========
 
+4.3.2
+-----
+#. Include CKEditor version 4.3.2.
+#. Force language to be coherent with contextual language selected
+
 4.0.2
 -----
 #. Include CKEditor version 4.0.2.
