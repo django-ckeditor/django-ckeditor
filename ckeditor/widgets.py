@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
 from django.utils.encoding import force_unicode
+from django.utils.translation import get_language
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
 import json
@@ -55,6 +56,7 @@ class CKEditorWidget(forms.Textarea):
 
         # Try to get valid config from settings.
         configs = getattr(settings, 'CKEDITOR_CONFIGS', None)
+        
         if configs:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
@@ -81,6 +83,8 @@ class CKEditorWidget(forms.Textarea):
         final_attrs = self.build_attrs(attrs, name=name)
         self.config['filebrowserUploadUrl'] = reverse('ckeditor_upload')
         self.config['filebrowserBrowseUrl'] = reverse('ckeditor_browse')
+        if not 'language' in self.config:  # means  autodetect
+            self.config['language'] = get_language()
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_unicode(value)),
