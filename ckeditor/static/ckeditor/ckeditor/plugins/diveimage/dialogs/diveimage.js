@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -40,12 +40,25 @@
 
 		function commitDiveContent(imageElement) {
 			var imagemodel_id = this.getContentElement('advanced', 'dive_id').getValue();
-			var expand_type = this.getContentElement('advanced', 'dive_expandable_choices').getValue();
-			var expand_url = this.getContentElement('advanced', 'dive_expandable_location').getValue();
+
+
+			var expandable_checked = this.getContentElement('info', 'image_expandable').getValue();
+            var className = 'is_expandable';
+
+			if ( expandable_checked ) {
+				var expand_type = this.getContentElement('advanced', 'dive_expandable_choices').getValue();
+				var expand_url = this.getContentElement('advanced', 'dive_expandable_location').getValue();
+
+				imageElement.addClass(className);
+				imageElement.data('expandable-url', expand_url);
+				imageElement.data('expandable-type', expand_type);
+			} else {
+				imageElement.removeClass(className);
+				imageElement.data('expandable-url', false);
+				imageElement.data('expandable-type', false);
+			}
 
 			imageElement.data('imagemodel', imagemodel_id);
-			imageElement.data('expandable-url', expand_url);
-			imageElement.data('expandable-type', expand_type);
 
 			// replace the attribution if this image is in a figurebox?
 			var replaceCredit = this.getContentElement('advanced', 'dive_replace_credit').getValue();
@@ -82,7 +95,7 @@
 					return '';
 				}
 			} else {
-				json_text = JSON.parse(json_field.getValue());
+				json_text = JSON.parse(json_elem.getValue());
 				return JSON.parse(json_text)[key] || '';
 			}
 		}
@@ -491,23 +504,7 @@
                           	is_expandable = element.hasClass(className);
                             this.setValue(is_expandable);
                           }
-                      },
-                      commit: function(type, element) {
-                        var className = 'is_expandable';
-                        if (type == IMAGE) {
-                            is_checked = this.getValue();
-                          	is_expandable = element.hasClass(className);
-
-                            // Made expandable but class doesn't exist
-                            if (is_checked && !is_expandable) {
-                                element.addClass(className);
-                            }
-                            // Value unchecked but class exists
-                            else if (!is_checked && is_expandable) {
-                                element.removeClass(className);
-                            }
-                        }
-					  }
+                      }
                     },
                           if (type == IMAGE) {
                             is_expandable = element.getAttribute('class') && element.getAttribute('class').indexOf(className) != -1;
@@ -1073,8 +1070,11 @@
 								}
 
 								if (this.getValue() == 'dive_expand_uncropped') {
-									var full_url_element = this.getDialog().getContentElement('advanced', 'dive_img_full_url');
-									full_url_element.setValue(this.getDialog().getJSONData('fullUrl'));
+									// var full_url_element = this.getDialog().getContentElement('advanced', 'dive_img_full_url');
+									var full_url = this.getDialog().getJSONData('fullUrl');
+									html_element.setValue(full_url);
+									// full_url_element.setValue(full_url);
+
 								}
 							},
 							commit: function(type, element) {
@@ -1103,6 +1103,9 @@
 								if (type == IMAGE && (this.getValue() || this.isChanged())) {
 									element.data('expandable-url', this.getValue());
 								}
+							},
+							onChange: function(evt) {
+								debugger;
 							}
 						},
 						{ id: 'dive_id',
@@ -1128,6 +1131,9 @@
 								var text = 'Image Model ID: ' + number;
 								var html_element = this.getDialog().getContentElement('info', 'show_dive_id');
 								html_element.getInputElement().setText(text);
+
+
+
 							}
 						},
 						{ id: 'dive_credit',
