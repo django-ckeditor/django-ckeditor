@@ -40,7 +40,12 @@
 
 		function commitDiveContent(imageElement) {
 			var imagemodel_id = this.getContentElement('advanced', 'dive_id').getValue();
+			var expand_type = this.getContentElement('advanced', 'dive_expandable_choices').getValue();
+			var expand_url = this.getContentElement('advanced', 'dive_expandable_location').getValue();
+
 			imageElement.data('imagemodel', imagemodel_id);
+			imageElement.data('expandable-url', expand_url);
+			imageElement.data('expandable-type', expand_type);
 
 			// replace the attribution if this image is in a figurebox?
 			var replaceCredit = this.getContentElement('advanced', 'dive_replace_credit').getValue();
@@ -57,6 +62,28 @@
 					// could put an alert here ?
 					return;
 				}
+			}
+		}
+
+		function getJSONData(key, json_field) {
+			var json_elem = json_field || this.getContentElement('advanced', 'dive_json');
+			var json_text = null;
+
+			if ( !json_elem.getValue().length ) {
+				var img_id = this.getContentElement('advanced', 'dive_id').getValue();
+
+				if ( parseInt(img_id) > 0 ) {
+					var fetch_url = '/api/v1/diveimage/get_data/?camelcase=1&id=' + img_id;
+					json_text = CKEDITOR.ajax.load(fetch_url);
+					json_obj = JSON.parse(json_text);
+					json_elem.setValue(json_text);
+					return json_obj[key] || '';
+				} else {
+					return '';
+				}
+			} else {
+				json_text = JSON.parse(json_field.getValue());
+				return JSON.parse(json_text)[key] || '';
 			}
 		}
 
@@ -312,6 +339,7 @@
 
 				this.commitContent = commitContent;
 				this.commitDiveContent = commitDiveContent;
+				this.getJSONData = getJSONData;
 			},
 			onHide: function() {
 				if (this.preview)
@@ -963,8 +991,11 @@
 									d.getContentElement('info', 'txtUrl').setValue(json_obj.fullUrl);
 								}
 
-								d.getContentElement('advanced', 'dive_expandable_location').setValue(json_obj.fullUrl);
-								d.getContentElement('advanced', 'dive_expandable_choices').setValue('dive_expand_uncropped');
+								// handle expandable options
+								d.getContentElement('advanced', 'dive_img_full_url').setValue(json_obj.fullUrl);
+								// d.getContentElement('advanced', 'dive_expandable_location').setValue(json_obj.fullUrl);
+								// d.getContentElement('advanced', 'dive_expandable_choices').setValue('dive_expand_uncropped');
+
 								//need to set this AFTER changing the Url, because the in the
 								// Url onChange the id is wiped
 								d.getContentElement('advanced', 'dive_id').setValue(json_obj.id);
@@ -1040,6 +1071,11 @@
 								else {
 									html_element.getElement().hide();
 								}
+
+								if (this.getValue() == 'dive_expand_uncropped') {
+									var full_url_element = this.getDialog().getContentElement('advanced', 'dive_img_full_url');
+									full_url_element.setValue(this.getDialog().getJSONData('fullUrl'));
+								}
 							},
 							commit: function(type, element) {
 								element.data('expandable-type', this.getValue());
@@ -1098,6 +1134,10 @@
 							type: 'text',
 							hidden: true,
 							default: ''
+						},
+						{ id: 'dive_img_full_url',
+							type: 'text',
+							hidden: true
 						}
 					]
 				}

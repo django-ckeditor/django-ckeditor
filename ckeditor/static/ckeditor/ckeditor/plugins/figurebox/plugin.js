@@ -24,7 +24,7 @@ CKEDITOR.plugins.add( 'figurebox', {
 			// Read more about the Advanced Content Filter here:
 			// * http://docs.ckeditor.com/#!/guide/dev_advanced_content_filter
 			// * http://docs.ckeditor.com/#!/guide/plugin_sdk_integration_with_acf
-			allowedContent: 'figure(!inside_story, image_portrait); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix);img[src,alt,title,data-imagemodel]{height, width}(is_expandable)',
+			allowedContent: 'figure(!inside_story, image_portrait); figcaption(!inside_story_caption); div(figure_content, caption_text, source_text, clearfix);img[src,alt,title,data-imagemodel,data-expandable-url,data-expandable-type]{height, width}(is_expandable)',
 
 			// Minimum HTML which is required by this widget to work.
 			requiredContent: 'figure(inside_story); figcaption(inside_story_caption);',

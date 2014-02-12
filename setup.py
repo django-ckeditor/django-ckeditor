@@ -9,7 +9,7 @@ def get_source_files():
 
 setup(
     name='django-ckeditor',
-    version='4.0.5-dive',
+    version='4.0.6-dive',
     description='Django admin CKEditor integration.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Shaun Sephton',

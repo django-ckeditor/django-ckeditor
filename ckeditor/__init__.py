@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-__version__ = "4.0.2-dive-ckeditor-4.3-0119.3" # update this when deploying new version to production
+__version__ = "4.0.6-dive-ckeditor" # update this when deploying new version to production
 
 if 'ckeditor' in settings.INSTALLED_APPS:
     # Confirm CKEDITOR_UPLOAD_PATH setting has been specified.

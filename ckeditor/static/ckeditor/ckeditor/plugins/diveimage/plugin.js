@@ -10,7 +10,7 @@
 (function() {
 
 	CKEDITOR.plugins.add( 'diveimage', {
-		requires: 'dialog',
+		requires: 'dialog,ajax',
 		lang: 'en',
 		icons: 'image', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
