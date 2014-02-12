@@ -1103,9 +1103,6 @@
 								if (type == IMAGE && (this.getValue() || this.isChanged())) {
 									element.data('expandable-url', this.getValue());
 								}
-							},
-							onChange: function(evt) {
-								debugger;
 							}
 						},
 						{ id: 'dive_id',
