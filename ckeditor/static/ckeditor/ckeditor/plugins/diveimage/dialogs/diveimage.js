@@ -90,14 +90,14 @@
 					json_text = CKEDITOR.ajax.load(fetch_url);
 					json_obj = JSON.parse(json_text);
 					json_elem.setValue(json_text);
-					return json_obj[key] || '';
 				} else {
 					return '';
 				}
 			} else {
-				json_text = JSON.parse(json_elem.getValue());
-				return JSON.parse(json_text)[key] || '';
+				json_obj = JSON.parse(json_elem.getValue());
 			}
+
+			return json_obj[key] || '';
 		}
 
 		// Avoid recursions.
