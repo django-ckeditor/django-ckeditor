@@ -43,11 +43,21 @@ def upload(request):
     # Get the uploaded file from request.
     upload = request.FILES['upload']
 
+    #Verify that file is a valid image
+    backend = image_processing.get_backend()
+    try:
+        backend.image_verify(upload)
+    except IOError:
+        return HttpResponse("""
+                   <script type='text/javascript'>
+                        alert('Invalid image')
+                        window.parent.CKEDITOR.tools.callFunction({0});
+                   </script>""".format(request.GET['CKEditorFuncNum']))
+
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
     saved_path = default_storage.save(upload_filename, upload)
 
-    backend = image_processing.get_backend()
     if backend.should_create_thumbnail(saved_path):
         backend.create_thumbnail(saved_path)
 
