@@ -16,7 +16,7 @@ def get_thumb_filename(file_name):
     Generate thumb filename by adding _thumb to end of
     filename before . (if present)
     """
-    return '{0}_thumb{1}'.format(*os.path.splitext(file_name))
+    return u'{0}_thumb{1}'.format(*os.path.splitext(file_name))
 
 
 def get_image_format(extension):
