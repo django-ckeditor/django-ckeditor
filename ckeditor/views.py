@@ -103,7 +103,7 @@ def get_image_files(user=None, path=''):
 
     for directory in storage_list[STORAGE_DIRECTORIES]:
         directory_path = os.path.join(path, directory)
-        for element in get_image_files(path=directory_path):
+        for element in get_image_files(user=user, path=directory_path):
             yield element
 
 
