@@ -33,14 +33,18 @@
                 </div>
                 <div id="thumbs" class="navigation">
                     <ul class="thumbs noscript">
-                        {% for image in images %}
+                        {% for file in files %}
                         <li>
-                            <a class="thumb" href="{{ image.src }}">
-                                <img src="{{ image.thumb }}" style="max-width: 75px;"/>
+                            <a {% if file.is_image %}class="thumb"{% endif %} href="{{ file.src }}">
+                                {% if file.is_image %}
+                                    <img src="{{ file.thumb }}" style="max-width: 75px;"/>
+                                {% else %}
+                                    {{ file.thumb }}
+                                {% endif %}
                             </a>
                             <div class="caption">
                                 <div class="submit-row">
-                                    <input href="{{ image.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                    <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
                                 </div>
                             </div>
                         </li>
