@@ -1,4 +1,4 @@
-django==1.6.0
-Pillow==2.2.1
-selenium==2.38.1
-tox==1.6.1
+django
+Pillow
+selenium
+tox
