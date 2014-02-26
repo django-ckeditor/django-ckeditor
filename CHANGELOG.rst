@@ -1,6 +1,39 @@
 Changelog
 =========
 
+4.2.7
+-----
+#. Fix slugifying to empty filename if only bad characters given in filename. Use random string as fallback.
+#. Don't use IMG tags for non image files in ckeditor file browser.
+#. Remove non-existing image reference from CSS files that broke collectstatic.
+#. Misc fixes
+
+4.2.5 / 4.2.6
+-----
+#. Fix static files installation - switch from distutils to setuptools
+
+4.2.4
+-----
+#. Added new demo application with selenium integration test
+#. tox setup for Python 3.3 and 2.7 testing
+#. Extracted image processing to backends. PIL/Pillow is optional now. Other backends can be added.
+#. Fixed a bug with thumbnail generation
+
+4.2.3
+-----
+#. Python 3.3 compatibility
+#. All uploaded files are slugified by default (New settings CKEDITOR_SLUGIFY_FILENAME)
+#. Upload file when editing a link (<a href>) now works properly
+
+4.2.2
+-----
+#. Python 3.3 compatibility in widgets.py
+
+4.2.1
+-----
+#. Include CKEditor version 4.2.1.
+#. Support Django 1.6
+
 4.0.2
 -----
 #. Include CKEditor version 4.0.2.
