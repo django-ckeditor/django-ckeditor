@@ -15,6 +15,10 @@ from ckeditor import utils
 THUMBNAIL_SIZE = (75, 75)
 
 
+def image_verify(f):
+    Image.open(f).verify()
+
+
 def create_thumbnail(file_path):
     thumbnail_filename = utils.get_thumb_filename(file_path)
     thumbnail_format = utils.get_image_format(os.path.splitext(file_path)[1])

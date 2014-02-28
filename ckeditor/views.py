@@ -43,11 +43,21 @@ def upload(request):
     # Get the uploaded file from request.
     upload = request.FILES['upload']
 
+    #Verify that file is a valid image
+    backend = image_processing.get_backend()
+    try:
+        backend.image_verify(upload)
+    except IOError:
+        return HttpResponse("""
+                   <script type='text/javascript'>
+                        alert('Invalid image')
+                        window.parent.CKEDITOR.tools.callFunction({0});
+                   </script>""".format(request.GET['CKEditorFuncNum']))
+
     # Open output file in which to store upload.
     upload_filename = get_upload_filename(upload.name, request.user)
     saved_path = default_storage.save(upload_filename, upload)
 
-    backend = image_processing.get_backend()
     if backend.should_create_thumbnail(saved_path):
         backend.create_thumbnail(saved_path)
 
@@ -97,28 +107,34 @@ def get_image_files(user=None, path=''):
             yield element
 
 
-def get_image_browse_urls(user=None):
+def get_files_browse_urls(user=None):
     """
     Recursively walks all dirs under upload dir and generates a list of
     thumbnail and full image URL's for each file found.
     """
-    images = []
+    files = []
     for filename in get_image_files(user=user):
         src = utils.get_media_url(filename)
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             thumb = utils.get_media_url(utils.get_thumb_filename(filename))
         else:
             thumb = src
-        images.append({
+        files.append({
             'thumb': thumb,
-            'src': src
+            'src': src,
+            'is_image': is_image(src)
         })
 
-    return images
+    return files
+
+
+def is_image(path):
+    ext = path.split('.')[-1].lower()
+    return ext in ['jpg', 'jpeg', 'png', 'gif']
 
 
 def browse(request):
     context = RequestContext(request, {
-        'images': get_image_browse_urls(request.user),
+        'files': get_files_browse_urls(request.user),
     })
     return render_to_response('browse.html', context)
