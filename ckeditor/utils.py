@@ -21,7 +21,7 @@ def get_thumb_filename(file_name):
 
 def get_image_format(extension):
     mimetypes.init()
-    return mimetypes.types_map[extension]
+    return mimetypes.types_map[extension.lower()]
 
 
 def get_media_url(path):
