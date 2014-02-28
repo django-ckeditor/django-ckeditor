@@ -49,7 +49,7 @@ class CKEditorWidget(forms.Textarea):
                     uploaded media). Make sure to use a trailing slash: \
                     CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'")
 
-    def __init__(self, config_name='default', *args, **kwargs):
+    def __init__(self, config_name='default', extra_plugins=None, external_plugin_resources=None, *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
         # Setup config from defaults.
         self.config = DEFAULT_CONFIG.copy()
@@ -75,6 +75,13 @@ class CKEditorWidget(forms.Textarea):
             else:
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
+        
+        extra_plugins = extra_plugins or []
+        
+        if extra_plugins:
+            self.config['extraPlugins'] = ','.join(extra_plugins)
+
+        self.external_plugin_resources = external_plugin_resources or []
 
     def render(self, name, value, attrs={}):
         if value is None:
@@ -89,5 +96,6 @@ class CKEditorWidget(forms.Textarea):
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_text(value)),
             'id': final_attrs['id'],
-            'config': json_encode(self.config)
+            'config': json_encode(self.config),
+            'external_plugin_resources' : self.external_plugin_resources
         }))
