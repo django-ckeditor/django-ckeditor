@@ -22,6 +22,8 @@ def get_upload_filename(upload_name, user):
     # Generate date based path to put uploaded file.
     date_path = datetime.now().strftime('%Y/%m/%d')
 
+
+
     # Complete upload path (upload_path + date_path).
     upload_path = os.path.join(
         settings.CKEDITOR_UPLOAD_PATH, user_path, date_path)
@@ -103,7 +105,7 @@ def get_image_files(user=None, path=''):
 
     for directory in storage_list[STORAGE_DIRECTORIES]:
         directory_path = os.path.join(path, directory)
-        for element in get_image_files(path=directory_path):
+        for element in get_image_files(user=user, path=directory_path):
             yield element
 
 
@@ -119,11 +121,12 @@ def get_files_browse_urls(user=None):
             thumb = utils.get_media_url(utils.get_thumb_filename(filename))
         else:
             thumb = src
-        files.append({
-            'thumb': thumb,
-            'src': src,
-            'is_image': is_image(src)
-        })
+        if is_image(src):
+            files.append({
+                'thumb': thumb,
+                'src': src,
+                'is_image': is_image(src)
+            })
 
     return files
 
