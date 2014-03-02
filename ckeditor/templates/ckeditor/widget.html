@@ -1,4 +1,10 @@
 <p><textarea{{ final_attrs|safe }}>{{ value }}</textarea></p>
 <script type="text/javascript">
-    CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    if (typeof CKEDITOR == "undefined") {
+        $( document ).ready(function() {
+            CKEDITOR.replace("{{ id }}", {{ config|safe }});
+        });
+    } else {
+        CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    }
 </script>
