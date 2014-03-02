@@ -82,6 +82,7 @@ class CKEditorWidget(forms.Textarea):
         final_attrs = self.build_attrs(attrs, name=name)
         self.config.setdefault('filebrowserUploadUrl', reverse('ckeditor_upload'))
         self.config.setdefault('filebrowserBrowseUrl', reverse('ckeditor_browse'))
+
         if not self.config.get('language'):
             self.config['language'] = get_language()
 
