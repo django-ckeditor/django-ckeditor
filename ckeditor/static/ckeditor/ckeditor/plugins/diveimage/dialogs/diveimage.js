@@ -14,38 +14,6 @@
 			regexGetSizeOrEmpty = /(^\s*(\d+)((px)|\%)?\s*$)|^$/i,
 			pxLengthRegex = /^\d+px$/;
 
-		var onSizeChange = function() {
-			var value = this.getValue(),
-				// This = input element.
-				dialog = this.getDialog(),
-				aMatch = value.match(regexGetSize); // Check value
-			if (aMatch) {
-				if (aMatch[2] == '%') // % is allowed - > unlock ratio.
-					switchLockRatio(dialog, false); // Unlock.
-				value = aMatch[1];
-			}
-
-			// Only if ratio is locked
-			if (dialog.lockRatio) {
-				var oImageOriginal = dialog.originalElement;
-				if (oImageOriginal.getCustomData('isReady') == 'true') {
-					if (this.id == 'txtHeight') {
-						if (value && value != '0')
-							value = Math.round(oImageOriginal.$.width * (value / oImageOriginal.$.height));
-						if (!isNaN(value))
-							dialog.setValueOf('info', 'txtWidth', value);
-					} else //this.id = txtWidth.
-					{
-						if (value && value != '0')
-							value = Math.round(oImageOriginal.$.height * (value / oImageOriginal.$.width));
-						if (!isNaN(value))
-							dialog.setValueOf('info', 'txtHeight', value);
-					}
-				}
-			}
-			updatePreview(dialog);
-		};
-
 		var updatePreview = function(dialog) {
 			//Don't load before onShow.
 			if (!dialog.originalElement || !dialog.preview)
@@ -122,96 +90,6 @@
 			incommit = 0;
 		}
 
-		var switchLockRatio = function(dialog, value) {
-			if (!dialog.getContentElement('info', 'ratioLock'))
-				return null;
-
-			var oImageOriginal = dialog.originalElement;
-
-			// Dialog may already closed. (#5505)
-			if (!oImageOriginal)
-				return null;
-
-			// Check image ratio and original image ratio, but respecting user's preference.
-			if (value == 'check') {
-				if (!dialog.userlockRatio && oImageOriginal.getCustomData('isReady') == 'true') {
-					var width = dialog.getValueOf('info', 'txtWidth'),
-						height = dialog.getValueOf('info', 'txtHeight'),
-						originalRatio = oImageOriginal.$.width * 1000 / oImageOriginal.$.height,
-						thisRatio = width * 1000 / height;
-					dialog.lockRatio = false; // Default: unlock ratio
-
-					if (!width && !height)
-						dialog.lockRatio = true;
-					else if (!isNaN(originalRatio) && !isNaN(thisRatio)) {
-						if (Math.round(originalRatio) == Math.round(thisRatio))
-							dialog.lockRatio = true;
-					}
-				}
-			} else if (value != undefined)
-				dialog.lockRatio = value;
-			else {
-				dialog.userlockRatio = 1;
-				dialog.lockRatio = !dialog.lockRatio;
-			}
-
-			var ratioButton = CKEDITOR.document.getById(btnLockSizesId);
-			if (dialog.lockRatio)
-				ratioButton.removeClass('cke_btn_unlocked');
-			else
-				ratioButton.addClass('cke_btn_unlocked');
-
-			ratioButton.setAttribute('aria-checked', dialog.lockRatio);
-
-			// Ratio button hc presentation - WHITE SQUARE / BLACK SQUARE
-			if (CKEDITOR.env.hc) {
-				var icon = ratioButton.getChild(0);
-				icon.setHtml(dialog.lockRatio ? CKEDITOR.env.ie ? '\u25A0' : '\u25A3' : CKEDITOR.env.ie ? '\u25A1' : '\u25A2');
-			}
-
-			return dialog.lockRatio;
-		};
-
-		var resetSize = function(dialog) {
-			var oImageOriginal = dialog.originalElement;
-			if (oImageOriginal.getCustomData('isReady') == 'true') {
-				var widthField = dialog.getContentElement('info', 'txtWidth'),
-					heightField = dialog.getContentElement('info', 'txtHeight');
-				widthField && widthField.setValue(oImageOriginal.$.width);
-				heightField && heightField.setValue(oImageOriginal.$.height);
-			}
-			updatePreview(dialog);
-		};
-
-		var setupDimension = function(type, element) {
-			if (type != IMAGE)
-				return;
-
-			function checkDimension(size, defaultValue) {
-				var aMatch = size.match(regexGetSize);
-				if (aMatch) {
-					if (aMatch[2] == '%') // % is allowed.
-					{
-						aMatch[1] += '%';
-						switchLockRatio(dialog, false); // Unlock ratio
-					}
-					return aMatch[1];
-				}
-				return defaultValue;
-			}
-
-			var dialog = this.getDialog(),
-				value = '',
-				dimension = this.id == 'txtWidth' ? 'width' : 'height',
-				size = element.getAttribute(dimension);
-
-			if (size)
-				value = checkDimension(size, value);
-			value = checkDimension(element.getStyle(dimension), value);
-
-			this.setValue(value);
-		};
-
 		var previewPreloader;
 
 		var onImgLoadEvent = function() {
@@ -225,17 +103,7 @@
 			// Hide loader
 			CKEDITOR.document.getById(imagePreviewLoaderId).setStyle('display', 'none');
 
-			// New image -> new domensions
-			// if (!this.dontResetSize)
-			// 	resetSize(this);
-
-			if (this.firstLoad)
-				CKEDITOR.tools.setTimeout(function() {
-					switchLockRatio(this, 'check');
-				}, 0, this);
-
 			this.firstLoad = false;
-			this.dontResetSize = false;
 		};
 
 		var onImgLoadErrorEvent = function() {
@@ -253,7 +121,6 @@
 
 			// Hide loader
 			CKEDITOR.document.getById(imagePreviewLoaderId).setStyle('display', 'none');
-			switchLockRatio(this, false); // Unlock.
 		};
 
 		var numbering = function(id) {
@@ -343,11 +210,11 @@
 				} else
 					this.imageElement = editor.document.createElement('img');
 
-				// Refresh LockRatio button
-				switchLockRatio(this, true);
-
 				// Dont show preview if no URL given.
-				if (!CKEDITOR.tools.trim(this.getValueOf('info', 'txtUrl'))) {
+				// Also hide it if it is the starting image from figurebox
+				var img_url = CKEDITOR.tools.trim(this.getValueOf('info', 'txtUrl'));
+				var starting_img = "ckeditor/ckeditor/plugins/figurebox/resources/wsiwyg_image_replacement.png";
+				if (!img_url || img_url.match(starting_img)) {
 					this.preview.removeAttribute('src');
 					this.preview.setStyle('display', 'none');
 				}
@@ -583,148 +450,31 @@
 						type: 'html',
 						html: ''
 					},
+					{ type: 'vbox',
+						height: '250px',
+						children: [{
+							type: 'html',
+							id: 'htmlPreview',
+							style: 'width:95%;',
+							html: '<div id="' + imagePreviewLoaderId + '" class="ImagePreviewLoader" style="display:none">' +
+							'<div class="loading">&nbsp;</div></div>' +
+							'<img id="' + previewImageId + '" alt="" style="max-width:100%;"/>'
+							// html: '<div>' + CKEDITOR.tools.htmlEncode(editor.lang.common.preview) + '<br>' +
+							// 	 +
+							// 	'<div class="ImagePreviewBox"><table><tr><td>' +
+							// 	'<a href="javascript:void(0)" target="_blank" onclick="return false;" id="' + previewLinkId + '">' +
+							// 	'<img id="' + previewImageId + '" alt="" /></a>' +
+							// 	(editor.config.image_previewText || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' +
+							// 	'Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, ' +
+							// 	'nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.') +
+							// 	'</td></tr></table></div></div>'
+						}]
+					},
 					{ type: 'hbox',
 						children: [{
 							id: 'basic',
 							type: 'vbox',
-							children: [{
-								type: 'hbox',
-								requiredContent: 'img{width,height}',
-								widths: ['50%', '50%'],
-								children: [{
-									type: 'vbox',
-									padding: 1,
-									children: [{
-										type: 'text',
-										width: '45px',
-										id: 'txtWidth',
-										label: editor.lang.common.width,
-										onKeyUp: onSizeChange,
-										onChange: function() {
-											commitInternally.call(this, 'advanced:txtdlgGenStyle');
-										},
-										validate: function() {
-											var aMatch = this.getValue().match(regexGetSizeOrEmpty),
-												isValid = !! (aMatch && parseInt(aMatch[1], 10) !== 0);
-											if (!isValid)
-												alert(editor.lang.common.invalidWidth);
-											return isValid;
-										},
-										setup: setupDimension,
-										commit: function(type, element, internalCommit) {
-											var value = this.getValue();
-											if (type == IMAGE) {
-												if (value)
-													element.setStyle('width', CKEDITOR.tools.cssLength(value));
-												else
-													element.removeStyle('width');
-
-												!internalCommit && element.removeAttribute('width');
-											} else if (type == PREVIEW) {
-												var aMatch = value.match(regexGetSize);
-												if (!aMatch) {
-													var oImageOriginal = this.getDialog().originalElement;
-													if (oImageOriginal.getCustomData('isReady') == 'true')
-														element.setStyle('width', oImageOriginal.$.width + 'px');
-												} else
-													element.setStyle('width', CKEDITOR.tools.cssLength(value));
-											} else if (type == CLEANUP) {
-												element.removeAttribute('width');
-												element.removeStyle('width');
-											}
-										}
-									}, {
-										type: 'text',
-										id: 'txtHeight',
-										width: '45px',
-										label: editor.lang.common.height,
-										onKeyUp: onSizeChange,
-										onChange: function() {
-											commitInternally.call(this, 'advanced:txtdlgGenStyle');
-										},
-										validate: function() {
-											var aMatch = this.getValue().match(regexGetSizeOrEmpty),
-												isValid = !! (aMatch && parseInt(aMatch[1], 10) !== 0);
-											if (!isValid)
-												alert(editor.lang.common.invalidHeight);
-											return isValid;
-										},
-										setup: setupDimension,
-										commit: function(type, element, internalCommit) {
-											var value = this.getValue();
-											if (type == IMAGE) {
-												if (value)
-													element.setStyle('height', CKEDITOR.tools.cssLength(value));
-												else
-													element.removeStyle('height');
-
-												!internalCommit && element.removeAttribute('height');
-											} else if (type == PREVIEW) {
-												var aMatch = value.match(regexGetSize);
-												if (!aMatch) {
-													var oImageOriginal = this.getDialog().originalElement;
-													if (oImageOriginal.getCustomData('isReady') == 'true')
-														element.setStyle('height', oImageOriginal.$.height + 'px');
-												} else
-													element.setStyle('height', CKEDITOR.tools.cssLength(value));
-											} else if (type == CLEANUP) {
-												element.removeAttribute('height');
-												element.removeStyle('height');
-											}
-										}
-									}]
-								}, {
-									id: 'ratioLock',
-									type: 'html',
-									style: 'margin-top:30px;width:40px;height:40px;',
-									onLoad: function() {
-										// Activate Reset button
-										var resetButton = CKEDITOR.document.getById(btnResetSizeId),
-											ratioButton = CKEDITOR.document.getById(btnLockSizesId);
-										if (resetButton) {
-											resetButton.on('click', function(evt) {
-												resetSize(this);
-												evt.data && evt.data.preventDefault();
-											}, this.getDialog());
-											resetButton.on('mouseover', function() {
-												this.addClass('cke_btn_over');
-											}, resetButton);
-											resetButton.on('mouseout', function() {
-												this.removeClass('cke_btn_over');
-											}, resetButton);
-										}
-										// Activate (Un)LockRatio button
-										if (ratioButton) {
-											ratioButton.on('click', function(evt) {
-												var locked = switchLockRatio(this),
-													oImageOriginal = this.originalElement,
-													width = this.getValueOf('info', 'txtWidth');
-
-												if (oImageOriginal.getCustomData('isReady') == 'true' && width) {
-													var height = oImageOriginal.$.height / oImageOriginal.$.width * width;
-													if (!isNaN(height)) {
-														this.setValueOf('info', 'txtHeight', Math.round(height));
-														updatePreview(this);
-													}
-												}
-												evt.data && evt.data.preventDefault();
-											}, this.getDialog());
-											ratioButton.on('mouseover', function() {
-												this.addClass('cke_btn_over');
-											}, ratioButton);
-											ratioButton.on('mouseout', function() {
-												this.removeClass('cke_btn_over');
-											}, ratioButton);
-										}
-									},
-									html: '<div>' +
-										'<a href="javascript:void(0)" tabindex="-1" title="' + editor.lang.image.lockRatio +
-										'" class="cke_btn_locked" id="' + btnLockSizesId + '" role="checkbox"><span class="cke_icon"></span><span class="cke_label">' + editor.lang.image.lockRatio + '</span></a>' +
-										'<a href="javascript:void(0)" tabindex="-1" title="' + editor.lang.image.resetSize +
-										'" class="cke_btn_reset" id="' + btnResetSizeId + '" role="button"><span class="cke_label">' + editor.lang.image.resetSize + '</span></a>' +
-										'</div>'
-								}]
-							},
+							children: [
 							{ type: 'vbox',
 								padding: 1,
 								children: [{
@@ -931,24 +681,8 @@
 									}
 								}]
 							}]
-						},
-						{ type: 'vbox',
-							height: '250px',
-							children: [{
-								type: 'html',
-								id: 'htmlPreview',
-								style: 'width:95%;',
-								html: '<div>' + CKEDITOR.tools.htmlEncode(editor.lang.common.preview) + '<br>' +
-									'<div id="' + imagePreviewLoaderId + '" class="ImagePreviewLoader" style="display:none"><div class="loading">&nbsp;</div></div>' +
-									'<div class="ImagePreviewBox"><table><tr><td>' +
-									'<a href="javascript:void(0)" target="_blank" onclick="return false;" id="' + previewLinkId + '">' +
-									'<img id="' + previewImageId + '" alt="" /></a>' +
-									(editor.config.image_previewText || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ' +
-									'Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, ' +
-									'nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.') +
-									'</td></tr></table></div></div>'
-							}]
-						}]
+						}
+						]
 					}]
 				},
 				{ id: 'Link',
@@ -1123,44 +857,6 @@
 									}
 								}
 							}]
-						},
-						{ id: 'txtdlgGenStyle',
-							type: 'text',
-							requiredContent: 'img{cke-xyz}', // Random text like 'xyz' will check if all are allowed.
-							label: editor.lang.common.cssStyle,
-							validate: CKEDITOR.dialog.validate.inlineStyle(editor.lang.common.invalidInlineStyle),
-							'default': '',
-							setup: function(type, element) {
-								if (type == IMAGE) {
-									var genStyle = element.getAttribute('style');
-									if (!genStyle && element.$.style.cssText)
-										genStyle = element.$.style.cssText;
-									this.setValue(genStyle);
-
-									var height = element.$.style.height,
-										width = element.$.style.width,
-										aMatchH = (height ? height : '').match(regexGetSize),
-										aMatchW = (width ? width : '').match(regexGetSize);
-
-									this.attributesInStyle = {
-										height: !! aMatchH,
-										width: !! aMatchW
-									};
-								}
-							},
-							onChange: function() {
-								commitInternally.call(this, ['info:cmbFloat', 'info:cmbAlign',
-									'info:txtVSpace', 'info:txtHSpace',
-									'info:txtBorder',
-									'info:txtWidth', 'info:txtHeight'
-								]);
-								updatePreview(this);
-							},
-							commit: function(type, element) {
-								if (type == IMAGE && (this.getValue() || this.isChanged())) {
-									element.setAttribute('style', this.getValue());
-								}
-							}
 						},
 						{ id: 'dive_json',
 							type: 'textarea',
