@@ -985,12 +985,12 @@
 								if ( json_obj.useCropped ) {
 									d.getContentElement('info', 'txtUrl').setValue(json_obj.croppedUrl);
 								} else {
-									d.getContentElement('info', 'txtUrl').setValue(json_obj.fullUrl);
+									d.getContentElement('info', 'txtUrl').setValue(json_obj.lightboxUrl);
 								}
 
 								// handle expandable options
-								d.getContentElement('advanced', 'dive_img_full_url').setValue(json_obj.fullUrl);
-								d.getContentElement('advanced', 'dive_expandable_location').setValue(json_obj.fullUrl);
+								d.getContentElement('advanced', 'dive_img_full_url').setValue(json_obj.lightboxUrl);
+								d.getContentElement('advanced', 'dive_expandable_location').setValue(json_obj.lightboxUrl);
 								d.getContentElement('advanced', 'dive_expandable_choices').setValue('dive_expand_uncropped');
 
 								//need to set this AFTER changing the Url, because the in the
@@ -1071,7 +1071,7 @@
 
 								if (this.getValue() == 'dive_expand_uncropped') {
 									// var full_url_element = this.getDialog().getContentElement('advanced', 'dive_img_full_url');
-									var full_url = this.getDialog().getJSONData('fullUrl');
+									var full_url = this.getDialog().getJSONData('lightboxUrl');
 									html_element.setValue(full_url);
 									// full_url_element.setValue(full_url);
 
