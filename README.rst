@@ -1,5 +1,5 @@
 Django CKEditor
-================
+===============
 * riklaunim / django-ckeditor is on PyPi as https://pypi.python.org/pypi/django-ckeditor-updated - latest code, works with latest Django
 * shaunsephton / django-ckeditor is on PyPi as https://pypi.python.org/pypi/django-ckeditor - still old release not compatible with newer Django versions
 
@@ -13,7 +13,7 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.2.1
+#. updated ckeditor to version 4.3.3
 #. included all ckeditor language files to made everyone happy!
 
 .. contents:: Contents
@@ -124,7 +124,7 @@ Included is a management command to create thumbnails for images already contain
 **NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`_ for more info.
 
 Using S3
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 See http://django-storages.readthedocs.org/en/latest/
 
 
@@ -157,7 +157,7 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 
 
 Running selenium test
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
 (You may have to fix some imports in selenium webdriver for Python 3.3).
