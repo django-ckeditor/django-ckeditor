@@ -1,6 +1,10 @@
 Changelog
 =========
 
+4.2.8
+-----
+#. Update CKEditor to 4.3.3
+
 4.2.7
 -----
 #. Fix slugifying to empty filename if only bad characters given in filename. Use random string as fallback.
@@ -9,7 +13,7 @@ Changelog
 #. Misc fixes
 
 4.2.5 / 4.2.6
------
+-------------
 #. Fix static files installation - switch from distutils to setuptools
 
 4.2.4
