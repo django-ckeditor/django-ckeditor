@@ -1,7 +1,10 @@
 <p><textarea{{ final_attrs|safe }}>{{ value }}</textarea></p>
 <script type="text/javascript">
-{% for plugin_name, base_path, resource_name in external_plugin_resources %}
-    CKEDITOR.plugins.addExternal("{{ plugin_name|escapejs }}", "{{ base_path|escapejs }}", "{{ resource_name|escapejs }}");
-{% endfor %}
-    CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    if (typeof CKEDITOR == "undefined") {
+        $( document ).ready(function() {
+            CKEDITOR.replace("{{ id }}", {{ config|safe }});
+        });
+    } else {
+        CKEDITOR.replace("{{ id }}", {{ config|safe }});
+    }
 </script>
