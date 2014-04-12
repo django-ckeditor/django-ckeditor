@@ -14,9 +14,6 @@ from ckeditor import utils
 
 THUMBNAIL_SIZE = (75, 75)
 
-def image_verify(f):
-    Image.open(f).verify()
-
 
 def image_verify(f):
     Image.open(f).verify()

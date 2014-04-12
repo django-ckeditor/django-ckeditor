@@ -14,13 +14,6 @@ Changelog
 
 4.2.5 / 4.2.6
 -------------
-#. Fix slugifying to empty filename if only bad characters given in filename. Use random string as fallback.
-#. Don't use IMG tags for non image files in ckeditor file browser.
-#. Remove non-existing image reference from CSS files that broke collectstatic.
-#. Misc fixes
-
-4.2.5 / 4.2.6
--------------
 #. Fix static files installation - switch from distutils to setuptools
 
 4.2.4
