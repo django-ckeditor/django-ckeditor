@@ -1,13 +1,11 @@
 Django CKEditor
-================
-**Note that there are two packages on PyPi - django-ckeditor made of this repository, and django-ckeditor-updated made from riklaunim / django-ckeditor fork.**
-Recently the code from riklaunim / django-ckeditor was merged into this repository but the PyPi package hasn't been updated yet. The new code brings support
-for recent Django versions as well as changes application configuration (no absolute path due to django file storage usage).
-
+===============
 * riklaunim / django-ckeditor is on PyPi as https://pypi.python.org/pypi/django-ckeditor-updated - latest code, works with latest Django
 * shaunsephton / django-ckeditor is on PyPi as https://pypi.python.org/pypi/django-ckeditor - still old release not compatible with newer Django versions
 
-The goal is to merge all outstanding fixes and pull requests to this repository. When django-ckeditor will start getting constant releases "django-ckeditor-updated" will be closed.
+
+**This fork, django-ckeditor-updated, has different configuration than the old django ckeditor. All of my changes were recently merged to shaunsephton repository
+but they havent been released yet as a package. Until django-ckeditor won't get new and constant releases I'be maintaining this fork.***
 
 
 **Django admin CKEditor integration.**
@@ -15,7 +13,7 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.2.1
+#. updated ckeditor to version 4.3.3
 #. included all ckeditor language files to made everyone happy!
 
 .. contents:: Contents
@@ -126,7 +124,7 @@ Included is a management command to create thumbnails for images already contain
 **NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`_ for more info.
 
 Using S3
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 See http://django-storages.readthedocs.org/en/latest/
 
 
@@ -159,7 +157,7 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 
 
 Running selenium test
-~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
 (You may have to fix some imports in selenium webdriver for Python 3.3).

@@ -1,8 +1,10 @@
 Changelog
 =========
 
-<<<<<<< HEAD
-=======
+4.2.8
+-----
+#. Update CKEditor to 4.3.3
+
 4.2.7
 -----
 #. Fix slugifying to empty filename if only bad characters given in filename. Use random string as fallback.
@@ -10,9 +12,8 @@ Changelog
 #. Remove non-existing image reference from CSS files that broke collectstatic.
 #. Misc fixes
 
->>>>>>> d9c2ec94efcd9a8e36f849116ea88c1dba445c0b
 4.2.5 / 4.2.6
------
+-------------
 #. Fix static files installation - switch from distutils to setuptools
 
 4.2.4
