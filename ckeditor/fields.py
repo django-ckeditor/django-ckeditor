@@ -4,7 +4,7 @@ from django import forms
 from ckeditor.widgets import CKEditorWidget
 
 
-class RichTextField(models.TextField):
+class RichTextField(models.Field):
     def __init__(self, *args, **kwargs):
         self.config_name = kwargs.pop("config_name", "default")
         self.extra_plugins = kwargs.pop("extra_plugins", [])
