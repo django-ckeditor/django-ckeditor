@@ -1,6 +1,11 @@
 Changelog
 =========
 
+4.4.0
+-----
+#. Update CKEditor to 4.4.1
+#. Django 1.7 compatibility fix
+
 4.2.8
 -----
 #. Update CKEditor to 4.3.3

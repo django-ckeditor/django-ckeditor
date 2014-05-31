@@ -13,7 +13,7 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.3.3
+#. updated ckeditor to version 4.4
 #. included all ckeditor language files to made everyone happy!
 
 .. contents:: Contents
