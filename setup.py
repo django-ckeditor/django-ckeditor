@@ -8,7 +8,7 @@ def get_source_files():
             yield os.path.join('/'.join(dirname.split('/')[1:]), filename)
 
 setup(
-    name='django-ckeditor',
+    name='django-ckeditor-updated',
     version='4.2.8',
     description='Django admin CKEditor integration.',
     long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
