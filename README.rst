@@ -48,11 +48,17 @@ Required
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: uses PIL or Pillow
+   
+#. Add a ``CKEDITOR_WINDOWSMODE=True`` setting to the project's ``settings.py`` file when you are debugging with windows platform or it will raise a error
+   See https://github.com/shaunsephton/django-ckeditor/issues/119
+
+#. Add a ``CKEDITOR_UPLOAD_URL`` setting to the project's ``settings.py`` file just like ``http://127.0.0.1:8000``
+   Do not end with ``/``
 
 
 Optional
 ~~~~~~~~
-#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_SLUGIFY_FILENAME`` to ``False``
+#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
 #. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
