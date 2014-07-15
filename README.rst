@@ -50,10 +50,10 @@ Required
    - ``pillow``: uses PIL or Pillow
    
 #. Add a ``CKEDITOR_WINDOWSMODE=True`` setting to the project's ``settings.py`` file when you are debugging with windows platform or it will raise a error
-See https://github.com/shaunsephton/django-ckeditor/issues/119
+   See https://github.com/shaunsephton/django-ckeditor/issues/119
 
 #. Add a ``CKEDITOR_UPLOAD_URL`` setting to the project's ``settings.py`` file just like ``http://127.0.0.1:8000``
-Do not end with ``/``
+   Do not end with ``/``
 
 
 Optional
