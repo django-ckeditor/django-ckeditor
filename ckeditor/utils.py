@@ -38,6 +38,11 @@ def get_image_format(extension):
 
 def get_media_url(path):
     """
-    Determine system file's media URL.
+    Determine system file's media URL(New Method)
+    Fix this issue:
+    https://github.com/shaunsephton/django-ckeditor/issues/119
     """
+    if getattr(settings,'CKEDITOR_WINDOWSMODE',True):
+        return str(settings.CKEDITOR_UPLOAD_URL)+\
+               str(path).split(settings.BASE_DIR)[1].replace("\\","/")
     return default_storage.url(path)
