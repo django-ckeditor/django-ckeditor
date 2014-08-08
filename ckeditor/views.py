@@ -4,6 +4,7 @@ import os
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -32,6 +33,7 @@ def get_upload_filename(upload_name, user):
     return default_storage.get_available_name(os.path.join(upload_path, upload_name))
 
 
+@staff_member_required
 @csrf_exempt
 def upload(request):
     """
@@ -133,6 +135,7 @@ def is_image(path):
     return ext in ['jpg', 'jpeg', 'png', 'gif']
 
 
+@staff_member_required
 def browse(request):
     context = RequestContext(request, {
         'files': get_files_browse_urls(request.user),
