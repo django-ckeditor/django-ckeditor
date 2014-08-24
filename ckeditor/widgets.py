@@ -40,7 +40,9 @@ class CKEditorWidget(forms.Textarea):
     class Media:
         try:
             js = (
+                '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
                 settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
+                settings.STATIC_URL + 'ckeditor/ckeditor-init.js',
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
@@ -75,9 +77,9 @@ class CKEditorWidget(forms.Textarea):
             else:
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
-        
+
         extra_plugins = extra_plugins or []
-        
+
         if extra_plugins:
             self.config['extraPlugins'] = ','.join(extra_plugins)
 
