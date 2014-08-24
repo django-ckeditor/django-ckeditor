@@ -16,7 +16,10 @@ THUMBNAIL_SIZE = (75, 75)
 
 
 def image_verify(f):
-    Image.open(f).verify()
+    try:
+        Image.open(f).verify()
+    except IOError:
+        raise utils.NotAnImageException
 
 
 def create_thumbnail(file_path):

@@ -7,6 +7,10 @@ from django.core.files.storage import default_storage
 from django.template.defaultfilters import slugify
 
 
+class NotAnImageException(Exception):
+    pass
+
+
 def slugify_filename(filename):
     """ Slugify filename """
     name, ext = os.path.splitext(filename)
