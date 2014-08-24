@@ -40,7 +40,7 @@ class CKEditorWidget(forms.Textarea):
     class Media:
         try:
             js = (
-                'http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js',
+                '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
                 settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
                 settings.STATIC_URL + 'ckeditor/ckeditor-init.js',
             )
