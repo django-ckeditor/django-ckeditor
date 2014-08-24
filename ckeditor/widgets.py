@@ -38,9 +38,12 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
     class Media:
+        js = ()
+        jquery_url = getattr(settings, 'CKEDITOR_JQUERY_URL', None)
+        if jquery_url:
+            js += (jquery_url, )
         try:
-            js = (
-                '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+            js += (
                 settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
                 settings.STATIC_URL + 'ckeditor/ckeditor-init.js',
             )
