@@ -1,0 +1,25 @@
+.ace_editor * {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important;
+    font-size: 12px !important;
+}
+.cke_dialog_ui_input_select select {
+    background-color: white !important;
+    border: 1px solid #CCC !important;
+    -webkit-border-radius: 4px !important;
+       -moz-border-radius: 4px !important;
+            border-radius: 4px !important;
+    color: #555 !important;
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    font-size: 12px !important;
+    height: auto !important;
+    margin-bottom: 10px !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+    width: 110px !important;
+}
+
+/* good font color on dark theme */
+.cke_reset_all .ace_dark *{
+    color: inherit;
+}
