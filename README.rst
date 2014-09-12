@@ -1,7 +1,7 @@
 Django CKEditor
 ===============
 
-**NOTICE: The django-ckeditor-updated 4.4 have been merged with django-ckeditor and released as  django-ckeditor-4.4.**
+**NOTICE: The django-ckeditor-updated 4.4.4 have been merged with django-ckeditor and released as  django-ckeditor-4.4.4.**
 
 **NOTICE 2: This newer version has different configuration than old django-ckeditor releases!**
 
