@@ -2,11 +2,6 @@ AUTHORS
 =======
 
 
-This fork
-----------
-#. `riklaunim <https://github.com/riklaunim>`_
-
-
 Created By
 ----------
 #. `shaunsephton <http://github.com/shaunsephton>`_
@@ -14,6 +9,7 @@ Created By
 
 Contributors
 ------------
+#. `riklaunim <https://github.com/riklaunim>`_
 #. `3point2 <https://github.com/3point2>`_
 #. `buchuki <http://github.com/buchuki>`_
 #. `chr15m <http://github.com/chr15m>`_
