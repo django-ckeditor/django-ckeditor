@@ -38,9 +38,14 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
     class Media:
+        js = ()
+        jquery_url = getattr(settings, 'CKEDITOR_JQUERY_URL', None)
+        if jquery_url:
+            js += (jquery_url, )
         try:
-            js = (
+            js += (
                 settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
+                settings.STATIC_URL + 'ckeditor/ckeditor-init.js',
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
@@ -75,9 +80,9 @@ class CKEditorWidget(forms.Textarea):
             else:
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
-        
+
         extra_plugins = extra_plugins or []
-        
+
         if extra_plugins:
             self.config['extraPlugins'] = ','.join(extra_plugins)
 
