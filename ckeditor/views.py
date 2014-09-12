@@ -47,7 +47,7 @@ def upload(request):
     backend = image_processing.get_backend()
     try:
         backend.image_verify(upload)
-    except IOError:
+    except utils.NotAnImageException:
         return HttpResponse("""
                    <script type='text/javascript'>
                         alert('Invalid image')

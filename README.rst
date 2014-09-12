@@ -14,7 +14,7 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.3.3
+#. updated ckeditor to version 4.4
 #. included all ckeditor language files to made everyone happy!
 
 .. contents:: Contents
@@ -29,8 +29,6 @@ Required
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
-
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an relative path to your CKEditor media upload directory. CKEditor uses Django storage API. By default Django uses file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
 
 
@@ -41,6 +39,8 @@ Required
    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
    There are issues using S3Storage from django-storages.
 
+#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
+
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
     (r'^ckeditor/', include('ckeditor.urls')),
@@ -49,10 +49,14 @@ Required
 
    - ``pillow``: uses PIL or Pillow
 
+#. django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
+
+       CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
 
 Optional
 ~~~~~~~~
-#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_SLUGIFY_FILENAME`` to ``False``
+#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
 #. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
@@ -81,6 +85,7 @@ Optional
                'width': 300,
            },
        }
+
 
 Usage
 -----
