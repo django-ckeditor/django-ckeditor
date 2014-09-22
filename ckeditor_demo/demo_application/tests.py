@@ -3,11 +3,21 @@ import hashlib
 import os.path
 from time import sleep
 
+CHROMIUM = 'chromium'
+FIREFOX = 'firefox'
+SELENIUM_BROWSER = FIREFOX
+
 from django.conf import settings
 from django.contrib.staticfiles.finders import find
 from django.test import LiveServerTestCase
 from django.test.utils import override_settings
-from selenium.webdriver.firefox.webdriver import WebDriver
+
+if SELENIUM_BROWSER == CHROMIUM:
+    from selenium import webdriver
+elif SELENIUM_BROWSER == FIREFOX:
+    from selenium.webdriver.firefox.webdriver import WebDriver
+else:
+    raise ValueError('a browser must be picked to run selenium tests')
 
 
 class TestAdminPanelWidget(LiveServerTestCase):
@@ -15,7 +25,10 @@ class TestAdminPanelWidget(LiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.selenium = WebDriver()
+        if SELENIUM_BROWSER == CHROMIUM:
+            cls.selenium = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
+        elif SELENIUM_BROWSER == FIREFOX:
+             cls.selenium = WebDriver()
         super(TestAdminPanelWidget, cls).setUpClass()
 
     @classmethod
