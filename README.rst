@@ -163,6 +163,10 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 
 Running selenium test
 ~~~~~~~~~~~~~~~~~~~~~
-
 You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
 (You may have to fix some imports in selenium webdriver for Python 3.3).
+
+
+Versioning
+~~~~~~~~~~
+First two numbers resemble ckeditor version used in the package. The third is used to issue releases for given ckeditor bundle (fixes, new features)
