@@ -3,7 +3,7 @@ $(function() {
     initialiseCKEditorInInlinedForms();
 
     function initialiseCKEditorInInlinedForms() {
-        $(".add-row a").click(function () {
+        $(".add-row a, .grp-add-handler").click(function () {
             initialiseCKEditor();
             return true;
         });
