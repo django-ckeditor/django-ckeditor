@@ -1,6 +1,18 @@
 Changelog
 =========
 
+4.4.6
+-----
+#. Make upload/browse views be staff_member_required by default (can be overridden)
+#. Fix ckeditor initialisation code breaking with other jQuery versions.
+#. Support grappelli inline form widgets.
+#. Remove odd left margin from widget template.
+#. Allow running selenium tests with chromium.
+
+4.4.5
+-----
+#. Post merge package name fix in Readme
+
 4.4.4
 -----
 #. Update CKEditor to 4.4.4 full package - for all plugins and static files you may need
