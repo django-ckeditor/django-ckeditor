@@ -1,4 +1,4 @@
-jQuery(function(){
+$(function() {
 
     function initCKEditor(){
         $('textarea[data-type=ckeditortype]').each(function(){
