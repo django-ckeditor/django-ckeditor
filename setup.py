@@ -13,7 +13,7 @@ setup(
         'http://dist.plone.org/thirdparty/',
     ],
     install_requires = [
-        'PIL',
+        'Pillow',
     ],
     include_package_data=True,
     test_suite="setuptest.SetupTestSuite",
