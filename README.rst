@@ -22,7 +22,7 @@ Installation
 
 Required
 ~~~~~~~~
-#. Install or add django-ckeditor-updated to your python path. Note: You may not have the original django-ckeditor and django-ckeditor-updated installed at the same time.
+#. Install or add django-ckeditor to your python path.
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
@@ -119,6 +119,17 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
         form = PostAdminForm
 
     admin.site.register(Post, PostAdmin)
+
+
+Note that when using outside of admin panel you will have to make sure all form media is present for the editor to work. You may have to render the media like so::
+
+    <form>
+        {{ myform.media }}
+        {{ myform.as_p }}
+        <input type="submit"/>
+    </form>
+
+
 
 Managment Commands
 ~~~~~~~~~~~~~~~~~~
