@@ -48,7 +48,7 @@ Required
 
    - ``pillow``: uses PIL or Pillow
 
-#. django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
+#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
 
        CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
@@ -147,13 +147,13 @@ See http://django-storages.readthedocs.org/en/latest/
 If you want to use allowedContent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To allowedContent works, disable **stylesheetparser** plugin.
-So included this on your settings.py.
+So included this on your settings.py.::
 
-CKEDITOR_CONFIGS = {
-    "default": {
-        "removePlugins": "stylesheetparser",
+    CKEDITOR_CONFIGS = {
+        "default": {
+            "removePlugins": "stylesheetparser",
+        }
     }
-}
 
 
 Demo / Test application
