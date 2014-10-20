@@ -98,7 +98,7 @@ def get_image_files(user=None, path=''):
         return
 
     for filename in storage_list[STORAGE_FILES]:
-        if os.path.splitext(filename)[0].endswith('_thumb'):
+        if os.path.splitext(filename)[0].endswith('_thumb') or os.path.basename(filename).startswith('.'):
             continue
         filename = os.path.join(browse_path, filename)
         yield filename
