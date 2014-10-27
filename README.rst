@@ -22,7 +22,7 @@ Installation
 
 Required
 ~~~~~~~~
-#. Install or add django-ckeditor-updated to your python path. Note: You may not have the original django-ckeditor and django-ckeditor-updated installed at the same time.
+#. Install or add django-ckeditor to your python path.
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
@@ -48,7 +48,7 @@ Required
 
    - ``pillow``: uses PIL or Pillow
 
-#. django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
+#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
 
        CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
@@ -120,6 +120,17 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
 
     admin.site.register(Post, PostAdmin)
 
+
+Note that when using outside of admin panel you will have to make sure all form media is present for the editor to work. You may have to render the media like so::
+
+    <form>
+        {{ myform.media }}
+        {{ myform.as_p }}
+        <input type="submit"/>
+    </form>
+
+
+
 Managment Commands
 ~~~~~~~~~~~~~~~~~~
 Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when starting to use django-ckeditor with existing images. Issue the command as follows::
@@ -136,13 +147,13 @@ See http://django-storages.readthedocs.org/en/latest/
 If you want to use allowedContent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To allowedContent works, disable **stylesheetparser** plugin.
-So included this on your settings.py.
+So included this on your settings.py.::
 
-CKEDITOR_CONFIGS = {
-    "default": {
-        "removePlugins": "stylesheetparser",
+    CKEDITOR_CONFIGS = {
+        "default": {
+            "removePlugins": "stylesheetparser",
+        }
     }
-}
 
 
 Demo / Test application

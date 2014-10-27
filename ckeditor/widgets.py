@@ -8,10 +8,19 @@ from django.utils.encoding import force_text
 from django.utils.translation import get_language
 from django.core.exceptions import ImproperlyConfigured
 from django.forms.util import flatatt
-import json
+
+from django.utils.functional import Promise
+from django.utils.encoding import force_text
+from django.core.serializers.json import DjangoJSONEncoder
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Promise):
+            return force_text(obj)
+        return super(LazyEncoder, self).default(obj)
 
 
-json_encode = json.JSONEncoder().encode
+json_encode = LazyEncoder().encode
 
 DEFAULT_CONFIG = {
     'skin': 'moono',
