@@ -5,10 +5,17 @@
     initialiseCKEditorInInlinedForms();
 
     function initialiseCKEditorInInlinedForms() {
-      $(document).on("click", ".add-row a, .grp-add-handler", function () {
-        initialiseCKEditor();
-        return true;
-      });
+      try {
+        $(document).on("click", ".add-row a, .grp-add-handler", function () {
+          initialiseCKEditor();
+          return true;
+        });
+      } catch (e) {
+        $(document).live(".add-row a, .grp-add-handler", "click",  function () {
+          initialiseCKEditor();
+          return true;
+        });
+      }
     }
 
     function initialiseCKEditor() {
