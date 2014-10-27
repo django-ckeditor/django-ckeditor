@@ -11,7 +11,7 @@
           return true;
         });
       } catch (e) {
-        $(document).live(".add-row a, .grp-add-handler", "click",  function () {
+        $(document).delegate(".add-row a, .grp-add-handler", "click",  function () {
           initialiseCKEditor();
           return true;
         });
