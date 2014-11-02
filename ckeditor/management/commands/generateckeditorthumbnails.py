@@ -18,11 +18,11 @@ class Command(NoArgsCommand):
             backend = get_backend()
             for image in get_image_files():
                 if not os.path.isfile(get_thumb_filename(image)):
-                    self.stdout.write("Creating thumbnail for {0}".format(image))
+                    self.stdout.write("Creating thumbnail for %s" % image)
                     try:
                         backend.create_thumbnail(image)
                     except Exception as e:
-                        self.stdout.write("Couldn't create thumbnail for {0}: {1}".format(image, e))
+                        self.stdout.write("Couldn't create thumbnail for %s: %s" % (image, e))
             self.stdout.write("Finished")
         else:
             self.stdout.write("No thumbnail backend is enabled")
