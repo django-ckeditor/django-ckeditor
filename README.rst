@@ -47,6 +47,12 @@ Required
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: uses PIL or Pillow
+   
+#. Add a ``CKEDITOR_WINDOWSMODE=True`` setting to the project's ``settings.py`` file when you are debugging with windows platform or it will raise a error
+   See https://github.com/shaunsephton/django-ckeditor/issues/119
+
+#. Add a ``CKEDITOR_UPLOAD_URL`` setting to the project's ``settings.py`` file just like ``http://127.0.0.1:8000``
+   Do not end with ``/``
 
 #. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set this variable and django-ckeditor will not try to load its own jQuery. Example::
 
