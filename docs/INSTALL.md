@@ -3,11 +3,11 @@ Installation Guide
 
 Required
 ~~~~~~~~
-#. Install or add django-ckeditor to your python path.
+1. Install or add django-ckeditor to your python path.
 
-#. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
+2. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an relative path to your CKEditor media upload directory. CKEditor uses Django storage API. By default Django uses file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
+3. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an relative path to your CKEditor media upload directory. CKEditor uses Django storage API. By default Django uses file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
 
 
     CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -17,30 +17,30 @@ Required
    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
    There are issues using S3Storage from django-storages.
 
-#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
+4. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
-#. Add CKEditor URL include to your project's ``urls.py`` file::
+5. Add CKEditor URL include to your project's ``urls.py`` file::
 
     (r'^ckeditor/', include('ckeditor.urls')),
 
-#. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6 those views are staff_member_required. If you want different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manualy to you urls.py.
+6. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6 those views are staff_member_required. If you want different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manualy to you urls.py.
 
-#. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
+7. Set ``CKEDITOR_IMAGE_BACKEND`` to one of supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: uses PIL or Pillow
 
-#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site then check that this variable is set correctly. Example::
+8. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site then check that this variable is set correctly. Example::
 
        CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
 
 Optional
 ~~~~~~~~
-#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
+1. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
-#. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
+2. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
-#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
+3. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
 
        CKEDITOR_CONFIGS = {
            'awesome_ckeditor': {

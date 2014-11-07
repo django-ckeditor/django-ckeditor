@@ -72,13 +72,13 @@ Demo / Test application
 ~~~~~~~~~~~~~~~~~~~~~~~
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
 
-#. ``pip install -r ckeditor_demo_requirements.txt``
+1. ``pip install -r ckeditor_demo_requirements.txt``
 
-#. Run ``python.manage.py syncdb``
+2. Run ``python.manage.py syncdb``
 
-#. Create a superuser if you want to test the widget in the admin panel
+3. Create a superuser if you want to test the widget in the admin panel
 
-#. Start the development server.
+4. Start the development server.
 
 There is a forms.Form on main page (/) and a model in admin that uses the widget for a model field.
 Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
