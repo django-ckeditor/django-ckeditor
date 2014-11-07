@@ -1,8 +1,7 @@
-Installation Guide
-------------------
+# Installation Guide
 
-Required
-~~~~~~~~
+## Required
+
 1. Install or add django-ckeditor to your python path.
 
 2. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
@@ -34,8 +33,8 @@ Required
        CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 
 
-Optional
-~~~~~~~~
+## Optional
+
 1. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
 2. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
