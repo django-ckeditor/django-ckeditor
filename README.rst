@@ -131,8 +131,8 @@ Note that when using outside of admin panel you will have to make sure all form 
 
 
 
-Managment Commands
-~~~~~~~~~~~~~~~~~~
+Management Commands
+~~~~~~~~~~~~~~~~~~~
 Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when starting to use django-ckeditor with existing images. Issue the command as follows::
 
     $ ./manage.py generateckeditorthumbnails
