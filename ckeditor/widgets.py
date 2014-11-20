@@ -29,6 +29,7 @@ DEFAULT_CONFIG = {
     ],
     'toolbar_Full': [
         ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+        [ 'Link','Unlink','Anchor'],
         ['Image', 'Flash', 'Table', 'HorizontalRule'],
         ['TextColor', 'BGColor'],
         ['Smiley', 'SpecialChar'], ['Source'],
