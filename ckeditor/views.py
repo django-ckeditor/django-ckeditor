@@ -104,6 +104,8 @@ def get_image_files(user=None, path=''):
         yield filename
 
     for directory in storage_list[STORAGE_DIRECTORIES]:
+        if directory.startswith('.'):
+            continue
         directory_path = os.path.join(path, directory)
         for element in get_image_files(user=user, path=directory_path):
             yield element
