@@ -1,5 +1,12 @@
-;(function() {
-  var $ = $ || django.jQuery;
+(function() {
+  var djangoJQuery;
+  if (typeof jQuery == 'undefined' && typeof django == 'undefined') {
+    console.error('ERROR django-ckeditor missing jQuery. Set CKEDITOR_JQUERY_URL or provide jQuery in the template.');
+  } else if (typeof django != 'undefined') {
+    djangoJQuery = django.jQuery;
+  }
+
+  var $ = jQuery || djangoJQuery;
   $(function() {
     initialiseCKEditor();
     initialiseCKEditorInInlinedForms();
@@ -25,6 +32,6 @@
           CKEDITOR.replace($(this).attr('id'), $(this).data('config'));
         }
       });
-    };
+    }
   });
 }());

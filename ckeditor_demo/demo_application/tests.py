@@ -75,15 +75,15 @@ class TestAdminPanelWidget(LiveServerTestCase):
         sleep(1)
 
     def _go_to_upload_tab(self):
-        self.selenium.find_element_by_id("cke_Upload_102").click()
+        self.selenium.find_element_by_id("cke_Upload_116").click()
         sleep(1)
 
     def _switch_to_form_iframe(self):
-        iframe = self.selenium.find_element_by_id('cke_97_fileInput')
+        iframe = self.selenium.find_element_by_id('cke_111_fileInput')
         self.selenium.switch_to_frame(iframe)
 
     def _upload_image(self):
-        input = self.selenium.find_element_by_id("cke_97_fileInput_input")
+        input = self.selenium.find_element_by_id("cke_111_fileInput_input")
         input.send_keys(self._get_upload_file())
         self.selenium.switch_to_default_content()
         self.selenium.find_element_by_class_name("cke_dialog_ui_fileButton").click()

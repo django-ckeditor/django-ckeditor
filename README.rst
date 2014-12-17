@@ -23,6 +23,8 @@ Installation
 Required
 ~~~~~~~~
 #. Install or add django-ckeditor to your python path.
+    
+    pip install django-ckeditor-updated
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
@@ -79,7 +81,7 @@ Optional
 
        CKEDITOR_CONFIGS = {
            'default': {
-               'toolbar': 'Full',
+               'toolbar': 'full',
                'height': 300,
                'width': 300,
            },
