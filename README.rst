@@ -24,7 +24,7 @@ Required
 ~~~~~~~~
 #. Install or add django-ckeditor to your python path.
     
-    pip install django-ckeditor-updated
+    pip install django-ckeditor
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
