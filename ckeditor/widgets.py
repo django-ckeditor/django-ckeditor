@@ -102,7 +102,6 @@ class CKEditorWidget(forms.Textarea):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
-        print self.config
         if 'filebrowserUploadUrl' not in self.config:
             self.config.setdefault('filebrowserUploadUrl', reverse('ckeditor_upload'))
         if 'filebrowserBrowseUrl' not in self.config:
