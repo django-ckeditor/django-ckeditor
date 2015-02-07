@@ -24,7 +24,7 @@ def get_slugified_name(filename):
 
 
 def get_random_string():
-    return ''.join(random.sample(string.ascii_lowercase*6, 6))
+    return ''.join(random.sample(string.ascii_lowercase * 6, 6))
 
 
 def get_thumb_filename(file_name):
@@ -32,7 +32,7 @@ def get_thumb_filename(file_name):
     Generate thumb filename by adding _thumb to end of
     filename before . (if present)
     """
-    return u'{0}_thumb{1}'.format(*os.path.splitext(file_name))
+    return unicode('{0}_thumb{1}').format(*os.path.splitext(file_name))
 
 
 def get_image_format(extension):
