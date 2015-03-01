@@ -145,11 +145,9 @@ Using S3
 ~~~~~~~~
 See http://django-storages.readthedocs.org/en/latest/
 
-**NOTE:** `django-ckeditor` will not work with S3 through `django-storages` without this line in `settings.py`:  
+**NOTE:** ``django-ckeditor`` will not work with S3 through ``django-storages`` without this line in ``settings.py``::  
 
-```python
-AWS_QUERYSTRING_AUTH = False
-```
+    AWS_QUERYSTRING_AUTH = False
 
 If you want to use allowedContent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
