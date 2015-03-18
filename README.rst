@@ -87,7 +87,7 @@ Optional
            },
        }
 
-    It is possible to create a custom toolbar ::
+   It is possible to create a custom toolbar ::
 
         CKEDITOR_CONFIGS = {
             'default': {
