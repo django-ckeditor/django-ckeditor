@@ -5,6 +5,7 @@ import string
 
 from django.core.files.storage import default_storage
 from django.template.defaultfilters import slugify
+from django.utils.encoding import force_text
 
 
 class NotAnImageException(Exception):
@@ -32,7 +33,7 @@ def get_thumb_filename(file_name):
     Generate thumb filename by adding _thumb to end of
     filename before . (if present)
     """
-    return unicode('{0}_thumb{1}').format(*os.path.splitext(file_name))
+    return force_text('{0}_thumb{1}').format(*os.path.splitext(file_name))
 
 
 def get_image_format(extension):
