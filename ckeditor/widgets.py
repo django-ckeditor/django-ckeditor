@@ -1,6 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
@@ -59,8 +60,8 @@ class CKEditorWidget(forms.Textarea):
             js += (jquery_url, )
         try:
             js += (
-                settings.STATIC_URL + 'ckeditor/ckeditor/ckeditor.js',
-                settings.STATIC_URL + 'ckeditor/ckeditor-init.js',
+                static('ckeditor/ckeditor/ckeditor.js'),
+                static('ckeditor/ckeditor-init.js'),
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
