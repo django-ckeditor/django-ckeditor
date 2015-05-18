@@ -1,6 +1,14 @@
 Changelog
 =========
 
+4.4.8
+-----
+#. Python 3 compatibility fixes
+#. Get static files paths in a proper way
+#. Fix Django 1.7 deprecation warning
+#. More examples in readme
+
+
 4.4.7
 -----
 #. Allow only POST requests on upload view.
