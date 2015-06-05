@@ -38,7 +38,7 @@ Required
    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
    There are issues using S3Storage from django-storages.
 
-#. Run the ``collectstatic`` management command: ``$ /manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
+#. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
