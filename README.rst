@@ -136,13 +136,22 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
     admin.site.register(Post, PostAdmin)
 
 
-Note that when using outside of admin panel you will have to make sure all form media is present for the editor to work. You may have to render the media like so::
+Outside of django admin
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When you are rendering form outside of admin panel you will have to make sure that all form media is present for the editor to work. One of the way how to achieve this is following::
 
     <form>
         {{ myform.media }}
         {{ myform.as_p }}
         <input type="submit"/>
     </form>
+
+or you can load the media manually at it is done in demo app::
+        
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 
 
 
