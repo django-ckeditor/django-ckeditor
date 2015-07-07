@@ -1,6 +1,15 @@
 Changelog
 =========
 
+
+4.5.0
+-----
+#. Updated ckeditor to 4.5.1
+#. Reverted django.contrib.staticfiles.templatetags.staticfiles.static usage causing problems with some storages
+#. Allow non-image files to be upload (the upload widget expects images so the user experience isn't best at the moment)
+#. Few refactors and fixes to selenium tests
+
+
 4.4.8
 -----
 #. Python 3 compatibility fixes
