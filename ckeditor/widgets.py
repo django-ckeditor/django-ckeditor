@@ -103,7 +103,7 @@ class CKEditorWidget(forms.Textarea):
 
         self.external_plugin_resources = external_plugin_resources or []
 
-    def render(self, name, value, attrs={}):
+    def render(self, name, value, attrs=None):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
