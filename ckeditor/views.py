@@ -116,10 +116,10 @@ def get_files_browse_urls(user=None):
     files = []
     for filename in get_image_files(user=user):
         src = utils.get_media_url(filename)
+        visible_filename = None
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             if is_image(src):
                 thumb = utils.get_media_url(utils.get_thumb_filename(filename))
-                visible_filename = None
             else:
                 thumb = utils.get_icon_filename(filename)
                 visible_filename = os.path.split(filename)[1]
