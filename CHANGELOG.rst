@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+4.5.1
+-----
+#. Fixed unbound variable in non-image file upload
+
+
 4.5.0
 -----
 #. Updated ckeditor to 4.5.1
