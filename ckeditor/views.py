@@ -12,6 +12,7 @@ from django.template import RequestContext
 
 from ckeditor import image_processing
 from ckeditor import utils
+from ckeditor.forms import SearchForm
 
 
 def get_upload_filename(upload_name, user):
@@ -144,8 +145,10 @@ def is_image(path):
 
 def browse(request):
     files = get_files_browse_urls(request.user)
-    if request.POST:
-        files = filter(lambda d: request.POST.get('q', '').lower() in d['visible_filename'].lower(), files)
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            files = filter(lambda d: form.cleaned_data.get('q', '').lower() in d['visible_filename'].lower(), files)
     context = RequestContext(request, {
         'files': files,
     })
