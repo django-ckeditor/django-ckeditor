@@ -143,7 +143,10 @@ def is_image(path):
 
 
 def browse(request):
+    files = get_files_browse_urls(request.user)
+    if request.POST:
+        files = filter(lambda d: request.POST.get('q', '').lower() in d['visible_filename'].lower(), files)
     context = RequestContext(request, {
-        'files': get_files_browse_urls(request.user),
+        'files': files,
     })
     return render_to_response('browse.html', context)
