@@ -149,7 +149,10 @@ def browse(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             files = filter(lambda d: form.cleaned_data.get('q', '').lower() in d['visible_filename'].lower(), files)
+    else:
+        form = SearchForm()
     context = RequestContext(request, {
         'files': files,
+        'form': form
     })
     return render_to_response('browse.html', context)

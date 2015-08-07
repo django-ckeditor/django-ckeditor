@@ -39,7 +39,7 @@
                 <div id="search">
                     <form action="" method="post">
                         {% csrf_token %}
-                        <label>Search files&nbsp;<input type="text" name="q"></label>
+                        {{ form }}
                     </form>
                 </div>
                 <div id="thumbs" class="navigation">
