@@ -11,8 +11,8 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.4
-#. included all ckeditor language files to made everyone happy!
+#. updated ckeditor to version 4.5
+#. included all ckeditor language and plugin files to made everyone happy!
 
 .. contents:: Contents
     :depth: 5
@@ -183,6 +183,14 @@ So included this on your settings.py.::
             "removePlugins": "stylesheetparser",
         }
     }
+
+
+Plugins:
+~~~~~~~~
+
+django-ckeditor send by default the following ckeditor plugins, however, not all are enabled by default:
+
+a11yhelp, about, adobeair, ajax, autoembed, autogrow, autolink, bbcode, clipboard, codesnippet, codesnippetgeshi, colordialog, devtools, dialog, div, divarea, docprops, embed, embedbase, embedsemantic, filetools, find, flash, forms, iframe, iframedialog, image, image2, language, lineutils, link, liststyle, magicline, mathjax, menubutton, notification, notificationaggregator, pagebreak, pastefromword, placeholder, preview, scayt, sharedspace, showblocks, smiley, sourcedialog, specialchar, stylesheetparser, table, tableresize, tabletools, templates, uicolor, uploadimage, uploadwidget, widget, wsc, xml
 
 
 Demo / Test application
