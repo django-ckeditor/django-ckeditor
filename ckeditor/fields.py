@@ -1,10 +1,13 @@
-from django.db import models
-from django import forms
+from __future__ import absolute_import
 
-from ckeditor.widgets import CKEditorWidget
+from django import forms
+from django.db import models
+
+from .widgets import CKEditorWidget
 
 
 class RichTextField(models.TextField):
+
     def __init__(self, *args, **kwargs):
         self.config_name = kwargs.pop("config_name", "default")
         self.extra_plugins = kwargs.pop("extra_plugins", [])
@@ -15,7 +18,7 @@ class RichTextField(models.TextField):
         defaults = {
             'form_class': RichTextFormField,
             'config_name': self.config_name,
-            'extra_plugins' : self.extra_plugins,
+            'extra_plugins': self.extra_plugins,
             'external_plugin_resources': self.external_plugin_resources
         }
         defaults.update(kwargs)
@@ -23,8 +26,10 @@ class RichTextField(models.TextField):
 
 
 class RichTextFormField(forms.fields.CharField):
+
     def __init__(self, config_name='default', extra_plugins=None, external_plugin_resources=None, *args, **kwargs):
-        kwargs.update({'widget': CKEditorWidget(config_name=config_name, extra_plugins=extra_plugins, external_plugin_resources=external_plugin_resources)})
+        kwargs.update({'widget': CKEditorWidget(config_name=config_name, extra_plugins=extra_plugins,
+                                                external_plugin_resources=external_plugin_resources)})
         super(RichTextFormField, self).__init__(*args, **kwargs)
 
 try:

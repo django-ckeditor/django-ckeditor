@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import mimetypes
 import os.path
 import random
@@ -9,7 +11,6 @@ from django.core.files.storage import default_storage
 from django.template.defaultfilters import slugify
 from django.utils.encoding import force_text
 
-
 # Non-image file icons, matched from top to bottom
 fileicons_path = '{}/file-icons/'.format(getattr(settings, 'CKEDITOR_FILEICONS_PATH', '/static/ckeditor'))
 CKEDITOR_FILEICONS = getattr(settings, 'CKEDITOR_FILEICONS', [
@@ -18,7 +19,7 @@ CKEDITOR_FILEICONS = getattr(settings, 'CKEDITOR_FILEICONS', [
     ('\.txt$', fileicons_path + 'txt.png'),
     ('\.ppt$', fileicons_path + 'ppt.png'),
     ('\.xls$', fileicons_path + 'xls.png'),
-    ('.*', fileicons_path + 'file.png'), # Default
+    ('.*', fileicons_path + 'file.png'),  # Default
 ])
 
 

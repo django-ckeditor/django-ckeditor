@@ -1,5 +1,12 @@
+from __future__ import absolute_import
+
+import os
 from io import BytesIO
-import os.path
+
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
+from ckeditor import utils
 
 try:
     from PIL import Image, ImageOps
@@ -7,10 +14,6 @@ except ImportError:
     import Image
     import ImageOps
 
-from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import InMemoryUploadedFile
-
-from ckeditor import utils
 
 THUMBNAIL_SIZE = (75, 75)
 
