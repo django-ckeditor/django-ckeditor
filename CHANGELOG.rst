@@ -7,7 +7,11 @@ Changelog
 #. Added new plugins from ckeditor maintainers: adobeair, ajax, autoembed, autogrow, autolink, bbcode, codesnippet, codesnippetgeshi, devtools, divarea, docprops, embed, embedbase, embedsemantic, filetools, iframedialog, image2, language, lineutils, mathjax, menubutton, notification, notificationaggregator, placeholder, sharedspace, sourcedialog, stylesheetparser, tableresize, uicolor, uploadimage, uploadwidget, widget, xml 
 #. Add `zip_safe=False` on setup config, to force does not create ".egg" file 
 #. Add python Wheel package configuration
-#. Add setup.py functions to easy release ".egg" package and Wheel package, and tag version on git
+#. Add setup.py functions to easy release ".egg" package and Wheel package, and tag version on git ( ``python setup.py publish`` and ``python setup.py tag`` )
+#. Improved Tox configuration to code coverage check, code quality check (flake8), imports order check (isort) and test with django master branch
+#. Add code quality configurations
+#. Add EditorConfig configuration file
+#. Refactored code to be in compliance with PEP8
 
 4.5.1
 -----
