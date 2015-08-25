@@ -1,7 +1,9 @@
+from __future__ import absolute_import
+
 from django.core.urlresolvers import reverse
 from django.views import generic
 
-from ckeditor_demo.demo_application import forms
+from . import forms
 
 
 class CkEditorFormView(generic.FormView):

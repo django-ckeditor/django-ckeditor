@@ -1,17 +1,17 @@
-from datetime import datetime
+from __future__ import absolute_import
+
 import os
-import sys
+from datetime import datetime
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.views.decorators.csrf import csrf_exempt
-from django.views import generic
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
 
-from ckeditor import image_processing
-from ckeditor import utils
+from ckeditor import image_processing, utils
 from ckeditor.forms import SearchForm
 
 
@@ -45,7 +45,7 @@ class ImageUploadView(generic.View):
         # Get the uploaded file from request.
         upload = request.FILES['upload']
 
-        #Verify that file is a valid image
+        # Verify that file is a valid image
         backend = image_processing.get_backend()
         try:
             backend.image_verify(upload)

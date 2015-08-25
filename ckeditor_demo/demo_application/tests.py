@@ -1,18 +1,19 @@
-from datetime import datetime
+from __future__ import absolute_import
+
 import hashlib
 import os.path
+from datetime import datetime
 from time import sleep
-
-CHROMIUM = 'chromium'
-FIREFOX = 'firefox'
-SELENIUM_BROWSER = FIREFOX
 
 from django.conf import settings
 from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test.utils import override_settings
-
 from selenium import webdriver
+
+CHROMIUM = 'chromium'
+FIREFOX = 'firefox'
+SELENIUM_BROWSER = FIREFOX
 
 
 class TestAdminPanelWidget(StaticLiveServerTestCase):
@@ -70,15 +71,15 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
         sleep(1)
 
     def _go_to_upload_tab(self):
-        self.selenium.find_element_by_id("cke_Upload_118").click()
+        self.selenium.find_element_by_id("cke_Upload_119").click()
         sleep(1)
 
     def _switch_to_form_iframe(self):
-        iframe = self.selenium.find_element_by_id('cke_113_fileInput')
+        iframe = self.selenium.find_element_by_id('cke_114_fileInput')
         self.selenium.switch_to.frame(iframe)
 
     def _upload_image(self):
-        input = self.selenium.find_element_by_id("cke_113_fileInput_input")
+        input = self.selenium.find_element_by_id("cke_114_fileInput_input")
         input.send_keys(self._get_upload_file())
         self.selenium.switch_to.default_content()
         self.selenium.find_element_by_class_name("cke_dialog_ui_fileButton").click()
@@ -124,6 +125,7 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
 
 @override_settings(CKEDITOR_IMAGE_BACKEND=None)
 class TestAdminPanelWidgetForDummyImageBackend(TestAdminPanelWidget):
+
     def _assert_image_uploaded(self):
         upload_directory = self._get_upload_directory()
         expected_image_path = os.path.join(upload_directory, 'close.png')

@@ -1,11 +1,13 @@
+from __future__ import absolute_import
+
 import os
 
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 
-from ckeditor.views import get_image_files
-from ckeditor.utils import get_thumb_filename
 from ckeditor.image_processing import get_backend
+from ckeditor.utils import get_thumb_filename
+from ckeditor.views import get_image_files
 
 
 class Command(NoArgsCommand):

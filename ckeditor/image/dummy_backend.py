@@ -1,4 +1,6 @@
-import os.path
+from __future__ import absolute_import
+
+import os
 
 from ckeditor import utils
 

@@ -1,8 +1,10 @@
+from __future__ import absolute_import
+
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.core.urlresolvers import reverse
 from django.core.serializers.json import DjangoJSONEncoder
+from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
@@ -19,6 +21,7 @@ except ImportError:
 
 
 class LazyEncoder(DjangoJSONEncoder):
+
     def default(self, obj):
         if isinstance(obj, Promise):
             return force_text(obj)
@@ -84,14 +87,14 @@ class CKEditorWidget(forms.Textarea):
                     # Make sure the configuration is a dictionary.
                     if not isinstance(config, dict):
                         raise ImproperlyConfigured('CKEDITOR_CONFIGS["%s"] \
-                                setting must be a dictionary type.' % \
-                                config_name)
+                                setting must be a dictionary type.' %
+                                                   config_name)
                     # Override defaults with settings config.
                     self.config.update(config)
                 else:
                     raise ImproperlyConfigured("No configuration named '%s' \
-                            found in your CKEDITOR_CONFIGS setting." % \
-                            config_name)
+                            found in your CKEDITOR_CONFIGS setting." %
+                                               config_name)
             else:
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
@@ -115,12 +118,13 @@ class CKEditorWidget(forms.Textarea):
             self.config['language'] = get_language()
 
         # Force to text to evaluate possible lazy objects
-        external_plugin_resources = [[force_text(a), force_text(b), force_text(c)] for a, b, c in self.external_plugin_resources]
+        external_plugin_resources = [[force_text(a), force_text(b), force_text(c)]
+                                     for a, b, c in self.external_plugin_resources]
 
         return mark_safe(render_to_string('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_text(value)),
             'id': final_attrs['id'],
             'config': json_encode(self.config),
-            'external_plugin_resources' : json_encode(external_plugin_resources)
+            'external_plugin_resources': json_encode(external_plugin_resources)
         }))

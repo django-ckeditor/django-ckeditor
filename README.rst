@@ -11,8 +11,8 @@ Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with imag
 
 * This version also includes:
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.4
-#. included all ckeditor language files to made everyone happy!
+#. updated ckeditor to version 4.5.3
+#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.5.3/plugins>`_ )
 
 .. contents:: Contents
     :depth: 5
@@ -63,7 +63,7 @@ Optional
 
 #. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
-#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Setting_Configurations>`_), i.e.::
+#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.ckeditor.com/#!/guide/dev_configuration>`_), i.e.::
 
        CKEDITOR_CONFIGS = {
            'awesome_ckeditor': {
@@ -185,6 +185,14 @@ So included this on your settings.py.::
     }
 
 
+Plugins:
+~~~~~~~~
+
+django-ckeditor send by default the following ckeditor plugins, however, not all are enabled by default::
+
+    a11yhelp, about, adobeair, ajax, autoembed, autogrow, autolink, bbcode, clipboard, codesnippet, codesnippetgeshi, colordialog, devtools, dialog, div, divarea, docprops, embed, embedbase, embedsemantic, filetools, find, flash, forms, iframe, iframedialog, image, image2, language, lineutils, link, liststyle, magicline, mathjax, menubutton, notification, notificationaggregator, pagebreak, pastefromword, placeholder, preview, scayt, sharedspace, showblocks, smiley, sourcedialog, specialchar, stylesheetparser, table, tableresize, tabletools, templates, uicolor, uploadimage, uploadwidget, widget, wsc, xml
+
+
 Demo / Test application
 ~~~~~~~~~~~~~~~~~~~~~~~
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
@@ -201,10 +209,16 @@ There is a forms.Form on main page (/) and a model in admin that uses the widget
 Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
 
 
+
 Running selenium test
 ~~~~~~~~~~~~~~~~~~~~~
-You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.3.
-(You may have to fix some imports in selenium webdriver for Python 3.3).
+You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.4.
+
+
+Running code quality tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and others quality check) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
 
 
 Versioning
