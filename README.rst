@@ -36,7 +36,7 @@ Required
 
 
 Required for using widget with file upload
-~~~~~~~~----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Add ``ckeditor_uploader`` to your ``INSTALLED_APPS`` setting.
 
