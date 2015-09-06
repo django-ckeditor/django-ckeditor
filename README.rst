@@ -7,7 +7,7 @@ Django CKEditor
 
 
 **Django admin CKEditor integration.**
-Provides a ``RichTextField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
+Provides a ``RichTextField``, ``RichTextUploadingField`` and ``CKEditorWidget`` utilizing CKEditor with image upload and browsing support included.
 
 * This version also includes:
 #. support to django-storages (works with S3)
@@ -28,6 +28,18 @@ Required
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
+#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site then check that this variable is set correctly. Example::
+
+       CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+#. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
+
+
+Required for using widget with file upload
+~~~~~~~~----------------------------------
+
+#. Add ``ckeditor_uploader`` to your ``INSTALLED_APPS`` setting.
+
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an relative path to your CKEditor media upload directory. CKEditor uses Django storage API. By default Django uses file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
 
 
@@ -40,8 +52,6 @@ Required
 
 #. For the default filesystem storage configuration ``MEDIA_ROOT`` and ``MEDIA_URL`` must be set correctly for the media files to work (like those uploaded by the ckeditor widget).
 
-#. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This'll copy static CKEditor require media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
-
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
     (r'^ckeditor/', include('ckeditor.urls')),
@@ -52,16 +62,9 @@ Required
 
    - ``pillow``: uses PIL or Pillow
 
-#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site then check that this variable is set correctly. Example::
 
-       CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
-
-
-Optional
-~~~~~~~~
-#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
-
-#. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
+Optional - customizing CKEditor editor
+--------------------------------------
 
 #. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.ckeditor.com/#!/guide/dev_configuration>`_), i.e.::
 
@@ -103,6 +106,14 @@ Optional
             }
         }
 
+
+Optional for file upload
+~~~~~~~~----------------
+#. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
+
+#. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
+
+
 Usage
 -----
 
@@ -115,6 +126,8 @@ The quickest way to add rich text editing capabilities to your models is to use 
 
     class Post(models.Model):
         content = RichTextField()
+
+For file upload support use ``RichTextUploadingField`` from ckeditor_uploader.fields
 
 
 Widget
