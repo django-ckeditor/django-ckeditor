@@ -199,7 +199,7 @@ So included this on your settings.py.::
 
 
 Plugins:
-~~~~~~~~
+--------
 
 django-ckeditor send by default the following ckeditor plugins, however, not all are enabled by default::
 
@@ -214,7 +214,7 @@ Restricting file upload
 
 
 Demo / Test application
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
 
 #. ``pip install -r ckeditor_demo_requirements.txt``
@@ -231,16 +231,16 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 
 
 Running selenium test
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.4.
 
 
 Running code quality tests
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and others quality check) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
 
 
 Versioning
-~~~~~~~~~~
+----------
 First two numbers resemble ckeditor version used in the package. The third is used to issue releases for given ckeditor bundle (fixes, new features)
