@@ -14,7 +14,5 @@ def should_create_thumbnail(file_path):
 
 
 def image_verify(file_object):
-    valid_extensions = ['.jpeg', '.jpg', '.gif', '.png']
-    _, extension = os.path.splitext(file_object.name)
-    if not extension.lower() in valid_extensions:
+    if not utils.is_valid_image_extension(file_object.name):
         raise utils.NotAnImageException

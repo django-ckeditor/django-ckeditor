@@ -70,3 +70,9 @@ def get_media_url(path):
     Determine system file's media URL.
     """
     return default_storage.url(path)
+
+
+def is_valid_image_extension(file_path):
+    valid_extensions = ['.jpeg', '.jpg', '.gif', '.png']
+    _, extension = os.path.splitext(file_path)
+    return extension.lower() in valid_extensions
