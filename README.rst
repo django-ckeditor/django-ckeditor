@@ -206,6 +206,13 @@ django-ckeditor send by default the following ckeditor plugins, however, not all
     a11yhelp, about, adobeair, ajax, autoembed, autogrow, autolink, bbcode, clipboard, codesnippet, codesnippetgeshi, colordialog, devtools, dialog, div, divarea, docprops, embed, embedbase, embedsemantic, filetools, find, flash, forms, iframe, iframedialog, image, image2, language, lineutils, link, liststyle, magicline, mathjax, menubutton, notification, notificationaggregator, pagebreak, pastefromword, placeholder, preview, scayt, sharedspace, showblocks, smiley, sourcedialog, specialchar, stylesheetparser, table, tableresize, tabletools, templates, uicolor, uploadimage, uploadwidget, widget, wsc, xml
 
 
+Restricting file upload
+-----------------------
+#. To restrict file types you can upload check ckeditor_uploader.views.ImageUploadView. There are two interesting methods: _verify_file and _on_verification_failure. You can create your own view that inherits this one and overrides those or other methods. Then in your urls.py set your view to point to the ``upload/`` url.
+
+#. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and not include it.
+
+
 Demo / Test application
 ~~~~~~~~~~~~~~~~~~~~~~~
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
