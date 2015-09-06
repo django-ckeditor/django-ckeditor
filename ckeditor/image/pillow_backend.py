@@ -63,4 +63,4 @@ def should_create_thumbnail(file_path):
     except IOError:
         return False
     else:
-        return True
+        return utils.is_valid_image_extension(file_path)
