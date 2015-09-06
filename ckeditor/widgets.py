@@ -4,7 +4,6 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
-from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
@@ -125,12 +124,3 @@ class CKEditorWidget(forms.Textarea):
     def _set_config(self):
         if not self.config.get('language'):
             self.config['language'] = get_language()
-
-
-class CKEditorUploadingWidget(CKEditorWidget):
-    def _set_config(self):
-        if 'filebrowserUploadUrl' not in self.config:
-            self.config.setdefault('filebrowserUploadUrl', reverse('ckeditor_upload'))
-        if 'filebrowserBrowseUrl' not in self.config:
-            self.config.setdefault('filebrowserBrowseUrl', reverse('ckeditor_browse'))
-        super(CKEditorUploadingWidget, self)._set_config()
