@@ -110,14 +110,7 @@ class CKEditorWidget(forms.Textarea):
         if value is None:
             value = ''
         final_attrs = self.build_attrs(attrs, name=name)
-        if 'filebrowserUploadUrl' not in self.config:
-            self.config.setdefault('filebrowserUploadUrl', reverse('ckeditor_upload'))
-        if 'filebrowserBrowseUrl' not in self.config:
-            self.config.setdefault('filebrowserBrowseUrl', reverse('ckeditor_browse'))
-        if not self.config.get('language'):
-            self.config['language'] = get_language()
-
-        # Force to text to evaluate possible lazy objects
+        self._set_config()
         external_plugin_resources = [[force_text(a), force_text(b), force_text(c)]
                                      for a, b, c in self.external_plugin_resources]
 
@@ -128,3 +121,16 @@ class CKEditorWidget(forms.Textarea):
             'config': json_encode(self.config),
             'external_plugin_resources': json_encode(external_plugin_resources)
         }))
+
+    def _set_config(self):
+        if not self.config.get('language'):
+            self.config['language'] = get_language()
+
+
+class CKEditorUploadingWidget(CKEditorWidget):
+    def _set_config(self):
+        if 'filebrowserUploadUrl' not in self.config:
+            self.config.setdefault('filebrowserUploadUrl', reverse('ckeditor_upload'))
+        if 'filebrowserBrowseUrl' not in self.config:
+            self.config.setdefault('filebrowserBrowseUrl', reverse('ckeditor_browse'))
+        super(CKEditorUploadingWidget, self)._set_config()
