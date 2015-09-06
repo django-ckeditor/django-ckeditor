@@ -108,7 +108,7 @@ Optional - customizing CKEditor editor
 
 
 Optional for file upload
-~~~~~~~~----------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 #. All uploaded files are slugified by defaults, to disable this feature set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``
 
 #. Set the CKEDITOR_RESTRICT_BY_USER setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
