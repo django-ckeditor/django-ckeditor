@@ -11,8 +11,9 @@ from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from ckeditor import image_processing, utils
-from ckeditor.forms import SearchForm
+from ckeditor_uploader import image_processing
+from ckeditor_uploader import utils
+from ckeditor_uploader.forms import SearchForm
 
 
 def get_upload_filename(upload_name, user):
@@ -165,4 +166,4 @@ def browse(request):
         'files': files,
         'form': form
     })
-    return render_to_response('browse.html', context)
+    return render_to_response('ckeditor/browse.html', context)

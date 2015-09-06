@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import os
 
-from ckeditor import utils
+from ckeditor_uploader import utils
 
 
 def create_thumbnail(file_path, format):

@@ -5,9 +5,9 @@ import os
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 
-from ckeditor.image_processing import get_backend
-from ckeditor.utils import get_thumb_filename
-from ckeditor.views import get_image_files
+from ckeditor_uploader.image_processing import get_backend
+from ckeditor_uploader.utils import get_thumb_filename
+from ckeditor_uploader.views import get_image_files
 
 
 class Command(NoArgsCommand):

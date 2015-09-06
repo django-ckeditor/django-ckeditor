@@ -6,7 +6,7 @@ from io import BytesIO
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
-from ckeditor import utils
+from ckeditor_uploader import utils
 
 try:
     from PIL import Image, ImageOps
