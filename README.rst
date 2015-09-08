@@ -1,9 +1,9 @@
 Django CKEditor
 ===============
 
-**NOTICE: The django-ckeditor-updated 4.4.4 have been merged with django-ckeditor and released as  django-ckeditor-4.4.4.**
+**NOTICE: django-ckeditor has backward incompatible code moves against 4.5.1. **
 
-**NOTICE 2: This newer version has different configuration than old django-ckeditor releases!**
+File upload support have been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls while for file uploading widget you have to use RichTextUploadingField instead of RichTextField.
 
 
 **Django admin CKEditor integration.**
@@ -54,7 +54,7 @@ Required for using widget with file upload
 
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
-    (r'^ckeditor/', include('ckeditor.urls')),
+    (r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 #. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6 those views are staff_member_required. If you want different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manualy to you urls.py.
 
@@ -127,7 +127,7 @@ The quickest way to add rich text editing capabilities to your models is to use 
     class Post(models.Model):
         content = RichTextField()
 
-For file upload support use ``RichTextUploadingField`` from ckeditor_uploader.fields
+**For file upload support use ``RichTextUploadingField`` from ckeditor_uploader.fields**
 
 
 Widget
