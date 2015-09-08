@@ -1,8 +1,8 @@
 Changelog
 =========
 
-4.5.3 - unreleased
-------------------
+4.5.3 / 5.0.0
+-------------
 #. Moved file upload code to new Django application - ckeditor_uploader. `RichTextField` doesn't use file upload which have been moved to `RichTextUploadingField`.
 #. Updated ckeditor to 4.5.3 (from https://github.com/ckeditor/ckeditor-dev/tree/4.5.3)
 #. Added new plugins from ckeditor maintainers: adobeair, ajax, autoembed, autogrow, autolink, bbcode, codesnippet, codesnippetgeshi, devtools, divarea, docprops, embed, embedbase, embedsemantic, filetools, iframedialog, image2, language, lineutils, mathjax, menubutton, notification, notificationaggregator, placeholder, sharedspace, sourcedialog, stylesheetparser, tableresize, uicolor, uploadimage, uploadwidget, widget, xml 
