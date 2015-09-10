@@ -1,6 +1,11 @@
 Changelog
 =========
 
+5.0.2
+-----
+#. Added template missing in the package
+
+
 5.0.1
 -----
 #. Update Readme with backward-incompatible changes
