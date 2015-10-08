@@ -20,7 +20,7 @@
 
 5. Add CKEditor URL include to your project's ``urls.py`` file::
 
-    (r'^ckeditor/', include('ckeditor.urls')),
+    (r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 6. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6 those views are staff_member_required. If you want different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manualy to you urls.py.
 
