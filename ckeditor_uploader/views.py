@@ -14,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from ckeditor_uploader import image_processing
 from ckeditor_uploader import utils
 from ckeditor_uploader.forms import SearchForm
+from django.utils.html import escape
 
 
 def get_upload_filename(upload_name, user):
@@ -46,7 +47,18 @@ class ImageUploadView(generic.View):
         uploaded_file = request.FILES['upload']
 
         backend = image_processing.get_backend()
-        self._verify_file(backend, uploaded_file)
+        ck_func_num = escape(request.GET['CKEditorFuncNum'])
+
+        # Throws an error when an non-image file are uploaded.
+        if not getattr(settings, 'CKEDITOR_ALLOW_NONIMAGE_FILES', True):
+            try:
+                backend.image_verify(uploaded_file)
+            except utils.NotAnImageException:
+                return HttpResponse("""
+                    <script type='text/javascript'>
+                    window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
+                    </script>""".format(ck_func_num))
+
         saved_path = self._save_file(request, uploaded_file)
         self._create_thumbnail_if_needed(backend, saved_path)
         url = utils.get_media_url(saved_path)
@@ -55,16 +67,7 @@ class ImageUploadView(generic.View):
         return HttpResponse("""
         <script type='text/javascript'>
             window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
-        </script>""".format(request.GET['CKEditorFuncNum'], url))
-
-    def _verify_file(self, backend, uploaded_file):
-        try:
-            backend.image_verify(uploaded_file)
-        except utils.NotAnImageException:
-            return self._on_verification_failure()
-
-    def _on_verification_failure(self):
-        pass
+        </script>""".format(ck_func_num, url))
 
     @staticmethod
     def _save_file(request, uploaded_file):

@@ -209,7 +209,7 @@ django-ckeditor send by default the following ckeditor plugins, however, not all
 
 Restricting file upload
 -----------------------
-#. To restrict file types you can upload check ckeditor_uploader.views.ImageUploadView. There are two interesting methods: _verify_file and _on_verification_failure. You can create your own view that inherits this one and overrides those or other methods. Then in your urls.py set your view to point to the ``upload/`` url.
+#. To restrict upload functionality to image files only, add ``CKEDITOR_ALLOW_NONIMAGE_FILES = False`` in your settings.py file. Currently non-image files are allowed by default.
 
 #. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and not include it.
 
