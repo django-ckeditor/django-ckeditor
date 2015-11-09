@@ -164,7 +164,7 @@ def browse(request):
     else:
         form = SearchForm()
 
-    show_dirs = getattr(settings, 'CKEDITOR_BROWSE_SHOW_DIRS')
+    show_dirs = getattr(settings, 'CKEDITOR_BROWSE_SHOW_DIRS', False)
     dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
 
     # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
