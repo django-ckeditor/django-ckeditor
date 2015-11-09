@@ -164,11 +164,15 @@ def browse(request):
     else:
         form = SearchForm()
 
+    show_dirs = getattr(settings, 'CKEDITOR_BROWSE_SHOW_DIRS')
     dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
 
-    files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
+    # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
+    if os.name == 'nt': 
+        files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
 
     context = RequestContext(request, {
+        'show_dirs': show_dirs,
         'dirs': dir_list,
         'files': files,
         'form': form
