@@ -155,6 +155,7 @@ def is_image(path):
 
 
 def browse(request):
+    
     files = get_files_browse_urls(request.user)
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -162,8 +163,15 @@ def browse(request):
             files = filter(lambda d: form.cleaned_data.get('q', '').lower() in d['visible_filename'].lower(), files)
     else:
         form = SearchForm()
+
+    dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
+
+    files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
+
     context = RequestContext(request, {
+        'dirs': dir_list,
         'files': files,
         'form': form
     })
     return render_to_response('ckeditor/browse.html', context)
+
