@@ -17,11 +17,6 @@
             a.thumb { text-align: center; display: block; float: left; width: 75px; height: 75px; word-wrap: break-word; line-height: 1.2em; overflow: hidden; }
             a.thumb img { display: inline-block; }
             span.filename { color: #666; font-size: 0.95em; }
-
-            h4 {
-                display: inline-block;
-            }
-
         </style>
     </head>
     <body>
@@ -48,14 +43,12 @@
                     </form>
                 </div>
                 <div id="thumbs" class="navigation">
-                
                     <ul class="thumbs noscript">
                         {% for dir in dirs %}
-                        <li>
-                        Images in: {{ dir }}</li>    
+                        <li>Images in: {{ dir }}</li>    
                             {% for file in files %}
                                 {% if dir in file.src %}
-                                    <li class="pic">
+                                    <li>
                                         <a class="thumb" href="{% if file.is_image %}{{ file.src }}{% else %}{{ file.thumb }}{% endif %}">
                                             <img src="{{ file.thumb }}" style="max-width: 75px;"/>
                                             {% if file.visible_filename %}
@@ -69,10 +62,8 @@
                                         </div>
                                     </li> 
                                 {% endif %}  
-
-                            {% endfor %}
-                         
-                    {% endfor %}
+                            {% endfor %} <!-- for file in files -->                       
+                        {% endfor %} <!-- for dir in dirs -->   
                     </ul>  
                 </div>
                 <div style="clear: both;"></div>
@@ -112,7 +103,7 @@
                 // Initially set opacity on thumbs and add
                 // additional styling for hover effect on thumbs
                 var onMouseOutOpacity = 0.67;
-                $('#thumbs ul.thumbs li.pic').opacityrollover({
+                $('#thumbs ul.thumbs li').opacityrollover({
                     mouseOutOpacity:   onMouseOutOpacity,
                     mouseOverOpacity:  1.0,
                     fadeSpeed:         'fast',
