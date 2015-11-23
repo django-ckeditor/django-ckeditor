@@ -44,22 +44,45 @@
                 </div>
                 <div id="thumbs" class="navigation">
                     <ul class="thumbs noscript">
-                        {% for file in files %}
-                        <li>
-                            <a class="thumb" href="{% if file.is_image %}{{ file.src }}{% else %}{{ file.thumb }}{% endif %}">
-                                <img src="{{ file.thumb }}" style="max-width: 75px;"/>
-                                {% if file.visible_filename %}
-                                    <span class="filename">{{ file.visible_filename }}</span>
-                                {% endif %}
-                            </a>
-                            <div class="caption">
-                                <div class="submit-row">
-                                    <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ul>
+                        {% if show_dirs %}
+                            {% for dir in dirs %}
+                            <li>Images in: {{ dir }}</li>  
+                                    {% for file in files %}
+                                        {% if dir in file.src %}
+                                            <li>
+                                                <a class="thumb" href="{% if file.is_image %}{{ file.src }}{% else %}{{ file.thumb }}{% endif %}">
+                                                    <img src="{{ file.thumb }}" style="max-width: 75px;"/>
+                                                    {% if file.visible_filename %}
+                                                        <span class="filename">{{ file.visible_filename }}</span>
+                                                    {% endif %}
+                                                </a>
+                                                <div class="caption">
+                                                    <div class="submit-row">
+                                                        <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}  
+                                    {% endfor %} <!-- for file in files -->                       
+                            {% endfor %} <!-- for dir in dirs -->   
+                        {% else %}
+                            {% for file in files %}
+                                <li>
+                                    <a class="thumb" href="{% if file.is_image %}{{ file.src }}{% else %}{{ file.thumb }}{% endif %}">
+                                        <img src="{{ file.thumb }}" style="max-width: 75px;"/>
+                                        {% if file.visible_filename %}
+                                            <span class="filename">{{ file.visible_filename }}</span>
+                                        {% endif %}
+                                    </a>
+                                    <div class="caption">
+                                        <div class="submit-row">
+                                            <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %} <!-- for file in files -->    
+                        {% endif %}                                
+                    </ul>  
                 </div>
                 <div style="clear: both;"></div>
             </div>
@@ -83,7 +106,6 @@
                     image.height(image_height);
                 }
             }
-
             // embedder
             $('.embed').live('click', function() {
                 var funcNum = getUrlParam('CKEditorFuncNum');
@@ -91,13 +113,11 @@
                 window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
                 window.close();
             });
-
             // galleriffic
             jQuery(document).ready(function($) {
                 // We only want these styles applied when javascript is enabled
                 $('div.navigation').css({'width' : '300px', 'float' : 'left'});
                 $('div.content').css('display', 'block');
-
                 // Initially set opacity on thumbs and add
                 // additional styling for hover effect on thumbs
                 var onMouseOutOpacity = 0.67;

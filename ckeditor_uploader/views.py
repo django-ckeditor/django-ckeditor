@@ -158,6 +158,7 @@ def is_image(path):
 
 
 def browse(request):
+    
     files = get_files_browse_urls(request.user)
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -165,8 +166,19 @@ def browse(request):
             files = filter(lambda d: form.cleaned_data.get('q', '').lower() in d['visible_filename'].lower(), files)
     else:
         form = SearchForm()
+
+    show_dirs = getattr(settings, 'CKEDITOR_BROWSE_SHOW_DIRS', False)
+    dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
+
+    # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
+    if os.name == 'nt': 
+        files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
+
     context = RequestContext(request, {
+        'show_dirs': show_dirs,
+        'dirs': dir_list,
         'files': files,
         'form': form
     })
     return render_to_response('ckeditor/browse.html', context)
+
