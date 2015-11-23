@@ -28,10 +28,10 @@ def image_verify(f):
 def create_thumbnail(file_path):
     thumbnail_filename = utils.get_thumb_filename(file_path)
     thumbnail_format = utils.get_image_format(os.path.splitext(file_path)[1])
-    file_format = thumbnail_format.split('/')[1]
 
     image = default_storage.open(file_path)
     image = Image.open(image)
+    file_format = image.format
 
     # Convert to RGB if necessary
     # Thanks to Limodou on DjangoSnippets.org
