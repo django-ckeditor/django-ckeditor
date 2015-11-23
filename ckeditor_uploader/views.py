@@ -142,6 +142,7 @@ def get_files_browse_urls(user=None):
                     visible_filename = visible_filename[0:19] + '...'
         else:
             thumb = src
+            visible_filename = os.path.split(filename)[1]
         files.append({
             'thumb': thumb,
             'src': src,
