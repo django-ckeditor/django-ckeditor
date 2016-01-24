@@ -1,6 +1,15 @@
 Changelog
 =========
 
+5.0.3
+-----
+#. Fix file/directory browsing and searching
+#. Editor width style fixes
+#. Added CKEDITOR_BROWSE_SHOW_DIRS
+#. Added CKEDITOR_ALLOW_NONIMAGE_FILES
+#. Python 2.6 compatibility fix
+
+
 5.0.2
 -----
 #. Added template missing in the package
