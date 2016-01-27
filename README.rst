@@ -116,6 +116,8 @@ Optional for file upload
 
 #. Set the ``CKEDITOR_BROWSE_SHOW_DIRS`` setting to ``True`` to show directories on the "Browse Server" page. This enables image grouping by directory they are stored in, sorted by date.
 
+#. Set the ``CKEDITOR_SAVED_IMAGE_LENGTH_MAX`` setting to one value for a maximum size image - width or height. This option allow set maximum image size (width or height), saved on the server side. It depends on the ``CKEDITOR_IMAGE_BACKEND`` setting enabled.
+
 Usage
 -----
 
