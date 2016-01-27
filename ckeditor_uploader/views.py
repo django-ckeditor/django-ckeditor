@@ -59,8 +59,22 @@ class ImageUploadView(generic.View):
                     window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
                     </script>""".format(ck_func_num))
 
-        saved_path = self._save_file(request, uploaded_file)
-        self._create_thumbnail_if_needed(backend, saved_path)
+        original_saved_path = self._save_file(request, uploaded_file)
+        
+        if backend.is_image(original_saved_path):
+            #resize uploaded image if CKEDITOR_SAVED_IMAGE_LENGTH_MAX in settings.py
+            CKEDITOR_SAVED_IMAGE_LENGTH_MAX = getattr(settings, 'CKEDITOR_SAVED_IMAGE_LENGTH_MAX', None)
+            if CKEDITOR_SAVED_IMAGE_LENGTH_MAX:
+                saved_path = self._resize_uploaded_image(backend, original_saved_path, CKEDITOR_SAVED_IMAGE_LENGTH_MAX)
+                #delete original save image
+                default_storage.delete(original_saved_path)
+            else:
+                saved_path = original_saved_path    
+            
+            self._create_thumbnail_if_needed(backend, saved_path)
+        else:
+            saved_path = original_saved_path
+
         url = utils.get_media_url(saved_path)
 
         # Respond with Javascript sending ckeditor upload url.
@@ -77,8 +91,12 @@ class ImageUploadView(generic.View):
 
     @staticmethod
     def _create_thumbnail_if_needed(backend, saved_path):
-        if backend.should_create_thumbnail(saved_path):
-            backend.create_thumbnail(saved_path)
+        backend.create_thumbnail(saved_path)
+
+    @staticmethod
+    def _resize_uploaded_image(backend, original_saved_path, image_longest_side):
+        resized_saved_path = backend.resize_uploaded_image(original_saved_path, image_longest_side)
+        return resized_saved_path
 
 
 upload = csrf_exempt(ImageUploadView.as_view())
