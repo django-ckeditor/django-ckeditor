@@ -60,6 +60,14 @@ def get_thumb_filename(file_name):
     return force_text('{0}_thumb{1}').format(*os.path.splitext(file_name))
 
 
+def get_resize_filename(file_name):
+    """
+    Generate resizing filename by adding _resized to end of
+    filename before . (if present)
+    """
+    return force_text('{0}_resized{1}').format(*os.path.splitext(file_name))
+
+
 def get_image_format(extension):
     mimetypes.init()
     return mimetypes.types_map[extension.lower()]
