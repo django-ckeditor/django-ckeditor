@@ -152,6 +152,7 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
 
     admin.site.register(Post, PostAdmin)
 
+**For file upload support use ``CKEditorUploadingWidget`` from ckeditor_uploader.widgets**
 
 Outside of django admin
 ~~~~~~~~~~~~~~~~~~~~~~~
