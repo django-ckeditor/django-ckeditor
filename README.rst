@@ -221,7 +221,7 @@ If you clone the repository you will be able to run the ``ckeditor_demo`` applic
 
 #. ``pip install -r ckeditor_demo_requirements.txt``
 
-#. Run ``python.manage.py syncdb``
+#. Run ``python manage.py migrate``
 
 #. Create a superuser if you want to test the widget in the admin panel
 
