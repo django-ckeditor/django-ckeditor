@@ -254,7 +254,7 @@ Example ckeditor configuration
             'toolbar_Basic': [
                 ['Source', '-', 'Bold', 'Italic']
             ],
-            'toolbar_YouCustomToolbarConfig': [
+            'toolbar_YourCustomToolbarConfig': [
                 {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
                 {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
                 {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
@@ -277,7 +277,7 @@ Example ckeditor configuration
                 {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
                 {'name': 'about', 'items': ['About']},
                 '/',  # put this to force next toolbar on new line
-                {'name': 'youcustomtools', 'items': [
+                {'name': 'yourcustomtools', 'items': [
                     # put the name of your editor.ui.addButton here
                     'Preview',
                     'Maximize',
