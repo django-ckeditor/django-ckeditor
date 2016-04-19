@@ -295,7 +295,7 @@ Example ckeditor configuration
             'tabSpaces': 4,
             'extraPlugins': ','.join(
                 [
-                    # you extra plugins here
+                    # your extra plugins here
                     'div',
                     'autolink',
                     'autoembed',
