@@ -254,7 +254,7 @@ Example ckeditor configuration
             'toolbar_Basic': [
                 ['Source', '-', 'Bold', 'Italic']
             ],
-            'toolbar_YouCustomToolbarConfig': [
+            'toolbar_YourCustomToolbarConfig': [
                 {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
                 {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
                 {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
@@ -277,14 +277,14 @@ Example ckeditor configuration
                 {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
                 {'name': 'about', 'items': ['About']},
                 '/',  # put this to force next toolbar on new line
-                {'name': 'youcustomtools', 'items': [
+                {'name': 'yourcustomtools', 'items': [
                     # put the name of your editor.ui.addButton here
                     'Preview',
                     'Maximize',
 
                 ]},
             ],
-            'toolbar': 'YouCustomToolbarConfig',  # put selected toolbar config here
+            'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
             # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
             # 'height': 291,
             # 'width': '100%',
@@ -295,7 +295,7 @@ Example ckeditor configuration
             'tabSpaces': 4,
             'extraPlugins': ','.join(
                 [
-                    # you extra plugins here
+                    # your extra plugins here
                     'div',
                     'autolink',
                     'autoembed',
