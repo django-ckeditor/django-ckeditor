@@ -20,7 +20,7 @@ from django.utils.html import escape
 def get_upload_filename(upload_name, user):
     # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
     if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
-        user_path = user.username
+        user_path = user.get_username()
     else:
         user_path = ''
 
@@ -96,7 +96,7 @@ def get_image_files(user=None, path=''):
 
     restrict = getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)
     if user and not user.is_superuser and restrict:
-        user_path = user.username
+        user_path = user.get_username()
     else:
         user_path = ''
 
