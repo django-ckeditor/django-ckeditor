@@ -1,6 +1,13 @@
 Changelog
 =========
 
+5.1.0
+-----
+#. Updated CkEditor to 4.5.10
+#. Django 1.10 compatibility changes
+#. Documentation updates
+
+
 5.0.3
 -----
 #. Fix file/directory browsing and searching
