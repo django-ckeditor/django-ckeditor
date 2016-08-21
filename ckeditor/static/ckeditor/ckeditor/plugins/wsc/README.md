@@ -1,4 +1,4 @@
-﻿CKEditor WebSpellChecker Plugin
+CKEditor WebSpellChecker Plugin
 ===============================
 
 This plugin brings Web Spell Checker (WSC) into CKEditor.
