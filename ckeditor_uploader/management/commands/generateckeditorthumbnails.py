@@ -3,19 +3,19 @@ from __future__ import absolute_import
 import os
 
 from django.conf import settings
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 from ckeditor_uploader.image_processing import get_backend
 from ckeditor_uploader.utils import get_thumb_filename
 from ckeditor_uploader.views import get_image_files
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     """
     Creates thumbnail files for the CKEditor file image browser.
     Useful if starting to use django-ckeditor with existing images.
     """
-    def handle_noargs(self, **options):
+    def handle(self, *args, **options):
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             backend = get_backend()
             for image in get_image_files():
