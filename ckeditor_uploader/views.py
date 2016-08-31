@@ -20,7 +20,7 @@ from django.utils.html import escape
 def get_upload_filename(upload_name, user):
     # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
     if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
-        user_path = user.get_username()
+        user_path = user.username
     else:
         user_path = ''
 
@@ -59,9 +59,12 @@ class ImageUploadView(generic.View):
                     window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
                     </script>""".format(ck_func_num))
 
-        saved_path = self._save_file(request, uploaded_file)
-        self._create_thumbnail_if_needed(backend, saved_path)
-        url = utils.get_media_url(saved_path)
+        # EPFL Storage
+        from media import store_image_file
+        filepath, image = store_image_file(uploaded_file, prefix_path='fckeditorimage', max_width=600) #@UnusedVariable image
+        filename = os.path.basename(filepath)
+        from django.contrib.sites.models import Site
+        url = "http://" + Site.objects.get_current().domain + os.path.join(settings.MEDIA_URL, filepath)
 
         # Respond with Javascript sending ckeditor upload url.
         return HttpResponse("""
@@ -96,7 +99,7 @@ def get_image_files(user=None, path=''):
 
     restrict = getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)
     if user and not user.is_superuser and restrict:
-        user_path = user.get_username()
+        user_path = user.username
     else:
         user_path = ''
 
@@ -158,7 +161,7 @@ def is_image(path):
 
 
 def browse(request):
-    
+
     files = get_files_browse_urls(request.user)
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -172,7 +175,7 @@ def browse(request):
     dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
 
     # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
-    if os.name == 'nt': 
+    if os.name == 'nt':
         files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
 
     context = RequestContext(request, {
