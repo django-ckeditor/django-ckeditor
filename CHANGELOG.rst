@@ -1,6 +1,12 @@
 Changelog
 =========
 
+
+5.1.1
+-----
+#. Re-add missing additional CkEditor plugins
+
+
 5.1.0
 -----
 #. Updated CkEditor to 4.5.10
