@@ -158,7 +158,6 @@ def is_image(path):
 
 
 def browse(request):
-    
     files = get_files_browse_urls(request.user)
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -172,7 +171,7 @@ def browse(request):
     dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
 
     # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
-    if os.name == 'nt': 
+    if os.name == 'nt':
         files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
 
     context = RequestContext(request, {
