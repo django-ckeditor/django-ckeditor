@@ -20,8 +20,7 @@ p, li {
 	line-height: 1.8em;
 }
 h1, h2 {
-    font-size: 18px;
-    color: #666;
+	font-family: "Trebuchet MS", Verdana, sans-serif;
 	margin: 0 0 10px 0;
 	letter-spacing:-1px;
 }
@@ -32,7 +31,7 @@ h1 {
 }
 h2 {
 	padding-top: 10px;
-	font-size: 18px;
+	font-size:2em;
 }
 pre {
 	font-size: 1.2em;

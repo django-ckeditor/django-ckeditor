@@ -69,12 +69,11 @@ div.caption-container {
 	position: relative;
 	clear: left;
 	height: 75px;
-    top: 40px;
 }
 span.image-caption {
 	display: block;
 	position: absolute;
-	width: 545px;
+	width: 550px;
 	top: 0;
 	left: 0;
 }
