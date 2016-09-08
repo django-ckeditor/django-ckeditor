@@ -1,6 +1,111 @@
 Changelog
 =========
 
+
+5.1.1
+-----
+#. Re-add missing additional CkEditor plugins
+
+
+5.1.0
+-----
+#. Updated CkEditor to 4.5.10
+#. Django 1.10 compatibility changes
+#. Documentation updates
+
+
+5.0.3
+-----
+#. Fix file/directory browsing and searching
+#. Editor width style fixes
+#. Added CKEDITOR_BROWSE_SHOW_DIRS
+#. Added CKEDITOR_ALLOW_NONIMAGE_FILES
+#. Python 2.6 compatibility fix
+
+
+5.0.2
+-----
+#. Added template missing in the package
+
+
+5.0.1
+-----
+#. Update Readme with backward-incompatible changes
+
+
+5.0.0 (4.5.3)
+-------------
+#. Moved file upload code to new Django application - ckeditor_uploader. `RichTextField` doesn't use file upload which have been moved to `RichTextUploadingField`.
+
+File upload support have been moved to ckeditor_uploader. The urls are in ckeditor_uploader.urls while for file uploading widget you have to use RichTextUploadingField from ckeditor_uploader.fields instead of RichTextField from  from ckeditor.fields.
+
+#. Updated ckeditor to 4.5.3 (from https://github.com/ckeditor/ckeditor-dev/tree/4.5.3)
+#. Added new plugins from ckeditor maintainers: adobeair, ajax, autoembed, autogrow, autolink, bbcode, codesnippet, codesnippetgeshi, devtools, divarea, docprops, embed, embedbase, embedsemantic, filetools, iframedialog, image2, language, lineutils, mathjax, menubutton, notification, notificationaggregator, placeholder, sharedspace, sourcedialog, stylesheetparser, tableresize, uicolor, uploadimage, uploadwidget, widget, xml 
+#. Add `zip_safe=False` on setup config, to force does not create ".egg" file 
+#. Add python Wheel package configuration
+#. Add setup.py functions to easy release ".egg" package and Wheel package, and tag version on git ( ``python setup.py publish`` and ``python setup.py tag`` )
+#. Improved Tox configuration to code coverage check, code quality check (flake8), imports order check (isort) and test with django master branch
+#. Add code quality configurations
+#. Add EditorConfig configuration file
+#. Refactored code to be in compliance with PEP8
+
+4.5.1
+-----
+#. Fixed unbound variable in non-image file upload
+
+
+4.5.0
+-----
+#. Updated ckeditor to 4.5.1
+#. Reverted django.contrib.staticfiles.templatetags.staticfiles.static usage causing problems with some storages
+#. Allow non-image files to be upload (the upload widget expects images so the user experience isn't best at the moment)
+#. Few refactors and fixes to selenium tests
+
+
+4.4.8
+-----
+#. Python 3 compatibility fixes
+#. Get static files paths in a proper way
+#. Fix Django 1.7 deprecation warning
+#. More examples in readme
+
+
+4.4.7
+-----
+#. Allow only POST requests on upload view.
+#. Exclude hidden files from image browser
+#. Prevent caching of image browser view
+#. Use lazy JSON encoder to support i18n in CKEditor settings.
+#. Misc documentation updates
+#. Check for jQuery presence correctly
+#. Update to CKEditor 4.4.6
+
+4.4.6
+-----
+#. Make upload/browse views be staff_member_required by default (can be overridden)
+#. Fix ckeditor initialisation code breaking with other jQuery versions.
+#. Support grappelli inline form widgets.
+#. Remove odd left margin from widget template.
+#. Allow running selenium tests with chromium.
+
+4.4.5
+-----
+#. Post merge package name fix in Readme
+
+4.4.4
+-----
+#. Update CKEditor to 4.4.4 full package - for all plugins and static files you may need
+#. Fixes for inline editor
+#. Editor initialisation uses jQuery. You need to specify CKEDITOR_JQUERY_URL for it to work. You can use::
+
+    CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+
+4.4.0
+-----
+#. Update CKEditor to 4.4.1
+#. Django 1.7 compatibility fix
+
 4.2.8
 -----
 #. Update CKEditor to 4.3.3

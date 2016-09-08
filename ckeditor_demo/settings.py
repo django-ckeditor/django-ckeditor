@@ -1,3 +1,10 @@
+from __future__ import absolute_import
+
+import os
+import tempfile
+
+import django
+
 """
 Django settings for ckeditor_demo project.
 
@@ -7,10 +14,8 @@ https://docs.djangoproject.com/en/1.6/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
-import tempfile
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -23,12 +28,40 @@ SECRET_KEY = 'cwog(6mx-+m9-@*n7jsn+*q4in*+nss_nv+s0da39ail@=x(ne'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+if django.VERSION >= (1, 8):
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+                'debug': DEBUG
+            },
+        },
+    ]
+
+else:
+    TEMPLATE_DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
-#DEFAULT_FILE_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+CACHED_STORAGE = False
+
+if CACHED_STORAGE:
+    DEFAULT_FILE_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+        'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    )
 
 # Application definition
 
@@ -40,6 +73,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'ckeditor_uploader',
     'ckeditor_demo.demo_application',
 )
 
@@ -80,7 +114,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
@@ -91,3 +124,4 @@ MEDIA_ROOT = os.path.join(tempfile.gettempdir(), 'ck_media')
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
