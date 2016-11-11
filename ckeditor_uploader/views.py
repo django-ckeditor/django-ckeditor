@@ -6,7 +6,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -174,10 +174,10 @@ def browse(request):
     if os.name == 'nt':
         files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
 
-    context = RequestContext(request, {
+    context = {
         'show_dirs': show_dirs,
         'dirs': dir_list,
         'files': files,
         'form': form
-    })
-    return render_to_response('ckeditor/browse.html', context)
+    }
+    return render('ckeditor/browse.html', context)
