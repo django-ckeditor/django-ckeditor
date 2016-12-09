@@ -13,7 +13,20 @@
 // Otherwise it is strongly recommended to customize this file to match your
 // website requirements and design properly.
 
-CKEDITOR.stylesSet.add( 'default', [
+// We have change the DEFAULT styleSet
+CKEDITOR.stylesSet.add( 'default', [{
+		name: 'Special Container',
+		element: 'div',
+		styles: {
+			padding: '5px 10px',
+			background: '#eee',
+			border: '1px solid #ccc'
+		}
+	},] );
+
+// The orginal StyleSet
+// If you want enable it, you need replace 'backup' to 'default'
+CKEDITOR.stylesSet.add( 'backup', [
 	/* Block Styles */
 
 	// These styles are already available in the "Format" combo ("format" plugin),

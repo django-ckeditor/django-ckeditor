@@ -25,7 +25,7 @@ def get_source_files():
             yield os.path.join('/'.join(dirname.split('/')[1:]), filename)
 
 setup(
-    name='django-ckeditor',
+    name='django-ckeditor-epfl',
     version=version,
     description='Django admin CKEditor integration.',
     long_description=long_description,
