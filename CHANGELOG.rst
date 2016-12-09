@@ -1,6 +1,11 @@
 Changelog
 =========
 
+5.1.1
+-----
+#. Add a custom select for style
+
+
 5.1.0
 -----
 #. Updated CkEditor to 4.5.10
