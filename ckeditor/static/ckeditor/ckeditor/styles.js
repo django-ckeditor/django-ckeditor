@@ -15,6 +15,7 @@
 
 // We have change the DEFAULT styleSet
 CKEDITOR.stylesSet.add( 'default', [{
+	/* Block Styles */
 		name: 'Special Container',
 		element: 'div',
 		styles: {
@@ -22,7 +23,11 @@ CKEDITOR.stylesSet.add( 'default', [{
 			background: '#eee',
 			border: '1px solid #ccc'
 		}
-	},] );
+	},
+	/* Object Styles */
+	{ name: 'Borderless Table',		element: 'table',	styles: { 'border-style': 'hidden', 'background-color': '#E6E6FA' } },
+] );
+
 
 // The orginal StyleSet
 // If you want enable it, you need replace 'backup' to 'default'
@@ -121,4 +126,3 @@ CKEDITOR.stylesSet.add( 'backup', [
 	{ name: 'Borderless Table',		element: 'table',	styles: { 'border-style': 'hidden', 'background-color': '#E6E6FA' } },
 	{ name: 'Square Bulleted List',	element: 'ul',		styles: { 'list-style-type': 'square' } }
 ] );
-

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+5.1.2
+-----
+#. Add table and object style
+
+
 5.1.1
 -----
 #. Add a custom select for style
