@@ -30,7 +30,7 @@ class LazyEncoder(DjangoJSONEncoder):
 json_encode = LazyEncoder().encode
 
 DEFAULT_CONFIG = {
-    'skin': 'moono',
+    'skin': 'moono-lisa',
     'toolbar_Basic': [
         ['Source', '-', 'Bold', 'Italic']
     ],
