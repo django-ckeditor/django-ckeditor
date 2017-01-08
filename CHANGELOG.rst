@@ -1,6 +1,10 @@
 Changelog
 =========
 
+5.2.1
+-----
+#. Fix CKEditor package static path
+
 5.2.0
 -----
 #. Django 1.10 updates
