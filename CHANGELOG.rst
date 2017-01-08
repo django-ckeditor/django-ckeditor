@@ -1,6 +1,14 @@
 Changelog
 =========
 
+5.2.0
+-----
+#. Django 1.10 updates
+#. Development dependencies bump
+#. CKEditor 4.6.1
+#. Paste image support
+#. Fix for ManifestStaticFilesStorage
+
 
 5.1.1
 -----
