@@ -1,0 +1,95 @@
+/** parts of django admin base.css needed by django-ckeditor uploader **/
+
+/* GLOBAL DEFAULTS */
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+/* FORM DEFAULTS */
+
+input {
+    margin: 2px 0;
+    padding: 2px 3px;
+    vertical-align: middle;
+    font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+input[type=text] {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
+}
+
+input[type=text]:focus {
+    border-color: #999;
+}
+
+/* FORM BUTTONS */
+
+input[type=submit] {
+    background: #79aec8;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type=submit]:active,
+input[type=submit]:focus,
+input[type=submit]:hover {
+    background: #609ab6;
+}
+
+input[type=submit].default {
+    float: right;
+    border: none;
+    font-weight: 400;
+    background: #417690;
+}
+
+input[type=submit].default:active,
+input[type=submit].default:focus,
+input[type=submit].default:hover {
+    background: #205067;
+}
+
+/* MESSAGES & ERRORS */
+
+ul.errorlist {
+    margin: 0 0 4px;
+    padding: 0;
+    color: #ba2121;
+    background: #fff;
+}
+
+ul.errorlist li {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+ul.errorlist li:first-child {
+    margin-top: 0;
+}
+
+/* OBJECT HISTORY */
+
+table#change-history {
+    width: 100%;
+}
+
+table#change-history tbody th {
+    width: 16em;
+}
+
+/* PAGE STRUCTURE */
+
+#container {
+    position: relative;
+}
