@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.template import RequestContext
+from django.template.defaultfilters import filesizeformat
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
@@ -61,6 +61,13 @@ class ImageUploadView(generic.View):
                     <script type='text/javascript'>
                     window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
                     </script>""".format(ck_func_num))
+
+        if getattr(settings, 'CKEDITOR_UPLOAD_FILE_MAX_SIZE') is not None:
+            if uploaded_file.size > settings.CKEDITOR_UPLOAD_FILE_MAX_SIZE:
+                return HttpResponse("""
+                    <script type='text/javascript'>
+                    window.parent.CKEDITOR.tools.callFunction({0}, '', 'File max size is {1}.');
+                    </script>""".format(ck_func_num, filesizeformat(settings.CKEDITOR_UPLOAD_FILE_MAX_SIZE)))
 
         saved_path = self._save_file(request, uploaded_file)
         self._create_thumbnail_if_needed(backend, saved_path)

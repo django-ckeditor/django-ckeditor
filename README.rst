@@ -212,6 +212,8 @@ Restricting file upload
 -----------------------
 #. To restrict upload functionality to image files only, add ``CKEDITOR_ALLOW_NONIMAGE_FILES = False`` in your settings.py file. Currently non-image files are allowed by default.
 
+#. To restrict upload file size, in bytes, add ``CKEDITOR_UPLOAD_FILE_MAX_SIZE`` in your settings.py. Set ``None`` to skip check file size, Default value is ``None``.
+
 #. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and not include it.
 
 
