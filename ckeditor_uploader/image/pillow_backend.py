@@ -7,6 +7,8 @@ from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from ckeditor_uploader import utils
+from django.conf import settings
+
 
 try:
     from PIL import Image, ImageOps
@@ -15,7 +17,8 @@ except ImportError:
     import ImageOps
 
 
-THUMBNAIL_SIZE = (75, 75)
+THUMBNAIL_SIZE = getattr(settings, "THUMBNAIL_SIZE", (75,75))
+
 
 
 def image_verify(f):
