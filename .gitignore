@@ -11,3 +11,11 @@ ve/
 django-ckeditor.sublime-workspace
 django-ckeditor.sublime-project
 *.DS_Store
+*.egg
+pep8.txt
+coverage.xml
+db.sqlite3
+.tox/
+.coverage
+.coverage.*
+.idea

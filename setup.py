@@ -1,5 +1,22 @@
-import os.path
+#!/usr/bin/env python
+
+import os
+import sys
 from setuptools import setup, find_packages
+
+version = '5.2.1'
+
+if sys.argv[-1] == 'publish':
+    os.system('python setup.py sdist upload')
+    os.system('python setup.py bdist_wheel upload')
+    sys.exit()
+
+if sys.argv[-1] == 'tag':
+    os.system("git tag -a %s -m 'version %s'" % (version, version))
+    os.system("git push --tags")
+    sys.exit()
+
+long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read()
 
 
 def get_source_files():
@@ -9,32 +26,29 @@ def get_source_files():
 
 setup(
     name='django-ckeditor',
-    version='4.0.2',
+    version=version,
     description='Django admin CKEditor integration.',
-    long_description=open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
-    author='Shaun Sephton',
-    author_email='connect@shaunsephton.com',
-    url='http://github.com/shaunsephton/django-ckeditor',
-    packages=find_packages(exclude=['project', ]),
+    long_description=long_description,
+    author='Shaun Sephton & Piotr Malinski',
+    author_email='riklaunim@gmail.com',
+    url='https://github.com/django-ckeditor/django-ckeditor',
+    packages=find_packages(exclude=["*.demo"]),
+    zip_safe=False,
     install_requires=[
-        'Pillow',
+        'Django',
     ],
     include_package_data=True,
-    exclude_package_data={
-        'ckeditor': list(get_source_files()),
-    },
-    test_suite="setuptest.setuptest.SetupTestSuite",
-    tests_require=[
-        'django-setuptest>=0.1.1',
-    ],
     classifiers=[
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: BSD License",
-        "Development Status :: 4 - Beta",
         "Operating System :: OS Independent",
         "Framework :: Django",
         "Intended Audience :: Developers",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
     ],
-    zip_safe=False,
 )

@@ -48,21 +48,20 @@ div.slideshow-container {
 	position: relative;
 	clear: both;
 	float: left;
-	height: 532px;
+	height: 562px;
 }
 
 div.loader {
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-image: url('images/loader.gif');
+	background-image: url('loader.gif');
 	background-repeat: no-repeat;
 	background-position: center;
 }
 div.slideshow span.image-wrapper {
 	display: block;
 	position: absolute;
-	top: 30px;
 	left: 0;
 }
 div.slideshow a.advance-link {
