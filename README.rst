@@ -166,7 +166,7 @@ When you are rendering form outside of admin panel you will have to make sure th
 
 or you can load the media manually at it is done in demo app::
         
-    {% load staticfiles %}
+    {% load static %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
 
