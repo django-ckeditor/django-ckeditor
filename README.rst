@@ -4,11 +4,11 @@ Django CKEditor
 **NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
 
 
-File upload support have been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls while for file uploading widget you have to use RichTextUploadingField instead of RichTextField.
+File upload support has been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls, while for the file uploading widget you have to use RichTextUploadingField instead of RichTextField.
 
 
 **Django admin CKEditor integration.**
-Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and ``CKEditorUploadingWidget`` utilizing CKEditor with image upload and browsing support included.
+Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and ``CKEditorUploadingWidget`` utilizing CKEditor with image uploading and browsing support included.
 
 * This version also includes:
 #. support to django-storages (works with S3)
@@ -29,7 +29,7 @@ Required
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site then check that this variable is set correctly. Example::
+#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site, then check that this variable is set correctly. Example::
 
        CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
@@ -41,23 +41,23 @@ Required for using widget with file upload
 
 #. Add ``ckeditor_uploader`` to your ``INSTALLED_APPS`` setting.
 
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies an relative path to your CKEditor media upload directory. CKEditor uses Django storage API. By default Django uses file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
+#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies a relative path to your CKEditor media upload directory. CKEditor uses Django's storage API. By default, Django uses the file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use a different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
 
 
     CKEDITOR_UPLOAD_PATH = "uploads/"
 
-   For the default file system storage images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
+   When using default file system storage, images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
 
    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
    There are issues using S3Storage from django-storages.
 
-#. For the default filesystem storage configuration ``MEDIA_ROOT`` and ``MEDIA_URL`` must be set correctly for the media files to work (like those uploaded by the ckeditor widget).
+#. For the default filesystem storage configuration, ``MEDIA_ROOT`` and ``MEDIA_URL`` must be set correctly for the media files to work (like those uploaded by the ckeditor widget).
 
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
     (r'^ckeditor/', include('ckeditor_uploader.urls')),
 
-#. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6 those views are staff_member_required. If you want different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manually to your urls.py.
+#. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6, those views are staff_member_required. If you want a different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manually to your urls.py.
 
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
@@ -156,7 +156,7 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
 Outside of django admin
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When you are rendering form outside of admin panel you will have to make sure that all form media is present for the editor to work. One of the way how to achieve this is following::
+When you are rendering a form outside the admin panel, you'll have to make sure all form media is present for the editor to work. One way to achieve this is like this::
 
     <form>
         {{ myform.media }}
@@ -164,7 +164,7 @@ When you are rendering form outside of admin panel you will have to make sure th
         <input type="submit"/>
     </form>
 
-or you can load the media manually at it is done in demo app::
+or you can load the media manually as it is done in the demo app::
         
     {% load static %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
@@ -174,7 +174,7 @@ or you can load the media manually at it is done in demo app::
 
 Management Commands
 ~~~~~~~~~~~~~~~~~~~
-Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when starting to use django-ckeditor with existing images. Issue the command as follows::
+Included is a management command to create thumbnails for images already contained in ``CKEDITOR_UPLOAD_PATH``. This is useful to create thumbnails when using django-ckeditor with existing images. Issue the command as follows::
 
     $ ./manage.py generateckeditorthumbnails
 
@@ -182,7 +182,7 @@ Included is a management command to create thumbnails for images already contain
 
 Using S3
 ~~~~~~~~
-See http://django-storages.readthedocs.org/en/latest/
+See https://django-storages.readthedocs.org/en/latest/
 
 **NOTE:** ``django-ckeditor`` will not work with S3 through ``django-storages`` without this line in ``settings.py``::  
 
@@ -190,8 +190,8 @@ See http://django-storages.readthedocs.org/en/latest/
 
 If you want to use allowedContent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To allowedContent works, disable **stylesheetparser** plugin.
-So included this on your settings.py.::
+To get allowedContent to work, disable **stylesheetparser** plugin.
+So include this in your settings.py.::
 
     CKEDITOR_CONFIGS = {
         "default": {
@@ -203,7 +203,7 @@ So included this on your settings.py.::
 Plugins:
 --------
 
-django-ckeditor send by default the following ckeditor plugins, however, not all are enabled by default::
+django-ckeditor includes the following ckeditor plugins, but not all are enabled by default::
 
     a11yhelp, about, adobeair, ajax, autoembed, autogrow, autolink, bbcode, clipboard, codesnippet, codesnippetgeshi, colordialog, devtools, dialog, div, divarea, docprops, embed, embedbase, embedsemantic, filetools, find, flash, forms, iframe, iframedialog, image, image2, language, lineutils, link, liststyle, magicline, mathjax, menubutton, notification, notificationaggregator, pagebreak, pastefromword, placeholder, preview, scayt, sharedspace, showblocks, smiley, sourcedialog, specialchar, stylesheetparser, table, tableresize, tabletools, templates, uicolor, uploadimage, uploadwidget, widget, wsc, xml
 
@@ -212,7 +212,7 @@ Restricting file upload
 -----------------------
 #. To restrict upload functionality to image files only, add ``CKEDITOR_ALLOW_NONIMAGE_FILES = False`` in your settings.py file. Currently non-image files are allowed by default.
 
-#. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and not include it.
+#. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and don't include it.
 
 
 Demo / Test application
@@ -227,7 +227,7 @@ If you clone the repository you will be able to run the ``ckeditor_demo`` applic
 
 #. Start the development server.
 
-There is a forms.Form on main page (/) and a model in admin that uses the widget for a model field.
+There is a forms.Form on the main page (/) and a model in admin that uses the widget for a model field.
 Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directory.
 
 
@@ -240,7 +240,7 @@ You can run the test with ``python manage.py test ckeditor_demo`` (for repo chec
 Running code quality tests
 --------------------------
 
-Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and others quality check) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
+Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and other quality checks) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
 
 
 Example ckeditor configuration
