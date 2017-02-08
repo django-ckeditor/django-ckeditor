@@ -84,8 +84,7 @@ class ImageUploadView(generic.View):
         filename = get_upload_filename(uploaded_file.name, request.user)
 
 
-        img_name = Image.open(filename).filename
-        img_format = Image.open(filename).format
+        img_name, img_format = os.path.splitext(filename)
         IMAGE_QUALITY = getattr(settings, "IMAGE_QUALITY", 60)
 
         if(str(img_format).lower() == "png"):
