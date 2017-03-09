@@ -2,8 +2,8 @@ from __future__ import absolute_import
 
 from django.db import models
 
-from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class ExampleModel(models.Model):

@@ -5,8 +5,8 @@ from datetime import datetime
 
 from django.conf import settings
 from django.core.files.storage import default_storage
-from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -56,7 +56,10 @@ class ImageUploadView(generic.View):
         uploaded_file = request.FILES['upload']
 
         backend = image_processing.get_backend()
-        ck_func_num = escape(request.GET['CKEditorFuncNum'])
+
+        ck_func_num = request.GET.get('CKEditorFuncNum')
+        if ck_func_num:
+            ck_func_num = escape(ck_func_num)
 
         # Throws an error when an non-image file are uploaded.
         if not getattr(settings, 'CKEDITOR_ALLOW_NONIMAGE_FILES', True):
@@ -72,11 +75,16 @@ class ImageUploadView(generic.View):
         self._create_thumbnail_if_needed(backend, saved_path)
         url = utils.get_media_url(saved_path)
 
-        # Respond with Javascript sending ckeditor upload url.
-        return HttpResponse("""
-        <script type='text/javascript'>
-            window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
-        </script>""".format(ck_func_num, url))
+        if ck_func_num:
+            # Respond with Javascript sending ckeditor upload url.
+            return HttpResponse("""
+            <script type='text/javascript'>
+                window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
+            </script>""".format(ck_func_num, url))
+        else:
+            retdata = {'url': url, 'uploaded': '1',
+                       'fileName': uploaded_file.name}
+            return JsonResponse(retdata)
 
     @staticmethod
     def _save_file(request, uploaded_file):
@@ -172,21 +180,24 @@ def browse(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             query = form.cleaned_data.get('q', '').lower()
-            files = list(filter(lambda d: query in d['visible_filename'].lower(), files))
+            files = list(filter(lambda d: query in d[
+                         'visible_filename'].lower(), files))
     else:
         form = SearchForm()
 
     show_dirs = getattr(settings, 'CKEDITOR_BROWSE_SHOW_DIRS', False)
-    dir_list = sorted(set(os.path.dirname(f['src']) for f in files), reverse=True)
+    dir_list = sorted(set(os.path.dirname(f['src'])
+                          for f in files), reverse=True)
 
-    # Ensures there are no objects created from Thumbs.db files - ran across this problem while developing on Windows
+    # Ensures there are no objects created from Thumbs.db files - ran across
+    # this problem while developing on Windows
     if os.name == 'nt':
         files = [f for f in files if os.path.basename(f['src']) != 'Thumbs.db']
 
-    context = RequestContext(request, {
+    context = {
         'show_dirs': show_dirs,
         'dirs': dir_list,
         'files': files,
         'form': form
-    })
-    return render_to_response('ckeditor/browse.html', context)
+    }
+    return render(request, 'ckeditor/browse.html', context)

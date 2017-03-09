@@ -4,7 +4,7 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-version = '5.1.1'
+version = '5.2.1'
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
@@ -44,6 +44,7 @@ setup(
         "Programming Language :: Python :: 3.3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Framework :: Django",

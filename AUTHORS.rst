@@ -20,4 +20,4 @@ Contributors
 #. `mwcz <https://github.com/mwcz>`_
 #. `tomwys <https://github.com/tomwys>`_
 #. `snbuback <https://github.com/snbuback>`_
-#. And others `<https://github.com/**/django-ckeditor/graphs/contributors>`_
+#. And others `<https://github.com/django-ckeditor/django-ckeditor/graphs/contributors>`_
