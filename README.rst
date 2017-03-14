@@ -129,7 +129,7 @@ The quickest way to add rich text editing capabilities to your models is to use 
     class Post(models.Model):
         content = RichTextField()
 
-**For file upload support use ``RichTextUploadingField`` from ckeditor_uploader.fields**
+**For file upload support** use ``RichTextUploadingField`` from ``ckeditor_uploader.fields``.
 
 
 Widget
@@ -151,6 +151,8 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
         form = PostAdminForm
 
     admin.site.register(Post, PostAdmin)
+
+**For file upload support** use ``CKEditorUploadingWidget`` from ``ckeditor_uploader.widgets``.
 
 
 Outside of django admin
