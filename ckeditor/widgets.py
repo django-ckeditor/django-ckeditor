@@ -61,6 +61,7 @@ class CKEditorWidget(forms.Textarea):
             js += (jquery_url, )
         try:
             js += (
+                'ckeditor/ckeditor-basepath.js',
                 'ckeditor/ckeditor/ckeditor.js',
                 'ckeditor/ckeditor-init.js',
             )
