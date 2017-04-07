@@ -24,7 +24,7 @@ Installation
 Required
 ~~~~~~~~
 #. Install or add django-ckeditor to your python path.
-    
+
     pip install django-ckeditor
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
@@ -167,10 +167,10 @@ When you are rendering a form outside the admin panel, you'll have to make sure 
     </form>
 
 or you can load the media manually as it is done in the demo app::
-        
+
     {% load static %}
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
 
 
@@ -186,7 +186,7 @@ Using S3
 ~~~~~~~~
 See https://django-storages.readthedocs.org/en/latest/
 
-**NOTE:** ``django-ckeditor`` will not work with S3 through ``django-storages`` without this line in ``settings.py``::  
+**NOTE:** ``django-ckeditor`` will not work with S3 through ``django-storages`` without this line in ``settings.py``::
 
     AWS_QUERYSTRING_AUTH = False
 

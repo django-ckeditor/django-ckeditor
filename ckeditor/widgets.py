@@ -61,8 +61,8 @@ class CKEditorWidget(forms.Textarea):
             js += (jquery_url, )
         try:
             js += (
-                'ckeditor/ckeditor/ckeditor.js',
                 'ckeditor/ckeditor-init.js',
+                'ckeditor/ckeditor/ckeditor.js',
             )
         except AttributeError:
             raise ImproperlyConfigured("django-ckeditor requires \
