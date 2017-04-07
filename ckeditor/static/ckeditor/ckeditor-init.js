@@ -7,6 +7,12 @@
   }
 
   var $ = jQuery || djangoJQuery;
+
+  var el = $('.django-ckeditor-widget');
+  if (el.length && !window.CKEDITOR_BASEPATH) {
+    window.CKEDITOR_BASEPATH = el[0].getAttribute('data-ckeditor-basepath');
+  }
+
   $(function() {
     initialiseCKEditor();
     initialiseCKEditorInInlinedForms();
