@@ -10,6 +10,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from ckeditor_uploader import image_processing
 from ckeditor_uploader import utils
@@ -37,6 +38,7 @@ def get_upload_filename(upload_name, user):
     return default_storage.get_available_name(os.path.join(upload_path, upload_name))
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ImageUploadView(generic.View):
     http_method_names = ['post']
 
@@ -89,7 +91,7 @@ class ImageUploadView(generic.View):
             backend.create_thumbnail(saved_path)
 
 
-upload = csrf_exempt(ImageUploadView.as_view())
+upload = ImageUploadView.as_view()
 
 
 def get_image_files(user=None, path=''):
