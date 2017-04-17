@@ -1,6 +1,13 @@
 Changelog
 =========
 
+5.2.2
+-----
+#. Django 1.11 support
+#. Drop South migrations
+#. Fix storage problems by setting CKEDITOR_BASEPATH
+
+
 5.2.1
 -----
 #. Fix CKEditor package static path
