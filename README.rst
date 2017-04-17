@@ -251,6 +251,18 @@ Running code quality tests
 Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and other quality checks) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
 
 
+Troubleshooting
+---------------
+
+If your browser has problems displaying uploaded images in the image upload window you may need to change Django settings:
+
+::
+
+    X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+More on https://docs.djangoproject.com/en/1.11/ref/clickjacking/#setting-x-frame-options-for-all-responses
+
+
 Example ckeditor configuration
 ------------------------------
 ::
