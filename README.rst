@@ -215,6 +215,8 @@ django-ckeditor includes the following ckeditor plugins, but not all are enabled
     sourcedialog, specialchar, stylesheetparser, table, tableresize, tabletools, templates, uicolor,
     uploadimage, uploadwidget, widget, wsc, xml
 
+The image/file upload feature is done by the `uploadimage` plugin.
+
 
 Restricting file upload
 -----------------------
@@ -315,6 +317,7 @@ Example ckeditor configuration
             'tabSpaces': 4,
             'extraPlugins': ','.join(
                 [
+                    'uploadimage', # the upload image feature
                     # your extra plugins here
                     'div',
                     'autolink',
