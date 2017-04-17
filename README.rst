@@ -116,6 +116,9 @@ Optional for file upload
 
 #. Set the ``CKEDITOR_BROWSE_SHOW_DIRS`` setting to ``True`` to show directories on the "Browse Server" page. This enables image grouping by directory they are stored in, sorted by date.
 
+#. Set the ``CKEDITOR_RESTRICT_BY_DATE`` setting to ``True`` to bucked uploaded files by year/month/day.
+
+
 Usage
 -----
 
