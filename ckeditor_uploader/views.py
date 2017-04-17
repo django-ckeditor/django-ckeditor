@@ -17,6 +17,7 @@ from ckeditor_uploader import image_processing
 from ckeditor_uploader import utils
 from ckeditor_uploader.forms import SearchForm
 
+from PIL import Image
 
 def get_upload_filename(upload_name, user):
     user_path = ''
@@ -76,7 +77,8 @@ class ImageUploadView(generic.View):
                     </script>""".format(ck_func_num))
 
         saved_path = self._save_file(request, uploaded_file)
-        self._create_thumbnail_if_needed(backend, saved_path)
+        if(str(saved_path).split('.')[1].lower() != 'gif'):
+            self._create_thumbnail_if_needed(backend, saved_path)
         url = utils.get_media_url(saved_path)
 
         if ck_func_num:
@@ -93,7 +95,28 @@ class ImageUploadView(generic.View):
     @staticmethod
     def _save_file(request, uploaded_file):
         filename = get_upload_filename(uploaded_file.name, request.user)
-        saved_path = default_storage.save(filename, uploaded_file)
+
+
+        img_name, img_format = os.path.splitext(filename)
+        IMAGE_QUALITY = getattr(settings, "IMAGE_QUALITY", 60)
+
+        if(str(img_format).lower() == "png"):
+
+            img = Image.open(uploaded_file)
+            img = img.resize(img.size, Image.ANTIALIAS)
+            saved_path = default_storage.save("{}.jpg".format(img_name), uploaded_file)
+            img.save("{}.jpg".format(img_name), quality=IMAGE_QUALITY, optimize=True)
+
+        elif(str(img_format).lower() == "jpg" or str(img_format).lower() == "jpeg"):
+
+            img = Image.open(uploaded_file)
+            img = img.resize(img.size, Image.ANTIALIAS)
+            saved_path = default_storage.save(filename, uploaded_file)
+            img.save(saved_path,quality=IMAGE_QUALITY, optimize=True)
+        else:
+            saved_path = default_storage.save(filename, uploaded_file)
+
+
         return saved_path
 
     @staticmethod
