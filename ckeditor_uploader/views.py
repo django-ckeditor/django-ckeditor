@@ -10,19 +10,20 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.module_loading import import_string
+from django.utils.html import escape
 
 from ckeditor_uploader import image_processing
 from ckeditor_uploader import utils
 from ckeditor_uploader.forms import SearchForm
-from django.utils.html import escape
 
 
 def get_upload_filename(upload_name, user):
+    user_path = ''
+
     # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
     if getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False):
         user_path = user.get_username()
-    else:
-        user_path = ''
 
     # Generate date based path to put uploaded file.
     # If CKEDITOR_RESTRICT_BY_DATE is True upload file to date specific path.
@@ -33,12 +34,20 @@ def get_upload_filename(upload_name, user):
 
     # Complete upload path (upload_path + date_path).
     upload_path = os.path.join(
-        settings.CKEDITOR_UPLOAD_PATH, user_path, date_path)
+        settings.CKEDITOR_UPLOAD_PATH, user_path, date_path
+    )
 
-    if getattr(settings, "CKEDITOR_UPLOAD_SLUGIFY_FILENAME", True):
+    if (getattr(settings, 'CKEDITOR_UPLOAD_SLUGIFY_FILENAME', True) and
+            not hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR')):
         upload_name = utils.slugify_filename(upload_name)
 
-    return default_storage.get_available_name(os.path.join(upload_path, upload_name))
+    if hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR'):
+        generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
+        upload_name = generator(upload_name)
+
+    return default_storage.get_available_name(
+        os.path.join(upload_path, upload_name)
+    )
 
 
 class ImageUploadView(generic.View):

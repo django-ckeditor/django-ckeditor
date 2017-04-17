@@ -31,7 +31,7 @@ Required
 
 #. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site, then check that this variable is set correctly. Example::
 
-       CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+    CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
 #. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
 
@@ -44,12 +44,27 @@ Required for using widget with file upload
 #. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies a relative path to your CKEditor media upload directory. CKEditor uses Django's storage API. By default, Django uses the file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use a different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
 
 
-    CKEDITOR_UPLOAD_PATH = "uploads/"
+    ``CKEDITOR_UPLOAD_PATH = "uploads/"``
 
-   When using default file system storage, images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
+    When using default file system storage, images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
 
-   CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
-   There are issues using S3Storage from django-storages.
+    If you want be able for have control for filename generation, you have to add into settings yours custom filename generator.
+
+    ```
+    # utils.py
+
+    def get_filename(filename):
+        return filename.upper()
+    ```
+
+    ```
+    # settings.py
+
+    CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
+    ```
+
+    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
+    There are issues using S3Storage from django-storages.
 
 #. For the default filesystem storage configuration, ``MEDIA_ROOT`` and ``MEDIA_URL`` must be set correctly for the media files to work (like those uploaded by the ckeditor widget).
 
