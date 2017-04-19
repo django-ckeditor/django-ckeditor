@@ -11,6 +11,8 @@ from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 
+from js_asset import JS, static
+
 try:
     # Django >=1.7
     from django.forms.utils import flatatt
@@ -61,7 +63,14 @@ class CKEditorWidget(forms.Textarea):
             js += (jquery_url, )
         try:
             js += (
-                'ckeditor/ckeditor-init.js',
+                JS('ckeditor/ckeditor-init.js', {
+                    'id': 'ckeditor-init-script',
+                    'data-ckeditor-basepath': getattr(
+                        settings,
+                        'CKEDITOR_BASEPATH',
+                        static('ckeditor/ckeditor/'),
+                    ),
+                }),
                 'ckeditor/ckeditor/ckeditor.js',
             )
         except AttributeError:
