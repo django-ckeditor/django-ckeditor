@@ -32,6 +32,15 @@
 
        CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
+9. If you're using ``ManifestStaticFilesStorage`` (or any other storage that mangles the filenames of static files) you have to set ``CKEDITOR_BASEPATH``, because CKEditor is unable to find its own files by looking at the location of ``ckeditor.js``. It is recommended to override the ``admin/base_site.html`` template with your own, i.e.::
+
+    {% extends "admin/base_site.html" %}
+
+    {% block extrahead %}
+    <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+    {{ block.super }}
+    {% endblock %}
+
 
 ## Optional
 
