@@ -10,13 +10,14 @@ File upload support has been moved to ckeditor_uploader.  The urls are in ckedit
 **Django admin CKEditor integration.**
 Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and ``CKEditorUploadingWidget`` utilizing CKEditor with image uploading and browsing support included.
 
-* This version also includes:
+This version also includes:
+
 #. support to django-storages (works with S3)
 #. updated ckeditor to version 4.6.1
 #. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.1/plugins>`_ )
 
 .. contents:: Contents
-    :depth: 5
+   :depth: 5
 
 Installation
 ------------
@@ -72,11 +73,35 @@ Required for using widget with file upload
 
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
-#. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6, those views are staff_member_required. If you want a different permission decorator (login_required, user_passes_test etc.) then add views defined in `ckeditor.urls` manually to your urls.py.
+#. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6, those views are decorated using ``@staff_member_required``. If you want a different permission decorator (``login_required``, ``user_passes_test`` etc.) then add views defined in ``ckeditor.urls`` manually to your urls.py.
 
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
-   - ``pillow``: uses PIL or Pillow
+   - ``pillow``: Uses Pillow
+
+#. django-ckeditor uses Django admin's jQuery by default. You may override this
+   by specifying a different jQuery as ``CKEDITOR_JQUERY_URL``. If you find
+   that CKEditor widgets don't appear in your Django admin site then check that
+   this variable is set correctly. Example::
+
+       CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+
+#. CKEditor needs to know where its assets are located because it loads them
+   lazily only when needed. The location is determined by looking at a script
+   tag which includes a URL ending in ``ckeditor.js``. This does not work all
+   the time, for example when using ``ManifestStaticFilesStorage``, any asset
+   packaging pipeline or whatnot. django-ckeditor is quite good at
+   automatically detecting the correct place even then, but sometimes you have
+   to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override
+   the ``admin/base_site.html`` template with your own if you really need to do
+   this, i.e.::
+
+        {% extends "admin/base_site.html" %}
+
+        {% block extrahead %}
+        <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+        {{ block.super }}
+        {% endblock %}
 
 
 Optional - customizing CKEditor editor
@@ -238,6 +263,7 @@ The image/file upload feature is done by the `uploadimage` plugin.
 
 Restricting file upload
 -----------------------
+
 #. To restrict upload functionality to image files only, add ``CKEDITOR_ALLOW_NONIMAGE_FILES = False`` in your settings.py file. Currently non-image files are allowed by default.
 
 #. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and don't include it.
@@ -245,6 +271,7 @@ Restricting file upload
 
 Demo / Test application
 -----------------------
+
 If you clone the repository you will be able to run the ``ckeditor_demo`` application.
 
 #. ``pip install -r ckeditor_demo_requirements.txt``
@@ -262,6 +289,7 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 
 Running selenium test
 ---------------------
+
 You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.4.
 
 
@@ -285,6 +313,7 @@ More on https://docs.djangoproject.com/en/1.11/ref/clickjacking/#setting-x-frame
 
 Example ckeditor configuration
 ------------------------------
+
 ::
 
     CKEDITOR_CONFIGS = {
@@ -333,22 +362,21 @@ Example ckeditor configuration
             # 'toolbarCanCollapse': True,
             # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
             'tabSpaces': 4,
-            'extraPlugins': ','.join(
-                [
-                    'uploadimage', # the upload image feature
-                    # your extra plugins here
-                    'div',
-                    'autolink',
-                    'autoembed',
-                    'embedsemantic',
-                    'autogrow',
-                    # 'devtools',
-                    'widget',
-                    'lineutils',
-                    'clipboard',
-                    'dialog',
-                    'dialogui',
-                    'elementspath'
-                ]),
+            'extraPlugins': ','.join([
+                'uploadimage', # the upload image feature
+                # your extra plugins here
+                'div',
+                'autolink',
+                'autoembed',
+                'embedsemantic',
+                'autogrow',
+                # 'devtools',
+                'widget',
+                'lineutils',
+                'clipboard',
+                'dialog',
+                'dialogui',
+                'elementspath'
+            ]),
         }
     }

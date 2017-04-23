@@ -1,6 +1,22 @@
 Changelog
 =========
 
+Next version
+------------
+#. Fix storage problems by setting ``CKEDITOR_BASEPATH`` (hopefully for real
+   this time)
+#. Documentation updates
+#. Added a ``CKEDITOR_RESTRICT_BY_DATE`` setting to add uploaded files into
+   folders containing the current date.
+#. Added a ``CKEDITOR_FILEICONS`` setting that allows overriding the
+   icons used by Gallerific.
+#. Added a ``CKEDITOR_FILENAME_GENERATOR`` setting which allows
+   specifying a callable which mangles the filename of uploaded files.
+#. Added ``THUMBNAIL_SIZE`` and ``IMAGE_QUALITY`` settings for the
+   Pillow image backend.
+#. Actually include static assets for ``ckeditor_uploader`` in the
+   pip-installable package.
+
 5.2.2
 -----
 #. Django 1.11 support
@@ -59,8 +75,8 @@ Changelog
 File upload support have been moved to ckeditor_uploader. The urls are in ckeditor_uploader.urls while for file uploading widget you have to use RichTextUploadingField from ckeditor_uploader.fields instead of RichTextField from  from ckeditor.fields.
 
 #. Updated ckeditor to 4.5.3 (from https://github.com/ckeditor/ckeditor-dev/tree/4.5.3)
-#. Added new plugins from ckeditor maintainers: adobeair, ajax, autoembed, autogrow, autolink, bbcode, codesnippet, codesnippetgeshi, devtools, divarea, docprops, embed, embedbase, embedsemantic, filetools, iframedialog, image2, language, lineutils, mathjax, menubutton, notification, notificationaggregator, placeholder, sharedspace, sourcedialog, stylesheetparser, tableresize, uicolor, uploadimage, uploadwidget, widget, xml 
-#. Add `zip_safe=False` on setup config, to force does not create ".egg" file 
+#. Added new plugins from ckeditor maintainers: adobeair, ajax, autoembed, autogrow, autolink, bbcode, codesnippet, codesnippetgeshi, devtools, divarea, docprops, embed, embedbase, embedsemantic, filetools, iframedialog, image2, language, lineutils, mathjax, menubutton, notification, notificationaggregator, placeholder, sharedspace, sourcedialog, stylesheetparser, tableresize, uicolor, uploadimage, uploadwidget, widget, xml
+#. Add `zip_safe=False` on setup config, to force does not create ".egg" file
 #. Add python Wheel package configuration
 #. Add setup.py functions to easy release ".egg" package and Wheel package, and tag version on git ( ``python setup.py publish`` and ``python setup.py tag`` )
 #. Improved Tox configuration to code coverage check, code quality check (flake8), imports order check (isort) and test with django master branch
