@@ -32,14 +32,14 @@
 
        CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
-9. CKEditor needs to know where its assets are located because it loads them lazily only when needed. The location is determined by looking at a script tag which includes a URL ending in ``ckeditor.js``. This does not work all the time, for example when using ``ManifestStaticFilesStorage``, any asset packaging pipeline or whatnot. django-ckeditor is quite good at automatically detecting the correct place even then, but sometimes you have to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override the ``admin/base_site.html`` template with your own, i.e.::
+9. CKEditor needs to know where its assets are located because it loads them lazily only when needed. The location is determined by looking at a script tag which includes a URL ending in ``ckeditor.js``. This does not work all the time, for example when using ``ManifestStaticFilesStorage``, any asset packaging pipeline or whatnot. django-ckeditor is quite good at automatically detecting the correct place even then, but sometimes you have to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override the ``admin/base_site.html`` template with your own, i.e.:
 
-    {% extends "admin/base_site.html" %}
+       {% extends "admin/base_site.html" %}
 
-    {% block extrahead %}
-    <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
-    {{ block.super }}
-    {% endblock %}
+       {% block extrahead %}
+       <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+       {{ block.super }}
+       {% endblock %}
 
 
 ## Optional
