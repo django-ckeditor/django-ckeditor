@@ -4,7 +4,7 @@ import os
 import sys
 from setuptools import setup, find_packages
 
-version = '5.2.2'
+version = __import__('ckeditor').__version__
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
