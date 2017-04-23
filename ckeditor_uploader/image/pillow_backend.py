@@ -2,11 +2,12 @@ from __future__ import absolute_import
 
 import os
 from io import BytesIO
-from PIL import Image, ImageOps
 
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
+
+from PIL import Image, ImageOps
 
 from ckeditor_uploader import utils
 

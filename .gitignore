@@ -19,3 +19,4 @@ db.sqlite3
 .coverage
 .coverage.*
 .idea
+venv

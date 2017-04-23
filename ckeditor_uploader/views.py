@@ -2,19 +2,19 @@ from __future__ import absolute_import
 
 import os
 from datetime import datetime
-from PIL import Image
 
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.utils.html import escape
+from django.utils.module_loading import import_string
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.module_loading import import_string
-from django.utils.html import escape
 
-from ckeditor_uploader import image_processing
-from ckeditor_uploader import utils
+from PIL import Image
+
+from ckeditor_uploader import image_processing, utils
 from ckeditor_uploader.forms import SearchForm
 
 
