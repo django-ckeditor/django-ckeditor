@@ -2,23 +2,16 @@ from __future__ import absolute_import
 
 import os
 from io import BytesIO
+from PIL import Image, ImageOps
 
+from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
 from ckeditor_uploader import utils
-from django.conf import settings
 
 
-try:
-    from PIL import Image, ImageOps
-except ImportError:
-    import Image
-    import ImageOps
-
-
-THUMBNAIL_SIZE = getattr(settings, "THUMBNAIL_SIZE", (75,75))
-
+THUMBNAIL_SIZE = getattr(settings, "THUMBNAIL_SIZE", (75, 75))
 
 
 def image_verify(f):

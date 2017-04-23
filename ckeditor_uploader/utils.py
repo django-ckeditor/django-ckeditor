@@ -13,18 +13,18 @@ from django.utils.encoding import force_text
 
 # Non-image file icons, matched from top to bottom
 fileicons_path = '{0}/file-icons/'.format(getattr(settings, 'CKEDITOR_FILEICONS_PATH', '/static/ckeditor'))
-# This allows adding or overriding the default icons used by Gallerific by getting an additional two-tuple list from 
+# This allows adding or overriding the default icons used by Gallerific by getting an additional two-tuple list from
 # the project settings.  If it does not exist, it is ignored.  If the same file extension exists twice, the settings
 # file version is used instead of the default.
 override_icons = getattr(settings, 'CKEDITOR_FILEICONS', [])
-ckeditor_icons =     [
-        ('\.pdf$', fileicons_path + 'pdf.png'),
-        ('\.doc$|\.docx$|\.odt$', fileicons_path + 'doc.png'),
-        ('\.txt$', fileicons_path + 'txt.png'),
-        ('\.ppt$', fileicons_path + 'ppt.png'),
-        ('\.xls$', fileicons_path + 'xls.png'),
-        ('.*', fileicons_path + 'file.png'),  # Default
-    ]
+ckeditor_icons = [
+    ('\.pdf$', fileicons_path + 'pdf.png'),
+    ('\.doc$|\.docx$|\.odt$', fileicons_path + 'doc.png'),
+    ('\.txt$', fileicons_path + 'txt.png'),
+    ('\.ppt$', fileicons_path + 'ppt.png'),
+    ('\.xls$', fileicons_path + 'xls.png'),
+    ('.*', fileicons_path + 'file.png'),  # Default
+]
 CKEDITOR_FILEICONS = override_icons + ckeditor_icons
 
 

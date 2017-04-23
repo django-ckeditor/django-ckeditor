@@ -24,6 +24,7 @@ def get_source_files():
         for filename in files:
             yield os.path.join('/'.join(dirname.split('/')[1:]), filename)
 
+
 setup(
     name='django-ckeditor',
     version=version,

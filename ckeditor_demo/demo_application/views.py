@@ -13,4 +13,5 @@ class CkEditorFormView(generic.FormView):
     def get_success_url(self):
         return reverse('ckeditor-form')
 
+
 ckeditor_form_view = CkEditorFormView.as_view()

@@ -2,12 +2,12 @@ from __future__ import absolute_import
 
 import os
 from datetime import datetime
+from PIL import Image
 
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.template import RequestContext
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.module_loading import import_string
@@ -17,7 +17,6 @@ from ckeditor_uploader import image_processing
 from ckeditor_uploader import utils
 from ckeditor_uploader.forms import SearchForm
 
-from PIL import Image
 
 def get_upload_filename(upload_name, user):
     user_path = ''
@@ -96,7 +95,6 @@ class ImageUploadView(generic.View):
     def _save_file(request, uploaded_file):
         filename = get_upload_filename(uploaded_file.name, request.user)
 
-
         img_name, img_format = os.path.splitext(filename)
         IMAGE_QUALITY = getattr(settings, "IMAGE_QUALITY", 60)
 
@@ -112,10 +110,10 @@ class ImageUploadView(generic.View):
             img = Image.open(uploaded_file)
             img = img.resize(img.size, Image.ANTIALIAS)
             saved_path = default_storage.save(filename, uploaded_file)
-            img.save(saved_path,quality=IMAGE_QUALITY, optimize=True)
+            img.save(saved_path, quality=IMAGE_QUALITY, optimize=True)
+
         else:
             saved_path = default_storage.save(filename, uploaded_file)
-
 
         return saved_path
 
