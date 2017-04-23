@@ -35,7 +35,6 @@ setup(
     packages=find_packages(exclude=["*.demo"]),
     zip_safe=False,
     install_requires=[
-        'Django',
         'django-js-asset',
     ],
     include_package_data=True,
