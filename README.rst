@@ -1,7 +1,7 @@
 Django CKEditor
 ===============
 
-**NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
+**NOTICE: django-ckeditor 5 has backwards incompatible code moves against 4.5.1.**
 
 
 File upload support has been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls, while for the file uploading widget you have to use RichTextUploadingField instead of RichTextField.
