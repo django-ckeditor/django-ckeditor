@@ -3,6 +3,7 @@ Changelog
 
 Next version
 ------------
+#. CKEditor 4.6.2
 #. Fix storage problems by setting ``CKEDITOR_BASEPATH`` (hopefully for real
    this time)
 #. Documentation updates
