@@ -13,8 +13,8 @@ Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and
 This version also includes:
 
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.6.1
-#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.1/plugins>`_ )
+#. updated ckeditor to version 4.6.2
+#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`_ )
 
 .. contents:: Contents
    :depth: 5
