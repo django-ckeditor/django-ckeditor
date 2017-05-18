@@ -16,7 +16,11 @@ if sys.argv[-1] == 'tag':
     os.system("git push --tags")
     sys.exit()
 
-long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read()
+long_description = "\n".join([
+    open('README.rst', 'r').read(),
+    open('AUTHORS.rst', 'r').read(),
+    open('CHANGELOG.rst', 'r').read(),
+])
 
 
 def get_source_files():

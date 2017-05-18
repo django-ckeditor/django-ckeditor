@@ -14,7 +14,7 @@ This version also includes:
 
 #. support to django-storages (works with S3)
 #. updated ckeditor to version 4.6.2
-#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`_ )
+#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`__ )
 
 .. contents:: Contents
    :depth: 5
@@ -34,7 +34,7 @@ Required
 
     CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
-#. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`_ for more info.
+#. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`__ for more info.
 
 
 Required for using widget with file upload
@@ -107,7 +107,7 @@ Required for using widget with file upload
 Optional - customizing CKEditor editor
 --------------------------------------
 
-#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.ckeditor.com/#!/guide/dev_configuration>`_), i.e.::
+#. Add a CKEDITOR_CONFIGS setting to the project's ``settings.py`` file. This specifies sets of CKEditor settings that are passed to CKEditor (see CKEditor's `Setting Configurations <http://docs.ckeditor.com/#!/guide/dev_configuration>`__), i.e.::
 
        CKEDITOR_CONFIGS = {
            'awesome_ckeditor': {
@@ -223,7 +223,7 @@ Included is a management command to create thumbnails for images already contain
 
     $ ./manage.py generateckeditorthumbnails
 
-**NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`_ for more info.
+**NOTE**: If you're using custom views remember to include ckeditor.js in your form's media either through ``{{ form.media }}`` or through a ``<script>`` tag. Admin will do this for you automatically. See `Django's Form Media docs <http://docs.djangoproject.com/en/dev/topics/forms/media/>`__ for more info.
 
 Using S3
 ~~~~~~~~
@@ -296,7 +296,7 @@ You can run the test with ``python manage.py test ckeditor_demo`` (for repo chec
 Running code quality tests
 --------------------------
 
-Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`_ and run ``tox -e py27-lint`` to `Flake8 (pep8 and other quality checks) <https://pypi.python.org/pypi/flake8>`_ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`_ tests
+Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`__ and run ``tox -e py27-lint`` to `Flake8 (pep8 and other quality checks) <https://pypi.python.org/pypi/flake8>`__ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`__ tests
 
 
 Troubleshooting

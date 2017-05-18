@@ -4,6 +4,7 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install flake8
+  - pip install flake8 docutils pygments
 script:
   - flake8
+  - python setup.py check --restructuredtext --strict --metadata
