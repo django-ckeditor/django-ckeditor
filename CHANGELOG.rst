@@ -17,6 +17,12 @@ Next version
    Pillow image backend.
 #. Actually include static assets for ``ckeditor_uploader`` in the
    pip-installable package.
+#. Removed ``CKEDITOR_JQUERY_URL`` and the jQuery dependency. The
+   CKEditor activation now uses plain JavaScript. Dependencies are
+   `JSON.parse <http://caniuse.com/#search=json.parse>`__ and
+   `document.querySelectorAll <http://caniuse.com/#search=querySelectorAll>`__
+   which are supported in practically all used browsers these days.
+
 
 5.2.2
 -----

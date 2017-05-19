@@ -30,10 +30,6 @@ Required
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
-#. **django-ckeditor uses jQuery in ckeditor-init.js file. You must set ``CKEDITOR_JQUERY_URL`` to a jQuery URL that will be used to load the library**. If you have jQuery loaded from a different source just don't set [CKEDITOR_JQUERY_URL] and django-ckeditor will not try to load its own jQuery. If you find that CKEditor widgets don't appear in your Django admin site, then check that this variable is set correctly. Example::
-
-    CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
-
 #. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`__ for more info.
 
 
@@ -78,13 +74,6 @@ Required for using widget with file upload
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: Uses Pillow
-
-#. django-ckeditor uses Django admin's jQuery by default. You may override this
-   by specifying a different jQuery as ``CKEDITOR_JQUERY_URL``. If you find
-   that CKEditor widgets don't appear in your Django admin site then check that
-   this variable is set correctly. Example::
-
-       CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
 
 #. CKEditor needs to know where its assets are located because it loads them
    lazily only when needed. The location is determined by looking at a script

@@ -3,13 +3,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-        <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-        <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     </head>
     <body>
         <form method="post" action="./">
             {% csrf_token %}
+            {{ form.media }}
             {{ form.as_p }}
             <p><input type="submit" value="post"></p>
         </form>

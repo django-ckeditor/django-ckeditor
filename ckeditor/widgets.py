@@ -58,9 +58,6 @@ class CKEditorWidget(forms.Textarea):
     """
     class Media:
         js = ()
-        jquery_url = getattr(settings, 'CKEDITOR_JQUERY_URL', None)
-        if jquery_url:
-            js += (jquery_url, )
         try:
             js += (
                 JS('ckeditor/ckeditor-init.js', {
