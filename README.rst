@@ -147,6 +147,23 @@ Optional - customizing CKEditor editor
             }
         }
 
+   If you want or need plugins which are not part of django-ckeditor's
+   plugin set you may specify assets and plugins as follows::
+
+        text = RichTextField(
+            config_name='forum-post',
+
+            # CKEDITOR.config.extraPlugins:
+            extra_plugins=['someplugin'],
+
+            # CKEDITOR.plugins.addExternal(...)
+            external_plugin_resources=[(
+                'someplugin',
+                '/static/.../path-to-someplugin/',
+                'plugin.js',
+            )],
+        )
+
 
 Optional for file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~
