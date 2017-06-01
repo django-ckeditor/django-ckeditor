@@ -32,6 +32,23 @@ Required
 
 #. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`__ for more info.
 
+#. CKEditor needs to know where its assets are located because it loads them
+   lazily only when needed. The location is determined by looking at a script
+   tag which includes a URL ending in ``ckeditor.js``. This does not work all
+   the time, for example when using ``ManifestStaticFilesStorage``, any asset
+   packaging pipeline or whatnot. django-ckeditor is quite good at
+   automatically detecting the correct place even then, but sometimes you have
+   to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override
+   the ``admin/base_site.html`` template with your own if you really need to do
+   this, i.e.::
+
+        {% extends "admin/base_site.html" %}
+
+        {% block extrahead %}
+        <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+        {{ block.super }}
+        {% endblock %}
+
 
 Required for using widget with file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,23 +91,6 @@ Required for using widget with file upload
 #. Set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
 
    - ``pillow``: Uses Pillow
-
-#. CKEditor needs to know where its assets are located because it loads them
-   lazily only when needed. The location is determined by looking at a script
-   tag which includes a URL ending in ``ckeditor.js``. This does not work all
-   the time, for example when using ``ManifestStaticFilesStorage``, any asset
-   packaging pipeline or whatnot. django-ckeditor is quite good at
-   automatically detecting the correct place even then, but sometimes you have
-   to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override
-   the ``admin/base_site.html`` template with your own if you really need to do
-   this, i.e.::
-
-        {% extends "admin/base_site.html" %}
-
-        {% block extrahead %}
-        <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
-        {{ block.super }}
-        {% endblock %}
 
 
 Optional - customizing CKEditor editor
