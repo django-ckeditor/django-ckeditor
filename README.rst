@@ -49,6 +49,9 @@ Required
         {{ block.super }}
         {% endblock %}
 
+   Of course you should adapt this snippet to your needs when using
+   CKEditor outside the admin app.
+
 
 Required for using widget with file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
