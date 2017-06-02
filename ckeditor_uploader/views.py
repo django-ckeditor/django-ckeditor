@@ -225,4 +225,5 @@ def browse(request):
         'files': files,
         'form': form
     }
-    return render(request, 'ckeditor/browse.html', context)
+    browse_template = getattr(settings, 'CKEDITOR_BROWSE_TEMPLATE', 'ckeditor/browse.html')
+    return render(request, browse_template, context)
