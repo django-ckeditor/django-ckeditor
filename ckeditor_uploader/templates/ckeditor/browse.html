@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles i18n %}
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -24,9 +24,9 @@
         <div id="page">
             <div id="container" style="width: 880px">
                 {% if files %}
-                    <h2>Browse for the image you want, then click 'Embed Image' to continue...</h2>
+                    <h2>{% trans "Browse for the image you want, then click 'Embed Image' to continue..." %}</h2>
                 {% else %}
-                    <h2>No images found. Upload images using the 'Image Button' dialog's 'Upload' tab.</h2>
+                    <h2>{% trans "No images found. Upload images using the 'Image Button' dialog's 'Upload' tab." %}</h2>
                 {% endif %}
 
                 <!-- Start Advanced Gallery Html Containers -->
@@ -59,7 +59,7 @@
                                                 </a>
                                                 <div class="caption">
                                                     <div class="submit-row">
-                                                        <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                                        <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="{% trans "Embed Image" %}" />
                                                     </div>
                                                 </div>
                                             </li>
@@ -77,7 +77,7 @@
                                     </a>
                                     <div class="caption">
                                         <div class="submit-row">
-                                            <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                            <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="{% trans "Embed Image" %}" />
                                         </div>
                                     </div>
                                 </li>
