@@ -13,7 +13,7 @@ from selenium import webdriver
 
 CHROMIUM = 'chromium'
 FIREFOX = 'firefox'
-SELENIUM_BROWSER = FIREFOX
+SELENIUM_BROWSER = CHROMIUM
 
 
 class TestAdminPanelWidget(StaticLiveServerTestCase):
