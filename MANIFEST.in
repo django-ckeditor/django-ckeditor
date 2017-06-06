@@ -8,3 +8,4 @@ recursive-exclude ckeditor/static/ckeditor/ckeditor/_samples *
 recursive-include ckeditor/templates *
 recursive-include ckeditor_uploader/static *
 recursive-include ckeditor_uploader/templates *
+recursive-include ckeditor_uploader/locale *
