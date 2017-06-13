@@ -161,7 +161,7 @@ Optional for file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~
 #. All uploaded files are slugified by default. To disable this feature, set ``CKEDITOR_UPLOAD_SLUGIFY_FILENAME`` to ``False``.
 
-#. Set the ``CKEDITOR_RESTRICT_BY_USER`` setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images). Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
+#. Set the ``CKEDITOR_RESTRICT_BY_USER`` setting to ``True`` in the project's ``settings.py`` file (default ``False``). This restricts access to uploaded images to the uploading user (e.g. each user only sees and uploads their own images).  Upload paths are prefixed by the string returned by ``get_username``.  If ``CKEDITOR_RESTRICT_BY_USER`` is set to a string, the named property is used instead.  Superusers can still see all images. **NOTE**: This restriction is only enforced within the CKEditor media browser.
 
 #. Set the ``CKEDITOR_BROWSE_SHOW_DIRS`` setting to ``True`` to show directories on the "Browse Server" page. This enables image grouping by directory they are stored in, sorted by date.
 
