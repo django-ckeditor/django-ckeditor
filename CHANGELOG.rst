@@ -22,6 +22,8 @@ Next version
    `JSON.parse <http://caniuse.com/#search=json.parse>`__ and
    `document.querySelectorAll <http://caniuse.com/#search=querySelectorAll>`__
    which are supported in practically all used browsers these days.
+#. Fixed a bug where the CKEditor language was not set individually for
+   each request.
 
 
 5.2.2
