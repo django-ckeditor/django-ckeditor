@@ -1,8 +1,16 @@
 Changelog
 =========
 
+5.3.1
+-----
+
+(Upcoming)
+
+#. Actually include the code which sets ``CKEDITOR_BASEPATH``.
+
+
 5.3.0
-------------
+-----
 #. CKEditor 4.7
 #. Fix storage problems by setting ``CKEDITOR_BASEPATH`` (hopefully for real
    this time)
