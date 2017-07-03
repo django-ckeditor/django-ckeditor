@@ -1,4 +1,9 @@
-(function() {
+/* global CKEDITOR */
+;(function() {
+  var el = document.getElementById('ckeditor-init-script');
+  if (el && !window.CKEDITOR_BASEPATH) {
+    window.CKEDITOR_BASEPATH = el.getAttribute('data-ckeditor-basepath');
+  }
 
   // Polyfill from https://developer.mozilla.org/en/docs/Web/API/Element/matches
   if (!Element.prototype.matches) {
