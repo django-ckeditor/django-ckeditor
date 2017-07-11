@@ -21,10 +21,16 @@
         };
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  function runInitialisers() {
     initialiseCKEditor();
     initialiseCKEditorInInlinedForms();
-  });
+  }
+
+  if (document.readyState != 'loading') {
+    runInitialisers();
+  } else {
+    document.addEventListener('DOMContentLoaded', runInitialisers);
+  }
 
   function initialiseCKEditor() {
     var textareas = Array.prototype.slice.call(document.querySelectorAll('textarea[data-type=ckeditortype]'));
