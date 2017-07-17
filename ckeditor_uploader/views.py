@@ -26,7 +26,7 @@ def get_upload_filename(upload_name, user):
     if RESTRICT_BY_USER:
         try:
             user_prop = getattr(user, RESTRICT_BY_USER)
-        except AttributeError:
+        except (AttributeError, TypeError):
             user_prop = getattr(user, 'get_username')
 
         if callable(user_prop):
