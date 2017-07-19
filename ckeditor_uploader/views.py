@@ -18,7 +18,7 @@ from ckeditor_uploader import image_processing, utils
 from ckeditor_uploader.forms import SearchForm
 
 
-def get_upload_filename(upload_name, user):
+def _get_user_path(user):
     user_path = ''
 
     # If CKEDITOR_RESTRICT_BY_USER is True upload file to user specific path.
@@ -33,6 +33,13 @@ def get_upload_filename(upload_name, user):
             user_path = user_prop()
         else:
             user_path = user_prop
+
+    return user_path
+
+
+def get_upload_filename(upload_name, user):
+
+    user_path = _get_user_path(user)
 
     # Generate date based path to put uploaded file.
     # If CKEDITOR_RESTRICT_BY_DATE is True upload file to date specific path.
@@ -145,9 +152,10 @@ def get_image_files(user=None, path=''):
     STORAGE_DIRECTORIES = 0
     STORAGE_FILES = 1
 
-    restrict = getattr(settings, 'CKEDITOR_RESTRICT_BY_USER', False)
-    if user and not user.is_superuser and restrict:
-        user_path = user.get_username()
+    # allow browsing from anywhere if user is superuser
+    # otherwise use the user path
+    if user and not user.is_superuser:
+        user_path = _get_user_path(user)
     else:
         user_path = ''
 
