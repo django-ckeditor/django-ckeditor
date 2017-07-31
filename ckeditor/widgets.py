@@ -138,4 +138,9 @@ class CKEditorWidget(forms.Textarea):
         return attrs
 
     def _set_config(self):
-        self.config['language'] = get_language()
+        lang = get_language()
+        if lang == 'zh-hans':
+            lang = 'zh-cn'
+        elif lang == 'zh-hant':
+            lang = 'zh'
+        self.config['language'] = lang
