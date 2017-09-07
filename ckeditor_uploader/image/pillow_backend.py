@@ -4,8 +4,8 @@ import os
 from io import BytesIO
 
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from ckeditor_uploader.utils import storage
 
 from PIL import Image, ImageOps
 
@@ -26,7 +26,7 @@ def create_thumbnail(file_path):
     thumbnail_filename = utils.get_thumb_filename(file_path)
     thumbnail_format = utils.get_image_format(os.path.splitext(file_path)[1])
 
-    image = default_storage.open(file_path)
+    image = storage.open(file_path)
     image = Image.open(image)
     file_format = image.format
 
@@ -50,11 +50,11 @@ def create_thumbnail(file_path):
         None)
     thumbnail.seek(0)
 
-    return default_storage.save(thumbnail_filename, thumbnail)
+    return storage.save(thumbnail_filename, thumbnail)
 
 
 def should_create_thumbnail(file_path):
-    image = default_storage.open(file_path)
+    image = storage.open(file_path)
     try:
         Image.open(image)
     except IOError:
