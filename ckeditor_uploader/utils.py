@@ -37,6 +37,7 @@ class NotAnImageException(Exception):
 def get_storage_class():
     return import_string(getattr(settings, 'CKEDITOR_STORAGE_BACKEND', 'django.core.files.storage.DefaultStorage'))()
 
+
 storage = get_storage_class()
 
 
