@@ -26,10 +26,8 @@
     initialiseCKEditorInInlinedForms();
   }
 
-  if (document.readyState != 'loading') {
+  window.onload = function() {
     runInitialisers();
-  } else {
-    document.addEventListener('DOMContentLoaded', runInitialisers);
   }
 
   function initialiseCKEditor() {
