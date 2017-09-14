@@ -167,6 +167,7 @@ Optional for file upload
 
 #. Set the ``CKEDITOR_RESTRICT_BY_DATE`` setting to ``True`` to bucked uploaded files by year/month/day.
 
+#. Set the ``CKEDITOR_MEDIA_FULL_URL`` setting to ``your.domian/media_url/`` to upload file as full url.
 
 Usage
 -----
