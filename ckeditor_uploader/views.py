@@ -87,7 +87,7 @@ class ImageUploadView(generic.View):
         saved_path = self._save_file(request, uploaded_file)
         if(str(saved_path).split('.')[1].lower() != 'gif'):
             self._create_thumbnail_if_needed(backend, saved_path)
-            
+
         if getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', None):
             url = utils.get_full_media_url(saved_path, getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', ''))
         else:
@@ -185,7 +185,11 @@ def get_files_browse_urls(user=None):
     """
     files = []
     for filename in get_image_files(user=user):
-        src = utils.get_media_url(filename)
+        if getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', None):
+            src = utils.get_full_media_url(filename, getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', ''))
+        else:
+            src = utils.get_media_url(filename)
+
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             if is_image(src):
                 thumb = utils.get_media_url(utils.get_thumb_filename(filename))
