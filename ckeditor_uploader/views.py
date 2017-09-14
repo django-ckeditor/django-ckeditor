@@ -87,7 +87,11 @@ class ImageUploadView(generic.View):
         saved_path = self._save_file(request, uploaded_file)
         if(str(saved_path).split('.')[1].lower() != 'gif'):
             self._create_thumbnail_if_needed(backend, saved_path)
-        url = utils.get_media_url(saved_path)
+            
+        if getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', None):
+            url = utils.get_full_media_url(saved_path, getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', ''))
+        else:
+            url = utils.get_media_url(saved_path)
 
         if ck_func_num:
             # Respond with Javascript sending ckeditor upload url.

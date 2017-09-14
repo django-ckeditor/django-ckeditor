@@ -77,6 +77,14 @@ def get_media_url(path):
     return default_storage.url(path)
 
 
+# add get_full_media_url to get full url for image
+def get_full_media_url(path, base_url):
+    url = filepath_to_uri(path)
+    if url is not None:
+        url = url.lstrip('/')
+    return urljoin(base_url, url)
+
+
 def is_valid_image_extension(file_path):
     valid_extensions = ['.jpeg', '.jpg', '.gif', '.png']
     _, extension = os.path.splitext(file_path)
