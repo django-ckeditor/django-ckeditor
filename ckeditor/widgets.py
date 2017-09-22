@@ -138,4 +138,5 @@ class CKEditorWidget(forms.Textarea):
         return attrs
 
     def _set_config(self):
-        self.config['language'] = get_language()
+        if not self.config.get('language'):
+            self.config['language'] = get_language()
