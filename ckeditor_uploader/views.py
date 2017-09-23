@@ -88,10 +88,12 @@ class ImageUploadView(generic.View):
         if(str(saved_path).split('.')[1].lower() != 'gif'):
             self._create_thumbnail_if_needed(backend, saved_path)
 
-        if getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', None):
-            url = utils.get_full_media_url(saved_path, getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', ''))
-        else:
-            url = utils.get_media_url(saved_path)
+        url = utils.get_media_url(saved_path)
+        if getattr(settings, 'CKEDITOR_MEDIA_USE_FULL_URL', False):
+            url = utils.get_full_media_url(saved_path, 
+                getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', request.build_absolute_uri(settings.MEDIA_URL))
+            )
+            
 
         if ck_func_num:
             # Respond with Javascript sending ckeditor upload url.
@@ -178,17 +180,18 @@ def get_image_files(user=None, path=''):
             yield element
 
 
-def get_files_browse_urls(user=None):
+def get_files_browse_urls(request):
     """
     Recursively walks all dirs under upload dir and generates a list of
     thumbnail and full image URL's for each file found.
     """
     files = []
-    for filename in get_image_files(user=user):
-        if getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', None):
-            src = utils.get_full_media_url(filename, getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', ''))
-        else:
-            src = utils.get_media_url(filename)
+    for filename in get_image_files(user=request.user):
+        src = utils.get_media_url(filename)
+        if getattr(settings, 'CKEDITOR_MEDIA_USE_FULL_URL', False):
+            src = utils.get_full_media_url(filename, 
+                getattr(settings, 'CKEDITOR_MEDIA_FULL_URL', request.build_absolute_uri(settings.MEDIA_URL))
+            )
 
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
             if is_image(src):
@@ -217,7 +220,7 @@ def is_image(path):
 
 
 def browse(request):
-    files = get_files_browse_urls(request.user)
+    files = get_files_browse_urls(request)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():

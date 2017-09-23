@@ -80,10 +80,7 @@ def get_media_url(path):
 
 # add get_full_media_url to get full url for image
 def get_full_media_url(path, base_url):
-    url = filepath_to_uri(path)
-    if url is not None:
-        url = url.lstrip('/')
-    return urljoin(base_url, url)
+    return urljoin(base_url, get_media_url(path))
 
 
 def is_valid_image_extension(file_path):
