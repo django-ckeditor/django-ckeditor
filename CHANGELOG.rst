@@ -7,6 +7,7 @@ Changelog
 (Upcoming)
 
 #. Actually include the code which sets ``CKEDITOR_BASEPATH``.
+#. CKEditor 4.7.3
 
 
 5.3.0
