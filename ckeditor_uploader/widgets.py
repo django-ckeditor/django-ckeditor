@@ -1,4 +1,9 @@
-from django.core.urlresolvers import reverse
+import django
+
+if django.VERSION >= (2, 0):
+    from django.urls import reverse
+else:
+    from django.core.urlresolvers import reverse
 
 from ckeditor import widgets
 
