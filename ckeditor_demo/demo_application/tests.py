@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test.utils import override_settings
+
 from selenium import webdriver
 
 CHROMIUM = 'chromium'
@@ -22,7 +23,7 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         if SELENIUM_BROWSER == CHROMIUM:
-            cls.selenium = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver')
+            cls.selenium = webdriver.Chrome(executable_path='chromedriver')
         elif SELENIUM_BROWSER == FIREFOX:
             cls.selenium = webdriver.Firefox()
         super(TestAdminPanelWidget, cls).setUpClass()
