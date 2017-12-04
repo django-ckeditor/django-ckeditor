@@ -12,7 +12,7 @@ from .demo_application.views import ckeditor_form_view
 if django.VERSION >= (1, 8):
     urlpatterns = [
         url(r'^$', ckeditor_form_view, name='ckeditor-form'),
-        url(r'^admin/', include(admin.site.urls)),
+        url(r'^admin/', admin.site.urls),
         url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     ] + static(
         settings.STATIC_URL,

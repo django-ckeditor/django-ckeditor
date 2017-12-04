@@ -11,7 +11,6 @@ from PIL import Image, ImageOps
 
 from ckeditor_uploader import utils
 
-
 THUMBNAIL_SIZE = getattr(settings, "THUMBNAIL_SIZE", (75, 75))
 
 
