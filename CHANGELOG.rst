@@ -1,6 +1,11 @@
 Changelog
 =========
 
+5.4.0
+-----
+#. Django 2.0 compatibility
+
+
 5.3.1
 -----
 #. Actually include the code which sets ``CKEDITOR_BASEPATH``.
