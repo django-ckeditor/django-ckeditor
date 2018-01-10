@@ -34,7 +34,7 @@ def _get_user_path(user):
         else:
             user_path = user_prop
 
-    return user_path
+    return str(user_path)
 
 
 def get_upload_filename(upload_name, user):
