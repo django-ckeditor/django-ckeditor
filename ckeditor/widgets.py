@@ -57,25 +57,17 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
     class Media:
-        js = ()
-        try:
-            js += (
-                JS('ckeditor/ckeditor-init.js', {
-                    'id': 'ckeditor-init-script',
-                    'data-ckeditor-basepath': getattr(
-                        settings,
-                        'CKEDITOR_BASEPATH',
-                        static('ckeditor/ckeditor/'),
-                    ),
-                }),
-                'ckeditor/ckeditor/ckeditor.js',
-            )
-        except AttributeError:
-            raise ImproperlyConfigured("django-ckeditor requires \
-                    CKEDITOR_MEDIA_PREFIX setting. This setting specifies a \
-                    URL prefix to the ckeditor JS and CSS media (not \
-                    uploaded media). Make sure to use a trailing slash: \
-                    CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'")
+        js = (
+            JS('ckeditor/ckeditor-init.js', {
+                'id': 'ckeditor-init-script',
+                'data-ckeditor-basepath': getattr(
+                    settings,
+                    'CKEDITOR_BASEPATH',
+                    static('ckeditor/ckeditor/'),
+                ),
+            }),
+            'ckeditor/ckeditor/ckeditor.js',
+        )
 
     def __init__(self, config_name='default', extra_plugins=None, external_plugin_resources=None, *args, **kwargs):
         super(CKEditorWidget, self).__init__(*args, **kwargs)
