@@ -225,7 +225,8 @@ or you can load the media manually as it is done in the demo app::
     {% load static %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-
+    
+When you need to render ``RichTextField``'s HTML output in your templates safely, just use ``{{ content|safe }}``,  `Django's safe filter <https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#std:templatefilter-safe>`_
 
 
 Management Commands
