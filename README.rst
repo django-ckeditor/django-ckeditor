@@ -225,7 +225,8 @@ or you can load the media manually as it is done in the demo app::
     {% load static %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-
+    
+When you need to render ``RichtextField``'s html output in your templates, just use ``{% autoescape on %}{{ content }}{% endautoescape %}``
 
 
 Management Commands
