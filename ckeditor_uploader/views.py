@@ -64,7 +64,7 @@ class ImageUploadView(generic.View):
         filepath, image = store_image_file(uploaded_file, prefix_path='fckeditorimage', max_width=600) #@UnusedVariable image
         filename = os.path.basename(filepath)
         from django.contrib.sites.models import Site
-        url = "http://" + Site.objects.get_current().domain + os.path.join(settings.MEDIA_URL, filepath)
+        url = "//" + Site.objects.get_current().domain + os.path.join(settings.MEDIA_URL, filepath)
 
         # Respond with Javascript sending ckeditor upload url.
         return HttpResponse("""
