@@ -1,6 +1,9 @@
 Changelog
 =========
 
+#. CKEditor 4.9.2
+
+
 5.4.0
 -----
 #. Django 2.0 compatibility

@@ -13,7 +13,7 @@ Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and
 This version also includes:
 
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.7
+#. updated ckeditor to version 4.9
 #. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`__ )
 
 .. contents:: Contents
@@ -35,10 +35,10 @@ Required
 
 #. CKEditor needs to know where its assets are located because it loads them
    lazily only when needed. The location is determined in the ``ckeditor-init.js``
-   script. and defaults to ``static/ckeditor/ckeditor/``. This does not work all 
+   script. and defaults to ``static/ckeditor/ckeditor/``. This does not work all
    the time, for example when using ``ManifestStaticFilesStorage``, any asset
-   packaging pipeline or whatnot. django-ckeditor is quite good at automatically 
-   detecting the correct place even then, but sometimes you have to hardcode 
+   packaging pipeline or whatnot. django-ckeditor is quite good at automatically
+   detecting the correct place even then, but sometimes you have to hardcode
    ``CKEDITOR_BASEPATH`` somewhere. This can be hardcoded in settings, i.e.::
 
         CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor"
@@ -225,7 +225,7 @@ or you can load the media manually as it is done in the demo app::
     {% load static %}
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-    
+
 When you need to render ``RichTextField``'s HTML output in your templates safely, just use ``{{ content|safe }}``,  `Django's safe filter <https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#std:templatefilter-safe>`_
 
 
