@@ -13,7 +13,7 @@ Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and
 This version also includes:
 
 #. support to django-storages (works with S3)
-#. updated ckeditor to version 4.7
+#. updated ckeditor to version 4.9
 #. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`__ )
 
 .. contents:: Contents
@@ -25,27 +25,32 @@ Installation
 Required
 ~~~~~~~~
 #. Install or add django-ckeditor to your python path.
+   ::
 
-    pip install django-ckeditor
+        pip install django-ckeditor
 
 #. Add ``ckeditor`` to your ``INSTALLED_APPS`` setting.
 
 #. Run the ``collectstatic`` management command: ``$ ./manage.py collectstatic``. This will copy static CKEditor required media resources into the directory given by the ``STATIC_ROOT`` setting. See `Django's documentation on managing static files <https://docs.djangoproject.com/en/dev/howto/static-files>`__ for more info.
 
 #. CKEditor needs to know where its assets are located because it loads them
-   lazily only when needed. The location is determined by looking at a script
-   tag which includes a URL ending in ``ckeditor.js``. This does not work all
+   lazily only when needed. The location is determined in the ``ckeditor-init.js``
+   script. and defaults to ``static/ckeditor/ckeditor/``. This does not work all
    the time, for example when using ``ManifestStaticFilesStorage``, any asset
-   packaging pipeline or whatnot. django-ckeditor is quite good at
-   automatically detecting the correct place even then, but sometimes you have
-   to hardcode ``CKEDITOR_BASEPATH`` somewhere. It is recommended to override
-   the ``admin/base_site.html`` template with your own if you really need to do
+   packaging pipeline or whatnot. django-ckeditor is quite good at automatically
+   detecting the correct place even then, but sometimes you have to hardcode
+   ``CKEDITOR_BASEPATH`` somewhere. This can be hardcoded in settings, i.e.::
+
+        CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor"
+
+   It is possible to override
+   the ``admin/change_form.html`` template with your own if you really need to do
    this, i.e.::
 
-        {% extends "admin/base_site.html" %}
+        {% extends "admin/change_form.html" %}
 
         {% block extrahead %}
-        <script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+        <script>window.CKEDITOR_BASEPATH = '/my_static/ckeditor/ckeditor/';</script>
         {{ block.super }}
         {% endblock %}
 
@@ -58,30 +63,27 @@ Required for using widget with file upload
 
 #. Add ``ckeditor_uploader`` to your ``INSTALLED_APPS`` setting.
 
-#. Add a CKEDITOR_UPLOAD_PATH setting to the project's ``settings.py`` file. This setting specifies a relative path to your CKEditor media upload directory. CKEditor uses Django's storage API. By default, Django uses the file system storage backend (it will use your MEDIA_ROOT and MEDIA_URL) and if you don't use a different backend you have to have write permissions for the CKEDITOR_UPLOAD_PATH path within MEDIA_ROOT, i.e.::
+#. Add a ``CKEDITOR_UPLOAD_PATH`` setting to the project's ``settings.py`` file. This setting specifies a relative path to your CKEditor media upload directory. CKEditor uses Django's storage API. By default, Django uses the file system storage backend (it will use your ``MEDIA_ROOT`` and ``MEDIA_URL``) and if you don't use a different backend you have to have write permissions for the ``CKEDITOR_UPLOAD_PATH`` path within ``MEDIA_ROOT``, i.e.::
 
+        CKEDITOR_UPLOAD_PATH = "uploads/"
 
-    ``CKEDITOR_UPLOAD_PATH = "uploads/"``
+   When using default file system storage, images will be uploaded to "uploads" folder in your ``MEDIA_ROOT`` and urls will be created against ``MEDIA_URL`` (``/media/uploads/image.jpg``).
 
-    When using default file system storage, images will be uploaded to "uploads" folder in your MEDIA_ROOT and urls will be created against MEDIA_URL (/media/uploads/image.jpg).
+   If you want be able for have control for filename generation, you have to add into settings yours custom filename generator::
 
-    If you want be able for have control for filename generation, you have to add into settings yours custom filename generator.
+        # utils.py
 
-    ```
-    # utils.py
+        def get_filename(filename):
+            return filename.upper()
 
-    def get_filename(filename):
-        return filename.upper()
-    ```
+   ::
 
-    ```
-    # settings.py
+        # settings.py
 
-    CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
-    ```
+        CKEDITOR_FILENAME_GENERATOR = 'utils.get_filename'
 
-    CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
-    There are issues using S3Storage from django-storages.
+   CKEditor has been tested with django FileSystemStorage and S3BotoStorage.
+   There are issues using S3Storage from django-storages.
 
 #. For the default filesystem storage configuration, ``MEDIA_ROOT`` and ``MEDIA_URL`` must be set correctly for the media files to work (like those uploaded by the ckeditor widget).
 
@@ -224,6 +226,7 @@ or you can load the media manually as it is done in the demo app::
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
     <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
+When you need to render ``RichTextField``'s HTML output in your templates safely, just use ``{{ content|safe }}``,  `Django's safe filter <https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#std:templatefilter-safe>`_
 
 
 Management Commands

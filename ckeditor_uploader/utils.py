@@ -18,11 +18,11 @@ fileicons_path = '{0}/file-icons/'.format(getattr(settings, 'CKEDITOR_FILEICONS_
 # file version is used instead of the default.
 override_icons = getattr(settings, 'CKEDITOR_FILEICONS', [])
 ckeditor_icons = [
-    ('\.pdf$', fileicons_path + 'pdf.png'),
-    ('\.doc$|\.docx$|\.odt$', fileicons_path + 'doc.png'),
-    ('\.txt$', fileicons_path + 'txt.png'),
-    ('\.ppt$', fileicons_path + 'ppt.png'),
-    ('\.xls$', fileicons_path + 'xls.png'),
+    (r'\.pdf$', fileicons_path + 'pdf.png'),
+    (r'\.doc$|\.docx$|\.odt$', fileicons_path + 'doc.png'),
+    (r'\.txt$', fileicons_path + 'txt.png'),
+    (r'\.ppt$', fileicons_path + 'ppt.png'),
+    (r'\.xls$', fileicons_path + 'xls.png'),
     ('.*', fileicons_path + 'file.png'),  # Default
 ]
 CKEDITOR_FILEICONS = override_icons + ckeditor_icons

@@ -1,12 +1,18 @@
 Changelog
 =========
 
+#. CKEditor 4.9.2
+
+
+5.4.0
+-----
+#. Django 2.0 compatibility
+
+
 5.3.1
 -----
-
-(Upcoming)
-
 #. Actually include the code which sets ``CKEDITOR_BASEPATH``.
+#. CKEditor 4.7.3
 
 
 5.3.0
