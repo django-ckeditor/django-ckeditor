@@ -44,10 +44,6 @@ DEFAULT_CONFIG = {
         ['Smiley', 'SpecialChar'], ['Source'],
     ],
     'toolbar': 'Full',
-    'height': 291,
-    'width': 835,
-    'filebrowserWindowWidth': 940,
-    'filebrowserWindowHeight': 725,
 }
 
 
