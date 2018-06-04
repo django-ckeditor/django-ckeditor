@@ -1,7 +1,12 @@
 Changelog
 =========
 
+
+5.5.0
+-----
 #. CKEditor 4.9.2
+#. Documentation improvements
+#. Allow non-string properties of user for CKEDITOR_RESTRICT_BY_USER
 
 
 5.4.0
