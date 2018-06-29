@@ -10,6 +10,7 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
+from django.forms.widgets import get_default_renderer
 
 from js_asset import JS, static
 
@@ -103,7 +104,9 @@ class CKEditorWidget(forms.Textarea):
 
         self.external_plugin_resources = external_plugin_resources or []
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
+        if renderer is None:
+            renderer = get_default_renderer()
         if value is None:
             value = ''
         final_attrs = self.build_attrs(self.attrs, attrs, name=name)
@@ -111,7 +114,7 @@ class CKEditorWidget(forms.Textarea):
         external_plugin_resources = [[force_text(a), force_text(b), force_text(c)]
                                      for a, b, c in self.external_plugin_resources]
 
-        return mark_safe(render_to_string('ckeditor/widget.html', {
+        return mark_safe(renderer.render('ckeditor/widget.html', {
             'final_attrs': flatatt(final_attrs),
             'value': conditional_escape(force_text(value)),
             'id': final_attrs['id'],
