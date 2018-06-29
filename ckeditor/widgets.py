@@ -4,7 +4,6 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
-from django.template.loader import render_to_string
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 from django.utils.html import conditional_escape
