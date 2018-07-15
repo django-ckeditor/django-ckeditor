@@ -4,7 +4,6 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.utils.html import escape
@@ -15,6 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 
 from ckeditor_uploader import image_processing, utils
+from ckeditor_uploader.utils import storage
 from ckeditor_uploader.forms import SearchForm
 
 
@@ -61,7 +61,7 @@ def get_upload_filename(upload_name, user):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
         upload_name = generator(upload_name)
 
-    return default_storage.get_available_name(
+    return storage.get_available_name(
         os.path.join(upload_path, upload_name)
     )
 
@@ -118,18 +118,18 @@ class ImageUploadView(generic.View):
 
             img = Image.open(uploaded_file)
             img = img.resize(img.size, Image.ANTIALIAS)
-            saved_path = default_storage.save("{}.jpg".format(img_name), uploaded_file)
+            saved_path = storage.save("{}.jpg".format(img_name), uploaded_file)
             img.save("{}.jpg".format(img_name), quality=IMAGE_QUALITY, optimize=True)
 
         elif(str(img_format).lower() == "jpg" or str(img_format).lower() == "jpeg"):
 
             img = Image.open(uploaded_file)
             img = img.resize(img.size, Image.ANTIALIAS)
-            saved_path = default_storage.save(filename, uploaded_file)
+            saved_path = storage.save(filename, uploaded_file)
             img.save(saved_path, quality=IMAGE_QUALITY, optimize=True)
 
         else:
-            saved_path = default_storage.save(filename, uploaded_file)
+            saved_path = storage.save(filename, uploaded_file)
 
         return saved_path
 
@@ -162,7 +162,7 @@ def get_image_files(user=None, path=''):
     browse_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, user_path, path)
 
     try:
-        storage_list = default_storage.listdir(browse_path)
+        storage_list = storage.listdir(browse_path)
     except NotImplementedError:
         return
     except OSError:
