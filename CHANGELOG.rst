@@ -2,6 +2,12 @@ Changelog
 =========
 
 
+5.6.0
+-----
+#. Django 2.1 compatibility, minimal supported Django version is 1.11 LTS
+#. Option to set custom django file backend for CKEditor uploader app.
+
+
 5.5.0
 -----
 #. CKEditor 4.9.2
