@@ -1,6 +1,10 @@
 Changelog
 =========
 
+5.6.1
+-----
+#. Fix bad pypi package
+
 
 5.6.0
 -----
