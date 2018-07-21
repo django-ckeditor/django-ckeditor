@@ -234,9 +234,12 @@ In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways
            'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
            ...
        }]
+   
+   
+   - Add ``'django.forms'`` to ``INSTALLED_APPS``.
+   
 
-
-#. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in INSTALLED_APPS. 
+#. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in ``INSTALLED_APPS``. 
 
 
 
