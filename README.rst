@@ -227,6 +227,7 @@ In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways
    
    
    - Include ``templates`` folder in ``DIRS``
+   
    ::
     
        TEMPLATES = [{
