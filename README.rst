@@ -212,6 +212,38 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
 **For file upload support** use ``CKEditorUploadingWidget`` from ``ckeditor_uploader.widgets``.
 
 
+**Overriding widget template**
+
+In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways:
+
+
+#. Place ``ckeditor/widget.html`` in  ``BASE_DIR/templates``
+
+   - Change ``FORM_RENDERER`` to ``TemplateSettings``. 
+
+   ::
+      
+       FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
+   
+   
+   - Include ``templates`` folder in ``DIRS``
+   
+   ::
+    
+       TEMPLATES = [{
+           ...
+           'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+           ...
+       }]
+   
+   
+   - Add ``'django.forms'`` to ``INSTALLED_APPS``.
+   
+
+#. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in ``INSTALLED_APPS``. 
+
+
+
 Outside of django admin
 ~~~~~~~~~~~~~~~~~~~~~~~
 
