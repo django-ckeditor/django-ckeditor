@@ -16,6 +16,7 @@ from PIL import Image
 from ckeditor_uploader import image_processing, utils
 from ckeditor_uploader.utils import storage
 from ckeditor_uploader.forms import SearchForm
+import importlib
 
 
 def _get_user_path(user):
@@ -90,12 +91,7 @@ class ImageUploadView(generic.View):
                     <script type='text/javascript'>
                     window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
                     </script>""".format(ck_func_num))
-
-        saved_path = self._save_file(request, uploaded_file)
-        if(str(saved_path).split('.')[1].lower() != 'gif'):
-            self._create_thumbnail_if_needed(backend, saved_path)
-        url = utils.get_media_url(saved_path)
-
+        url = self._custom_save_file(request, uploaded_file, backend)
         if ck_func_num:
             # Respond with Javascript sending ckeditor upload url.
             return HttpResponse("""
@@ -106,6 +102,20 @@ class ImageUploadView(generic.View):
             retdata = {'url': url, 'uploaded': '1',
                        'fileName': uploaded_file.name}
             return JsonResponse(retdata)
+
+    def _custom_save_file(self, request, uploaded_file, backend):
+        save_file_module = getattr(settings, 'CKEDITOR_SAVE_FILE_MODULE', None)
+        save_file_func = getattr(settings, 'CKEDITOR_SAVE_FILE_FUNC', None)
+        if save_file_module and save_file_func:
+            m = importlib.import_module(save_file_module)
+            save_file = getattr(m, save_file_func)
+            url = save_file(request, uploaded_file)
+        else:
+            saved_path = self._save_file(request, uploaded_file)
+            if (str(saved_path).split('.')[1].lower() != 'gif'):
+                self._create_thumbnail_if_needed(backend, saved_path)
+            url = utils.get_media_url(saved_path)
+        return url
 
     @staticmethod
     def _save_file(request, uploaded_file):
@@ -216,8 +226,19 @@ def is_image(path):
     return ext in ['jpg', 'jpeg', 'png', 'gif']
 
 
+def _get_files_browse_urls(user):
+    browse_module = getattr(settings, 'CKEDITOR_BROWSE_FILE_MODULE', None)
+    browse_func = getattr(settings, 'CKEDITOR_BROWSE_FILE_FUNC', None)
+    if browse_module and browse_func:
+        m = importlib.import_module(browse_module)
+        browse_file = getattr(m, browse_func)
+        return browse_file(user)
+    else:
+        return get_files_browse_urls(user)
+
+
 def browse(request):
-    files = get_files_browse_urls(request.user)
+    files = _get_files_browse_urls(request.user)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():

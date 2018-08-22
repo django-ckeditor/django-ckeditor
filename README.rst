@@ -315,6 +315,37 @@ Restricting file upload
 
 #. By default the upload and browse URLs use staff_member_required decorator - ckeditor_uploader/urls.py - if you want other decorators just insert two urls found in that urls.py and don't include it.
 
+Custom upload file(example: to cdn)
+-----------------------------------
+
+#. Add custom function
+
+    example::
+
+        def upload_file(request, uploaded_file):
+            return ''
+
+        def browse_file(user):
+            files = []
+            attachments = query()  # query attachments
+            for attachment in attachments:
+                url = attachment.url()
+                files.append({
+                    'thumb': '',
+                    'src': '',
+                    'is_image': attachment.type == 'image',
+                    'visible_filename': attachment.file_name,
+                })
+            return files
+
+#. Add the following code to you settings
+    settings::
+
+        CKEDITOR_UPLOAD_PATH = ''
+        CKEDITOR_BROWSE_FILE_MODULE = CKEDITOR_SAVE_FILE_MODULE = 'attachment.services'
+        CKEDITOR_SAVE_FILE_FUNC = 'upload_file'
+        CKEDITOR_BROWSE_FILE_FUNC = 'browse_file'
+
 
 Demo / Test application
 -----------------------
