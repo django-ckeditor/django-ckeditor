@@ -203,6 +203,7 @@ Alernatively you can use the included ``CKEditorWidget`` as the widget for a for
         content = forms.CharField(widget=CKEditorWidget())
         class Meta:
             model = Post
+            fields = '__all__'
 
     class PostAdmin(admin.ModelAdmin):
         form = PostAdminForm
