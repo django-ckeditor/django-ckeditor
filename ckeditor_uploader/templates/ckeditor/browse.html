@@ -59,6 +59,7 @@
                                                 </a>
                                                 <div class="caption">
                                                     <div class="submit-row">
+							<input href="{{ file.path }}" class="default delete" type="submit" name="_delete" value="Delete File" style="margin-left: 5px; margin-right: 5px; background: red" />
                                                         <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
                                                     </div>
                                                 </div>
@@ -77,6 +78,7 @@
                                     </a>
                                     <div class="caption">
                                         <div class="submit-row">
+				            <input href="{{ file.path }}" class="default delete" type="submit" name="_delete" value="Delete File" style="margin-left: 5px; margin-right: 5px; background: red" />
                                             <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
                                         </div>
                                     </div>
@@ -113,6 +115,26 @@
                 var fileUrl = $(this).attr('href');
                 window.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
                 window.close();
+            });
+	    //delete file
+            $('.delete').live('click', function() {
+                var path = $(this).attr('href');
+                var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+                if (confirm('Delete File :'+path) ) {
+                //delete
+                    $.ajaxSetup({
+                           beforeSend: function(xhr, settings) {
+                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                           }
+                        });
+                    $.ajax({url: '/ckeditor/delete?path='+path,
+                    type: 'DELETE',
+                    datatype: 'json',
+                    success: function(result) {
+                            location.reload();
+                        }
+                    });
+                }
             });
             // galleriffic
             jQuery(document).ready(function($) {

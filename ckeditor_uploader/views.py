@@ -142,6 +142,21 @@ class ImageUploadView(generic.View):
 upload = csrf_exempt(ImageUploadView.as_view())
 
 
+
+class FileDeleteView(View):
+    http_method_names = ['delete']
+
+    def delete(self, request, **kwargs):
+        file_to_de_deleted = request.GET['path']
+
+        if is_image(file_to_de_deleted):
+            thumbnail_filename_path = utils.get_thumb_filename(file_to_de_deleted)
+            default_storage.delete(thumbnail_filename_path)
+
+        default_storage.delete(file_to_de_deleted)
+        return JsonResponse({'success': 1})
+
+
 def get_image_files(user=None, path=''):
     """
     Recursively walks all dirs under upload dir and generates a list of
@@ -204,6 +219,7 @@ def get_files_browse_urls(user=None):
         files.append({
             'thumb': thumb,
             'src': src,
+	    'path': filename,
             'is_image': is_image(src),
             'visible_filename': visible_filename,
         })
