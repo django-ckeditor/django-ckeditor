@@ -15,6 +15,7 @@ from PIL import Image
 
 from ckeditor_uploader import image_processing, utils
 from ckeditor_uploader.utils import storage
+from django.core.files.storage import default_storage
 from ckeditor_uploader.forms import SearchForm
 
 
@@ -143,7 +144,7 @@ upload = csrf_exempt(ImageUploadView.as_view())
 
 
 
-class FileDeleteView(View):
+class FileDeleteView(generic.View):
     http_method_names = ['delete']
 
     def delete(self, request, **kwargs):
@@ -219,7 +220,7 @@ def get_files_browse_urls(user=None):
         files.append({
             'thumb': thumb,
             'src': src,
-	    'path': filename,
+            'path': filename,
             'is_image': is_image(src),
             'visible_filename': visible_filename,
         })
