@@ -143,7 +143,6 @@ class ImageUploadView(generic.View):
 upload = csrf_exempt(ImageUploadView.as_view())
 
 
-
 class FileDeleteView(generic.View):
     http_method_names = ['delete']
 
