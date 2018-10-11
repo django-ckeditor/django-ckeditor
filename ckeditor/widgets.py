@@ -9,9 +9,23 @@ from django.utils.functional import Promise
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
-from django.forms.widgets import get_default_renderer
 
 from js_asset import JS, static
+
+try:
+    # Django >=1.11
+    from django.forms.widgets import get_default_renderer
+except ImportError:
+    # Django <1.11
+    from django.template.loader import render_to_string
+
+    def get_default_renderer():
+        class DummyDjangoRenderer(object):
+            @staticmethod
+            def render(*args, **kwargs):
+                return render_to_string(*args, **kwargs)
+
+        return DummyDjangoRenderer
 
 try:
     # Django >=1.7
@@ -56,6 +70,7 @@ class CKEditorWidget(forms.Textarea):
     Widget providing CKEditor for Rich Text Editing.
     Supports direct image uploads and embed.
     """
+
     class Media:
         js = (
             JS('ckeditor/ckeditor-init.js', {

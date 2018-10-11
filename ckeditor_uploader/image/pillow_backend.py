@@ -5,11 +5,11 @@ from io import BytesIO
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from ckeditor_uploader.utils import storage
 
 from PIL import Image, ImageOps
 
 from ckeditor_uploader import utils
+from ckeditor_uploader.utils import storage
 
 THUMBNAIL_SIZE = getattr(settings, "THUMBNAIL_SIZE", (75, 75))
 
