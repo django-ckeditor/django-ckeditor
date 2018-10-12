@@ -1,10 +1,33 @@
+dist: trusty
+addons:
+  chrome: stable
 language: python
 sudo: false
 python:
   - "3.5"
   - "3.6"
+
+env:
+  - DJANGO=1.11
+  - DJANGO=2.1
+
+matrix:
+  include:
+    - python: "2.7"
+      env: DJANGO=1.11
+    - python: "2.7"
+      env: DJANGO=1.8
+
 install:
-  - pip install flake8 docutils pygments
+  - travis_retry pip install -U tox-travis
+  - wget -N http://chromedriver.storage.googleapis.com/70.0.3538.16/chromedriver_linux64.zip -P ~/
+  - unzip ~/chromedriver_linux64.zip -d ~/
+  - rm ~/chromedriver_linux64.zip
+  - sudo mv -f ~/chromedriver /usr/local/share/
+  - sudo chmod +x /usr/local/share/chromedriver
+  - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+  - export PATH=$PATH:/usr/local/bin/
 script:
-  - flake8
-  - python setup.py check --restructuredtext --strict --metadata
+  - whereis google-chrome-stable
+  - whereis chromedriver
+  - tox

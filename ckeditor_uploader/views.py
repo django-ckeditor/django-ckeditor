@@ -14,8 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 
 from ckeditor_uploader import image_processing, utils
-from ckeditor_uploader.utils import storage
 from ckeditor_uploader.forms import SearchForm
+from ckeditor_uploader.utils import storage
 
 
 def _get_user_path(user):
@@ -38,7 +38,6 @@ def _get_user_path(user):
 
 
 def get_upload_filename(upload_name, user):
-
     user_path = _get_user_path(user)
 
     # Generate date based path to put uploaded file.
@@ -92,7 +91,7 @@ class ImageUploadView(generic.View):
                     </script>""".format(ck_func_num))
 
         saved_path = self._save_file(request, uploaded_file)
-        if(str(saved_path).split('.')[1].lower() != 'gif'):
+        if (str(saved_path).split('.')[1].lower() != 'gif'):
             self._create_thumbnail_if_needed(backend, saved_path)
         url = utils.get_media_url(saved_path)
 
@@ -114,14 +113,14 @@ class ImageUploadView(generic.View):
         img_name, img_format = os.path.splitext(filename)
         IMAGE_QUALITY = getattr(settings, "IMAGE_QUALITY", 60)
 
-        if(str(img_format).lower() == "png"):
+        if (str(img_format).lower() == "png"):
 
             img = Image.open(uploaded_file)
             img = img.resize(img.size, Image.ANTIALIAS)
             saved_path = storage.save("{}.jpg".format(img_name), uploaded_file)
             img.save("{}.jpg".format(img_name), quality=IMAGE_QUALITY, optimize=True)
 
-        elif(str(img_format).lower() == "jpg" or str(img_format).lower() == "jpeg"):
+        elif (str(img_format).lower() == "jpg" or str(img_format).lower() == "jpeg"):
 
             img = Image.open(uploaded_file)
             img = img.resize(img.size, Image.ANTIALIAS)
@@ -223,7 +222,7 @@ def browse(request):
         if form.is_valid():
             query = form.cleaned_data.get('q', '').lower()
             files = list(filter(lambda d: query in d[
-                         'visible_filename'].lower(), files))
+                'visible_filename'].lower(), files))
     else:
         form = SearchForm()
 
