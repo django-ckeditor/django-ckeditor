@@ -189,17 +189,16 @@ def get_files_browse_urls(user=None):
     files = []
     for filename in get_image_files(user=user):
         src = utils.get_media_url(filename)
-        if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
-            if is_image(src):
+        if is_image(src):
+            if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
                 thumb = utils.get_media_url(utils.get_thumb_filename(filename))
             else:
-                thumb = utils.get_icon_filename(filename)
-            visible_filename = os.path.split(filename)[1]
-            if len(visible_filename) > 20:
-                visible_filename = visible_filename[0:19] + '...'
+                thumb = src
         else:
-            thumb = src
-            visible_filename = os.path.split(filename)[1]
+            thumb = utils.get_icon_filename(filename)
+        visible_filename = os.path.split(filename)[1]
+        if len(visible_filename) > 20:
+            visible_filename = visible_filename[0:19] + '...'
         files.append({
             'thumb': thumb,
             'src': src,
