@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import inspect
 import os
 from datetime import datetime
 
@@ -37,8 +38,8 @@ def _get_user_path(user):
     return str(user_path)
 
 
-def get_upload_filename(upload_name, user):
-    user_path = _get_user_path(user)
+def get_upload_filename(upload_name, request):
+    user_path = _get_user_path(request.user)
 
     # Generate date based path to put uploaded file.
     # If CKEDITOR_RESTRICT_BY_DATE is True upload file to date specific path.
@@ -58,7 +59,11 @@ def get_upload_filename(upload_name, user):
 
     if hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR'):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
-        upload_name = generator(upload_name)
+        # Check number of parameters, for backwards compatibility
+        if len(inspect.signature(generator).parameters) == 1:
+            upload_name = generator(upload_name)
+        else:
+            upload_name = generator(upload_name, request)
 
     return storage.get_available_name(
         os.path.join(upload_path, upload_name)
@@ -108,7 +113,7 @@ class ImageUploadView(generic.View):
 
     @staticmethod
     def _save_file(request, uploaded_file):
-        filename = get_upload_filename(uploaded_file.name, request.user)
+        filename = get_upload_filename(uploaded_file.name, request)
 
         img_name, img_format = os.path.splitext(filename)
         IMAGE_QUALITY = getattr(settings, "IMAGE_QUALITY", 60)

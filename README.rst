@@ -73,7 +73,7 @@ Required for using widget with file upload
 
         # utils.py
 
-        def get_filename(filename):
+        def get_filename(filename, request):
             return filename.upper()
 
    ::
