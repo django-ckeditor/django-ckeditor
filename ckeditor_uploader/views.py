@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-import inspect
 import os
 from datetime import datetime
 
@@ -59,11 +58,11 @@ def get_upload_filename(upload_name, request):
 
     if hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR'):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
-        # Check number of parameters, for backwards compatibility
-        if len(inspect.signature(generator).parameters) == 1:
-            upload_name = generator(upload_name)
-        else:
+        # Check if too many arguments, for backwards compatibility
+        try:
             upload_name = generator(upload_name, request)
+        except TypeError:
+            upload_name = generator(upload_name)
 
     return storage.get_available_name(
         os.path.join(upload_path, upload_name)
