@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
+import inspect
 import os
+import warnings
 from datetime import datetime
 
 from django.conf import settings
@@ -58,11 +60,27 @@ def get_upload_filename(upload_name, request):
 
     if hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR'):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
-        # Check if too many arguments, for backwards compatibility
+        # Does the generator accept a request argument?
         try:
-            upload_name = generator(upload_name, request)
+            inspect.getcallargs(generator, upload_name, request)
         except TypeError:
-            upload_name = generator(upload_name)
+            # Does the generator accept only an upload_name argument?
+            try:
+                inspect.getcallargs(generator, upload_name)
+            except TypeError:
+                warnings.warn(
+                    "Update %s() to accept the arguments `filename, request`."
+                    % settings.CKEDITOR_FILENAME_GENERATOR
+                )
+            else:
+                warnings.warn(
+                    "Update %s() to accept a second `request` argument."
+                    % settings.CKEDITOR_FILENAME_GENERATOR,
+                    PendingDeprecationWarning
+                )
+                upload_name = generator(upload_name)
+        else:
+            upload_name = generator(upload_name, request)
 
     return storage.get_available_name(
         os.path.join(upload_path, upload_name)
