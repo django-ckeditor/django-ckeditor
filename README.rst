@@ -41,7 +41,7 @@ Required
    detecting the correct place even then, but sometimes you have to hardcode
    ``CKEDITOR_BASEPATH`` somewhere. This can be hardcoded in settings, i.e.::
 
-        CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor"
+        CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
 
    It is possible to override
    the ``admin/change_form.html`` template with your own if you really need to do
