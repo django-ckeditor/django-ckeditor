@@ -28,27 +28,22 @@ SECRET_KEY = 'cwog(6mx-+m9-@*n7jsn+*q4in*+nss_nv+s0da39ail@=x(ne'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-if django.VERSION >= (1, 8):
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.debug',
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                ],
-                'debug': DEBUG
-            },
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'debug': DEBUG
         },
-    ]
-
-else:
-    TEMPLATE_DEBUG = True
-
+    },
+]
 
 ALLOWED_HOSTS = []
 

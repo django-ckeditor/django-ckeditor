@@ -15,10 +15,3 @@ class RichTextUploadingFormField(forms.fields.CharField):
         kwargs.update({'widget': widgets.CKEditorUploadingWidget(config_name=config_name, extra_plugins=extra_plugins,
                                                                  external_plugin_resources=external_plugin_resources)})
         super(RichTextUploadingFormField, self).__init__(*args, **kwargs)
-
-
-try:
-    from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^ckeditor_uploader\.fields\.RichTextUploadingField"])  # noqa: W605
-except ImportError:
-    pass
