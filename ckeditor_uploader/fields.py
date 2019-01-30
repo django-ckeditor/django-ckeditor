@@ -19,6 +19,6 @@ class RichTextUploadingFormField(forms.fields.CharField):
 
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^ckeditor_uploader\.fields\.RichTextUploadingField"])
+    add_introspection_rules([], ["^ckeditor_uploader\.fields\.RichTextUploadingField"])  # noqa: W605
 except ImportError:
     pass

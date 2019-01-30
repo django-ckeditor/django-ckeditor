@@ -28,6 +28,8 @@ ckeditor_icons = [
 ]
 CKEDITOR_FILEICONS = override_icons + ckeditor_icons
 
+IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif'}
+
 
 class NotAnImageException(Exception):
     pass
@@ -87,6 +89,5 @@ def get_media_url(path):
 
 
 def is_valid_image_extension(file_path):
-    valid_extensions = ['.jpeg', '.jpg', '.gif', '.png']
-    _, extension = os.path.splitext(file_path)
-    return extension.lower() in valid_extensions
+    extension = os.path.splitext(file_path.lower())[1]
+    return extension in IMAGE_EXTENSIONS
