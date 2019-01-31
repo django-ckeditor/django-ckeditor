@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import os
 from datetime import datetime
@@ -11,7 +11,8 @@ from django.utils.module_loading import import_string
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from ckeditor_uploader import image_processing, utils
+from ckeditor_uploader import utils
+from ckeditor_uploader.backends import registry
 from ckeditor_uploader.forms import SearchForm
 from ckeditor_uploader.utils import storage
 
@@ -74,27 +75,24 @@ class ImageUploadView(generic.View):
         """
         uploaded_file = request.FILES['upload']
 
-        backend = image_processing.get_backend()
+        backend = registry.get_backend()
 
         ck_func_num = request.GET.get('CKEditorFuncNum')
         if ck_func_num:
             ck_func_num = escape(ck_func_num)
 
+        filewrapper = backend(storage, uploaded_file)
+        allow_nonimages = getattr(settings, 'CKEDITOR_ALLOW_NONIMAGE_FILES', True)
         # Throws an error when an non-image file are uploaded.
-        if not getattr(settings, 'CKEDITOR_ALLOW_NONIMAGE_FILES', True):
-            try:
-                backend.image_verify(uploaded_file)
-            except utils.NotAnImageException:
-                return HttpResponse("""
-                    <script type='text/javascript'>
-                    window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
-                    </script>""".format(ck_func_num))
+        if not filewrapper.is_image and not allow_nonimages:
+            return HttpResponse("""
+                <script type='text/javascript'>
+                window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
+                </script>""".format(ck_func_num))
 
-        saved_path = self._save_file(request, uploaded_file)
+        filepath = get_upload_filename(uploaded_file.name, request.user)
 
-        file_ext = os.path.splitext(saved_path)[1]
-        if file_ext.lower() != '.gif':
-            self._create_thumbnail_if_needed(backend, saved_path)
+        saved_path = filewrapper.save_as(filepath)
 
         url = utils.get_media_url(saved_path)
 
@@ -105,22 +103,10 @@ class ImageUploadView(generic.View):
                 window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
             </script>""".format(ck_func_num, url))
         else:
+            _, filename = os.path.split(saved_path)
             retdata = {'url': url, 'uploaded': '1',
-                       'fileName': uploaded_file.name}
+                       'fileName': filename}
             return JsonResponse(retdata)
-
-    @staticmethod
-    def _save_file(request, uploaded_file):
-        filename = get_upload_filename(uploaded_file.name, request.user)
-
-        saved_path = storage.save(filename, uploaded_file)
-
-        return saved_path
-
-    @staticmethod
-    def _create_thumbnail_if_needed(backend, saved_path):
-        if backend.should_create_thumbnail(saved_path):
-            backend.create_thumbnail(saved_path)
 
 
 upload = csrf_exempt(ImageUploadView.as_view())

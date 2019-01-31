@@ -3,8 +3,6 @@ from __future__ import absolute_import
 import os
 import tempfile
 
-import django
-
 """
 Django settings for ckeditor_demo project.
 
@@ -67,23 +65,21 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'ckeditor',
     'ckeditor_uploader',
     'ckeditor_demo.demo_application',
 )
 
-_MIDDLEWARE = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-if django.VERSION >= (1, 10):
-    MIDDLEWARE = _MIDDLEWARE
-else:
-    MIDDLEWARE_CLASSES = _MIDDLEWARE
+]
 
 ROOT_URLCONF = 'ckeditor_demo.urls'
 
@@ -123,7 +119,7 @@ MEDIA_ROOT = os.path.join(tempfile.gettempdir(), 'ck_media')
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
-
-# New
-IMAGE_QUALITY = 40
-THUMBNAIL_SIZE = (300, 300)
+CKEDITOR_THUMBNAIL_SIZE = (300, 300)
+CKEDITOR_IMAGE_QUALITY = 40
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = True

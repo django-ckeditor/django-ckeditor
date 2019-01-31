@@ -1,93 +1,19 @@
 from __future__ import absolute_import
 
-import hashlib
 import os.path
-import shutil
-from datetime import datetime
 from time import sleep
 
-from django.conf import settings
 from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import TestCase
 from django.test.utils import override_settings
 
 from selenium import webdriver
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
+from .utils import get_upload_directory, remove_upload_directory, sha1
 
 CHROMIUM = 'chromium'
 FIREFOX = 'firefox'
 SELENIUM_BROWSER = CHROMIUM
-
-
-def get_upload_directory():
-    date_path = datetime.now().strftime('%Y/%m/%d')
-
-    # Complete upload path (upload_path + date_path).
-    upload_path = os.path.join(
-        settings.CKEDITOR_UPLOAD_PATH, date_path)
-    return os.path.join(settings.MEDIA_ROOT, upload_path)
-
-
-def remove_upload_directory():
-    # Called on test setup
-    # Avoid falling in the use case chere django append a hash to the file name
-    # to prevent file collisions
-    shutil.rmtree(get_upload_directory(), ignore_errors=True)
-
-
-class ViewsTestCase(TestCase):
-    fixtures = ['test_admin.json']
-
-    def setUp(self):
-        remove_upload_directory()
-
-    def assertFileExists(self, fname):
-        upload_directory = get_upload_directory()
-        f = os.path.join(upload_directory, fname)
-        self.assertTrue(os.path.isfile(f), f)
-
-    def assertFileNotExists(self, fname):
-        upload_directory = get_upload_directory()
-        f = os.path.join(upload_directory, fname)
-        self.assertFalse(os.path.exists(f), f)
-
-    def test_upload_png(self):
-        self.client.login(username='test', password='test')
-
-        filepath = find('ckeditor/ckeditor/skins/moono/images/hidpi/close.png')
-
-        with open(filepath, 'rb') as fp:
-            response = self.client.post(reverse('ckeditor_upload'), {'upload': fp})
-        self.assertEqual(200, response.status_code)
-        self.assertFileExists('close.png')
-        self.assertFileExists('close_thumb.png')
-
-    def test_upload_jpg(self):
-        self.client.login(username='test', password='test')
-
-        filepath = find('ckeditor/ckeditor/plugins/codesnippet/lib/highlight/styles/pojoaque.jpg')
-
-        with open(filepath, 'rb') as fp:
-            response = self.client.post(reverse('ckeditor_upload'), {'upload': fp})
-        self.assertEqual(200, response.status_code)
-        self.assertFileExists('pojoaque.jpg')
-        self.assertFileExists('pojoaque_thumb.jpg')
-
-    def test_upload_gif(self):
-        self.client.login(username='test', password='test')
-
-        filepath = find('ckeditor/galleriffic/css/loader.gif')
-
-        with open(filepath, 'rb') as fp:
-            response = self.client.post(reverse('ckeditor_upload'), {'upload': fp})
-        self.assertEqual(200, response.status_code)
-        self.assertFileExists('loader.gif')
-        self.assertFileNotExists('pojoaque_thumb.gif')
 
 
 class TestAdminPanelWidget(StaticLiveServerTestCase):
@@ -180,15 +106,9 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
         os.remove(expected_thumbnail_path)
 
     def _assert_uploaded_image_did_not_changed(self, path):
-        expected_sha = self._get_sha1_for_file(self._get_upload_file())
-        uploaded_sha = self._get_sha1_for_file(path)
+        expected_sha = sha1(self._get_upload_file())
+        uploaded_sha = sha1(path)
         self.assertEqual(expected_sha, uploaded_sha)
-
-    def _get_sha1_for_file(self, path):
-        image = open(path, 'rb')
-        hash = hashlib.sha1()
-        hash.update(image.read())
-        return hash.hexdigest()
 
     def _assert_thumbnail_is_not_empty(self, path):
         size = os.path.getsize(path)

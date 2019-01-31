@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-import mimetypes
 import os.path
 import random
 import re
@@ -29,10 +28,6 @@ ckeditor_icons = [
 CKEDITOR_FILEICONS = override_icons + ckeditor_icons
 
 IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif'}
-
-
-class NotAnImageException(Exception):
-    pass
 
 
 # Allow for a custom storage backend defined in settings.
@@ -74,11 +69,6 @@ def get_thumb_filename(file_name):
     filename before . (if present)
     """
     return force_text('{0}_thumb{1}').format(*os.path.splitext(file_name))
-
-
-def get_image_format(extension):
-    mimetypes.init()
-    return mimetypes.types_map[extension.lower()]
 
 
 def get_media_url(path):
