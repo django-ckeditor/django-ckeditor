@@ -5,7 +5,7 @@ import os
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from ckeditor_uploader.image_processing import get_backend
+from ckeditor_uploader.backends import registry
 from ckeditor_uploader.utils import get_thumb_filename
 from ckeditor_uploader.views import get_image_files
 
@@ -17,7 +17,7 @@ class Command(BaseCommand):
     """
     def handle(self, *args, **options):
         if getattr(settings, 'CKEDITOR_IMAGE_BACKEND', None):
-            backend = get_backend()
+            backend = registry.get_backend()
             for image in get_image_files():
                 if not self._thumbnail_exists(image):
                     self.stdout.write("Creating thumbnail for %s" % image)
