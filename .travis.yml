@@ -1,22 +1,22 @@
-dist: trusty
-addons:
-  chrome: stable
-language: python
-sudo: false
-python:
-  - "3.5"
-  - "3.6"
+dist: xenial
 
-env:
-  - DJANGO=1.11
-  - DJANGO=2.1
+language: python
+
+sudo: false
 
 matrix:
   include:
-    - python: "2.7"
-      env: DJANGO=1.11
-    - python: "2.7"
-      env: DJANGO=1.8
+    - python: 2.7
+      env: TOX_ENV=py27-django111
+    - python: 3.6
+      env: TOX_ENV=py36-django111
+    - python: 3.6
+      env: TOX_ENV=py36-django20
+    - python: 3.6
+      env: TOX_ENV=py36-django21
+
+addons:
+  chrome: stable
 
 install:
   - travis_retry pip install -U tox-travis
@@ -27,7 +27,8 @@ install:
   - sudo chmod +x /usr/local/share/chromedriver
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
   - export PATH=$PATH:/usr/local/bin/
+
 script:
   - whereis google-chrome-stable
   - whereis chromedriver
-  - tox
+  - tox -e $TOX_ENV

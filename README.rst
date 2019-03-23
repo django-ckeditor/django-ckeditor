@@ -41,7 +41,7 @@ Required
    detecting the correct place even then, but sometimes you have to hardcode
    ``CKEDITOR_BASEPATH`` somewhere. This can be hardcoded in settings, i.e.::
 
-        CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor"
+        CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
 
    It is possible to override
    the ``admin/change_form.html`` template with your own if you really need to do
@@ -92,11 +92,6 @@ Required for using widget with file upload
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 
 #. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6, those views are decorated using ``@staff_member_required``. If you want a different permission decorator (``login_required``, ``user_passes_test`` etc.) then add views defined in ``ckeditor.urls`` manually to your urls.py.
-
-#. Set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery. By default no thumbnails are created and full size images are used as preview. Supported backends:
-
-   - ``pillow``: Uses Pillow
-
 
 
 Optional - customizing CKEditor editor
@@ -172,6 +167,24 @@ Optional for file upload
 
 #. You can set a custom file storage for CKEditor uploader by defining it under ``CKEDITOR_STORAGE_BACKEND`` variable in settings.
 
+#. You can set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery.
+   By default no thumbnails are created and full size images are used as preview.
+   Supported backends:
+
+   - ``pillow``: Uses Pillow
+
+#. With the ``pillow`` backend, you can change the thumbnail size with the ``CKEDITOR_THUMBNAIL_SIZE`` setting (formerly ``THUMBNAIL_SIZE``).
+   Default value: (75, 75)
+
+#. With the ``pillow`` backend, you can convert and compress the uploaded images to jpeg, to save disk space.
+   Set the ``CKEDITOR_FORCE_JPEG_COMPRESSION`` setting to ``True`` (default ``False``)
+   You can change the ``CKEDITOR_IMAGE_QUALITY`` setting (formerly ``IMAGE_QUALITY``), which is passed to Pillow:
+
+    The image quality, on a scale from 1 (worst) to 95 (best). The default is 75. Values above 95
+    should be avoided; 100 disables portions of the JPEG compression algorithm, and results in
+    large files with hardly any gain in image quality.
+
+   This feature is disabled for animated images.
 
 Usage
 -----
