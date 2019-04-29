@@ -1,6 +1,16 @@
 Changelog
 =========
 
+
+5.7.0
+-----
+#. Fix Django 1.8 - 1.10 regression
+#. Drop leftover support for Django older than 1.8
+#. Django 2.2 support
+#. Documentation updates
+#. Minor fixes to JS handling
+
+
 5.6.1
 -----
 #. Fix bad pypi package
