@@ -22,6 +22,11 @@
   }
 
   function runInitialisers() {
+    if (!window.CKEDITOR) {
+      setTimeout(runInitialisers, 100);
+      return;
+    }
+
     initialiseCKEditor();
     initialiseCKEditorInInlinedForms();
   }
