@@ -154,6 +154,9 @@ Optional - customizing CKEditor editor
             )],
         )
 
+    Alternatively, those settings can also be provided through
+    ``CKEDITOR_CONFIGS``.
+
 
 Optional for file upload
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,28 +236,28 @@ In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways
 
 #. Place ``ckeditor/widget.html`` in  ``BASE_DIR/templates``
 
-   - Change ``FORM_RENDERER`` to ``TemplateSettings``. 
+   - Change ``FORM_RENDERER`` to ``TemplateSettings``.
 
    ::
-      
+
        FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
-   
-   
+
+
    - Include ``templates`` folder in ``DIRS``
-   
+
    ::
-    
+
        TEMPLATES = [{
            ...
            'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
            ...
        }]
-   
-   
-   - Add ``'django.forms'`` to ``INSTALLED_APPS``.
-   
 
-#. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in ``INSTALLED_APPS``. 
+
+   - Add ``'django.forms'`` to ``INSTALLED_APPS``.
+
+
+#. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in ``INSTALLED_APPS``.
 
 
 
