@@ -31,7 +31,8 @@
     initialiseCKEditorInInlinedForms();
   }
 
-  if (document.readyState != 'loading') {
+  if (document.readyState != 'loading' && document.body) {
+    document.addEventListener('DOMContentLoaded', initialiseCKEditor);
     runInitialisers();
   } else {
     document.addEventListener('DOMContentLoaded', runInitialisers);
