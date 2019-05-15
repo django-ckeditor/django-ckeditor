@@ -1,7 +1,7 @@
 Django CKEditor
 ===============
 
-**NOTICE: django-ckeditor 5 has backwards incompatible code moves against 4.5.1.**
+**NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
 
 
 File upload support has been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls, while for the file uploading widget you have to use RichTextUploadingField instead of RichTextField.
@@ -14,7 +14,7 @@ This version also includes:
 
 #. support to django-storages (works with S3)
 #. updated ckeditor to version 4.9
-#. included all ckeditor language and plugin files to made everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`__ )
+#. included all ckeditor language and plugin files to make everyone happy! ( `only the plugins maintained by the ckeditor develops team <https://github.com/ckeditor/ckeditor-dev/tree/4.6.2/plugins>`__ )
 
 .. contents:: Contents
    :depth: 5
@@ -54,7 +54,7 @@ Required
         {{ block.super }}
         {% endblock %}
 
-   Of course you should adapt this snippet to your needs when using
+   Of course, you should adapt this snippet to your needs when using
    CKEditor outside the admin app.
 
 
@@ -69,7 +69,7 @@ Required for using widget with file upload
 
    When using default file system storage, images will be uploaded to "uploads" folder in your ``MEDIA_ROOT`` and urls will be created against ``MEDIA_URL`` (``/media/uploads/image.jpg``).
 
-   If you want be able for have control for filename generation, you have to add into settings yours custom filename generator::
+   If you want be able to have control for filename generation, you have to add into settings yours custom filename generator::
 
         # utils.py
 
@@ -171,7 +171,7 @@ Optional for file upload
 #. You can set a custom file storage for CKEditor uploader by defining it under ``CKEDITOR_STORAGE_BACKEND`` variable in settings.
 
 #. You can set ``CKEDITOR_IMAGE_BACKEND`` to one of the supported backends to enable thumbnails in ckeditor gallery.
-   By default no thumbnails are created and full size images are used as preview.
+   By default, no thumbnails are created and full-size images are used as preview.
    Supported backends:
 
    - ``pillow``: Uses Pillow
@@ -184,7 +184,7 @@ Optional for file upload
    You can change the ``CKEDITOR_IMAGE_QUALITY`` setting (formerly ``IMAGE_QUALITY``), which is passed to Pillow:
 
     The image quality, on a scale from 1 (worst) to 95 (best). The default is 75. Values above 95
-    should be avoided; 100 disables portions of the JPEG compression algorithm, and results in
+    should be avoided; 100 disables portions of the JPEG compression algorithm and results in
     large files with hardly any gain in image quality.
 
    This feature is disabled for animated images.
@@ -194,7 +194,7 @@ Usage
 
 Field
 ~~~~~
-The quickest way to add rich text editing capabilities to your models is to use the included ``RichTextField`` model field type. A CKEditor widget is rendered as the form field but in all other regards the field behaves as the standard Django ``TextField``. For example::
+The quickest way to add rich text editing capabilities to your models is to use the included ``RichTextField`` model field type. A CKEditor widget is rendered as the form field but in all other regards the field behaves like the standard Django ``TextField``. For example::
 
     from django.db import models
     from ckeditor.fields import RichTextField
@@ -207,7 +207,7 @@ The quickest way to add rich text editing capabilities to your models is to use 
 
 Widget
 ~~~~~~
-Alernatively you can use the included ``CKEditorWidget`` as the widget for a formfield. For example::
+Alternatively, you can use the included ``CKEditorWidget`` as the widget for a formfield. For example::
 
     from django import forms
     from django.contrib import admin
