@@ -73,7 +73,6 @@ class CKEditorWidget(forms.Textarea):
 
     class Media:
         js = (
-            'ckeditor/ckeditor/ckeditor.js',
             JS('ckeditor/ckeditor-init.js', {
                 'id': 'ckeditor-init-script',
                 'data-ckeditor-basepath': getattr(
@@ -82,6 +81,7 @@ class CKEditorWidget(forms.Textarea):
                     static('ckeditor/ckeditor/'),
                 ),
             }),
+            'ckeditor/ckeditor/ckeditor.js',
         )
 
     def __init__(self, config_name='default', extra_plugins=None, external_plugin_resources=None, *args, **kwargs):
@@ -111,12 +111,20 @@ class CKEditorWidget(forms.Textarea):
                 raise ImproperlyConfigured('CKEDITOR_CONFIGS setting must be a\
                         dictionary type.')
 
-        extra_plugins = extra_plugins or []
+        extra_plugins = (
+            extra_plugins
+            or self.config.pop("extra_plugins", None)
+            or []
+        )
 
         if extra_plugins:
             self.config['extraPlugins'] = ','.join(extra_plugins)
 
-        self.external_plugin_resources = external_plugin_resources or []
+        self.external_plugin_resources = (
+            external_plugin_resources
+            or self.config.pop("external_plugin_resources", None)
+            or []
+        )
 
     def render(self, name, value, attrs=None, renderer=None):
         if renderer is None:
