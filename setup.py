@@ -40,7 +40,7 @@ setup(
     packages=find_packages(exclude=["*.demo"]),
     zip_safe=False,
     install_requires=[
-        'django-js-asset',
+        'django-js-asset>=1.2.2',
     ],
     include_package_data=True,
     classifiers=[
