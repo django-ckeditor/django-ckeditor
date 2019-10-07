@@ -1,6 +1,10 @@
 Changelog
 =========
 
+5.1.3
+-----
+#. Django 1.11 compatibility
+
 5.1.2
 -----
 #. Add table and object style
