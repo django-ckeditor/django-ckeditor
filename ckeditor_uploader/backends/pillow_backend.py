@@ -59,7 +59,12 @@ class PillowBackend(object):
     def create_thumbnail(self, file_object, file_path):
         thumbnail_filename = utils.get_thumb_filename(file_path)
         thumbnail_io = BytesIO()
-        image = Image.open(file_object).convert('RGB')
+        # File object after saving e.g. to S3 can be closed.
+        try:
+            image = Image.open(file_object).convert('RGB')
+        except ValueError:
+            file_object = self.storage_engine.open(file_path)
+            image = Image.open(file_object).convert('RGB')
         image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
         image.save(thumbnail_io, format='JPEG', optimize=True)
         return self.storage_engine.save(thumbnail_filename, thumbnail_io)
