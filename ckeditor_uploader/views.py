@@ -1,6 +1,8 @@
 from __future__ import absolute_import, unicode_literals
 
+import inspect
 import os
+import warnings
 from datetime import datetime
 
 from django.conf import settings
@@ -38,8 +40,8 @@ def _get_user_path(user):
     return str(user_path)
 
 
-def get_upload_filename(upload_name, user):
-    user_path = _get_user_path(user)
+def get_upload_filename(upload_name, request):
+    user_path = _get_user_path(request.user)
 
     # Generate date based path to put uploaded file.
     # If CKEDITOR_RESTRICT_BY_DATE is True upload file to date specific path.
@@ -59,7 +61,27 @@ def get_upload_filename(upload_name, user):
 
     if hasattr(settings, 'CKEDITOR_FILENAME_GENERATOR'):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
-        upload_name = generator(upload_name)
+        # Does the generator accept a request argument?
+        try:
+            inspect.getcallargs(generator, upload_name, request)
+        except TypeError:
+            # Does the generator accept only an upload_name argument?
+            try:
+                inspect.getcallargs(generator, upload_name)
+            except TypeError:
+                warnings.warn(
+                    "Update %s() to accept the arguments `filename, request`."
+                    % settings.CKEDITOR_FILENAME_GENERATOR
+                )
+            else:
+                warnings.warn(
+                    "Update %s() to accept a second `request` argument."
+                    % settings.CKEDITOR_FILENAME_GENERATOR,
+                    PendingDeprecationWarning
+                )
+                upload_name = generator(upload_name)
+        else:
+            upload_name = generator(upload_name, request)
 
     return storage.get_available_name(
         os.path.join(upload_path, upload_name)
@@ -90,7 +112,7 @@ class ImageUploadView(generic.View):
                 window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
                 </script>""".format(ck_func_num))
 
-        filepath = get_upload_filename(uploaded_file.name, request.user)
+        filepath = get_upload_filename(uploaded_file.name, request)
 
         saved_path = filewrapper.save_as(filepath)
 

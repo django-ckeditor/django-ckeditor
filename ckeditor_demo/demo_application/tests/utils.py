@@ -43,3 +43,7 @@ def sha1(path):
 def get_absolute_media_path(fname):
     upload_directory = get_upload_directory()
     return os.path.join(upload_directory, fname)
+
+
+def get_absolute_name(class_or_function):
+    return '%s.%s' % (class_or_function.__module__, class_or_function.__name__)

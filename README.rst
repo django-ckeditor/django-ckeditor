@@ -69,11 +69,11 @@ Required for using widget with file upload
 
    When using default file system storage, images will be uploaded to "uploads" folder in your ``MEDIA_ROOT`` and urls will be created against ``MEDIA_URL`` (``/media/uploads/image.jpg``).
 
-   If you want be able to have control for filename generation, you have to add into settings yours custom filename generator::
+   If you want to be able to have control over filename generation, you have to add a custom filename generator to your settings::
 
         # utils.py
 
-        def get_filename(filename):
+        def get_filename(filename, request):
             return filename.upper()
 
    ::
