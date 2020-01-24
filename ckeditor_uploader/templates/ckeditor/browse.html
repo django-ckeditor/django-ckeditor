@@ -1,8 +1,8 @@
-{% load static %}
+{% load static i18n %}
 <html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>CKEDitor | Select an image to embed</title>
+        <title>CKEditor | {% trans "Select an image to embed" %}</title>
         <link rel="stylesheet" href="{% static "ckeditor/ckeditor_uploader/admin_base.css" %}" type="text/css" />
         <link rel="stylesheet" href="{% static "ckeditor/galleriffic/css/basic.css" %}" type="text/css" />
         <link rel="stylesheet" href="{% static "ckeditor/galleriffic/css/galleriffic-2.css" %}" type="text/css" />
@@ -24,9 +24,9 @@
         <div id="page">
             <div id="container" style="width: 880px">
                 {% if files %}
-                    <h2>Browse for the image you want, then click 'Embed Image' to continue...</h2>
+                    <h2>{% trans "Browse for the image you want, then click 'Embed Image' to continue..." %}</h2>
                 {% else %}
-                    <h2>No images found. Upload images using the 'Image Button' dialog's 'Upload' tab.</h2>
+                    <h2>{% trans "No images found. Upload images using the 'Image Button' dialog's 'Upload' tab." %}</h2>
                 {% endif %}
 
                 <!-- Start Advanced Gallery Html Containers -->
@@ -47,7 +47,7 @@
                     <ul class="thumbs noscript">
                         {% if show_dirs %}
                             {% for dir in dirs %}
-                            <li>Images in: {{ dir }}</li>  
+                            <li>{% trans "Images in: " %}{{ dir }}</li>
                                     {% for file in files %}
                                         {% if dir in file.src %}
                                             <li>
@@ -59,7 +59,7 @@
                                                 </a>
                                                 <div class="caption">
                                                     <div class="submit-row">
-                                                        <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                                        <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="{% trans "Embed Image" %}" />
                                                     </div>
                                                 </div>
                                             </li>
@@ -77,7 +77,7 @@
                                     </a>
                                     <div class="caption">
                                         <div class="submit-row">
-                                            <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="Embed Image" />
+                                            <input href="{{ file.src }}" class="default embed" type="submit" name="_embed" value="{% trans "Embed Image" %}" />
                                         </div>
                                     </div>
                                 </li>
@@ -143,12 +143,12 @@
                     loadingContainerSel:       '#loading',
                     renderSSControls:          true,
                     renderNavControls:         true,
-                    playLinkText:              'Play Slideshow',
-                    pauseLinkText:             'Pause Slideshow',
-                    prevLinkText:              '&lsaquo; Previous Photo',
-                    nextLinkText:              'Next Photo &rsaquo;',
-                    nextPageLinkText:          'Next &rsaquo;',
-                    prevPageLinkText:          '&lsaquo; Prev',
+                    playLinkText:              '{% trans "Play Slideshow" %}',
+                    pauseLinkText:             '{% trans "Pause Slideshow" %}',
+                    prevLinkText:              '{% trans "&lsaquo; Previous Photo" %}',
+                    nextLinkText:              '{% trans "Next Photo &rsaquo;" %}',
+                    nextPageLinkText:          '{% trans "Next &rsaquo;" %}',
+                    prevPageLinkText:          '{% trans "&lsaquo; Prev" %}',
                     enableHistory:             false,
                     autoStart:                 false,
                     syncTransitions:           false,

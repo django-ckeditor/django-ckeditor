@@ -7,6 +7,8 @@ Unreleased
 #. Python 3.8 support
 #. Replace `staticfiles` templatetags library usage with `static`
 #. Add a templates validation step to the tests
+#. Internationalize ckeditor_upload `browse.html` template.
+#. Add ckeditor_upload features and custom configuration example to `ckeditor_demo`
 
 
 5.8.0
