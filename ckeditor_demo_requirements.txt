@@ -1,5 +1,6 @@
 django
 django-js-asset
+django_extensions
 Pillow
 selenium
 tox
