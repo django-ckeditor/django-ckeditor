@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Unreleased
+----------
+#. Django 3.0 support
+#. Python 3.8 support
+#. Replace `staticfiles` templatetags library usage with `static`
+#. Add a templates validation step to the tests
+
+
 5.8.0
 -----
 #. CKEditor 4.13

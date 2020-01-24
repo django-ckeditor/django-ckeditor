@@ -6,6 +6,7 @@ from django.test import RequestFactory, TestCase
 from django.test.utils import override_settings
 
 from ckeditor_uploader.views import get_upload_filename
+
 from .utils import get_absolute_name
 
 MOCK_FILENAME = 'some_filename.jpg'
