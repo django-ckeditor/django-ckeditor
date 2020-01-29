@@ -12,6 +12,8 @@ from django.utils.translation import get_language
 
 from js_asset import JS, static
 
+from .configs import DEFAULT_CONFIG
+
 try:
     # Django >=1.11
     from django.forms.widgets import get_default_renderer
@@ -44,26 +46,6 @@ class LazyEncoder(DjangoJSONEncoder):
 
 
 json_encode = LazyEncoder().encode
-
-DEFAULT_CONFIG = {
-    'skin': 'moono-lisa',
-    'toolbar_Basic': [
-        ['Source', '-', 'Bold', 'Italic']
-    ],
-    'toolbar_Full': [
-        ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
-        ['Link', 'Unlink', 'Anchor'],
-        ['Image', 'Flash', 'Table', 'HorizontalRule'],
-        ['TextColor', 'BGColor'],
-        ['Smiley', 'SpecialChar'], ['Source'],
-    ],
-    'toolbar': 'Full',
-    'height': 291,
-    'width': 835,
-    'filebrowserWindowWidth': 940,
-    'filebrowserWindowHeight': 725,
-}
-
 
 class CKEditorWidget(forms.Textarea):
     """

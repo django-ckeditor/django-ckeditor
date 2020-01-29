@@ -8,7 +8,9 @@
         <form method="post" action="./">
             {% csrf_token %}
             {{ form.media }}
-            {{ form.as_p }}
+            <ul style="display: flex">
+                {{ form.as_ul }}
+            </ul>
             <p><input type="submit" value="post"></p>
         </form>
     </body>
