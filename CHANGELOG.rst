@@ -3,12 +3,17 @@ Changelog
 
 Unreleased
 ----------
+
+5.9.0
+-----
 #. Django 3.0 support
 #. Python 3.8 support
 #. Replace `staticfiles` templatetags library usage with `static`
 #. Add a templates validation step to the tests
 #. Internationalize ckeditor_upload `browse.html` template.
-#. Add ckeditor_upload features and custom configuration example to `ckeditor_demo`
+#. Add ckeditor_upload features and custom configuration example to
+   `ckeditor_demo`
+#. CKEditor 4.13.1
 
 
 5.8.0
