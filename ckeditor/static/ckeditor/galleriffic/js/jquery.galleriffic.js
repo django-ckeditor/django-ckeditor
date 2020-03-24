@@ -129,7 +129,7 @@
 
 			// Inserts an image into the set of images.  Argument listItem can be either a jQuery DOM element or arbitrary html.
 			// @param listItem Either a jQuery object or a string of html of the list item that is to be added to the gallery.
-			// @param {Integer} position The index within the gallery where the item shouold be added.
+			// @param {Integer} position The index within the gallery where the item should be added.
 			insertImage: function(listItem, position) {
 				this.addImage(listItem, false, true, position);
 				return this;
@@ -139,7 +139,7 @@
 			// @param listItem Either a jQuery object or a string of html of the list item that is to be added to the gallery.
 			// @param {Boolean} thumbExists Specifies whether the thumbnail already exists in the DOM or if it needs to be added.
 			// @param {Boolean} insert Specifies whether the the image is appended to the end or inserted into the gallery.
-			// @param {Integer} position The index within the gallery where the item shouold be added.
+			// @param {Integer} position The index within the gallery where the item should be added.
 			addImage: function(listItem, thumbExists, insert, position) {
 				var $li = ( typeof listItem === "string" ) ? $(listItem) : listItem;				
 				var $aThumb = $li.find('a.thumb');
