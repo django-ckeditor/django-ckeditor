@@ -57,7 +57,8 @@
     document.body.addEventListener('click', function(e) {
       if (e.target && (
         e.target.matches('.add-row a') ||
-        e.target.matches('.grp-add-handler')
+        e.target.matches('.grp-add-handler') ||
+        e.target.parentElement.matches('.grp-add-handler')
       )) {
         initialiseCKEditor();
       }
