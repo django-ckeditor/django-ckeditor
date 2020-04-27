@@ -1,11 +1,11 @@
 "Moono" Skin
 ====================
 
-This skin has been chosen for the **default skin** of CKEditor 4.x, elected from the CKEditor
-[skin contest](http://ckeditor.com/blog/new_ckeditor_4_skin) and further shaped by
+This skin has been chosen for the **default skin** of CKEditor 4.x.x (replaced by "Moono-lisa" skin since CKEditor 4.6.0),
+elected from the CKEditor [skin contest](https://ckeditor.com/blog/CKEditor-4-Skin-Contest-Winner/) and further shaped by
 the CKEditor team. "Moono" is maintained by the core developers.
 
-For more information about skins, please check the [CKEditor Skin SDK](http://docs.cksource.com/CKEditor_4.x/Skin_SDK)
+For more information about skins, please check the [CKEditor Skin SDK](https://ckeditor.com/docs/ckeditor4/latest/guide/skin_sdk_intro.html)
 documentation.
 
 Features
@@ -44,6 +44,6 @@ Other parts:
 License
 -------
 
-Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
+Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
 
-For licensing, see LICENSE.md or [http://ckeditor.com/license](http://ckeditor.com/license)
+For licensing, see LICENSE.md or [https://ckeditor.com/legal/ckeditor-oss-license](https://ckeditor.com/legal/ckeditor-oss-license)

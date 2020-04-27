@@ -10,6 +10,7 @@ CKEDITOR.plugins.setLang('youtube', 'de', {
 	chkPrivacy : 'Erweiterten Datenschutzmodus aktivieren',
 	chkOlderCode : 'Benutze alten Embed Code',
 	chkAutoplay : 'Autoplay',
+	chkControls : 'Player-Steuerelemente anzeigen',
 	noCode : 'Sie müssen einen Embed Code oder URL angeben',
 	invalidEmbed : 'Der angegebene Embed Code scheint nicht gültig zu sein.',
 	invalidUrl : 'Die angegebene URL scheint nicht gültig zu sein.',

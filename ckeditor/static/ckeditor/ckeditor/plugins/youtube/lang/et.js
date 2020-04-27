@@ -10,6 +10,7 @@ CKEDITOR.plugins.setLang('youtube', 'et', {
 	chkPrivacy : 'Aktiveerige privaatsust täiendav režiim',
 	chkOlderCode : 'Kasutage vana manuskoodi',
 	chkAutoplay: 'Automaatesitlus',
+	chkControls : 'Kuva pleieri nupud',
 	noCode : 'Te peate sisestama video manuskoodi või veebiaadressi',
 	invalidEmbed : 'Manuskood mille sisestasite ei paista olevat korrektne',
 	invalidUrl : 'Veebiaadress mille sisestasite ei paista olevat korrektne',

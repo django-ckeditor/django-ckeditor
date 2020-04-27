@@ -10,6 +10,7 @@
 	chkPrivacy : 'Bruk personverntilpasset modus',
 	chkOlderCode : 'Bruk gammel embedkode',
 	chkAutoplay: 'Spill automatisk',
+	chkControls: 'Vis spillerkontrollene',
 	noCode : 'Du må legge inn en embed-kode eller URL',
 	invalidEmbed : 'Emded-koden du la inn ser ikke ut til å være gyldig',
 	invalidUrl : 'URLen du la inn ser ikke ut til å være gyldig',

@@ -10,6 +10,7 @@
 	chkPrivacy : 'Povoliť pokročilý mód súkromia',
 	chkOlderCode : 'Použiť starú metódu vkladania',
 	chkAutoplay: 'Automatické prehrávanie',
+	chkControls: 'Zobraziť ovládacie prvky prehrávača',
 	noCode : 'Musíte vložiť Youtube Embed kód alebo URL',
 	invalidEmbed : 'Vložený kód nie je valídny',
 	invalidUrl : 'Vložená URL nie je platná',

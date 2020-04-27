@@ -10,6 +10,7 @@ CKEDITOR.plugins.setLang('youtube', 'fi', {
 	chkPrivacy : 'Aktivoi yksityisyyttä parantava tila',
 	chkOlderCode : 'Käytä vanhaa upotuskoodia',
 	chkAutoplay: 'Soita automaattisesti',
+	chkControls : 'Näytä soittimen ohjaimet',
 	noCode : 'Sinun täytyy syötää upotuskoodi tai www-osoite',
 	invalidEmbed : 'Upotuskoodi on virheellinen',
 	invalidUrl : 'Www-osoite on virheellinen',

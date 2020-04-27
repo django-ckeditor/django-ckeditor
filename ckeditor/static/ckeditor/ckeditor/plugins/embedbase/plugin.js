@@ -1,6 +1,6 @@
 ﻿/**
- * @license Copyright (c) 2003-2016, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 ( function() {
@@ -80,8 +80,8 @@
 	};
 
 	CKEDITOR.plugins.add( 'embedbase', {
-		lang: 'cs,da,de,de-ch,en,eo,es,eu,fr,gl,id,it,ko,ku,nb,nl,pl,pt,pt-br,ru,sv,tr,ug,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
-		requires: 'widget,notificationaggregator',
+		lang: 'ar,az,bg,ca,cs,da,de,de-ch,en,en-au,eo,es,es-mx,et,eu,fr,gl,hr,hu,id,it,ja,ko,ku,lv,nb,nl,oc,pl,pt,pt-br,ro,ru,sk,sq,sr,sr-latn,sv,tr,ug,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
+		requires: 'dialog,widget,notificationaggregator',
 
 		onLoad: function() {
 			CKEDITOR._.jsonpCallbacks = {};
@@ -104,10 +104,10 @@
 	 *
 	 * See example usage of this method in:
 	 *
-	 * * [/plugins/embed/plugin.js](https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/embed/plugin.js)
-	 * * [/plugins/embedsemantic/plugin.js](https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/embedsemantic/plugin.js)
+	 * * [/plugins/embed/plugin.js](https://github.com/ckeditor/ckeditor4/blob/master/plugins/embed/plugin.js)
+	 * * [/plugins/embedsemantic/plugin.js](https://github.com/ckeditor/ckeditor4/blob/master/plugins/embedsemantic/plugin.js)
 	 *
-	 * Note that both these plugins reuse the [dialog](https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/embedbase/dialogs/embedbase.js)
+	 * Note that both these plugins reuse the [dialog](https://github.com/ckeditor/ckeditor4/blob/master/plugins/embedbase/dialogs/embedbase.js)
 	 * defined by the `embedbase` plugin. Integration of the asynchronous way of loading content with a dialog requires additional
 	 * effort. Check the dialog's code for more details.
 	 *
@@ -192,11 +192,6 @@
 				this.on( 'sendRequest', function( evt ) {
 					this._sendRequest( evt.data );
 				}, this, null, 999 );
-
-				// Expose the widget in the dialog - needed to trigger loadContent() and do error handling.
-				this.on( 'dialog', function( evt ) {
-					evt.data.widget = this;
-				}, this );
 
 				this.on( 'handleResponse', function( evt ) {
 					if ( evt.data.html ) {
@@ -468,7 +463,7 @@
 						'alt="' + CKEDITOR.tools.htmlEncodeAttr( response.title || '' ) + '" style="max-width:100%;height:auto" />';
 				} else if ( response.type == 'video' || response.type == 'rich' ) {
 					// Embedded iframes are added to page's focus list. Adding negative tabindex attribute
-					// removes their ability to be focused by user. (#14538)
+					// removes their ability to be focused by user. (https://dev.ckeditor.com/ticket/14538)
 					response.html = response.html.replace( /<iframe/g, '<iframe tabindex="-1"' );
 
 					return response.html;

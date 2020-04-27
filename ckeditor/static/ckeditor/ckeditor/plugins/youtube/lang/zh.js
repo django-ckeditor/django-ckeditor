@@ -11,6 +11,7 @@ CKEDITOR.plugins.setLang('youtube', 'zh', {
     chkPrivacy: '啟用加強隱私模式',
     chkOlderCode: '使用舊的嵌入碼',
     chkAutoplay: '自動播放',
+    chkControls: '显示播放器控件',
     noCode: '必須輸入嵌入碼',
     invalidEmbed: '錯誤的嵌入碼',
     invalidUrl: '錯誤的URL',

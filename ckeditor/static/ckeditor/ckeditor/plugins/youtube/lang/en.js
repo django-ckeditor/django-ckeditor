@@ -10,6 +10,7 @@ CKEDITOR.plugins.setLang('youtube', 'en', {
 	chkPrivacy : 'Enable privacy-enhanced mode',
 	chkOlderCode : 'Use old embed code',
 	chkAutoplay: 'Autoplay',
+	chkControls: 'Show player controls',
 	noCode : 'You must input an embed code or URL',
 	invalidEmbed : 'The embed code you\'ve entered doesn\'t appear to be valid',
 	invalidUrl : 'The URL you\'ve entered doesn\'t appear to be valid',
@@ -19,5 +20,6 @@ CKEDITOR.plugins.setLang('youtube', 'en', {
 	noHeight : 'You must inform the height',
 	invalidHeight : 'Inform a valid height',
 	invalidTime : 'Inform a valid start time',
-	txtResponsive : 'Make Responsive (ignore width and height, fit to width)'
+	txtResponsive : 'Make Responsive (ignore width and height, fit to width)',
+	txtNoEmbed : 'Video image and link only'
 });
