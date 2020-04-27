@@ -94,8 +94,7 @@
             CKEDITOR.addCss(
                 'figure.quote {line-height: 1.5rem;margin: 0 0 1.5rem;text-align: center;border: 0.0625rem solid #ddd;border-radius: 0.5rem;}' +
                 'figure.quote blockquote {padding: 2.25rem 0.75rem 0.75rem;color: #333;background: #f8f8f7;}' +
-                'figure.quote blockquote::before {display: block;content: "🙷";font-family: serif;font-size: 6rem;}' +
-                'figure.quote figcaption {font-size: 0.875rem;background: #eee;}' +
+                'figure.quote figcaption {font-size: 0.875rem;background: #eee}' +
                 'figure.quote .cke_widget_editable {outline: none !important;}'
             );
         }
