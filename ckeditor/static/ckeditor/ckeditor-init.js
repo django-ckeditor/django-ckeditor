@@ -1,24 +1,8 @@
-/* global CKEDITOR */
+/* global CKEDITOR, django */
 ;(function() {
   var el = document.getElementById('ckeditor-init-script');
   if (el && !window.CKEDITOR_BASEPATH) {
     window.CKEDITOR_BASEPATH = el.getAttribute('data-ckeditor-basepath');
-  }
-
-  // Polyfill from https://developer.mozilla.org/en/docs/Web/API/Element/matches
-  if (!Element.prototype.matches) {
-    Element.prototype.matches =
-        Element.prototype.matchesSelector ||
-        Element.prototype.mozMatchesSelector ||
-        Element.prototype.msMatchesSelector ||
-        Element.prototype.oMatchesSelector ||
-        Element.prototype.webkitMatchesSelector ||
-        function(s) {
-            var matches = (this.document || this.ownerDocument).querySelectorAll(s),
-                i = matches.length;
-            while (--i >= 0 && matches.item(i) !== this) {}
-            return i > -1;
-        };
   }
 
   function runInitialisers() {
@@ -54,14 +38,9 @@
   }
 
   function initialiseCKEditorInInlinedForms() {
-    document.body.addEventListener('click', function(e) {
-      if (e.target && (
-        e.target.matches('.add-row a') ||
-        e.target.matches('.grp-add-handler')
-      )) {
-        initialiseCKEditor();
-      }
-    });
+    if (typeof django === 'object' && django.jQuery) {
+      django.jQuery(document).on('formset:added', initialiseCKEditor);
+    }
   }
 
 }());
