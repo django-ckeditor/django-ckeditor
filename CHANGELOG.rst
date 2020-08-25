@@ -4,6 +4,9 @@ Changelog
 Unreleased
 ----------
 
+#. Replace ``ugettext_lazy()`` with ``gettext_lazy()``
+
+
 5.9.0
 -----
 #. Django 3.0 support
