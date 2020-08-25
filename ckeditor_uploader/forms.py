@@ -1,7 +1,10 @@
 from __future__ import absolute_import
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import gettext_lazy as _
+except ImportError:
+    from django.utils.translation import ugettext_lazy as _
 
 
 class SearchForm(forms.Form):
