@@ -20,3 +20,5 @@ db.sqlite3
 .coverage.*
 .idea
 venv
+/build
+/dist
