@@ -141,7 +141,7 @@ class PillowTestCase(TestCase):
         thumb = get_absolute_media_path("close_thumb.png")
         self.assertEqual(sha1(filepath), sha1(upload))
         self.assertEqual(1271, os.path.getsize(upload))
-        self.assertEqual(747, os.path.getsize(thumb))
+        self.assertEqual(748, os.path.getsize(thumb))
 
     @override_settings(CKEDITOR_FORCE_JPEG_COMPRESSION=True)
     def test_upload_png_with_compression_enabled(self):
