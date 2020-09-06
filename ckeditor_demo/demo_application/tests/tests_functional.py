@@ -6,7 +6,6 @@ from time import sleep
 from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test.utils import override_settings
-
 from selenium import webdriver
 
 from .utils import get_upload_directory, remove_upload_directory, sha1

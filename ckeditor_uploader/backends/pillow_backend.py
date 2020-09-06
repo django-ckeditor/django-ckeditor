@@ -5,7 +5,6 @@ from io import BytesIO
 
 from django.conf import settings
 from django.utils.functional import cached_property
-
 from PIL import Image
 
 from ckeditor_uploader import utils
