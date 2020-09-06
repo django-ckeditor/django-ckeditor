@@ -89,7 +89,7 @@ Required for using widget with file upload
 
 #. Add CKEditor URL include to your project's ``urls.py`` file::
 
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 #. Note that by adding those URLs you add views that can upload and browse through uploaded images. Since django-ckeditor 4.4.6, those views are decorated using ``@staff_member_required``. If you want a different permission decorator (``login_required``, ``user_passes_test`` etc.) then add views defined in ``ckeditor.urls`` manually to your urls.py.
 
