@@ -5,6 +5,7 @@ Unreleased
 ----------
 
 #. Replace ``ugettext_lazy()`` with ``gettext_lazy()``
+#. CKEditor 4.14.1
 
 
 5.9.0
