@@ -9,6 +9,8 @@ Unreleased
 #. Changed our JS script to listen for Django's ``formset:added``
    signals instead of detecting clicks on inline buttons. This should
    fix compatibility with various Django admin skins.
+#. Dropped compatibility guarantees for Django<2.2 and Python<3.6.
+#. Reformatted the code using black, isort.
 
 
 5.9.0

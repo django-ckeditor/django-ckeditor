@@ -7,6 +7,10 @@ from django.views.decorators.cache import never_cache
 from . import views
 
 urlpatterns = [
-    url(r'^upload/', staff_member_required(views.upload), name='ckeditor_upload'),
-    url(r'^browse/', never_cache(staff_member_required(views.browse)), name='ckeditor_browse'),
+    url(r"^upload/", staff_member_required(views.upload), name="ckeditor_upload"),
+    url(
+        r"^browse/",
+        never_cache(staff_member_required(views.browse)),
+        name="ckeditor_browse",
+    ),
 ]

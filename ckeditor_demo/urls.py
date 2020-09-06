@@ -7,14 +7,12 @@ from django.contrib import admin
 
 from .demo_application.views import ckeditor_form_view
 
-urlpatterns = [
-    url(r'^$', ckeditor_form_view, name='ckeditor-form'),
-    url(r'^admin/', admin.site.urls),
-    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-] + static(
-    settings.STATIC_URL,
-    document_root=settings.STATIC_ROOT
-) + static(
-    settings.MEDIA_URL,
-    document_root=settings.MEDIA_ROOT
+urlpatterns = (
+    [
+        url(r"^$", ckeditor_form_view, name="ckeditor-form"),
+        url(r"^admin/", admin.site.urls),
+        url(r"^ckeditor/", include("ckeditor_uploader.urls")),
+    ]
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )

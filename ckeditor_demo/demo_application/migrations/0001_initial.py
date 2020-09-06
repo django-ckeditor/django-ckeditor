@@ -11,22 +11,37 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ExampleModel',
+            name="ExampleModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', ckeditor_uploader.fields.RichTextUploadingField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", ckeditor_uploader.fields.RichTextUploadingField()),
             ],
         ),
         migrations.CreateModel(
-            name='ExampleNonUploadModel',
+            name="ExampleNonUploadModel",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content', ckeditor.fields.RichTextField()),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("content", ckeditor.fields.RichTextField()),
             ],
         ),
     ]

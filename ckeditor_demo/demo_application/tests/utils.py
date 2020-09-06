@@ -9,21 +9,16 @@ from django.conf import settings
 
 
 def get_upload_directory():
-    date_path = datetime.now().strftime('%Y/%m/%d')
+    date_path = datetime.now().strftime("%Y/%m/%d")
 
     # Complete upload path (upload_path + date_path).
-    upload_path = os.path.join(
-        settings.CKEDITOR_UPLOAD_PATH, date_path)
+    upload_path = os.path.join(settings.CKEDITOR_UPLOAD_PATH, date_path)
     return os.path.join(settings.MEDIA_ROOT, upload_path)
 
 
 def get_media_url(fname):
-    args = [
-        settings.CKEDITOR_UPLOAD_PATH,
-        datetime.now().strftime('%Y/%m/%d'),
-        fname
-    ]
-    return settings.MEDIA_URL + "/".join(arg.strip('/') for arg in args)
+    args = [settings.CKEDITOR_UPLOAD_PATH, datetime.now().strftime("%Y/%m/%d"), fname]
+    return settings.MEDIA_URL + "/".join(arg.strip("/") for arg in args)
 
 
 def remove_upload_directory():
@@ -34,7 +29,7 @@ def remove_upload_directory():
 
 
 def sha1(path):
-    image = open(path, 'rb')
+    image = open(path, "rb")
     fhash = hashlib.sha1()
     fhash.update(image.read())
     return fhash.hexdigest()
@@ -46,4 +41,4 @@ def get_absolute_media_path(fname):
 
 
 def get_absolute_name(class_or_function):
-    return '%s.%s' % (class_or_function.__module__, class_or_function.__name__)
+    return "%s.%s" % (class_or_function.__module__, class_or_function.__name__)

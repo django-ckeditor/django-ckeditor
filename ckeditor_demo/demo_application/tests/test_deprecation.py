@@ -9,8 +9,8 @@ from ckeditor_uploader.views import get_upload_filename
 
 from .utils import get_absolute_name
 
-MOCK_FILENAME = 'some_filename.jpg'
-GENERATOR_PREFIX = 'some_folder'
+MOCK_FILENAME = "some_filename.jpg"
+GENERATOR_PREFIX = "some_folder"
 GENERATED_MOCK_FILENAME = os.path.join(GENERATOR_PREFIX, MOCK_FILENAME)
 
 
@@ -27,13 +27,17 @@ def generator_without_parameters():
 
 
 class TestUploadFilenameGeneratorParameters(TestCase):
-    fixtures = ['test_admin.json']
+    fixtures = ["test_admin.json"]
 
     def setUp(self):
         self.mock_request = RequestFactory().request()
-        self.mock_request.user = User.objects.get(username='test')
+        self.mock_request.user = User.objects.get(username="test")
 
-    @override_settings(CKEDITOR_FILENAME_GENERATOR=get_absolute_name(generator_with_filename_and_request))
+    @override_settings(
+        CKEDITOR_FILENAME_GENERATOR=get_absolute_name(
+            generator_with_filename_and_request
+        )
+    )
     def test_compatible_parameters(self):
         # `self.assertWarns()` is not available in Python 2
         with warnings.catch_warnings(record=True) as w:
@@ -44,7 +48,9 @@ class TestUploadFilenameGeneratorParameters(TestCase):
 
         self.assertIn(GENERATED_MOCK_FILENAME, generated_filename)
 
-    @override_settings(CKEDITOR_FILENAME_GENERATOR=get_absolute_name(generator_with_only_filename))
+    @override_settings(
+        CKEDITOR_FILENAME_GENERATOR=get_absolute_name(generator_with_only_filename)
+    )
     def test_no_request_parameter_deprecation_warning(self):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
@@ -55,7 +61,9 @@ class TestUploadFilenameGeneratorParameters(TestCase):
 
         self.assertIn(GENERATED_MOCK_FILENAME, generated_filename)
 
-    @override_settings(CKEDITOR_FILENAME_GENERATOR=get_absolute_name(generator_without_parameters))
+    @override_settings(
+        CKEDITOR_FILENAME_GENERATOR=get_absolute_name(generator_without_parameters)
+    )
     def test_incompatible_parameters(self):
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
