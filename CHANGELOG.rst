@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+6.0.0
+-----
 #. Replace ``ugettext_lazy()`` with ``gettext_lazy()``
 #. CKEditor 4.14.1
 #. Changed our JS script to listen for Django's ``formset:added``
