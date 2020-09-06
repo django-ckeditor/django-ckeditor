@@ -11,6 +11,7 @@ Unreleased
    fix compatibility with various Django admin skins.
 #. Dropped compatibility guarantees for Django<2.2 and Python<3.6.
 #. Reformatted the code using black, isort.
+#. Added testing using Django 3.1.
 
 
 5.9.0
