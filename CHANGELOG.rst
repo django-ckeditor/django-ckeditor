@@ -6,6 +6,9 @@ Unreleased
 
 #. Replace ``ugettext_lazy()`` with ``gettext_lazy()``
 #. CKEditor 4.14.1
+#. Changed our JS script to listen for Django's ``formset:added``
+   signals instead of detecting clicks on inline buttons. This should
+   fix compatibility with various Django admin skins.
 
 
 5.9.0
