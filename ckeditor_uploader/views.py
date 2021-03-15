@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import inspect
 import os
 import warnings
@@ -62,11 +60,11 @@ def get_upload_filename(upload_name, request):
         generator = import_string(settings.CKEDITOR_FILENAME_GENERATOR)
         # Does the generator accept a request argument?
         try:
-            inspect.getcallargs(generator, upload_name, request)
+            inspect.signature(generator).bind(upload_name, request)
         except TypeError:
             # Does the generator accept only an upload_name argument?
             try:
-                inspect.getcallargs(generator, upload_name)
+                inspect.signature(generator).bind(upload_name)
             except TypeError:
                 warnings.warn(
                     "Update %s() to accept the arguments `filename, request`."

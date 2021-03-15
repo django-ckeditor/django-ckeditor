@@ -9,4 +9,4 @@ class CKEditorUploadingWidget(widgets.CKEditorWidget):
             self.config.setdefault("filebrowserUploadUrl", reverse("ckeditor_upload"))
         if "filebrowserBrowseUrl" not in self.config:
             self.config.setdefault("filebrowserBrowseUrl", reverse("ckeditor_browse"))
-        super(CKEditorUploadingWidget, self)._set_config()
+        super()._set_config()

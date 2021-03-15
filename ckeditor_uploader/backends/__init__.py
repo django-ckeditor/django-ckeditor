@@ -3,7 +3,7 @@ from django.conf import settings
 from .dummy_backend import DummyBackend
 
 
-class BackendRegistry(object):
+class BackendRegistry:
     def __init__(self):
         self._registry = {}
 

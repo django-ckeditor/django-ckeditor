@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import os.path
 from time import sleep
 
@@ -27,12 +25,12 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
             cls.selenium = webdriver.Chrome(chrome_options=options)
         elif SELENIUM_BROWSER == FIREFOX:
             cls.selenium = webdriver.Firefox()
-        super(TestAdminPanelWidget, cls).setUpClass()
+        super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
         cls.selenium.quit()
-        super(TestAdminPanelWidget, cls).tearDownClass()
+        super().tearDownClass()
 
     def setUp(self):
         remove_upload_directory()
