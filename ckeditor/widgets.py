@@ -1,17 +1,16 @@
-from __future__ import absolute_import
-
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
+from django.forms.renderers import get_default_renderer
 from django.forms.utils import flatatt
-from django.forms.widgets import get_default_renderer
+from django.templatetags.static import static
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
-from js_asset import JS, static
+from js_asset import JS
 
 from .configs import DEFAULT_CONFIG
 
@@ -20,7 +19,7 @@ class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
         if isinstance(obj, Promise):
             return force_str(obj)
-        return super(LazyEncoder, self).default(obj)
+        return super().default(obj)
 
 
 json_encode = LazyEncoder().encode
@@ -56,7 +55,7 @@ class CKEditorWidget(forms.Textarea):
         *args,
         **kwargs
     ):
-        super(CKEditorWidget, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         # Setup config from defaults.
         self.config = DEFAULT_CONFIG.copy()
 

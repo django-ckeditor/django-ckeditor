@@ -28,4 +28,4 @@ class RichTextUploadingFormField(forms.fields.CharField):
                 )
             }
         )
-        super(RichTextUploadingFormField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

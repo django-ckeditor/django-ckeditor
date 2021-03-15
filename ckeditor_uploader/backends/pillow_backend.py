@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import os
 from io import BytesIO
 
@@ -12,7 +10,7 @@ from ckeditor_uploader import utils
 THUMBNAIL_SIZE = getattr(settings, "CKEDITOR_THUMBNAIL_SIZE", (75, 75))
 
 
-class PillowBackend(object):
+class PillowBackend:
     def __init__(self, storage_engine, file_object):
         self.file_object = file_object
         self.storage_engine = storage_engine

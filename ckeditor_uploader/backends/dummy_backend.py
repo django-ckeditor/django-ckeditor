@@ -1,11 +1,9 @@
-from __future__ import absolute_import
-
 from django.utils.functional import cached_property
 
 from ckeditor_uploader import utils
 
 
-class DummyBackend(object):
+class DummyBackend:
     def __init__(self, storage_engine, file_object):
         self.file_object = file_object
         self.storage_engine = storage_engine

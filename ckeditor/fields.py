@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from django import forms
 from django.db import models
 
@@ -11,7 +9,7 @@ class RichTextField(models.TextField):
         self.config_name = kwargs.pop("config_name", "default")
         self.extra_plugins = kwargs.pop("extra_plugins", [])
         self.external_plugin_resources = kwargs.pop("external_plugin_resources", [])
-        super(RichTextField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
         defaults = {
@@ -21,7 +19,7 @@ class RichTextField(models.TextField):
             "external_plugin_resources": self.external_plugin_resources,
         }
         defaults.update(kwargs)
-        return super(RichTextField, self).formfield(**defaults)
+        return super().formfield(**defaults)
 
     @staticmethod
     def _get_form_class():
@@ -46,4 +44,4 @@ class RichTextFormField(forms.fields.CharField):
                 )
             }
         )
-        super(RichTextFormField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
