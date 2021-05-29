@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+6.1.0
+-----
+#. CKEditor 4.16.1
+
+
 6.0.0
 -----
 #. Replace ``ugettext_lazy()`` with ``gettext_lazy()``
