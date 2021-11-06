@@ -2,9 +2,10 @@ import os
 import warnings
 
 from django.contrib.auth.models import User
-from django.test import RequestFactory, TestCase
+from django.test import RequestFactory, SimpleTestCase, TestCase
 from django.test.utils import override_settings
 
+from ckeditor_uploader import backends
 from ckeditor_uploader.views import get_upload_filename
 
 from .utils import get_absolute_name
@@ -73,3 +74,21 @@ class TestUploadFilenameGeneratorParameters(TestCase):
 
         self.assertIn(MOCK_FILENAME, generated_filename)
         self.assertNotIn(GENERATOR_PREFIX, generated_filename)
+
+
+class TestDeprecatedImageBackendValues(SimpleTestCase):
+    @override_settings(CKEDITOR_IMAGE_BACKEND="pillow")
+    def test_pillow_setting(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            result = backends.get_backend()
+            self.assertEqual(len(w), 1)
+            self.assertEqual(result, backends.PillowBackend)
+
+    @override_settings(CKEDITOR_IMAGE_BACKEND=None)
+    def test_none_setting(self):
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            result = backends.get_backend()
+            self.assertEqual(len(w), 1)
+            self.assertEqual(result, backends.DummyBackend)
