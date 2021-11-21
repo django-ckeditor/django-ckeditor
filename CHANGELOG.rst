@@ -4,6 +4,11 @@ Changelog
 Unreleased
 ----------
 
+6.2.0
+-----
+#. CKEditor 4.17.1
+
+
 6.1.0
 -----
 #. CKEditor 4.16.1
