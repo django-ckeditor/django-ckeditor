@@ -100,9 +100,7 @@ class CKEditorWidget(forms.Textarea):
             or []
         )
 
-    def render(self, name, value, attrs=None, renderer=None):
-        if renderer is None:
-            renderer = get_default_renderer()
+    def get_context(self, name, value, attrs):
         if value is None:
             value = ""
         final_attrs = self.build_attrs(self.attrs, attrs, name=name)
@@ -112,16 +110,13 @@ class CKEditorWidget(forms.Textarea):
             for a, b, c in self.external_plugin_resources
         ]
 
-        context = {
+        return {
             "final_attrs": flatatt(final_attrs),
             "value": conditional_escape(force_str(value)),
             "id": final_attrs["id"],
             "config": json_encode(self.config),
             "external_plugin_resources": json_encode(external_plugin_resources),
         }
-
-        return self._render(self.template_name, context, renderer)
-
 
     def build_attrs(self, base_attrs, extra_attrs=None, **kwargs):
         """
