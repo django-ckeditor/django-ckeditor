@@ -118,7 +118,7 @@ MEDIA_ROOT = os.path.join(tempfile.gettempdir(), "ck_media")
 from ckeditor.configs import DEFAULT_CONFIG  # noqa
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_IMAGE_BACKEND = "ckeditor_uploader.backends.PillowBackend"
 CKEDITOR_THUMBNAIL_SIZE = (300, 300)
 CKEDITOR_IMAGE_QUALITY = 40
 CKEDITOR_BROWSE_SHOW_DIRS = True

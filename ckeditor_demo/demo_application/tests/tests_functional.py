@@ -118,7 +118,7 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
         assert size > 0
 
 
-@override_settings(CKEDITOR_IMAGE_BACKEND=None)
+@override_settings(CKEDITOR_IMAGE_BACKEND='ckeditor_uploader.backends.DummyBackend')
 class TestAdminPanelWidgetForDummyImageBackend(TestAdminPanelWidget):
     def _assert_image_uploaded(self):
         upload_directory = get_upload_directory()

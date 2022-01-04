@@ -177,12 +177,12 @@ Optional for file upload
    By default, no thumbnails are created and full-size images are used as preview.
    Supported backends:
 
-   - ``pillow``: Uses Pillow
+   - ``ckeditor_uploader.backends.PillowBackend``: Uses Pillow
 
-#. With the ``pillow`` backend, you can change the thumbnail size with the ``CKEDITOR_THUMBNAIL_SIZE`` setting (formerly ``THUMBNAIL_SIZE``).
+#. With the ``PillowBackend`` backend, you can change the thumbnail size with the ``CKEDITOR_THUMBNAIL_SIZE`` setting (formerly ``THUMBNAIL_SIZE``).
    Default value: (75, 75)
 
-#. With the ``pillow`` backend, you can convert and compress the uploaded images to jpeg, to save disk space.
+#. With the ``PillowBackend`` backend, you can convert and compress the uploaded images to jpeg, to save disk space.
    Set the ``CKEDITOR_FORCE_JPEG_COMPRESSION`` setting to ``True`` (default ``False``)
    You can change the ``CKEDITOR_IMAGE_QUALITY`` setting (formerly ``IMAGE_QUALITY``), which is passed to Pillow:
 

@@ -12,7 +12,7 @@ from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
 from ckeditor_uploader import utils
-from ckeditor_uploader.backends import registry
+from ckeditor_uploader.backends import get_backend
 from ckeditor_uploader.forms import SearchForm
 from ckeditor_uploader.utils import storage
 
@@ -92,7 +92,7 @@ class ImageUploadView(generic.View):
         """
         uploaded_file = request.FILES["upload"]
 
-        backend = registry.get_backend()
+        backend = get_backend()
 
         ck_func_num = request.GET.get("CKEditorFuncNum")
         if ck_func_num:
