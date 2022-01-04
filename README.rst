@@ -234,7 +234,7 @@ Alternatively, you can use the included ``CKEditorWidget`` as the widget for a f
 
 **Overriding widget template**
 
-In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways:
+In Django >=1.11 for overriding ``ckeditor/widget.html`` you have three ways:
 
 
 #. Place ``ckeditor/widget.html`` in  ``BASE_DIR/templates``
@@ -262,7 +262,12 @@ In Django 1.11 and 2.x for overriding ``ckeditor/widget.html`` you have two ways
 
 #. Place ``ckeditor/widget.html`` in ``your_app/templates`` and place ``'your_app'`` **before** ``'ckeditor'`` and ``'ckeditor_uploader'`` in ``INSTALLED_APPS``.
 
+#. Inherit from ``CKEditorWidget`` and override ``template_name`` with a custom template available in TEMPLATES DIRS as defined settings.py.  
 
+   ::
+      
+      class MyCustomCKEditorWidget(CKEditorWidget):
+         template_name = "templates/custom_ckeditor/widget.html"
 
 Outside of django admin
 ~~~~~~~~~~~~~~~~~~~~~~~
