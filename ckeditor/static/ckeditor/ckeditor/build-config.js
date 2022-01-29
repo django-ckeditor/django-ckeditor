@@ -161,6 +161,7 @@ var CKBUILDER_CONFIG = {
 		'km' : 1,
 		'ko' : 1,
 		'ku' : 1,
+		'ky' : 1,
 		'lt' : 1,
 		'lv' : 1,
 		'mk' : 1,
