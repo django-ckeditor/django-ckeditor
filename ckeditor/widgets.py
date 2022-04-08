@@ -99,33 +99,31 @@ class CKEditorWidget(forms.Textarea):
         )
 
     def get_context(self, name, value, attrs):
-        if value is None:
-            value = ""
-        final_attrs = self.build_attrs(self.attrs, attrs, name=name)
         self._set_config()
         external_plugin_resources = [
             [force_str(a), force_str(b), force_str(c)]
             for a, b, c in self.external_plugin_resources
         ]
 
-        return {
-            **super().get_context(name, value, attrs),
+        # TODO: These context variables should be removed in the next minor/major version.
+        #       See the comments below for which variables should be used instead.
+        final_attrs = self.build_attrs(self.attrs, {"name": name, **(attrs or {})})
+        deprecated_context = {
+            # Use `widget.attrs` instead
+            # (For `final_attrs.name`, use `widget.name` instead)
             "final_attrs": flatatt(final_attrs),
-            "value": conditional_escape(force_str(value)),
+            # Use `widget.value` instead
+            "value": conditional_escape(force_str(value if value is not None else "")),
+            # Use `widget.attrs.id` instead
             "id": final_attrs["id"],
-            "config": json_encode(self.config),
-            "external_plugin_resources": json_encode(external_plugin_resources),
         }
 
-    def build_attrs(self, base_attrs, extra_attrs=None, **kwargs):
-        """
-        Helper function for building an attribute dictionary.
-        This is combination of the same method from Django<=1.10 and Django1.11+
-        """
-        attrs = dict(base_attrs, **kwargs)
-        if extra_attrs:
-            attrs.update(extra_attrs)
-        return attrs
+        return {
+            **super().get_context(name, value, attrs),
+            "config": json_encode(self.config),
+            "external_plugin_resources": json_encode(external_plugin_resources),
+            **deprecated_context,
+        }
 
     def _set_config(self):
         lang = get_language().lower()
