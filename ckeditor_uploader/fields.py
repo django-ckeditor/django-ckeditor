@@ -19,13 +19,15 @@ class RichTextUploadingFormField(forms.fields.CharField):
         *args,
         **kwargs
     ):
-        kwargs.update(
-            {
+        super().__init__(
+            *args,
+            **{
                 "widget": widgets.CKEditorUploadingWidget(
                     config_name=config_name,
                     extra_plugins=extra_plugins,
                     external_plugin_resources=external_plugin_resources,
-                )
+                ),
+                # Let developers override the kwargs inserted above
+                **kwargs,
             }
         )
-        super().__init__(*args, **kwargs)
