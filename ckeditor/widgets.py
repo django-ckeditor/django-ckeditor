@@ -2,13 +2,11 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
-from django.forms.renderers import get_default_renderer
 from django.forms.utils import flatatt
 from django.templatetags.static import static
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
 from django.utils.html import conditional_escape
-from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from js_asset import JS
 
@@ -111,6 +109,7 @@ class CKEditorWidget(forms.Textarea):
         ]
 
         return {
+            **super().get_context(name, value, attrs),
             "final_attrs": flatatt(final_attrs),
             "value": conditional_escape(force_str(value)),
             "id": final_attrs["id"],
