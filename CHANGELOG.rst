@@ -3,13 +3,20 @@ Changelog
 
 Unreleased
 ----------
+#. Changed the context for the widget to deviate less from Django.
+
+
+6.3.0
+-----
+#. CKEditor 4.18.0
+#. Made it possible to override the CKEditor template in the widget class.
+#. Changed ``CKEDITOR_IMAGE_BACKEND`` to require dotted module paths (the old
+   identifiers are still supported for now).
+
 
 6.2.0
 -----
 #. CKEditor 4.17.1
-#. Made it possible to override the CKEditor template in the widget class.
-#. Changed ``CKEDITOR_IMAGE_BACKEND`` to require dotted module paths (the old
-   identifiers are still supported for now).
 
 
 6.1.0
