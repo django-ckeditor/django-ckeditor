@@ -2,11 +2,9 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
-from django.forms.utils import flatatt
 from django.templatetags.static import static
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
-from django.utils.html import conditional_escape
 from django.utils.translation import get_language
 from js_asset import JS
 
@@ -105,24 +103,10 @@ class CKEditorWidget(forms.Textarea):
             for a, b, c in self.external_plugin_resources
         ]
 
-        # TODO: These context variables should be removed in the next minor/major version.
-        #       See the comments below for which variables should be used instead.
-        final_attrs = self.build_attrs(self.attrs, {"name": name, **(attrs or {})})
-        deprecated_context = {
-            # Use `widget.attrs` instead
-            # (For `final_attrs.name`, use `widget.name` instead)
-            "final_attrs": flatatt(final_attrs),
-            # Use `widget.value` instead
-            "value": conditional_escape(force_str(value if value is not None else "")),
-            # Use `widget.attrs.id` instead
-            "id": final_attrs["id"],
-        }
-
         return {
             **super().get_context(name, value, attrs),
             "config": json_encode(self.config),
             "external_plugin_resources": json_encode(external_plugin_resources),
-            **deprecated_context,
         }
 
     def _set_config(self):

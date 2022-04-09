@@ -3,7 +3,10 @@ Changelog
 
 Unreleased
 ----------
-#. Changed the context for the widget to deviate less from Django.
+#. Changed the context for the widget to deviate less from Django. Removed a
+   few template variables which are not used in the bundled
+   ``ckeditor/widget.html`` template. This only affects you if you are using a
+   customized widget or widget template.
 
 
 6.3.0
