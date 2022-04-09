@@ -3,11 +3,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, re_path
 
-from .demo_application.views import ckeditor_form_view
+from .demo_application import views
 
 urlpatterns = (
     [
-        re_path(r"^$", ckeditor_form_view, name="ckeditor-form"),
+        re_path(r"^$", views.ckeditor_form_view, name="ckeditor-form"),
+        re_path(
+            r"^multiwidget/$",
+            views.ckeditor_multi_widget_form_view,
+            name="ckeditor-multi-widget-form",
+        ),
         re_path(r"^admin/", admin.site.urls),
         re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
     ]

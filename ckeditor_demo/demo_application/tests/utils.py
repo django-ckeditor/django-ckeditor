@@ -2,8 +2,11 @@ import hashlib
 import os.path
 import shutil
 from datetime import datetime
+from typing import Any, Dict
 
 from django.conf import settings
+
+from ckeditor.configs import DEFAULT_CONFIG
 
 
 def get_upload_directory():
@@ -40,3 +43,32 @@ def get_absolute_media_path(fname):
 
 def get_absolute_name(class_or_function):
     return "%s.%s" % (class_or_function.__module__, class_or_function.__name__)
+
+
+def get_config(config_name):
+    return {
+        **DEFAULT_CONFIG,
+        **settings.CKEDITOR_CONFIGS[config_name],
+    }
+
+
+def get_contexts_for_widgets(response) -> Dict[str, Dict[str, Any]]:
+    """
+    Searches through the response's context for subcontexts of widgets,
+    and returns a dictionary with the widgets' `id` attribute as key
+    and the widget's context dictionary as value.
+    """
+    widget_contexts = {}
+    for subcontext in response.context:
+        if "widget" not in subcontext:
+            continue
+
+        for subcontext_dict in subcontext:
+            if type(subcontext_dict) is not dict or "widget" not in subcontext_dict:
+                continue
+
+            widget = subcontext_dict["widget"]
+            widget_id = widget["attrs"]["id"]
+            widget_contexts[widget_id] = subcontext_dict
+
+    return widget_contexts
