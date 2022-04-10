@@ -1,5 +1,3 @@
-from unittest import expectedFailure
-
 from django.test import TestCase
 
 from ckeditor.fields import RichTextFormField
@@ -34,8 +32,6 @@ class ModelFieldAndFormFieldTestCase(TestCase):
         self.assertEqual(widget.config.get("extraPlugins"), None)
         self.assertListEqual(widget.external_plugin_resources, [])
 
-    # Fails because `RichTextUploadingFormField` always overwrites the widget
-    @expectedFailure
     def test_upload_model_form_with_overridden_widget_contains_expected_formfield(self):
         form = ExampleModelOverriddenWidgetForm()
         form_field = form.fields["content"]
