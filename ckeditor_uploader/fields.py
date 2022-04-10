@@ -5,9 +5,9 @@ from ckeditor_uploader import widgets
 
 
 class RichTextUploadingField(fields.RichTextField):
-    @staticmethod
-    def _get_form_class():
-        return RichTextUploadingFormField
+    def formfield(self, **kwargs):
+        kwargs["form_class"] = RichTextUploadingFormField
+        return super().formfield(**kwargs)
 
 
 class RichTextUploadingFormField(forms.fields.CharField):
@@ -19,15 +19,9 @@ class RichTextUploadingFormField(forms.fields.CharField):
         *args,
         **kwargs
     ):
-        super().__init__(
-            *args,
-            **{
-                "widget": widgets.CKEditorUploadingWidget(
-                    config_name=config_name,
-                    extra_plugins=extra_plugins,
-                    external_plugin_resources=external_plugin_resources,
-                ),
-                # Let developers override the kwargs inserted above
-                **kwargs,
-            }
+        kwargs["widget"] = widgets.CKEditorUploadingWidget(
+            config_name=config_name,
+            extra_plugins=extra_plugins,
+            external_plugin_resources=external_plugin_resources,
         )
+        super().__init__(*args, **kwargs)
