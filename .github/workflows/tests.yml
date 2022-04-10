@@ -28,7 +28,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools tox
+      - uses: browser-actions/setup-geckodriver@latest
       - name: Run tox targets for ${{ matrix.python-version }}
         run: |
+          export DISPLAY=:99
+          export SELENIUM=firefox
+          geckodriver --version
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
           ENV_PREFIX=$(tr -C -d "0-9" <<< "${{ matrix.python-version }}")
           TOXENV=$(tox --listenvs | grep "^py$ENV_PREFIX" | tr '\n' ',') python -m tox
