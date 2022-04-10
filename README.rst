@@ -1,6 +1,18 @@
 Django CKEditor
 ===============
 
+.. image:: https://img.shields.io/pypi/v/django-ckeditor.svg
+   :target: https://pypi.python.org/pypi/django-ckeditor
+
+.. image:: https://img.shields.io/pypi/pyversions/django-ckeditor.svg
+   :target: https://pypi.org/project/django-ckeditor/
+
+.. image:: https://github.com/django-ckeditor/django-ckeditor/workflows/Tests/badge.svg
+   :target: https://github.com/django-ckeditor/django-ckeditor/actions
+
+.. image:: https://readthedocs.org/projects/django-ckeditor/badge/?version=latest&style=flat
+   :target: https://django-ckeditor.readthedocs.io/en/latest/
+
 **NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
 
 
