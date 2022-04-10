@@ -11,6 +11,9 @@ Unreleased
 #. Added a pre-commit configuration.
 #. Removed the Travis CI configuration; Travis CI hasn't run our unit tests for
    months now.
+#. Added a GitHub action for running tests.
+#. Made selenium tests require opt in using a ``SELENIUM=firefox`` or
+   ``SELENIUM=chromium`` environment variable.
 
 
 6.3.0
