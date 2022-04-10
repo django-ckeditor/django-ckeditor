@@ -1,6 +1,5 @@
 from http import HTTPStatus
 
-from django.forms.utils import flatatt
 from django.test import TestCase
 from django.urls import reverse
 
@@ -59,17 +58,10 @@ class WidgetContextTestCase(TestCase):
         widget_dict = cls.get_expected_widget_dict_for_widget_context(
             field_name, widget_id
         )
-        final_attrs = {
-            **widget_dict["attrs"],
-            "name": field_name,
-        }
         return {
             "widget": widget_dict,
             "config": json_encode(expected_config),
             "external_plugin_resources": "[]",
-            "final_attrs": flatatt(final_attrs),
-            "value": "",
-            "id": widget_id,
         }
 
     @staticmethod
