@@ -54,6 +54,8 @@ class CKEditorWidget(forms.Textarea):
         **kwargs
     ):
         super().__init__(*args, **kwargs)
+
+        self.config_name = config_name
         # Setup config from defaults.
         self.config = DEFAULT_CONFIG.copy()
 
@@ -62,14 +64,14 @@ class CKEditorWidget(forms.Textarea):
         if configs:
             if isinstance(configs, dict):
                 # Make sure the config_name exists.
-                if config_name in configs:
-                    config = configs[config_name]
+                if self.config_name in configs:
+                    config = configs[self.config_name]
                     # Make sure the configuration is a dictionary.
                     if not isinstance(config, dict):
                         raise ImproperlyConfigured(
                             'CKEDITOR_CONFIGS["%s"] \
                                 setting must be a dictionary type.'
-                            % config_name
+                            % self.config_name
                         )
                     # Override defaults with settings config.
                     self.config.update(config)
@@ -77,7 +79,7 @@ class CKEditorWidget(forms.Textarea):
                     raise ImproperlyConfigured(
                         "No configuration named '%s' \
                             found in your CKEDITOR_CONFIGS setting."
-                        % config_name
+                        % self.config_name
                     )
             else:
                 raise ImproperlyConfigured(
