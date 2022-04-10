@@ -9,6 +9,8 @@ Unreleased
    customized widget or widget template.
 #. Dropped support for Python < 3.8, Django < 3.2.
 #. Added a pre-commit configuration.
+#. Removed the Travis CI configuration; Travis CI hasn't run our unit tests for
+   months now.
 
 
 6.3.0

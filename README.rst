@@ -1,9 +1,6 @@
 Django CKEditor
 ===============
 
-.. image:: https://travis-ci.org/django-ckeditor/django-ckeditor.svg?branch=master
-   :target: https://travis-ci.org/django-ckeditor/django-ckeditor
-
 **NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
 
 
