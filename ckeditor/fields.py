@@ -22,7 +22,9 @@ class RichTextField(models.TextField):
         return super().formfield(**defaults)
 
 
-class RichTextFormField(forms.fields.CharField):
+class RichTextFormField(forms.CharField):
+    widget = CKEditorWidget
+
     def __init__(
         self,
         config_name="default",
@@ -31,7 +33,7 @@ class RichTextFormField(forms.fields.CharField):
         *args,
         **kwargs
     ):
-        kwargs["widget"] = CKEditorWidget(
+        kwargs["widget"] = self.widget(
             config_name=config_name,
             extra_plugins=extra_plugins,
             external_plugin_resources=external_plugin_resources,
