@@ -8,6 +8,7 @@ from selenium import webdriver
 
 from .utils import get_upload_directory, remove_upload_directory, sha1
 
+
 CHROMIUM = "chromium"
 FIREFOX = "firefox"
 SELENIUM_BROWSER = CHROMIUM
@@ -48,7 +49,7 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
         self._assert_image_uploaded()
 
     def _login_to_admin(self):
-        self.selenium.get("%s%s" % (self.live_server_url, "/admin/"))
+        self.selenium.get("{}{}".format(self.live_server_url, "/admin/"))
         username_input = self.selenium.find_element_by_name("username")
         username_input.send_keys("test")
         password_input = self.selenium.find_element_by_name("password")
@@ -57,7 +58,9 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
 
     def _go_to_demo_application_in_admin(self):
         self.selenium.get(
-            "%s%s" % (self.live_server_url, "/admin/demo_application/examplemodel/add/")
+            "{}{}".format(
+                self.live_server_url, "/admin/demo_application/examplemodel/add/"
+            )
         )
 
     def _assert_editor_loaded(self):
@@ -118,7 +121,7 @@ class TestAdminPanelWidget(StaticLiveServerTestCase):
         assert size > 0
 
 
-@override_settings(CKEDITOR_IMAGE_BACKEND='ckeditor_uploader.backends.DummyBackend')
+@override_settings(CKEDITOR_IMAGE_BACKEND="ckeditor_uploader.backends.DummyBackend")
 class TestAdminPanelWidgetForDummyImageBackend(TestAdminPanelWidget):
     def _assert_image_uploaded(self):
         upload_directory = get_upload_directory()

@@ -5,6 +5,7 @@ import sys
 
 from setuptools import find_packages, setup
 
+
 version = __import__("ckeditor").__version__
 
 if sys.argv[-1] == "publish":
@@ -13,15 +14,15 @@ if sys.argv[-1] == "publish":
     sys.exit()
 
 if sys.argv[-1] == "tag":
-    os.system("git tag -a %s -m 'version %s'" % (version, version))
+    os.system(f"git tag -a {version} -m 'version {version}'")
     os.system("git push --tags")
     sys.exit()
 
 long_description = "\n".join(
     [
-        open("README.rst", "r").read(),
-        open("AUTHORS.rst", "r").read(),
-        open("CHANGELOG.rst", "r").read(),
+        open("README.rst").read(),
+        open("AUTHORS.rst").read(),
+        open("CHANGELOG.rst").read(),
     ]
 )
 
@@ -43,14 +44,16 @@ setup(
     packages=find_packages(exclude=["*.demo"]),
     zip_safe=False,
     install_requires=[
+        "Django>=3.2",
         "django-js-asset>=1.2.2",
     ],
+    python_requires=">=3.8",
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Framework :: Django",

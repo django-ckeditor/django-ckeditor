@@ -1,6 +1,7 @@
 import os
 import sys
 
+
 sys.path.append(os.path.abspath(".."))
 
 extensions = []
@@ -11,8 +12,8 @@ source_suffix = ".rst"
 
 master_doc = "index"
 
-project = u"Django CKEditor"
-copyright = u"2010 - 2017 The Django-CKEditor Team"
+project = "Django CKEditor"
+copyright = "2010 - 2017 The Django-CKEditor Team"
 
 version = __import__("ckeditor").__version__
 release = version
@@ -29,8 +30,8 @@ latex_documents = [
     (
         "index",
         "DjangoCKEditor.tex",
-        u"Django CKEditor Documentation",
-        u"The Django-CKEditor Team",
+        "Django CKEditor Documentation",
+        "The Django-CKEditor Team",
         "manual",
     )
 ]
@@ -39,8 +40,8 @@ man_pages = [
     (
         "index",
         "djangoCKEditor",
-        u"Django CKEditor Documentation",
-        [u"The Django-CKEditor Team"],
+        "Django CKEditor Documentation",
+        ["The Django-CKEditor Team"],
         1,
     )
 ]
@@ -49,8 +50,8 @@ texinfo_documents = [
     (
         "index",
         "DjangoCKEditor",
-        u"Django CKEditor Documentation",
-        u"The Django-CKEditor Team",
+        "Django CKEditor Documentation",
+        "The Django-CKEditor Team",
         "DjangoCKEditor",
         "CKEditor integration for Django",
         "Miscellaneous",

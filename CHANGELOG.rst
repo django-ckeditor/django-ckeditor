@@ -7,6 +7,8 @@ Unreleased
    few template variables which are not used in the bundled
    ``ckeditor/widget.html`` template. This only affects you if you are using a
    customized widget or widget template.
+#. Dropped support for Python < 3.8, Django < 3.2.
+#. Added a pre-commit configuration.
 
 
 6.3.0
@@ -350,4 +352,3 @@ File upload support have been moved to ckeditor_uploader. The urls are in ckedit
 0.0.1
 -----
 #. Added CKEDITOR_UPLOAD_PREFIX setting. Thanks `chr15m <http://github.com/chr15m>`__ for the input.
-

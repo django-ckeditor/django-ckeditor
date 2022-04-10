@@ -9,7 +9,7 @@ from django.urls import reverse
 from .utils import get_absolute_media_path, get_media_url, remove_upload_directory, sha1
 
 
-@override_settings(CKEDITOR_IMAGE_BACKEND='ckeditor_uploader.backends.DummyBackend')
+@override_settings(CKEDITOR_IMAGE_BACKEND="ckeditor_uploader.backends.DummyBackend")
 class DummyTestCase(TestCase):
     fixtures = ["test_admin.json"]
 

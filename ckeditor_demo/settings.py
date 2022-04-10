@@ -1,6 +1,7 @@
 import os
 import tempfile
 
+
 """
 Django settings for ckeditor_demo project.
 
@@ -116,6 +117,7 @@ STATIC_ROOT = os.path.join(tempfile.gettempdir(), "ck_static")
 MEDIA_ROOT = os.path.join(tempfile.gettempdir(), "ck_media")
 
 from ckeditor.configs import DEFAULT_CONFIG  # noqa
+
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "ckeditor_uploader.backends.PillowBackend"

@@ -4,6 +4,7 @@ from django.views.decorators.cache import never_cache
 
 from . import views
 
+
 urlpatterns = [
     re_path(r"^upload/", staff_member_required(views.upload), name="ckeditor_upload"),
     re_path(

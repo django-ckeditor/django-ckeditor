@@ -23,9 +23,7 @@ class Command(BaseCommand):
                     try:
                         backend.create_thumbnail(image)
                     except Exception as e:
-                        self.stdout.write(
-                            "Couldn't create thumbnail for %s: %s" % (image, e)
-                        )
+                        self.stdout.write(f"Couldn't create thumbnail for {image}: {e}")
             self.stdout.write("Finished")
         else:
             self.stdout.write("No thumbnail backend is enabled")

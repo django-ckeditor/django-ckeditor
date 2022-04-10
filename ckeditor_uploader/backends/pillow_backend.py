@@ -7,6 +7,7 @@ from PIL import Image
 
 from ckeditor_uploader import utils
 
+
 THUMBNAIL_SIZE = getattr(settings, "CKEDITOR_THUMBNAIL_SIZE", (75, 75))
 
 
@@ -22,7 +23,7 @@ class PillowBackend:
                 BytesIO(self.file_object.read())
             ).verify()  # verify closes the file
             return True
-        except IOError:
+        except OSError:
             return False
         finally:
             self.file_object.seek(0)
@@ -45,7 +46,7 @@ class PillowBackend:
         is_animated = hasattr(image, "is_animated") and image.is_animated
         if should_compress and not is_animated:
             file_object = self._compress_image(image)
-            filepath = "{}.jpg".format(os.path.splitext(filepath)[0])
+            filepath = f"{os.path.splitext(filepath)[0]}.jpg"
             saved_path = self.storage_engine.save(filepath, file_object)
         else:
             file_object = self.file_object

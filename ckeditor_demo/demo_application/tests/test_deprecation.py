@@ -10,6 +10,7 @@ from ckeditor_uploader.views import get_upload_filename
 
 from .utils import get_absolute_name
 
+
 MOCK_FILENAME = "some_filename.jpg"
 GENERATOR_PREFIX = "some_folder"
 GENERATED_MOCK_FILENAME = os.path.join(GENERATOR_PREFIX, MOCK_FILENAME)

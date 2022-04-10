@@ -8,9 +8,10 @@ from django.template.defaultfilters import slugify
 from django.utils.encoding import force_str
 from django.utils.module_loading import import_string
 
+
 # Non-image file icons, matched from top to bottom
 
-fileicons_path = "{0}/file-icons/".format(
+fileicons_path = "{}/file-icons/".format(
     getattr(settings, "CKEDITOR_FILEICONS_PATH", "/static/ckeditor")
 )
 # This allows adding or overriding the default icons used by Gallerific by getting an additional two-tuple list from
@@ -45,7 +46,7 @@ storage = get_storage_class()
 
 
 def slugify_filename(filename):
-    """ Slugify filename """
+    """Slugify filename"""
     name, ext = os.path.splitext(filename)
     slugified = get_slugified_name(name)
     return slugified + ext

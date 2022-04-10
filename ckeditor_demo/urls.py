@@ -5,6 +5,7 @@ from django.urls import include, re_path
 
 from .demo_application import views
 
+
 urlpatterns = (
     [
         re_path(r"^$", views.ckeditor_form_view, name="ckeditor-form"),

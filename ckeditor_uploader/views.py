@@ -105,7 +105,7 @@ class ImageUploadView(generic.View):
             return HttpResponse(
                 """
                 <script type='text/javascript'>
-                window.parent.CKEDITOR.tools.callFunction({0}, '', 'Invalid file type.');
+                window.parent.CKEDITOR.tools.callFunction({}, '', 'Invalid file type.');
                 </script>""".format(
                     ck_func_num
                 )
@@ -122,7 +122,7 @@ class ImageUploadView(generic.View):
             return HttpResponse(
                 """
             <script type='text/javascript'>
-                window.parent.CKEDITOR.tools.callFunction({0}, '{1}');
+                window.parent.CKEDITOR.tools.callFunction({}, '{}');
             </script>""".format(
                     ck_func_num, url
                 )
@@ -174,8 +174,7 @@ def get_image_files(user=None, path=""):
         if directory.startswith("."):
             continue
         directory_path = os.path.join(path, directory)
-        for element in get_image_files(user=user, path=directory_path):
-            yield element
+        yield from get_image_files(user=user, path=directory_path)
 
 
 def get_files_browse_urls(user=None):
@@ -222,7 +221,7 @@ def browse(request):
         form = SearchForm()
 
     show_dirs = getattr(settings, "CKEDITOR_BROWSE_SHOW_DIRS", False)
-    dir_list = sorted(set(os.path.dirname(f["src"]) for f in files), reverse=True)
+    dir_list = sorted({os.path.dirname(f["src"]) for f in files}, reverse=True)
 
     # Ensures there are no objects created from Thumbs.db files - ran across
     # this problem while developing on Windows

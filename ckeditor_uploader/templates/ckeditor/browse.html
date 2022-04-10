@@ -63,9 +63,9 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                        {% endif %}  
-                                    {% endfor %} <!-- for file in files -->                       
-                            {% endfor %} <!-- for dir in dirs -->   
+                                        {% endif %}
+                                    {% endfor %} <!-- for file in files -->
+                            {% endfor %} <!-- for dir in dirs -->
                         {% else %}
                             {% for file in files %}
                                 <li>
@@ -81,9 +81,9 @@
                                         </div>
                                     </div>
                                 </li>
-                            {% endfor %} <!-- for file in files -->    
-                        {% endif %}                                
-                    </ul>  
+                            {% endfor %} <!-- for file in files -->
+                        {% endif %}
+                    </ul>
                 </div>
                 <div style="clear: both;"></div>
             </div>
@@ -93,7 +93,7 @@
             function getUrlParam(paramName) {
                 var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
                 var match = window.location.search.match(reParam) ;
- 
+
                 return (match && match.length > 1) ? match[1] : '' ;
             }
             function scale_image() {
@@ -128,7 +128,7 @@
                     fadeSpeed:         'fast',
                     exemptionSelector: '.selected'
                 });
-            
+
                 // Initialize Advanced Galleriffic Gallery
                 var gallery = $('#thumbs').galleriffic({
                     delay:                     2500,
