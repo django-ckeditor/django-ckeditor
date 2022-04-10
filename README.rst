@@ -7,6 +7,9 @@ Django CKEditor
 .. image:: https://img.shields.io/pypi/pyversions/django-ckeditor.svg
    :target: https://pypi.org/project/django-ckeditor/
 
+.. image:: https://img.shields.io/pypi/djversions/django-ckeditor.svg
+   :target: https://pypi.org/project/django-ckeditor/
+
 .. image:: https://github.com/django-ckeditor/django-ckeditor/workflows/Tests/badge.svg
    :target: https://github.com/django-ckeditor/django-ckeditor/actions
 
