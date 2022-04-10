@@ -1,5 +1,7 @@
+import os
 import os.path
 from time import sleep
+from unittest import skipUnless
 
 from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -11,20 +13,24 @@ from .utils import get_upload_directory, remove_upload_directory, sha1
 
 CHROMIUM = "chromium"
 FIREFOX = "firefox"
-SELENIUM_BROWSER = CHROMIUM
+SELENIUM = os.environ.get("SELENIUM")
 
 
+@skipUnless(
+    SELENIUM,
+    "Set the SELENIUM env variable to 'firefox' or 'chromium' to run selenium tests",
+)
 class TestAdminPanelWidget(StaticLiveServerTestCase):
     fixtures = ["test_admin.json"]
 
     @classmethod
     def setUpClass(cls):
-        if SELENIUM_BROWSER == CHROMIUM:
+        if SELENIUM == CHROMIUM:
             options = webdriver.ChromeOptions()
             options.add_argument("--headless")
             options.add_argument("--disable-gpu")
             cls.selenium = webdriver.Chrome(chrome_options=options)
-        elif SELENIUM_BROWSER == FIREFOX:
+        elif SELENIUM == FIREFOX:
             cls.selenium = webdriver.Firefox()
         super().setUpClass()
 
