@@ -19,8 +19,12 @@ class CkEditorMultiWidgetForm(forms.Form):
     SUBWIDGET_SUFFIXES = ["0", "1"]
 
     ckeditor_standard_multi_widget_example = RichTextFormField(
+        config_name="my-custom-toolbar",
         widget=CkEditorMultiWidget(
-            widgets={suffix: CKEditorWidget for suffix in SUBWIDGET_SUFFIXES},
+            widgets={
+                suffix: CKEditorWidget(config_name="my-custom-toolbar")
+                for suffix in SUBWIDGET_SUFFIXES
+            },
         ),
     )
     ckeditor_upload_multi_widget_example = RichTextUploadingFormField(
