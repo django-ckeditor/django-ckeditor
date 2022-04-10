@@ -41,6 +41,10 @@ setup(
     author="Shaun Sephton & Piotr Malinski",
     author_email="riklaunim@gmail.com",
     url="https://github.com/django-ckeditor/django-ckeditor",
+    project_urls={
+        "Documentation": "https://django-ckeditor.readthedocs.io/en/latest/",
+        "Source": "https://github.com/django-ckeditor/django-ckeditor",
+    },
     packages=find_packages(exclude=["*.demo"]),
     zip_safe=False,
     install_requires=[
