@@ -370,13 +370,21 @@ Database is set to sqlite3 and STATIC/MEDIA_ROOT to folders in temporary directo
 Running selenium test
 ---------------------
 
-You can run the test with ``python manage.py test ckeditor_demo`` (for repo checkout only) or with ``tox`` which is configured to run with Python 2.7 and 3.4.
+The recommended way to run selenium tests is using tox. Select the appropriate
+selenium driver using the ``SELENIUM`` environment variable and optionally
+specify that you want to run only one environment since selenium takes some
+time and/or since you do not have all supported versions of Python installed
+locally. The example uses the combination of Python 3.9 and Django 4.0 which is
+a supported combination at the time of writing::
 
+    # Either
+    SELENIUM=firefox tox -e py39-dj40
 
-Running code quality tests
---------------------------
+    # Or
+    SELENIUM=chromium tox -e py39-dj40
 
-Create a new virtualenv, install `tox <https://pypi.python.org/pypi/tox>`__ and run ``tox -e py27-lint`` to `Flake8 (pep8 and other quality checks) <https://pypi.python.org/pypi/flake8>`__ tests or ``tox -e py27-isort`` to `isort (import order check) <https://pypi.python.org/pypi/isort>`__ tests
+    # Or even
+    SELENIUM=firefox tox
 
 
 Troubleshooting
