@@ -16,13 +16,9 @@ Django CKEditor
 .. image:: https://readthedocs.org/projects/django-ckeditor/badge/?version=latest&style=flat
    :target: https://django-ckeditor.readthedocs.io/en/latest/
 
-**NOTICE: django-ckeditor 5 has backward incompatible code moves against 4.5.1.**
-
-
-File upload support has been moved to ckeditor_uploader.  The urls are in ckeditor_uploader.urls, while for the file uploading widget you have to use RichTextUploadingField instead of RichTextField.
-
 
 **Django admin CKEditor integration.**
+
 Provides a ``RichTextField``, ``RichTextUploadingField``, ``CKEditorWidget`` and ``CKEditorUploadingWidget`` utilizing CKEditor with image uploading and browsing support included.
 
 This version also includes:
