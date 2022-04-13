@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.admin.options import FORMFIELD_FOR_DBFIELD_DEFAULTS
 from django.db import models
 
 from .widgets import CKEditorWidget
@@ -25,6 +26,12 @@ class RichTextField(models.TextField):
         }
         defaults.update(kwargs)
         return super().formfield(**defaults)
+
+
+# Makes sure that the `formfield()` method above doesn't receive the default `widget`
+# argument from the Django admin site, which would have overwritten our own widget with
+# an `AdminTextareaWidget`
+FORMFIELD_FOR_DBFIELD_DEFAULTS[RichTextField] = {}
 
 
 class RichTextFormField(forms.fields.CharField):

@@ -1,5 +1,4 @@
 from http import HTTPStatus
-from unittest import expectedFailure
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -59,7 +58,6 @@ class ModelFieldAndFormFieldTestCase(TestCase):
             ],
         )
 
-    @expectedFailure
     def test_admin_model_forms_contain_expected_formfields(self):
         superuser = get_user_model().objects.create_user(
             username="superuser", is_superuser=True, is_staff=True
