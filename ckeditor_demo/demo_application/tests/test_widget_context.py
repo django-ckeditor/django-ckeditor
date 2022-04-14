@@ -1,13 +1,11 @@
 from http import HTTPStatus
-from unittest import expectedFailure
 
 from django.test import TestCase
 from django.urls import reverse
 
 from ckeditor.widgets import json_encode
-
-from ..forms import CkEditorMultiWidgetForm
 from .utils import get_config, get_contexts_for_widgets
+from ..forms import CkEditorMultiWidgetForm
 
 
 class WidgetContextTestCase(TestCase):
@@ -81,7 +79,6 @@ class WidgetContextTestCase(TestCase):
             "template_name": "ckeditor/widget.html",
         }
 
-    @expectedFailure  # FIXME it really shouldn't be.
     def test_rendered_ckeditor_multi_widgets_contain_expected_context(self):
         response = self.client.get(reverse("ckeditor-multi-widget-form"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
