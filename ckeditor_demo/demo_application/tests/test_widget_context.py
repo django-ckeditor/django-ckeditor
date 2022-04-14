@@ -52,31 +52,24 @@ class WidgetContextTestCase(TestCase):
                 )
                 self.assertDictEqual(widget_context, expected_widget_context)
 
-    @classmethod
-    def get_expected_widget_context(cls, field_name, widget_id, expected_config):
-        widget_dict = cls.get_expected_widget_dict_for_widget_context(
-            field_name, widget_id
-        )
-        return {
-            "widget": widget_dict,
-            "config": json_encode(expected_config),
-            "external_plugin_resources": "[]",
-        }
-
     @staticmethod
-    def get_expected_widget_dict_for_widget_context(field_name, widget_id):
+    def get_expected_widget_context(field_name, widget_id, expected_config: dict):
         return {
-            "name": field_name,
-            "is_hidden": False,
-            "required": True,
-            "value": None,
-            "attrs": {
-                "cols": "40",
-                "rows": "10",
+            "widget": {
+                "name": field_name,
+                "is_hidden": False,
                 "required": True,
-                "id": widget_id,
+                "value": None,
+                "attrs": {
+                    "cols": "40",
+                    "rows": "10",
+                    "required": True,
+                    "id": widget_id,
+                },
+                "template_name": "ckeditor/widget.html",
+                "config": json_encode(expected_config),
+                "external_plugin_resources": "[]",
             },
-            "template_name": "ckeditor/widget.html",
         }
 
     def test_rendered_ckeditor_multi_widgets_contain_expected_context(self):
@@ -85,34 +78,53 @@ class WidgetContextTestCase(TestCase):
 
         widget_contexts = get_contexts_for_widgets(response)
 
-        field_names = (
-            "ckeditor_standard_multi_widget_example",
-            "ckeditor_upload_multi_widget_example",
+        field_name__config__tuples = (
+            (
+                "ckeditor_standard_multi_widget_example",
+                {
+                    **get_config("default"),
+                    "language": "en-us",
+                },
+            ),
+            (
+                "ckeditor_upload_multi_widget_example",
+                {
+                    **get_config("my-custom-toolbar"),
+                    "filebrowserUploadUrl": reverse("ckeditor_upload"),
+                    "filebrowserBrowseUrl": reverse("ckeditor_browse"),
+                    "language": "en-us",
+                },
+            ),
         )
-        self.assertEqual(len(widget_contexts), len(field_names))
+        self.assertEqual(len(widget_contexts), len(field_name__config__tuples))
 
-        for field_name in field_names:
+        for field_name, expected_config in field_name__config__tuples:
             with self.subTest(field_name=field_name):
                 widget_id = f"id_{field_name}"
                 self.assertIn(widget_id, widget_contexts)
                 widget_context = widget_contexts[widget_id]
 
                 expected_widget_context = self.get_expected_multi_widget_context(
-                    field_name, widget_id
+                    field_name, widget_id, expected_config
                 )
                 self.assertDictEqual(widget_context, expected_widget_context)
 
     @classmethod
-    def get_expected_multi_widget_context(cls, field_name, widget_id):
-        subwidgets = []
+    def get_expected_multi_widget_context(
+        cls, field_name, widget_id, expected_config: dict
+    ):
+        subwidget_contexts = []
         for subwidget_suffix in CkEditorMultiWidgetForm.SUBWIDGET_SUFFIXES:
-            subwidget = cls.get_expected_widget_dict_for_widget_context(
+            expected_widget_context = cls.get_expected_widget_context(
                 f"{field_name}_{subwidget_suffix}",
                 f"{widget_id}_{subwidget_suffix}",
+                expected_config,
             )
+            # The multi-widget only uses the contents of the `widget` context variable
+            subwidget_context = expected_widget_context["widget"]
             # Each subwidget is non-required (even if its `required` attr is True)
-            subwidget["required"] = False
-            subwidgets.append(subwidget)
+            subwidget_context["required"] = False
+            subwidget_contexts.append(subwidget_context)
         return {
             "widget": {
                 "name": field_name,
@@ -124,6 +136,6 @@ class WidgetContextTestCase(TestCase):
                     "id": widget_id,
                 },
                 "template_name": "django/forms/widgets/multiwidget.html",
-                "subwidgets": subwidgets,
+                "subwidgets": subwidget_contexts,
             },
         }

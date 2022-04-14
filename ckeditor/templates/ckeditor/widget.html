@@ -1,4 +1,4 @@
 {% load static %}
 <div class="django-ckeditor-widget" data-field-id="{{ widget.attrs.id }}" style="display: inline-block;">
-    <textarea name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} data-processed="0" data-config="{{ config }}" data-external-plugin-resources="{{ external_plugin_resources }}" data-id="{{ widget.attrs.id }}" data-type="ckeditortype">{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+    <textarea name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} data-processed="0" data-config="{{ widget.config }}" data-external-plugin-resources="{{ widget.external_plugin_resources }}" data-id="{{ widget.attrs.id }}" data-type="ckeditortype">{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
 </div>

@@ -99,17 +99,19 @@ class CKEditorWidget(forms.Textarea):
         )
 
     def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+
         self._set_config()
+        context["widget"]["config"] = json_encode(self.config)
+
         external_plugin_resources = [
             [force_str(a), force_str(b), force_str(c)]
             for a, b, c in self.external_plugin_resources
         ]
-
-        return {
-            **super().get_context(name, value, attrs),
-            "config": json_encode(self.config),
-            "external_plugin_resources": json_encode(external_plugin_resources),
-        }
+        context["widget"]["external_plugin_resources"] = json_encode(
+            external_plugin_resources
+        )
+        return context
 
     def _set_config(self):
         lang = get_language().lower()
