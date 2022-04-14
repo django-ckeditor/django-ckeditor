@@ -4,8 +4,9 @@ from django.test import TestCase
 from django.urls import reverse
 
 from ckeditor.widgets import json_encode
-from .utils import get_config, get_contexts_for_widgets
+
 from ..forms import CkEditorMultiWidgetForm
+from .utils import get_config, get_contexts_for_widgets
 
 
 class WidgetContextTestCase(TestCase):

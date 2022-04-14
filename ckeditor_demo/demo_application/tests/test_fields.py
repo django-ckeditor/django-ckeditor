@@ -8,6 +8,7 @@ from ckeditor.fields import RichTextFormField
 from ckeditor.widgets import CKEditorWidget
 from ckeditor_uploader.fields import RichTextUploadingFormField
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
 from ..forms import (
     ExampleModelForm,
     ExampleModelOverriddenWidgetForm,
