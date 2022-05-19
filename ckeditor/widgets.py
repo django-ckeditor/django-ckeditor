@@ -38,8 +38,8 @@ class CKEditorWidget(forms.Textarea):
                     "data-ckeditor-basepath": getattr(
                         settings,
                         "CKEDITOR_BASEPATH",
-                        static("ckeditor/ckeditor/"),
-                    ),
+                        None,
+                    ) or static("ckeditor/ckeditor/"),
                 },
             ),
             "ckeditor/ckeditor/ckeditor.js",
