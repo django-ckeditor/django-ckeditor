@@ -39,7 +39,8 @@ class CKEditorWidget(forms.Textarea):
                         settings,
                         "CKEDITOR_BASEPATH",
                         None,
-                    ) or static("ckeditor/ckeditor/"),
+                    )
+                    or static("ckeditor/ckeditor/"),
                 },
             ),
             "ckeditor/ckeditor/ckeditor.js",
