@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.serializers.json import DjangoJSONEncoder
+from django.forms.widgets import Media
 from django.templatetags.static import static
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
@@ -28,23 +29,6 @@ class CKEditorWidget(forms.Textarea):
     """
 
     template_name = "ckeditor/widget.html"
-
-    class Media:
-        js = (
-            JS(
-                "ckeditor/ckeditor-init.js",
-                {
-                    "id": "ckeditor-init-script",
-                    "data-ckeditor-basepath": getattr(
-                        settings,
-                        "CKEDITOR_BASEPATH",
-                        None,
-                    )
-                    or static("ckeditor/ckeditor/"),
-                },
-            ),
-            "ckeditor/ckeditor/ckeditor.js",
-        )
 
     def __init__(
         self,
@@ -97,6 +81,26 @@ class CKEditorWidget(forms.Textarea):
             external_plugin_resources
             or self.config.pop("external_plugin_resources", None)
             or []
+        )
+
+    @property
+    def media(self):
+        return Media(
+            js=(
+                JS(
+                    "ckeditor/ckeditor-init.js",
+                    {
+                        "id": "ckeditor-init-script",
+                        "data-ckeditor-basepath": getattr(
+                            settings,
+                            "CKEDITOR_BASEPATH",
+                            None,
+                        )
+                        or static("ckeditor/ckeditor/"),
+                    },
+                ),
+                "ckeditor/ckeditor/ckeditor.js",
+            )
         )
 
     def get_context(self, name, value, attrs):
