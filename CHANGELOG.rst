@@ -4,6 +4,8 @@ Changelog
 Unreleased
 ----------
 
+6.5.0
+-----
 #. Avoided calling ``static()`` if ``CKEDITOR_BASEPATH`` is defined.
 #. Fixed ``./manage.py generateckeditorthumbnails`` to work again after the
    image uploader backend rework.
