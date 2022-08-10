@@ -7,6 +7,9 @@ Unreleased
 #. Avoided calling ``static()`` if ``CKEDITOR_BASEPATH`` is defined.
 #. Fixed ``./manage.py generateckeditorthumbnails`` to work again after the
    image uploader backend rework.
+#. CKEditor 4.19.1
+#. Stopped calling ``static()`` during application startup.
+#. Added Django 4.1
 
 
 6.4.0
