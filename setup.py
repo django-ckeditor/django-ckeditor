@@ -49,7 +49,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "Django>=3.2",
-        "django-js-asset>=1.2.2",
+        "django-js-asset>=2.0",
     ],
     python_requires=">=3.8",
     include_package_data=True,
