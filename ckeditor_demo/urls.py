@@ -1,16 +1,16 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, re_path
+from django.urls import include, path, re_path
 
 from .demo_application import views
 
 
 urlpatterns = (
     [
-        re_path(r"^$", views.ckeditor_form_view, name="ckeditor-form"),
-        re_path(
-            r"^multiwidget/$",
+        path("", views.ckeditor_form_view, name="ckeditor-form"),
+        path(
+            "multiwidget/",
             views.ckeditor_multi_widget_form_view,
             name="ckeditor-multi-widget-form",
         ),
