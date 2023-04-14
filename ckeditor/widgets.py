@@ -28,16 +28,17 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
 
-    template_name = "ckeditor/widget.html"
 
     def __init__(
         self,
         config_name="default",
         extra_plugins=None,
         external_plugin_resources=None,
+        template_name="ckeditor/widget.html",
         *args,
         **kwargs
     ):
+        self.template_name = template_name
         super().__init__(*args, **kwargs)
 
         self.config_name = config_name
