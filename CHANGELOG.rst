@@ -4,6 +4,10 @@ Changelog
 Unreleased
 ----------
 
+#. Required a newer version of django-js-asset which actually works with Django
+   4.1.
+#. CKEditor 4.21.0
+
 6.5.0
 -----
 #. Avoided calling ``static()`` if ``CKEDITOR_BASEPATH`` is defined.
