@@ -28,7 +28,6 @@ class CKEditorWidget(forms.Textarea):
     Supports direct image uploads and embed.
     """
 
-
     def __init__(
         self,
         config_name="default",

@@ -15,7 +15,7 @@ urlpatterns = (
             name="ckeditor-multi-widget-form",
         ),
         re_path(r"^admin/", admin.site.urls),
-        re_path(r"^ckeditor/", include("ckeditor_uploader.urls")),
+        path("ckeditor/", include("ckeditor_uploader.urls")),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

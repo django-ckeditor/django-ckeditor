@@ -7,7 +7,6 @@ import ckeditor_uploader.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
