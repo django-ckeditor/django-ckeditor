@@ -4,9 +4,13 @@ Changelog
 Unreleased
 ----------
 
+6.6.0
+-----
+
 #. Required a newer version of django-js-asset which actually works with Django
    4.1.
 #. CKEditor 4.21.0
+#. Fixed the CKEditor styles when used with the dark Django admin theme.
 
 6.5.0
 -----
