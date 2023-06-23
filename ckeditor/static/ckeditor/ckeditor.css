@@ -1,0 +1,16 @@
+/* Fix for Django dark theme background */
+/* See https://github.com/django-ckeditor/django-ckeditor/issues/670 */
+.cke_reset_all tr:nth-child(even),
+.cke_reset_all tr:nth-child(odd),
+.cke_reset_all .row-form-errors,
+.cke_reset_all tr:nth-child(even) .errorlist,
+.cke_reset_all tr:nth-child(odd) + .row-form-errors,
+.cke_reset_all tr:nth-child(odd) + .row-form-errors .errorlist {
+    background: inherit;
+}
+
+/* Fix for CKEditor source editor with Django dark theme */
+/* See https://github.com/django-ckeditor/django-ckeditor/issues/741 */
+textarea.cke_source {
+    color: revert;
+}

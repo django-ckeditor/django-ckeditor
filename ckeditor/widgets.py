@@ -86,6 +86,7 @@ class CKEditorWidget(forms.Textarea):
     @property
     def media(self):
         return Media(
+            css={"all": ["ckeditor/ckeditor.css"]},
             js=(
                 JS(
                     "ckeditor/ckeditor-init.js",
