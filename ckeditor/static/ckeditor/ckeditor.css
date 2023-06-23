@@ -5,12 +5,15 @@
 .cke_reset_all .row-form-errors,
 .cke_reset_all tr:nth-child(even) .errorlist,
 .cke_reset_all tr:nth-child(odd) + .row-form-errors,
-.cke_reset_all tr:nth-child(odd) + .row-form-errors .errorlist {
-    background: inherit;
+.cke_reset_all tr:nth-child(odd) + .row-form-errors .errorlist,
+.cke_reset_all input[type="text"],
+.cke_reset_all input[type="password"] {
+  background: inherit;
+  color: inherit;
 }
 
 /* Fix for CKEditor source editor with Django dark theme */
 /* See https://github.com/django-ckeditor/django-ckeditor/issues/741 */
 textarea.cke_source {
-    color: revert;
+  color: revert;
 }
