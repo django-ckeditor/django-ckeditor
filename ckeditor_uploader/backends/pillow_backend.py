@@ -30,7 +30,7 @@ class PillowBackend:
 
     def _compress_image(self, image):
         quality = getattr(settings, "CKEDITOR_IMAGE_QUALITY", 75)
-        image = image.resize(image.size, Image.ANTIALIAS).convert("RGB")
+        image = image.resize(image.size, Image.Resampling.LANCZOS).convert("RGB")
         image_tmp = BytesIO()
         image.save(image_tmp, format="JPEG", quality=quality, optimize=True)
         return image_tmp
@@ -65,6 +65,6 @@ class PillowBackend:
         except ValueError:
             file_object = self.storage_engine.open(file_path)
             image = Image.open(file_object).convert("RGB")
-        image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
+        image.thumbnail(THUMBNAIL_SIZE, Image.Resampling.LANCZOS)
         image.save(thumbnail_io, format="JPEG", optimize=True)
         return self.storage_engine.save(thumbnail_filename, thumbnail_io)
