@@ -4,6 +4,13 @@ Changelog
 Unreleased
 ----------
 
+6.7.0
+-----
+
+#. CKEditor 4.22.1
+#. Dark mode fixes.
+#. Added support for Pillow 10.
+
 6.6.0
 -----
 
