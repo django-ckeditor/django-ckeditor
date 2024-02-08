@@ -26,6 +26,7 @@ class WidgetContextTestCase(TestCase):
                 {
                     **get_config("default"),
                     "language": "en-us",
+                    "versionCheck": False,
                 },
             ),
             (
@@ -35,6 +36,7 @@ class WidgetContextTestCase(TestCase):
                     "filebrowserUploadUrl": reverse("ckeditor_upload"),
                     "filebrowserBrowseUrl": reverse("ckeditor_browse"),
                     "language": "en-us",
+                    "versionCheck": False,
                 },
             ),
         )
@@ -85,6 +87,7 @@ class WidgetContextTestCase(TestCase):
                 {
                     **get_config("default"),
                     "language": "en-us",
+                    "versionCheck": False,
                 },
             ),
             (
@@ -94,6 +97,7 @@ class WidgetContextTestCase(TestCase):
                     "filebrowserUploadUrl": reverse("ckeditor_upload"),
                     "filebrowserBrowseUrl": reverse("ckeditor_browse"),
                     "language": "en-us",
+                    "versionCheck": False,
                 },
             ),
         )
