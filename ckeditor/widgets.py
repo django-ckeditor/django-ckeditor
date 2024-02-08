@@ -101,7 +101,7 @@ class CKEditorWidget(forms.Textarea):
                     },
                 ),
                 "ckeditor/ckeditor/ckeditor.js",
-            )
+            ),
         )
 
     def get_context(self, name, value, attrs):
@@ -126,3 +126,4 @@ class CKEditorWidget(forms.Textarea):
         elif lang == "zh-hant":
             lang = "zh"
         self.config["language"] = lang
+        self.config["versionCheck"] = False
