@@ -97,15 +97,30 @@
                 return (match && match.length > 1) ? match[1] : '' ;
             }
             function scale_image() {
-                var max_width = 500;
-                var image = $(".advance-link > img");
-                var image_width = image.width();
-                if (image_width > max_width) {
-                    var aspect = image.height() / image_width;
-                    var image_height = max_width * aspect;
-                    image.width(max_width);
-                    image.height(image_height);
-                }
+                // Scale down width
+				{
+					var max_width = 500;
+					var image = $(".advance-link > img");
+					var image_width = image.width();
+					if (image_width > max_width) {
+						var aspect = image.height() / image_width;
+						var image_height = max_width * aspect;
+						image.width(max_width);
+						image.height(image_height);
+					}
+				}
+
+                // Scale down height
+				{
+					const max_height = 500;
+					var image_height = image.height();
+					if (image_height > max_height) {
+						var aspect = image.width() / image_height;
+						var image_width = max_height * aspect;
+						image.width(image_width);
+						image.height(max_height);
+					}
+				}
             }
             // embedder
             $('.embed').live('click', function() {
