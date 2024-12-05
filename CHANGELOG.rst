@@ -4,6 +4,23 @@ Changelog
 Unreleased
 ----------
 
+6.7.2
+-----
+
+#. **Deprecated the package.**
+#. Added a new ``ckeditor/fixups.js`` script which disables the version check
+   *again* (if something slips through by accident) and which disables the
+   behavior where CKEditor 4 would automatically attach itself to unrelated
+   HTML elements with a ``contenteditable`` attribute (see
+   ``CKEDITOR.disableAutoInline`` in the CKEditor 4 docs).
+
+6.7.1
+-----
+
+#. Silenced the CKEditor version check and associated nag message in the
+   frontend. Added a system check of our own which tells people to look for
+   alternatives.
+
 6.7.0
 -----
 

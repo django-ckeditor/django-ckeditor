@@ -101,6 +101,7 @@ class CKEditorWidget(forms.Textarea):
                     },
                 ),
                 "ckeditor/ckeditor/ckeditor.js",
+                "ckeditor/fixups.js",
             ),
         )
 
