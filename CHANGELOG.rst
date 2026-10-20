@@ -4,6 +4,14 @@ Changelog
 Unreleased
 ----------
 
+#. Raised the minimum Django version to 4.0.
+#. Switched from ``js_asset.JS`` with an attributes dict to
+   ``js_asset.Script``, which avoids the deprecation warnings in
+   django-js-asset 5.0 (see
+   https://github.com/feincms/django-js-asset/issues/44). A small fallback is
+   used with django-js-asset < 4.0, which is what gets installed with Django
+   < 4.2.
+
 6.7.2
 -----
 

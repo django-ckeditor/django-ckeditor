@@ -7,9 +7,17 @@ from django.templatetags.static import static
 from django.utils.encoding import force_str
 from django.utils.functional import Promise
 from django.utils.translation import get_language
-from js_asset import JS
 
 from .configs import DEFAULT_CONFIG
+
+
+try:
+    from js_asset import Script
+except ImportError:  # django-js-asset < 4.0, installed with Django < 4.2
+    from js_asset import JS
+
+    def Script(src, **attributes):
+        return JS(src, attributes)
 
 
 class LazyEncoder(DjangoJSONEncoder):
@@ -88,9 +96,9 @@ class CKEditorWidget(forms.Textarea):
         return Media(
             css={"all": ["ckeditor/ckeditor.css"]},
             js=(
-                JS(
+                Script(
                     "ckeditor/ckeditor-init.js",
-                    {
+                    **{
                         "id": "ckeditor-init-script",
                         "data-ckeditor-basepath": getattr(
                             settings,

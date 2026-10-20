@@ -48,7 +48,7 @@ setup(
     packages=find_packages(exclude=["*.demo"]),
     zip_safe=False,
     install_requires=[
-        "Django>=3.2",
+        "Django>=4.0",
         "django-js-asset>=2.0",
     ],
     python_requires=">=3.8",
@@ -64,7 +64,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Framework :: Django",
-        "Framework :: Django :: 3.2",
+        "Framework :: Django :: 4.0",
         "Framework :: Django :: 4.1",
         "Framework :: Django :: 4.2",
         "Framework :: Django :: 5.0",
