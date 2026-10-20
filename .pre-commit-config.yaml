@@ -1,51 +1,29 @@
 exclude: ".yarn/|yarn.lock|\\.min\\.(css|js)$|static/ckeditor/ckeditor/|static/ckeditor/galleriffic/"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-merge-conflict
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.7.0
+    rev: v3.22.0
     hooks:
       - id: pyupgrade
         args: [--py38-plus]
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: 1.14.0
+    rev: 1.33.0
     hooks:
       - id: django-upgrade
-        args: [--target-version, "3.2"]
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+        args: [--target-version, "4.0"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
     hooks:
-      - id: isort
-        args: [--profile=black, --lines-after-imports=2, --combine-as]
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
-    hooks:
-      - id: black
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        args: ["--ignore=E203,E501,W503"]
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.9-for-vscode
-    hooks:
-      - id: prettier
-        args: [--list-different, --no-semi]
-        exclude: "^conf/|.*\\.html$"
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v8.43.0
-    hooks:
-      - id: eslint
+      - id: ruff-check
         args: [--fix]
-        verbose: true
-        additional_dependencies:
-          - eslint
-          - eslint-config-prettier
-          - "@babel/core"
-          - "@babel/eslint-parser"
-          - "@babel/preset-env"
+      - id: ruff-format
+  - repo: https://github.com/biomejs/pre-commit
+    rev: v2.5.15
+    hooks:
+      - id: biome-check

@@ -1,0 +1,9 @@
+target-version = "py38"
+
+[lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[lint.isort]
+combine-as-imports = true
+lines-after-imports = 2

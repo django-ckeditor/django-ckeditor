@@ -43,7 +43,7 @@ class CKEditorWidget(forms.Textarea):
         external_plugin_resources=None,
         template_name="ckeditor/widget.html",
         *args,
-        **kwargs
+        **kwargs,
     ):
         self.template_name = template_name
         super().__init__(*args, **kwargs)

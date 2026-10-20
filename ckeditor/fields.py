@@ -31,7 +31,7 @@ class RichTextFormField(forms.CharField):
         extra_plugins=None,
         external_plugin_resources=None,
         *args,
-        **kwargs
+        **kwargs,
     ):
         kwargs["widget"] = self.widget(
             config_name=config_name,

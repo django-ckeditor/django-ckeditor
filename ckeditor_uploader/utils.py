@@ -66,7 +66,7 @@ def get_icon_filename(file_name):
     Return the path to a file icon that matches the file name.
     """
     for regex, iconpath in CKEDITOR_FILEICONS:
-        if re.search(regex, file_name, re.I):
+        if re.search(regex, file_name, re.IGNORECASE):
             return iconpath
 
 

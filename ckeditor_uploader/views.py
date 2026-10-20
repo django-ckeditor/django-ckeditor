@@ -28,7 +28,7 @@ def _get_user_path(user):
         try:
             user_prop = getattr(user, RESTRICT_BY_USER)
         except (AttributeError, TypeError):
-            user_prop = getattr(user, "get_username")
+            user_prop = user.get_username
 
         if callable(user_prop):
             user_path = user_prop()
@@ -103,12 +103,10 @@ class ImageUploadView(generic.View):
         # Throws an error when an non-image file are uploaded.
         if not filewrapper.is_image and not allow_nonimages:
             return HttpResponse(
-                """
+                f"""
                 <script type='text/javascript'>
-                window.parent.CKEDITOR.tools.callFunction({}, '', 'Invalid file type.');
-                </script>""".format(
-                    ck_func_num
-                )
+                window.parent.CKEDITOR.tools.callFunction({ck_func_num}, '', 'Invalid file type.');
+                </script>"""
             )
 
         filepath = get_upload_filename(uploaded_file.name, request)
@@ -120,12 +118,10 @@ class ImageUploadView(generic.View):
         if ck_func_num:
             # Respond with Javascript sending ckeditor upload url.
             return HttpResponse(
-                """
+                f"""
             <script type='text/javascript'>
-                window.parent.CKEDITOR.tools.callFunction({}, '{}');
-            </script>""".format(
-                    ck_func_num, url
-                )
+                window.parent.CKEDITOR.tools.callFunction({ck_func_num}, '{url}');
+            </script>"""
             )
         else:
             _, filename = os.path.split(saved_path)

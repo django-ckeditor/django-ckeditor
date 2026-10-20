@@ -6,7 +6,7 @@ from django.utils.module_loading import import_string
 from .dummy_backend import DummyBackend
 
 
-__all__ = ["get_backend", "DummyBackend", "PillowBackend"]
+__all__ = ["DummyBackend", "PillowBackend", "get_backend"]
 
 
 try:
